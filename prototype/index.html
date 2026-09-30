@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<title>Tomi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Baloo+2:wght@500;600;700;800&display=swap">
+<style>
+/* Layout: one playful mobile column. Sticky stat bar, mascot hero, camera card, lesson card, then a winding skill path. Lessons open full-screen, one card at a time. */
+:root {
+  --bg: #fbf9ff;
+  --surface: #ffffff;
+  --sunk: #efecf7;
+  --fg: #2b2440;
+  --muted: #7a7294;
+  --line: #e3def0;
+  --tomato: #ff4f3f;
+  --tomato-d: #d63526;
+  --carrot: #ff9a1f;
+  --carrot-d: #d97a06;
+  --plum: #7a5cff;
+  --plum-d: #5a3fd6;
+  --mint: #14b89a;
+  --mint-d: #0b8f77;
+  --butter: #ffc933;
+  --butter-d: #e0a800;
+  --good: #1fb86a;
+  --good-soft: #d9f7e6;
+  --bad: #ff4f3f;
+  --bad-soft: #ffe1dd;
+  --locked: #d4cfe0;
+  --locked-d: #b5aec6;
+  --on: #ffffff;
+  --display: "Lilita One", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --body: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17142a; --surface: #211d38; --sunk: #2c2748; --fg: #f3f0ff; --muted: #a79fc6; --line: #37305a;
+    --good-soft: #173a2b; --bad-soft: #43201f; --locked: #3a3458; --locked-d: #2a2543;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17142a; --surface: #211d38; --sunk: #2c2748; --fg: #f3f0ff; --muted: #a79fc6; --line: #37305a;
+  --good-soft: #173a2b; --bad-soft: #43201f; --locked: #3a3458; --locked-d: #2a2543;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { overflow-x: hidden; }
+body { background: var(--bg); color: var(--fg); font: 600 16px/1.45 var(--body); padding: 0 16px; }
+.wrap { max-width: 600px; margin: 0 auto; padding-block: 8px 80px; display: flex; flex-direction: column; gap: 22px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: 0.01em; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+button { font: inherit; cursor: pointer; color: inherit; }
+:focus-visible { outline: 3px solid var(--plum); outline-offset: 3px; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Chunky button */
+.chunk { --c: var(--tomato); --cd: var(--tomato-d); border: 0; border-radius: 16px; padding: 14px 20px; background: var(--c); color: var(--on);
+  font: 400 19px/1 var(--display); letter-spacing: .04em; text-transform: uppercase; box-shadow: 0 5px 0 var(--cd); transition: transform .08s, box-shadow .08s; width: 100%; }
+.chunk:active:not([disabled]) { transform: translateY(4px); box-shadow: 0 1px 0 var(--cd); }
+.chunk[disabled] { --c: var(--locked); --cd: var(--locked-d); color: var(--muted); cursor: default; }
+.chunk.plum { --c: var(--plum); --cd: var(--plum-d); }
+.chunk.good { --c: var(--good); --cd: #148a4e; }
+.chunk.bad { --c: var(--bad); --cd: var(--tomato-d); }
+.chunk.flat { background: transparent; color: var(--muted); box-shadow: none; border: 2px solid var(--line); box-shadow: 0 4px 0 var(--line); }
+
+/* Stat bar */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px; display: flex; flex-direction: column; gap: 8px; }
+.stats { display: flex; justify-content: space-between; gap: 8px; }
+.pill { display: flex; align-items: center; gap: 6px; font: 400 20px/1 var(--display); padding: 6px 12px 6px 8px; border-radius: 999px; background: var(--surface); border: 2px solid var(--line); }
+.pill svg { width: 26px; height: 26px; flex: none; }
+.pill.fire { color: var(--carrot); }
+.pill.gem { color: var(--plum); }
+.pill.lvl { color: var(--mint); }
+.xpbar { height: 14px; background: var(--sunk); border-radius: 999px; overflow: hidden; }
+.xpbar i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--butter), var(--carrot)); box-shadow: inset 0 -4px 0 rgba(0,0,0,.08), inset 0 3px 0 rgba(255,255,255,.35); transition: width .6s cubic-bezier(.3,1.4,.5,1); }
+.xpnote { font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: center; }
+.mascot { width: 110px; height: 110px; animation: bob 2.8s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(-5px) rotate(-2deg); } }
+.bubble { position: relative; background: var(--surface); border: 2px solid var(--line); border-radius: 18px; padding: 12px 14px; font-size: 17px; min-width: 0; }
+.bubble::before { content: ""; position: absolute; left: -10px; top: 40%; width: 16px; height: 16px; background: var(--surface); border-left: 2px solid var(--line); border-bottom: 2px solid var(--line); transform: rotate(45deg); }
+.bubble b { color: var(--tomato); }
+
+/* Camera card */
+.cam { background: var(--surface); border: 2px solid var(--line); border-radius: 22px; padding: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 5px 0 var(--line); }
+.shot { position: relative; display: grid; place-items: center; gap: 6px; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 16px; cursor: pointer; overflow: hidden; text-align: center;
+  background: repeating-linear-gradient(45deg, color-mix(in srgb, var(--plum) 10%, var(--surface)) 0 14px, var(--surface) 14px 28px); border: 3px dashed color-mix(in srgb, var(--plum) 45%, var(--line)); }
+.shot.over { border-color: var(--plum); }
+.shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.shot .camico { width: 64px; height: 64px; border-radius: 20px; background: var(--plum); display: grid; place-items: center; box-shadow: 0 5px 0 var(--plum-d); }
+.shot .camico svg { width: 36px; height: 36px; }
+.shot .cta { font: 400 20px/1.1 var(--display); color: var(--plum); }
+.shot .sub { font-size: 14px; color: var(--muted); padding-inline: 12px; }
+.shot .swap { position: absolute; right: 10px; bottom: 10px; background: rgba(0,0,0,.6); color: #fff; font-size: 13px; padding: 4px 10px; border-radius: 999px; }
+.shot input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+textarea { width: 100%; min-height: 56px; resize: vertical; border: 2px solid var(--line); background: var(--bg); color: var(--fg); border-radius: 14px; padding: 10px 12px; font: 600 15px/1.4 var(--body); }
+.focusrow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 15px; }
+.tag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px 3px 4px; border-radius: 999px; color: var(--on); background: var(--tc, var(--plum)); font-weight: 700; font-size: 14px; }
+.tag svg { width: 22px; height: 22px; background: rgba(255,255,255,.25); border-radius: 50%; padding: 3px; }
+.status { font-size: 15px; color: var(--muted); text-align: center; min-height: 1.4em; }
+.status.err { color: var(--bad); }
+.thinking { display: inline-flex; gap: 4px; vertical-align: middle; }
+.thinking i { width: 7px; height: 7px; border-radius: 50%; background: var(--plum); animation: dot 1s infinite; }
+.thinking i:nth-child(2) { animation-delay: .15s; } .thinking i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 50% { transform: translateY(-5px); opacity: .5; } }
+
+/* Lesson card */
+.lcard { border-radius: 22px; overflow: hidden; background: var(--surface); border: 2px solid var(--line); box-shadow: 0 5px 0 var(--line); }
+.lhead { background: var(--tc, var(--tomato)); color: var(--on); padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; position: relative; overflow: hidden; }
+.lhead::after { content: ""; position: absolute; right: -30px; top: -30px; width: 130px; height: 130px; border-radius: 50%; background: rgba(255,255,255,.14); }
+.lhead .kicker { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; opacity: .9; }
+.lhead h2 { font-size: 26px; line-height: 1.1; position: relative; }
+.lbody { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 14px; padding: 2px 12px; border-radius: 999px; background: var(--sunk); }
+.chip.have { background: var(--good-soft); color: var(--good); }
+.chip.need { background: var(--bad-soft); color: var(--bad); }
+.meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 15px; color: var(--muted); }
+.meta b { color: var(--fg); }
+.example { align-self: flex-start; font-size: 13px; background: var(--butter); color: #3a2a00; padding: 2px 10px; border-radius: 8px; }
+.alts { font-size: 14px; color: var(--muted); }
+
+/* Skill path */
+.unit { border-radius: 20px; padding: 14px 18px; color: var(--on); background: var(--tc); box-shadow: 0 5px 0 var(--tcd); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.unit h3 { font-size: 22px; }
+.unit p { font-size: 14px; opacity: .92; }
+.unit .count { font: 400 18px/1 var(--display); background: rgba(255,255,255,.22); padding: 8px 12px; border-radius: 12px; white-space: nowrap; }
+.path { display: flex; flex-direction: column; gap: 18px; padding-block: 22px 30px; }
+.nodewrap { position: relative; width: 84px; margin-left: calc(50% - 42px + var(--o) * 1%); display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.node { position: relative; width: 78px; height: 78px; border-radius: 50%; border: 0; background: var(--tc); box-shadow: 0 7px 0 var(--tcd); display: grid; place-items: center; transition: transform .08s, box-shadow .08s; }
+.node:active:not([disabled]) { transform: translateY(5px); box-shadow: 0 2px 0 var(--tcd); }
+.node svg.ico { width: 38px; height: 38px; }
+.node[disabled] { cursor: default; }
+.nodewrap.locked .node { --tc: var(--locked); --tcd: var(--locked-d); }
+.nodewrap.locked .node svg.ico { opacity: .55; }
+.nodewrap .ring { position: absolute; width: 102px; height: 102px; left: -9px; top: -12px; pointer-events: none; }
+.nodewrap .nlabel { font-size: 14px; text-align: center; line-height: 1.15; margin-top: 8px; width: 130px; }
+.nodewrap.locked .nlabel { color: var(--muted); }
+.crown { position: absolute; right: -6px; top: -8px; width: 30px; height: 30px; }
+.startflag { position: absolute; top: -46px; left: 50%; transform: translateX(-50%); background: var(--surface); color: var(--tc); border: 2px solid var(--line); font: 400 16px/1 var(--display); letter-spacing: .06em; padding: 8px 12px; border-radius: 12px; white-space: nowrap; animation: hop 1.6s ease-in-out infinite; }
+.startflag::after { content: ""; position: absolute; left: 50%; bottom: -8px; width: 12px; height: 12px; background: var(--surface); border-right: 2px solid var(--line); border-bottom: 2px solid var(--line); transform: translateX(-50%) rotate(45deg); }
+@keyframes hop { 50% { transform: translate(-50%, -5px); } }
+.nodewrap.focus { margin-top: 36px; }
+.resetrow { display: flex; justify-content: center; }
+.linkbtn { background: none; border: 0; color: var(--muted); text-decoration: underline; font-size: 14px; }
+
+/* Lesson player */
+.player { max-width: 600px; margin: 0 auto; padding-bottom: 40px; display: flex; flex-direction: column; }
+.player .inner { display: flex; flex-direction: column; }
+.voice { border: 2px solid var(--line); background: var(--surface); border-radius: 12px; height: 38px; padding: 0 10px; display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--muted); }
+.voice svg { width: 20px; height: 20px; }
+.voice[aria-pressed="true"] { border-color: var(--tc); color: var(--tc); background: color-mix(in srgb, var(--tc) 10%, var(--surface)); }
+.scene { border-radius: 20px; background: color-mix(in srgb, var(--tc) 14%, var(--surface)); border: 2px solid color-mix(in srgb, var(--tc) 30%, var(--line)); overflow: hidden; }
+.scene svg { display: block; width: 100%; height: auto; }
+.timer { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; background: var(--surface); border: 2px solid var(--line); border-radius: 18px; padding: 10px 14px; }
+.timer .t { font: 400 34px/1 var(--display); font-variant-numeric: tabular-nums; min-width: 4ch; }
+.timer.run .t { color: var(--tc); }
+.timer.ring { border-color: var(--good); background: var(--good-soft); }
+.timer .tb { display: flex; gap: 8px; margin-left: auto; }
+.minibtn { border: 2px solid var(--line); background: var(--bg); border-radius: 12px; padding: 6px 12px; font-size: 15px; box-shadow: 0 3px 0 var(--line); }
+.minibtn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--line); }
+.minibtn.pri { background: var(--tc); border-color: var(--tc); color: var(--on); box-shadow: 0 3px 0 color-mix(in srgb, var(--tc) 70%, #000); }
+.ask { border: 2px solid var(--line); border-radius: 20px; background: var(--surface); padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.askhead { display: flex; align-items: center; gap: 10px; }
+.askhead svg.mascot { width: 44px; height: 44px; animation: none; }
+.log { display: flex; flex-direction: column; gap: 8px; }
+.msg { max-width: 88%; padding: 8px 12px; border-radius: 16px; font-size: 15px; white-space: pre-wrap; }
+.msg.me { align-self: flex-end; background: var(--plum); color: var(--on); border-bottom-right-radius: 4px; }
+.msg.tomi { align-self: flex-start; background: var(--sunk); border-bottom-left-radius: 4px; }
+.askrow { display: flex; gap: 8px; }
+.askrow input { flex: 1; min-width: 0; border: 2px solid var(--line); background: var(--bg); color: var(--fg); border-radius: 12px; padding: 8px 12px; font: 600 15px var(--body); }
+.qchips { display: flex; flex-wrap: wrap; gap: 6px; }
+.qchip { border: 2px solid var(--line); background: var(--bg); border-radius: 999px; padding: 3px 12px; font-size: 13px; color: var(--muted); }
+.talk .mascot, .mascot.talk { animation: talk .35s ease-in-out infinite; }
+@keyframes talk { 50% { transform: translateY(-3px) scale(1.03); } }
+/* Scene animations */
+.scene svg * { transform-box: fill-box; transform-origin: center; }
+.flick { animation: flick .5s ease-in-out infinite alternate; transform-origin: bottom !important; }
+.flick:nth-child(2) { animation-delay: .17s; } .flick:nth-child(3) { animation-delay: .33s; }
+@keyframes flick { to { transform: scaleY(1.25) scaleX(.9); } }
+.rise { animation: rise 1.8s ease-out infinite; opacity: 0; }
+.rise:nth-of-type(2) { animation-delay: .6s; } .rise:nth-of-type(3) { animation-delay: 1.2s; }
+@keyframes rise { 0% { transform: translateY(8px); opacity: 0; } 30% { opacity: .9; } 100% { transform: translateY(-26px); opacity: 0; } }
+.chopit { animation: chop .7s ease-in-out infinite; }
+@keyframes chop { 0%, 100% { transform: translateY(-18px) rotate(-6deg); } 45% { transform: translateY(0) rotate(0); } }
+.flipit { animation: flip 1.6s ease-in-out infinite; }
+@keyframes flip { 0%, 20%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-46px) rotate(180deg); } 75% { transform: translateY(0) rotate(360deg); } }
+.stream { stroke-dasharray: 6 8; animation: dash .6s linear infinite; }
+@keyframes dash { to { stroke-dashoffset: -28; } }
+.stirit { animation: stir 1.4s ease-in-out infinite; transform-origin: 50% 90% !important; }
+@keyframes stir { 0%, 100% { transform: rotate(-14deg); } 50% { transform: rotate(14deg); } }
+.bub { animation: bub 1.4s ease-in infinite; }
+.bub:nth-of-type(2) { animation-delay: .4s; } .bub:nth-of-type(3) { animation-delay: .8s; } .bub:nth-of-type(4) { animation-delay: 1.1s; }
+@keyframes bub { 0% { transform: translateY(10px) scale(.4); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateY(-16px) scale(1); opacity: 0; } }
+.wob { animation: wob .5s ease-in-out infinite alternate; transform-origin: 50% 100% !important; }
+@keyframes wob { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
+.shake { animation: shake .45s ease-in-out infinite alternate; }
+@keyframes shake { from { transform: rotate(-150deg) translateX(-4px); } to { transform: rotate(-130deg) translateX(4px); } }
+.fall { animation: fall 1s linear infinite; }
+.fall:nth-of-type(2) { animation-delay: .25s; } .fall:nth-of-type(3) { animation-delay: .5s; } .fall:nth-of-type(4) { animation-delay: .75s; }
+@keyframes fall { from { transform: translateY(-6px); opacity: 1; } to { transform: translateY(34px); opacity: 0; } }
+.glow { animation: glow 1.4s ease-in-out infinite alternate; }
+@keyframes glow { from { opacity: .55; } to { opacity: 1; } }
+.fillup { animation: fillup 2.4s ease-in-out infinite; transform-origin: 50% 100% !important; }
+@keyframes fillup { 0% { transform: scaleY(.15); } 70%, 100% { transform: scaleY(1); } }
+.ptop { display: flex; align-items: center; gap: 12px; padding-block: 14px; }
+.x { border: 0; background: none; width: 36px; height: 36px; display: grid; place-items: center; color: var(--muted); border-radius: 10px; }
+.x svg { width: 26px; height: 26px; }
+.pbar { flex: 1; height: 16px; background: var(--sunk); border-radius: 999px; overflow: hidden; }
+.pbar i { display: block; height: 100%; background: var(--tc, var(--good)); border-radius: 999px; box-shadow: inset 0 4px 0 rgba(255,255,255,.3); transition: width .4s cubic-bezier(.3,1.4,.5,1); }
+.pbody { padding-block: 8px 20px; display: flex; flex-direction: column; gap: 18px; }
+.pbody h2 { font-size: 28px; line-height: 1.12; }
+.kick { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--tc); }
+.bigtext { font-size: 22px; line-height: 1.35; }
+.tipbox { display: grid; grid-template-columns: 70px 1fr; gap: 10px; align-items: end; }
+.tipbox svg { width: 70px; height: 70px; }
+.tipbox .bubble { font-size: 16px; }
+.tipbox .bubble::before { top: auto; bottom: 18px; }
+.concept { background: color-mix(in srgb, var(--tc) 12%, var(--surface)); border: 2px solid color-mix(in srgb, var(--tc) 35%, var(--line)); border-radius: 18px; padding: 14px 16px; font-size: 17px; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { text-align: left; background: var(--surface); border: 2px solid var(--line); box-shadow: 0 4px 0 var(--line); border-radius: 16px; padding: 14px 16px; font-size: 17px; display: flex; gap: 12px; align-items: center; }
+.opt .k { flex: none; width: 30px; height: 30px; border-radius: 8px; border: 2px solid var(--line); display: grid; place-items: center; font-size: 14px; color: var(--muted); }
+.opt.sel { border-color: var(--plum); box-shadow: 0 4px 0 var(--plum); background: color-mix(in srgb, var(--plum) 10%, var(--surface)); }
+.opt.right { border-color: var(--good); box-shadow: 0 4px 0 var(--good); background: var(--good-soft); }
+.opt.wrong { border-color: var(--bad); box-shadow: 0 4px 0 var(--bad); background: var(--bad-soft); }
+.pfoot { padding-block: 14px 18px; border-top: 2px solid var(--line); display: flex; flex-direction: column; gap: 12px; }
+.pfoot.good { background: var(--good-soft); border-color: transparent; border-radius: 18px; padding-inline: 14px; }
+.pfoot.bad { background: var(--bad-soft); border-color: transparent; border-radius: 18px; padding-inline: 14px; }
+.fb { display: flex; flex-direction: column; gap: 4px; }
+.fb h3 { font-size: 22px; }
+.pfoot.good .fb h3 { color: var(--good); } .pfoot.bad .fb h3 { color: var(--bad); }
+.pfoot .inner2 { width: 100%; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.center { text-align: center; align-items: center; }
+.celebrate { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding-top: 10px; }
+.celebrate .mascot { width: 150px; height: 150px; }
+.celebrate h2 { font-size: 34px; color: var(--carrot); }
+.rewards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; width: 100%; }
+.reward { border-radius: 16px; border: 2px solid var(--rc); overflow: hidden; }
+.reward .rt { background: var(--rc); color: var(--on); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; padding: 4px; }
+.reward .rv { font: 400 28px/1 var(--display); color: var(--rc); padding: 14px 6px; display: flex; gap: 6px; justify-content: center; align-items: center; }
+.reward .rv svg { width: 26px; height: 26px; }
+.unlock { background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 12px 14px; width: 100%; }
+canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30; }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 40; background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 14px; max-width: calc(100% - 32px); text-align: center; }
+
+@media (max-width: 420px) {
+  .hero { grid-template-columns: 88px 1fr; } .hero .mascot { width: 88px; height: 88px; }
+  .bubble { font-size: 15px; } .pill { font-size: 17px; padding: 5px 10px 5px 6px; } .pill svg { width: 22px; height: 22px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <div class="bar">
+    <div class="stats">
+      <span class="pill fire" title="Day streak"><svg viewBox="0 0 24 24"><path d="M12 2c1.2 4.2 6 5.6 6 11.2a6 6 0 0 1-12 0c0-2.8 1.4-4.6 3-5.8.2 2 1.1 3.2 2.3 3.4C11 7.6 10.6 5 12 2Z" fill="var(--carrot)"/><path d="M12 13c.6 1.8 2.6 2.4 2.6 4.6a2.6 2.6 0 0 1-5.2 0c0-1.3.7-2 1.4-2.5.1.8.5 1.3 1 1.4-.2-1.3-.3-2.3.2-3.5Z" fill="var(--butter)"/></svg><span id="streak" class="num">0</span></span>
+      <span class="pill gem" title="Total XP"><svg viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z" fill="var(--plum)"/><path d="M6 3l3 6h6l3-6M2 9h20M9 9l3 12 3-12" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.4" stroke-linejoin="round"/></svg><span id="xp" class="num">0</span></span>
+      <span class="pill lvl" title="Level"><svg viewBox="0 0 24 24"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" fill="var(--mint)"/><circle cx="12" cy="15" r="2" fill="#fff" opacity=".7"/></svg>Lv&nbsp;<span id="level" class="num">1</span></span>
+    </div>
+    <div class="xpbar"><i id="xpfill" style="width:0%"></i></div>
+    <div class="xpnote"><span id="xpnote1"></span><span id="xpnote2" class="num"></span></div>
+  </div>
+
+  <section class="hero">
+    <div id="heroMascot"></div>
+    <div class="bubble" id="say">Hi, I'm <b>Tomi</b>! Show me your fridge and I'll pick tonight's lesson.</div>
+  </section>
+
+  <section class="cam" aria-label="Scan your fridge">
+    <label class="shot" id="shot" for="photo">
+      <span class="camico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5h3.2l2-3h7.6l2 3H21V19H3z"/><circle cx="12" cy="13.2" r="3.6"/></svg></span>
+      <span class="cta">Snap your fridge</span>
+      <span class="sub">Opens your camera on a phone. You can also drop a photo here.</span>
+      <input type="file" id="photo" accept="image/jpeg,image/png,image/webp" capture="environment">
+    </label>
+    <textarea id="extra" placeholder="Anything hiding in the pantry? rice, soy sauce, garlic…"></textarea>
+    <div class="focusrow"><span class="muted">Practicing:</span> <span id="focustag"></span></div>
+    <button class="chunk" id="go">Pick tonight's lesson</button>
+    <p class="status" id="status" role="status"></p>
+  </section>
+
+  <section id="lesson" aria-live="polite"></section>
+
+  <section id="tree" aria-label="Skill path"></section>
+  <div class="resetrow"><button class="linkbtn" id="reset">Start fresh (clear progress)</button></div>
+</div>
+
+<div class="player" id="player" hidden></div>
+<canvas id="confetti" hidden></canvas>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const SKILLS = [
+  { id: "knife", name: "Knife basics", tier: 0, req: [], blurb: "dice, mince, slice safely" },
+  { id: "eggs", name: "Eggs 101", tier: 0, req: [], blurb: "scramble, fry, soft-boil" },
+  { id: "boil", name: "Boil & blanch", tier: 0, req: [], blurb: "salted water, timing, shocking veg" },
+  { id: "saute", name: "Sauté", tier: 1, req: ["knife"], blurb: "hot pan, small pieces, keep it moving" },
+  { id: "sear", name: "Searing", tier: 1, req: ["knife"], blurb: "dry surface, hot pan, don't touch" },
+  { id: "rice", name: "Rice & grains", tier: 1, req: ["boil"], blurb: "ratios, absorption, resting" },
+  { id: "roast", name: "Roasting", tier: 2, req: ["knife"], blurb: "high oven heat, spacing, browning" },
+  { id: "pansauce", name: "Pan sauces", tier: 2, req: ["sear"], blurb: "deglaze the fond, reduce, mount with butter" },
+  { id: "emulsion", name: "Emulsions", tier: 2, req: ["knife"], blurb: "vinaigrettes, mayo, why they hold" },
+  { id: "pasta", name: "Pasta & starch water", tier: 3, req: ["boil", "saute"], blurb: "al dente, glossy sauces" },
+  { id: "braise", name: "Braising", tier: 3, req: ["sear", "roast"], blurb: "low and slow in liquid" },
+  { id: "balance", name: "Balancing flavor", tier: 3, req: ["pansauce", "emulsion"], blurb: "salt, acid, fat, heat, sweet" },
+];
+const TIERS = [
+  { name: "Foundations", sub: "Knife, eggs and water", c: "var(--carrot)", d: "var(--carrot-d)" },
+  { name: "Heat control", sub: "Make the pan work for you", c: "var(--tomato)", d: "var(--tomato-d)" },
+  { name: "Building flavor", sub: "Browning, sauces, emulsions", c: "var(--plum)", d: "var(--plum-d)" },
+  { name: "Putting it together", sub: "Cook without a recipe", c: "var(--mint)", d: "var(--mint-d)" },
+];
+const OFFSETS = [0, 18, 26, 18, 0, -18, -26, -18];
+const REPS_TO_MASTER = 2;
+const XP_PER_LEVEL = 150;
+const KEY = "tomi.v1";
+
+const ICONS = {
+  knife: '<path d="M3 21l3.5-3.5M6.5 17.5L20 4c1 3-1 8-6 10l-3.5 3.5z"/>',
+  eggs: '<path d="M12 3c-4 0-7 6.5-7 10.5a7 7 0 0 0 14 0C19 9.5 16 3 12 3z"/><circle cx="12" cy="14" r="2.6" fill="#fff"/>',
+  boil: '<path d="M4 10h16v7a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3zM2 10h20M9 3c-1 1.5 1 2.5 0 4M14 3c-1 1.5 1 2.5 0 4"/>',
+  saute: '<circle cx="10" cy="13" r="6.5"/><path d="M16.5 13H22M7 11.5h.01M11 14.5h.01M12 10.5h.01"/>',
+  sear: '<path d="M12 2.5c1.2 4.2 6 5.6 6 11a6 6 0 0 1-12 0c0-2.8 1.4-4.6 3-5.8.2 2 1.1 3.2 2.3 3.4C11 7.8 10.6 5.2 12 2.5z"/>',
+  rice: '<path d="M3 11h18a9 9 0 0 1-18 0zM7 8a2.2 2.2 0 0 1 3.2-1.2A2.2 2.2 0 0 1 14 6.8 2.2 2.2 0 0 1 17 8"/>',
+  roast: '<rect x="3" y="4" width="18" height="16" rx="3"/><rect x="6.5" y="10" width="11" height="7" rx="1.5"/><path d="M7 7h.01M10 7h.01M13 7h4"/>',
+  pansauce: '<path d="M12 3c3 5 6 8 6 11.5a6 6 0 0 1-12 0C6 11 9 8 12 3z"/><path d="M9.5 15a2.5 2.5 0 0 0 2.5 2.5"/>',
+  emulsion: '<path d="M12 22v-7M12 15c-3.5 0-5-6-5-8.5a5 5 0 0 1 10 0c0 2.5-1.5 8.5-5 8.5zM12 2v13M9.5 3.5c-.5 3 .5 8 2.5 11.5M14.5 3.5c.5 3-.5 8-2.5 11.5"/>',
+  pasta: '<path d="M4 7c3 0 3 3 6 3s3-3 6-3 3 3 4 3M4 12c3 0 3 3 6 3s3-3 6-3 3 3 4 3M4 17c3 0 3 3 6 3s3-3 6-3 3 3 4 3"/>',
+  braise: '<path d="M4 11h16v6a3.5 3.5 0 0 1-3.5 3.5h-9A3.5 3.5 0 0 1 4 17zM2.5 11h19M8.5 8h7M12 8V5.5M1.5 14H4M20 14h2.5"/>',
+  balance: '<path d="M12 4v16M8 20h8M5 7h14M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/>',
+};
+const icon = (id, cls = "ico") => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[id] || ""}</svg>`;
+
+function mascot(mood = "happy") {
+  const mouth = mood === "wow" ? '<ellipse cx="60" cy="86" rx="6" ry="7" fill="#5a1410"/>'
+    : mood === "hmm" ? '<path d="M52 86h16" stroke="#5a1410" stroke-width="4" stroke-linecap="round"/>'
+    : '<path d="M50 82q10 11 20 0" fill="#5a1410"/><path d="M54 86q6 4 12 0" fill="#ff8f86"/>';
+  const eyes = mood === "wow"
+    ? '<circle cx="47" cy="68" r="9" fill="#fff"/><circle cx="73" cy="68" r="9" fill="#fff"/><circle cx="47" cy="68" r="4.5" fill="#2b2440"/><circle cx="73" cy="68" r="4.5" fill="#2b2440"/>'
+    : '<circle cx="47" cy="68" r="8" fill="#fff"/><circle cx="73" cy="68" r="8" fill="#fff"/><circle cx="48.5" cy="69.5" r="4.2" fill="#2b2440"/><circle cx="74.5" cy="69.5" r="4.2" fill="#2b2440"/><circle cx="50" cy="67.5" r="1.4" fill="#fff"/><circle cx="76" cy="67.5" r="1.4" fill="#fff"/>';
+  return `<svg class="mascot" viewBox="0 0 120 120" aria-label="Tomi the tomato chef" role="img">
+    <ellipse cx="60" cy="113" rx="30" ry="5" fill="#000" opacity=".1"/>
+    <path d="M86 44c8-6 16-4 20 0-6 1-10 5-12 10z" fill="#2fb45a"/>
+    <circle cx="60" cy="74" r="36" fill="#ff4f3f"/>
+    <path d="M60 110a36 36 0 0 1-34-24 36 36 0 0 0 68 0 36 36 0 0 1-34 24z" fill="#d63526" opacity=".5"/>
+    <ellipse cx="40" cy="56" rx="8" ry="5" fill="#fff" opacity=".35" transform="rotate(-30 40 56)"/>
+    ${eyes}
+    <ellipse cx="37" cy="81" rx="6" ry="3.5" fill="#ff9aa0" opacity=".8"/><ellipse cx="83" cy="81" rx="6" ry="3.5" fill="#ff9aa0" opacity=".8"/>
+    ${mouth}
+    <path d="M40 42C27 40 28 20 43 21 45 7 75 7 77 21c15-1 16 19 3 21z" fill="#fff" stroke="#e3def0" stroke-width="2"/>
+    <rect x="40" y="36" width="40" height="11" rx="3" fill="#fff" stroke="#e3def0" stroke-width="2"/>
+  </svg>`;
+}
+
+const SAMPLE_STATE = { sample: true, xp: 260, streak: 3, lastCook: null, focus: "pansauce", reps: { knife: 2, eggs: 2, sear: 2, boil: 1 } };
+const SAMPLE_LESSON = {
+  example: true,
+  ingredients: ["chicken thighs", "lemon", "spinach", "garlic", "butter", "eggs", "parmesan", "white wine"],
+  title: "Seared chicken thighs with lemon-butter pan sauce",
+  skill_id: "pansauce", time_min: 30,
+  uses: ["chicken thighs", "lemon", "garlic", "butter", "spinach", "white wine"], missing: [],
+  why_this: "You've mastered searing, so pan sauce is next. It turns the brown bits left in your pan into a sauce.",
+  concept: "Fond is the browned protein stuck to the pan after searing. Liquid dissolves it, reducing concentrates it, and cold butter swirled in at the end thickens it into a glossy sauce.",
+  steps: [
+    { text: "Pat 4 chicken thighs dry and salt both sides. Sear skin-side down in a hot pan with a little oil, 7–8 min, without moving them.", tip: "Dry skin browns. Wet skin steams.", scene: "sear", timer_sec: 450 },
+    { text: "Flip and cook 5–6 min more until 74°C / 165°F inside. Move the chicken to a plate.", tip: "No thermometer? Cut into the thickest part. The juices should run clear.", scene: "flip", timer_sec: 330 },
+    { text: "Pour off most of the fat. Add 2 minced garlic cloves and stir for 30 seconds.", tip: "Keep the brown bits in the pan. That's your fond!", scene: "stir", timer_sec: 30 },
+    { text: "Pour in 120 ml (½ cup) white wine and scrape the pan with a wooden spoon. Simmer until reduced by half.", tip: "This is deglazing, the key move in today's lesson.", scene: "pour", timer_sec: 180 },
+    { text: "Take the pan off the heat. Whisk in 2 tbsp cold butter and the juice of half a lemon. Taste and add salt.", tip: "Off the heat, so the butter emulsifies instead of turning greasy.", scene: "whisk", timer_sec: 0 },
+    { text: "Wilt the spinach in the same pan for 1 minute, then plate with the chicken and spoon the sauce over.", tip: "", scene: "plate", timer_sec: 60 },
+  ],
+  quiz: { q: "Why do you add the butter off the heat?", options: ["So it melts faster", "So it emulsifies into a glossy sauce instead of separating", "To cool the chicken down"], answer: 1, explain: "Cold butter whisked into a warm, not boiling, liquid forms an emulsion. Too much heat breaks it and leaves an oily sauce." },
+  alternatives: [{ title: "Spinach and parmesan omelette", skill_id: "eggs" }, { title: "Garlicky sautéed spinach with lemon", skill_id: "saute" }],
+};
+
+let state = load();
+let lesson = SAMPLE_LESSON;
+let photoFile = null;
+let busy = false;
+
+function load() {
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.reps) return s; } catch (e) {}
+  return structuredClone(SAMPLE_STATE);
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+const reps = id => state.reps[id] || 0;
+const mastered = id => reps(id) >= REPS_TO_MASTER;
+const skillById = id => SKILLS.find(s => s.id === id);
+const unlocked = id => skillById(id).req.every(mastered);
+const available = () => SKILLS.filter(s => unlocked(s.id) && !mastered(s.id));
+const tierOf = id => TIERS[skillById(id)?.tier ?? 0];
+function ensureFocus() { if (!state.focus || !unlocked(state.focus) || mastered(state.focus)) state.focus = available()[0]?.id || SKILLS[0].id; }
+function esc(s) { return String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]); }
+const $ = id => document.getElementById(id);
+
+function skillTag(id) {
+  const t = tierOf(id);
+  return `<span class="tag" style="--tc:${t.c}">${icon(id, "")}${esc(skillById(id).name)}</span>`;
+}
+
+function renderHeader() {
+  const lvl = Math.floor(state.xp / XP_PER_LEVEL) + 1, into = state.xp % XP_PER_LEVEL;
+  $("level").textContent = lvl;
+  $("streak").textContent = state.streak;
+  $("xp").textContent = state.xp;
+  $("xpfill").style.width = (into / XP_PER_LEVEL * 100) + "%";
+  $("xpnote1").textContent = state.sample ? "Sample progress" : `Level ${lvl}`;
+  $("xpnote2").textContent = `${XP_PER_LEVEL - into} XP to level ${lvl + 1}`;
+  $("focustag").innerHTML = skillTag(state.focus);
+}
+
+function renderTree() {
+  let k = 0;
+  $("tree").innerHTML = TIERS.map((t, i) => {
+    const skills = SKILLS.filter(s => s.tier === i);
+    const done = skills.filter(s => mastered(s.id)).length;
+    const nodes = skills.map(s => {
+      const lk = !unlocked(s.id), m = mastered(s.id), f = s.id === state.focus && !lk && !m;
+      const o = OFFSETS[k++ % OFFSETS.length];
+      const pct = Math.min(reps(s.id) / REPS_TO_MASTER, 1), C = 2 * Math.PI * 46;
+      const ringSvg = !lk ? `<svg class="ring" viewBox="0 0 102 102" aria-hidden="true"><circle cx="51" cy="51" r="46" fill="none" stroke="var(--sunk)" stroke-width="7"/><circle cx="51" cy="51" r="46" fill="none" stroke="${m ? "var(--butter)" : t.c}" stroke-width="7" stroke-linecap="round" stroke-dasharray="${C * pct} ${C}" transform="rotate(-90 51 51)"/></svg>` : "";
+      const label = lk ? `Needs ${s.req.map(r => skillById(r).name).join(" + ")}` : m ? "Mastered" : `${reps(s.id)}/${REPS_TO_MASTER} cooks`;
+      return `<div class="nodewrap ${lk ? "locked" : ""} ${f ? "focus" : ""}" style="--o:${o};--tc:${t.c};--tcd:${t.d}">
+        ${f ? `<span class="startflag">NEXT UP</span>` : ""}
+        ${ringSvg}
+        <button class="node" data-skill="${s.id}" ${lk || m ? "disabled" : ""} aria-label="${esc(s.name)}: ${label}">
+          ${icon(s.id)}
+          ${m ? `<svg class="crown" viewBox="0 0 24 24"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" fill="var(--butter)" stroke="var(--butter-d)" stroke-width="1.2"/></svg>` : ""}
+        </button>
+        <span class="nlabel">${esc(s.name)}<br><span class="muted" style="font-size:12px">${label}</span></span>
+      </div>`;
+    }).join("");
+    return `<div class="unit" style="--tc:${t.c};--tcd:${t.d}"><div><h3>Unit ${i + 1}: ${t.name}</h3><p>${t.sub}</p></div><span class="count num">${done}/${skills.length}</span></div>
+      <div class="path">${nodes}</div>`;
+  }).join("");
+}
+
+function renderLesson() {
+  const el = $("lesson");
+  if (!lesson) { el.innerHTML = ""; return; }
+  const t = tierOf(lesson.skill_id);
+  el.innerHTML = `<article class="lcard" style="--tc:${t.c}">
+    <div class="lhead"><span class="kicker">Tonight's lesson</span><h2>${esc(lesson.title)}</h2></div>
+    <div class="lbody">
+      ${lesson.example ? `<span class="example">Example lesson. Snap your own fridge above!</span>` : ""}
+      <div class="meta"><span>${skillTag(lesson.skill_id)}</span><span><b class="num">${esc(lesson.time_min)}</b> min</span><span><b>${lesson.steps.length}</b> steps</span><span><b>+50</b> XP</span></div>
+      <div class="chips">${lesson.ingredients.map(i => `<span class="chip ${lesson.uses.includes(i) ? "have" : ""}">${esc(i)}</span>`).join("")}${(lesson.missing || []).map(i => `<span class="chip need">need: ${esc(i)}</span>`).join("")}</div>
+      <p>${esc(lesson.why_this)}</p>
+      ${lesson.alternatives?.length ? `<p class="alts">Also possible: ${lesson.alternatives.map(a => esc(a.title)).join(" · ")}</p>` : ""}
+      <button class="chunk" id="start" style="--c:${t.c};--cd:${t.d}">Start lesson</button>
+    </div>
+  </article>`;
+}
+
+function say(html) { $("say").innerHTML = html; }
+function renderAll() { ensureFocus(); renderHeader(); renderTree(); renderLesson(); }
+
+function toast(msg) { const t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2600); }
+function status(msg, err) { const s = $("status"); s.innerHTML = msg; s.className = "status" + (err ? " err" : ""); }
+
+/* ---------- Step illustrations ---------- */
+const INK = "var(--fg)";
+const flames = (cx, y = 138) => `<g>${[-16, 0, 16].map(d => `<path class="flick" d="M${cx + d} ${y}c-7 0-9-8-5-14 2-4 5-7 5-12 3 4 7 9 7 14 0 7-3 12-7 12z" fill="${d ? "#ff9a1f" : "#ffc933"}"/>`).join("")}</g>`;
+const pan = (cx = 120, y = 104) => `<ellipse cx="${cx}" cy="${y}" rx="66" ry="17" fill="#3b3552"/><ellipse cx="${cx}" cy="${y - 4}" rx="59" ry="12" fill="#5d5585"/><rect x="${cx + 60}" y="${y - 8}" width="56" height="10" rx="5" fill="#3b3552"/>`;
+const pot = (cx = 120) => `<rect x="${cx - 52}" y="62" width="104" height="58" rx="12" fill="#5d5585"/><rect x="${cx - 60}" y="56" width="120" height="12" rx="6" fill="#3b3552"/><rect x="${cx - 74}" y="72" width="16" height="8" rx="4" fill="#3b3552"/><rect x="${cx + 58}" y="72" width="16" height="8" rx="4" fill="#3b3552"/>`;
+const steam = (x, y) => `<g>${[0, 16, 32].map(d => `<path class="rise" d="M${x + d} ${y}c-6-6 6-10 0-16s6-10 0-16" fill="none" stroke="${INK}" stroke-opacity=".35" stroke-width="4" stroke-linecap="round"/>`).join("")}</g>`;
+const chicken = (cx, cy) => `<path d="M${cx - 34} ${cy}c0-12 20-16 34-14s36 2 34 12-24 12-38 11-30 2-30-9z" fill="#e6a15c"/><path d="M${cx - 18} ${cy - 6}l8 10M${cx} ${cy - 8}l8 12M${cx + 18} ${cy - 6}l6 10" stroke="#a8622a" stroke-width="4" stroke-linecap="round"/>`;
+const SCENES = {
+  sear: () => `${flames(120)}${pan()}${chicken(118, 96)}${steam(98, 70)}`,
+  flip: () => `${flames(120)}${pan()}<g class="flipit">${chicken(118, 92)}</g>`,
+  pour: () => `${flames(120)}${pan()}<path d="M100 92c10-4 30-4 40 0" stroke="#c98a3c" stroke-width="8" stroke-linecap="round" fill="none"/><path class="stream" d="M74 36 Q86 60 104 90" stroke="#f0d28a" stroke-width="6" stroke-linecap="round" fill="none"/><g transform="rotate(-58 60 34)"><rect x="46" y="4" width="28" height="56" rx="8" fill="#2fb45a"/><rect x="54" y="-10" width="12" height="18" rx="3" fill="#2fb45a"/><rect x="50" y="22" width="20" height="18" rx="3" fill="#fff" opacity=".7"/></g>`,
+  stir: () => `${flames(120)}${pot()}<g class="stirit"><rect x="134" y="10" width="8" height="84" rx="4" fill="#c98a3c"/><ellipse cx="138" cy="94" rx="10" ry="6" fill="#c98a3c"/></g>${steam(96, 50)}`,
+  boil: () => `${flames(120)}${pot()}<g>${[92, 112, 132, 150].map((x, i) => `<circle class="bub" cx="${x}" cy="${50 - (i % 2) * 4}" r="${5 + (i % 2) * 2}" fill="none" stroke="${INK}" stroke-opacity=".45" stroke-width="3"/>`).join("")}</g>`,
+  chop: () => `<rect x="30" y="100" width="180" height="26" rx="10" fill="#c98a3c"/><rect x="30" y="100" width="180" height="8" rx="4" fill="#e2a95a"/><g fill="#2fb45a">${[70, 86, 102].map(x => `<rect x="${x}" y="84" width="12" height="16" rx="3"/>`).join("")}</g><rect x="120" y="82" width="56" height="18" rx="9" fill="#ff9a1f"/><g class="chopit"><path d="M104 96 L132 40 L148 44 L128 98z" fill="#cfd3e0"/><rect x="130" y="16" width="14" height="30" rx="6" fill="#3b3552" transform="rotate(14 137 31)"/></g>`,
+  whisk: () => `<path d="M50 70h140a70 50 0 0 1-140 0z" fill="#7a5cff"/><ellipse cx="120" cy="70" rx="70" ry="12" fill="#a898ff"/><ellipse cx="120" cy="70" rx="58" ry="8" fill="#ffe28a"/><g class="wob"><rect x="116" y="4" width="8" height="40" rx="4" fill="#3b3552"/><path d="M120 44c-18 6-14 30 0 32 14-2 18-26 0-32zM120 44v32M108 50c0 12 6 24 12 26M132 50c0 12-6 24-12 26" fill="none" stroke="#cfd3e0" stroke-width="3"/></g>`,
+  season: () => `${pan(120, 118)}${chicken(118, 110)}<g>${[108, 118, 128, 114].map(x => `<circle class="fall" cx="${x}" cy="62" r="2.5" fill="${INK}"/>`).join("")}</g><g class="shake" style="transform-origin:120px 40px"><rect x="102" y="10" width="36" height="44" rx="10" fill="#fff" stroke="${INK}" stroke-width="3"/><rect x="102" y="10" width="36" height="12" rx="6" fill="#cfd3e0" stroke="${INK}" stroke-width="3"/></g>`,
+  oven: () => `<rect x="50" y="16" width="140" height="124" rx="14" fill="#5d5585"/><rect x="50" y="16" width="140" height="22" rx="10" fill="#3b3552"/><circle cx="70" cy="27" r="5" fill="#ffc933"/><circle cx="86" cy="27" r="5" fill="#ff9a1f"/><rect class="glow" x="66" y="50" width="108" height="72" rx="8" fill="#ffb347"/><rect x="76" y="96" width="88" height="8" rx="3" fill="#3b3552"/>${chicken(120, 90)}`,
+  plate: () => `<ellipse cx="120" cy="108" rx="84" ry="26" fill="#cfd3e0"/><ellipse cx="120" cy="104" rx="70" ry="20" fill="#fff"/><path d="M76 102c8-10 30-8 30 0" fill="#2fb45a"/>${chicken(130, 98)}<path d="M100 104c20 6 50 6 66-2" stroke="#ffc933" stroke-width="5" fill="none" stroke-linecap="round"/>${steam(104, 72)}`,
+  check: () => `${chicken(110, 104)}<g transform="rotate(30 150 60)"><rect x="144" y="10" width="14" height="92" rx="7" fill="#fff" stroke="${INK}" stroke-width="3"/><rect class="fillup" x="148" y="40" width="6" height="56" rx="3" fill="#ff4f3f"/><circle cx="151" cy="100" r="10" fill="#ff4f3f"/></g><text x="30" y="40" font-family="Lilita One, sans-serif" font-size="22" fill="${INK}">74°C</text>`,
+};
+const SCENE_IDS = Object.keys(SCENES);
+const sceneSvg = id => `<div class="scene" aria-hidden="true"><svg viewBox="0 0 240 150">${(SCENES[id] || SCENES.plate)()}</svg></div>`;
+
+/* ---------- Voice ---------- */
+const synth = window.speechSynthesis;
+let voiceOn = false;
+try { voiceOn = localStorage.getItem("tomi.voice") === "1"; } catch (e) {}
+function pickVoice() {
+  const vs = synth?.getVoices?.() || [];
+  return vs.find(v => /en[-_](US|GB)/i.test(v.lang) && /natural|samantha|google|aria|jenny/i.test(v.name)) || vs.find(v => /^en/i.test(v.lang)) || null;
+}
+function speak(text) {
+  if (!voiceOn || !synth || !text) return;
+  try {
+    synth.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    const v = pickVoice(); if (v) u.voice = v;
+    u.rate = 1.02; u.pitch = 1.15;
+    const m = () => document.querySelectorAll("#player .tipbox .mascot, #player .askhead .mascot");
+    u.onstart = () => m().forEach(x => x.classList.add("talk"));
+    u.onend = u.onerror = () => m().forEach(x => x.classList.remove("talk"));
+    synth.speak(u);
+  } catch (e) {}
+}
+function hush() { try { synth?.cancel(); } catch (e) {} }
+function screenSpeech() {
+  if (!P) return "";
+  const scr = P.screens[P.i];
+  if (scr === "intro") return `${lesson.title}. ${lesson.concept}`;
+  if (scr.startsWith("step")) { const n = +scr.slice(4), s = lesson.steps[n]; return `Step ${n + 1}. ${s.text} ${s.tip ? "Tip: " + s.tip : ""}`; }
+  if (scr === "quiz") return `Quick check. ${lesson.quiz.q} ${lesson.quiz.options.map((o, i) => `${i + 1}: ${o}.`).join(" ")}`;
+  if (scr === "finish") return "Nice work! Did you cook it?";
+  return "";
+}
+
+/* ---------- Timer ---------- */
+let T = null; // { total, left, running, id }
+function fmt(s) { return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; }
+function stopTimer() { if (T?.id) clearInterval(T.id); T = null; }
+function beep() {
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    [0, .25, .5].forEach(d => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = 880; o.connect(g); g.connect(ac.destination); g.gain.setValueAtTime(.2, ac.currentTime + d); g.gain.exponentialRampToValueAtTime(.001, ac.currentTime + d + .2); o.start(ac.currentTime + d); o.stop(ac.currentTime + d + .22); });
+  } catch (e) {}
+}
+function paintTimer() {
+  const el = $("timer"); if (!el || !T) return;
+  el.querySelector(".t").textContent = fmt(T.left);
+  el.classList.toggle("run", T.running);
+  el.classList.toggle("ring", T.left === 0);
+  $("tgo").textContent = T.left === 0 ? "Done!" : T.running ? "Pause" : T.left < T.total ? "Resume" : "Start timer";
+}
+function toggleTimer() {
+  if (!T || T.left === 0) return;
+  if (T.running) { clearInterval(T.id); T.running = false; }
+  else {
+    T.running = true;
+    T.id = setInterval(() => {
+      T.left = Math.max(0, T.left - 1);
+      if (T.left === 0) { clearInterval(T.id); T.running = false; beep(); const wasOn = voiceOn; voiceOn = true; speak("Time's up!"); voiceOn = wasOn; }
+      paintTimer();
+    }, 1000);
+  }
+  paintTimer();
+}
+
+/* ---------- Ask Tomi ---------- */
+let chat = []; // [{who: "me"|"tomi", text}]
+let chatOpen = false, chatBusy = false, chatLesson = null;
+function chatHtml() {
+  const scr = P.screens[P.i];
+  const chips = scr.startsWith("step") ? ["How do I know it's done?", "What can I use instead?", "Explain this more simply"] : ["Why does this technique work?", "Can I make it vegetarian?", "What should I prep first?"];
+  return `<div class="ask" id="ask">
+    <div class="askhead">${mascot("happy")}<div><b>Ask Tomi</b><br><span class="muted" style="font-size:13px">Questions about this recipe or step</span></div></div>
+    <div class="log" id="log">${chat.map(m => `<div class="msg ${m.who}">${esc(m.text)}</div>`).join("") || `<div class="msg tomi">Stuck on something? Ask me anything about this dish.</div>`}</div>
+    <div class="qchips">${chips.map(c => `<button class="qchip" data-q="${esc(c)}">${esc(c)}</button>`).join("")}</div>
+    <form class="askrow" id="askform"><input id="askin" placeholder="e.g. My sauce is too thin, what now?" autocomplete="off"><button class="minibtn pri" type="submit">Ask</button></form>
+  </div>`;
+}
+async function askTomi(q) {
+  q = q.trim(); if (!q || chatBusy) return;
+  const s = await getSample();
+  if (!s) { toast("Ask Tomi works when this page is open on claude.ai."); return; }
+  chatBusy = true;
+  chat.push({ who: "me", text: q }, { who: "tomi", text: "…" });
+  const redraw = () => { if ($("log")) { $("log").innerHTML = chat.map(m => `<div class="msg ${m.who}">${esc(m.text)}</div>`).join(""); $("log").lastElementChild?.scrollIntoView({ block: "nearest" }); } };
+  redraw();
+  const scr = P.screens[P.i], n = scr.startsWith("step") ? +scr.slice(4) : -1;
+  const history = chat.slice(0, -2).map(m => `${m.who === "me" ? "Learner" : "Tomi"}: ${m.text}`).join("\n");
+  const prompt = `You are Tomi, a warm, practical cooking coach inside a cooking-lesson app. The learner is cooking this right now.
+
+Recipe: ${lesson.title}
+Skill being learned: ${skillById(lesson.skill_id).name}
+Ingredients they have: ${lesson.ingredients.join(", ")}
+Steps:
+${lesson.steps.map((st, i) => `${i + 1}. ${st.text}`).join("\n")}
+${n >= 0 ? `They are on step ${n + 1}: "${lesson.steps[n].text}"` : `They are on the "${scr}" screen of the lesson.`}
+
+${history ? "Conversation so far:\n" + history + "\n\n" : ""}Learner: ${q}
+
+Answer as Tomi in 1–4 short sentences, specific to their recipe and step. Use plain text with no markdown. If it's a safety question (raw meat, allergies, burns), be clear and careful.`;
+  try {
+    const res = await s(prompt, { cache: false, modelTier: "quick", onText: ({ text }) => { chat[chat.length - 1].text = text; redraw(); } });
+    chat[chat.length - 1].text = res.text;
+    redraw();
+    speak(res.text);
+  } catch (e) {
+    chat[chat.length - 1].text = e?.code === "rate_limited" ? "I need a quick breather. Ask me again in a minute!" : e?.code === "not_granted" ? "Allow Claude access for this page so I can answer." : (e?.text || "Sorry, I couldn't answer that one. Try asking another way.");
+    redraw();
+  } finally { chatBusy = false; }
+}
+
+/* ---------- Lesson player ---------- */
+let P = null; // { i, screens, picked, checked, correct }
+function openPlayer() {
+  const screens = ["intro", ...lesson.steps.map((_, i) => "step" + i), "quiz", "finish"];
+  P = { i: 0, screens, picked: null, checked: false, correct: false };
+  if (chatLesson !== lesson) { chat = []; chatOpen = false; chatLesson = lesson; }
+  document.querySelector(".wrap").hidden = true;
+  $("player").hidden = false;
+  renderPlayer();
+}
+function closePlayer() {
+  hush(); stopTimer();
+  $("player").hidden = true; $("player").innerHTML = "";
+  document.querySelector(".wrap").hidden = false;
+  P = null;
+}
+
+function renderPlayer() {
+  stopTimer();
+  const t = tierOf(lesson.skill_id);
+  const scr = P.screens[P.i];
+  const pct = (P.i / (P.screens.length - 1)) * 100;
+  let body = "", foot = "", footCls = "";
+  const btn = (label, id, extra = "", dis = false) => `<button class="chunk ${extra}" id="${id}" ${dis ? "disabled" : ""} style="${extra ? "" : `--c:${t.c};--cd:${t.d}`}">${label}</button>`;
+  const back = P.i > 0 && scr !== "done" ? `<button class="chunk flat" id="pback">Back</button>` : "";
+
+  if (scr === "intro") {
+    body = `<span class="kick">New skill · ${esc(skillById(lesson.skill_id).name)}</span>
+      <h2>${esc(lesson.title)}</h2>
+      ${sceneSvg(lesson.steps[0]?.scene || "sear")}
+      <div class="concept">${esc(lesson.concept)}</div>
+      <div class="tipbox">${mascot("happy")}<div class="bubble">${esc(lesson.why_this)}</div></div>`;
+    foot = btn("Let's cook", "pnext");
+  } else if (scr.startsWith("step")) {
+    const n = +scr.slice(4), s = lesson.steps[n];
+    const secs = Math.max(0, Math.round(Number(s.timer_sec) || 0));
+    body = `<span class="kick">Step ${n + 1} of ${lesson.steps.length}</span>
+      ${sceneSvg(s.scene)}
+      <p class="bigtext">${esc(s.text)}</p>
+      ${secs ? `<div class="timer" id="timer"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="var(--tc)" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg><span class="t">${fmt(secs)}</span><span class="tb"><button class="minibtn pri" id="tgo">Start timer</button><button class="minibtn" id="treset">Reset</button></span></div>` : ""}
+      ${s.tip ? `<div class="tipbox">${mascot("wow")}<div class="bubble"><b style="color:var(--tomato)">Tomi's tip:</b> ${esc(s.tip)}</div></div>` : ""}`;
+    foot = btn(n === lesson.steps.length - 1 ? "Done, quiz me" : "Next step", "pnext") + back;
+    if (secs) T = { total: secs, left: secs, running: false, id: null };
+  } else if (scr === "quiz") {
+    const q = lesson.quiz;
+    body = `<span class="kick">Quick check · +10 XP</span><h2>${esc(q.q)}</h2>
+      <div class="opts">${q.options.map((o, i) => {
+        let c = "";
+        if (P.checked) { if (i === q.answer) c = "right"; else if (i === P.picked) c = "wrong"; }
+        else if (i === P.picked) c = "sel";
+        return `<button class="opt ${c}" data-opt="${i}" ${P.checked ? "disabled" : ""}><span class="k">${i + 1}</span><span>${esc(o)}</span></button>`;
+      }).join("")}</div>`;
+    if (!P.checked) foot = btn("Check", "pcheck", "good", P.picked === null);
+    else {
+      footCls = P.correct ? "good" : "bad";
+      foot = `<div class="fb"><h3>${P.correct ? "Nice one! +10 XP" : "Not quite"}</h3><p>${esc(q.explain)}</p></div>${btn("Continue", "pnext", P.correct ? "good" : "bad")}`;
+    }
+  } else if (scr === "finish") {
+    body = `<div class="celebrate">${sceneSvg("plate")}<h2>Did you cook it?</h2>
+      <p class="muted">Log it to earn <b style="color:var(--plum)">+50 XP</b>, keep your streak and move ${esc(skillById(lesson.skill_id).name)} forward.</p></div>`;
+    foot = `${btn("I cooked it!", "pcooked")}<button class="chunk flat" id="plater">Save for later</button>`;
+  } else if (scr === "done") {
+    body = P.doneHtml;
+    foot = btn("Continue", "pfinish", "plum");
+  }
+  const voiceBtn = synth ? `<button class="voice" id="pvoice" aria-pressed="${voiceOn}" title="Read steps aloud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/>${voiceOn ? '<path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/>' : '<path d="M17 9l5 6M22 9l-5 6"/>'}</svg>${voiceOn ? "Voice on" : "Voice"}</button>` : "";
+  const askBtn = scr !== "done" ? `<button class="chunk flat" id="paskt">${chatOpen ? "Hide Ask Tomi" : "Ask Tomi a question"}</button>` : "";
+  $("player").innerHTML = `<div class="inner" style="--tc:${t.c}">
+    <div class="ptop"><button class="x" id="pclose" aria-label="Close lesson"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="pbar"><i style="width:${scr === "done" ? 100 : pct}%"></i></div>${voiceBtn}</div>
+    <div class="pbody">${body}</div>
+    <div class="pfoot ${footCls}"><div class="inner2">${foot}</div></div>
+    ${scr !== "done" ? `<div class="pfoot"><div class="inner2">${chatOpen ? chatHtml() : ""}${askBtn}</div></div>` : ""}
+  </div>`;
+  window.scrollTo({ top: 0 });
+  if (T) paintTimer();
+  speak(screenSpeech());
+}
+
+$("player").addEventListener("submit", e => {
+  if (e.target.id !== "askform") return;
+  e.preventDefault();
+  const inp = $("askin"); const q = inp.value; inp.value = ""; askTomi(q);
+});
+$("player").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b || !P || b.closest("form")) return;
+  if (b.id === "pclose" || b.id === "pfinish") { const done = P.screens[P.i] === "done"; closePlayer(); if (done) { lesson = null; renderAll(); } window.scrollTo({ top: 0 }); return; }
+  if (b.id === "pnext") { P.i++; renderPlayer(); return; }
+  if (b.id === "pback") { P.i = Math.max(0, P.i - 1); renderPlayer(); return; }
+  if (b.id === "tgo") { toggleTimer(); return; }
+  if (b.id === "treset") { if (T) { clearInterval(T.id); T.left = T.total; T.running = false; paintTimer(); } return; }
+  if (b.id === "pvoice") { voiceOn = !voiceOn; try { localStorage.setItem("tomi.voice", voiceOn ? "1" : "0"); } catch (e) {} if (!voiceOn) hush(); const keep = T; T = null; renderPlayerKeepTimer(keep); return; }
+  if (b.id === "paskt") { chatOpen = !chatOpen; const keep = T; T = null; renderPlayerKeepTimer(keep, true); if (chatOpen) $("askin")?.focus(); return; }
+  if (b.dataset.q) { askTomi(b.dataset.q); return; }
+  if (b.dataset.opt) { P.picked = +b.dataset.opt; renderPlayer(); return; }
+  if (b.id === "pcheck") {
+    P.checked = true; P.correct = P.picked === Number(lesson.quiz.answer);
+    if (P.correct) { state.xp += 10; save(); renderHeader(); }
+    renderPlayer(); return;
+  }
+  if (b.id === "plater") { closePlayer(); toast("Saved. Your lesson stays on the home screen."); return; }
+  if (b.id === "pcooked") { cooked(); return; }
+});
+// Re-render the same screen without resetting a running timer or re-reading the step aloud.
+function renderPlayerKeepTimer(keep, quiet) {
+  const v = voiceOn; if (quiet) voiceOn = false;
+  const sy = window.scrollY;
+  renderPlayer();
+  voiceOn = v;
+  if (keep && $("timer")) { stopTimer(); T = keep; paintTimer(); }
+  else if (keep?.id) clearInterval(keep.id);
+  if (quiet) window.scrollTo({ top: sy });
+}
+
+function cooked() {
+  const id = skillById(lesson.skill_id) && unlocked(lesson.skill_id) ? lesson.skill_id : state.focus;
+  const was = mastered(id);
+  const before = new Set(SKILLS.filter(s => unlocked(s.id)).map(s => s.id));
+  const lvlBefore = Math.floor(state.xp / XP_PER_LEVEL);
+  state.reps[id] = reps(id) + 1;
+  state.xp += 50;
+  const today = new Date().toDateString(), yest = new Date(Date.now() - 864e5).toDateString();
+  if (state.lastCook !== today) state.streak = (state.lastCook === yest || state.sample) ? state.streak + 1 : 1;
+  state.lastCook = today;
+  save();
+  const newly = SKILLS.filter(s => unlocked(s.id) && !before.has(s.id));
+  const levelUp = Math.floor(state.xp / XP_PER_LEVEL) > lvlBefore;
+  const nowMastered = !was && mastered(id);
+  P.doneHtml = `<div class="celebrate">${mascot("wow")}
+    <h2>${nowMastered ? "Skill mastered!" : levelUp ? "Level up!" : "Lesson complete!"}</h2>
+    <p class="muted">${nowMastered ? `You've got ${esc(skillById(id).name)} down.` : `${esc(skillById(id).name)}: ${reps(id)}/${REPS_TO_MASTER} cooks. One more to master it.`}</p>
+    <div class="rewards">
+      <div class="reward" style="--rc:var(--plum)"><div class="rt">XP earned</div><div class="rv num">+${50 + (P.correct ? 10 : 0)}</div></div>
+      <div class="reward" style="--rc:var(--carrot)"><div class="rt">Streak</div><div class="rv num"><svg viewBox="0 0 24 24"><path d="M12 2c1.2 4.2 6 5.6 6 11.2a6 6 0 0 1-12 0c0-2.8 1.4-4.6 3-5.8.2 2 1.1 3.2 2.3 3.4C11 7.6 10.6 5 12 2Z" fill="var(--carrot)"/></svg>${state.streak}</div></div>
+    </div>
+    ${newly.length ? `<div class="unlock"><b>Unlocked:</b> ${newly.map(s => skillTag(s.id)).join(" ")}</div>` : ""}
+  </div>`;
+  P.screens.push("done"); P.i = P.screens.length - 1;
+  renderHeader(); renderPlayer(); confetti();
+}
+
+function confetti() {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cv = $("confetti"), ctx = cv.getContext("2d"), dpr = devicePixelRatio || 1;
+  cv.hidden = false; cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.scale(dpr, dpr);
+  const cols = ["#ff4f3f", "#ff9a1f", "#ffc933", "#7a5cff", "#14b89a", "#1fb86a"];
+  const ps = Array.from({ length: 140 }, () => ({ x: innerWidth / 2, y: innerHeight * .35, vx: (Math.random() - .5) * 14, vy: -Math.random() * 14 - 4, r: Math.random() * 6 + 4, c: cols[Math.random() * cols.length | 0], a: Math.random() * 6, va: (Math.random() - .5) * .4 }));
+  const t0 = performance.now();
+  (function f(t) {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    ps.forEach(p => { p.vy += .35; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.a += p.va; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a); ctx.fillStyle = p.c; ctx.fillRect(-p.r / 2, -p.r / 4, p.r, p.r / 2); ctx.restore(); });
+    if (t - t0 < 2600) requestAnimationFrame(f); else { cv.hidden = true; ctx.setTransform(1, 0, 0, 1, 0, 0); }
+  })(t0);
+}
+
+/* ---------- Home interactions ---------- */
+document.querySelector(".wrap").addEventListener("click", e => {
+  const node = e.target.closest("[data-skill]");
+  if (node && !node.disabled) {
+    state.focus = node.dataset.skill; save(); renderHeader(); renderTree();
+    say(`Ooh, <b>${esc(skillById(state.focus).name)}</b>! Snap your fridge and I'll find a dish for it.`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+  if (e.target.id === "start") openPlayer();
+});
+
+$("reset").addEventListener("click", e => {
+  const b = e.currentTarget;
+  if (b.dataset.armed) {
+    state = { sample: false, xp: 0, streak: 0, lastCook: null, focus: null, reps: {} };
+    lesson = null; save(); renderAll(); b.textContent = "Start fresh (clear progress)"; delete b.dataset.armed;
+    say("Fresh start! Everyone begins with <b>Knife basics</b>. Show me your fridge.");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else { b.dataset.armed = "1"; b.textContent = "Tap again to clear all progress"; setTimeout(() => { b.textContent = "Start fresh (clear progress)"; delete b.dataset.armed; }, 4000); }
+});
+
+const photo = $("photo"), shot = $("shot");
+function setPhoto(f) {
+  if (!f || !f.type.startsWith("image/")) return;
+  photoFile = f;
+  shot.querySelectorAll("img,.swap").forEach(n => n.remove());
+  shot.insertAdjacentHTML("beforeend", `<img alt="Your fridge" src="${URL.createObjectURL(f)}"><span class="swap">Tap to retake</span>`);
+  say("Great shot! Tap <b>Pick tonight's lesson</b> and I'll take a look.");
+}
+photo.addEventListener("change", () => setPhoto(photo.files[0]));
+["dragover", "dragenter"].forEach(t => shot.addEventListener(t, e => { e.preventDefault(); shot.classList.add("over"); }));
+["dragleave", "drop"].forEach(t => shot.addEventListener(t, e => { e.preventDefault(); shot.classList.remove("over"); }));
+shot.addEventListener("drop", e => setPhoto(e.dataTransfer.files[0]));
+
+function buildPrompt(extra) {
+  const tree = SKILLS.map(s => `- ${s.id} (${s.name}: ${s.blurb}) — ${mastered(s.id) ? "MASTERED" : unlocked(s.id) ? `UNLOCKED, ${reps(s.id)}/${REPS_TO_MASTER} cooks` : "LOCKED"}`).join("\n");
+  return `You are Tomi, the upbeat teaching chef in a Duolingo-style cooking app. The learner wants one dinner they can cook tonight from what they already have, chosen so it practices a skill they're working on.
+
+${photoFile ? "The attached image is a photo of the inside of their fridge. Identify the food items you can actually see. Don't guess at items you can't see." : "There is no photo."}
+Other ingredients they listed: ${extra || "(none)"}
+Assume only these pantry basics exist too: salt, pepper, cooking oil, water.
+
+Their skill tree:
+${tree}
+
+Preferred skill to practice: ${state.focus}. If their ingredients really can't practice it, pick another UNLOCKED (not locked, not mastered) skill. Never pick a LOCKED skill. The recipe should suit someone who has mastered only the MASTERED skills. Give metric and imperial amounts. Keep 4–7 steps. Put the technique teaching in the tips of the steps where it happens. Write in a warm, encouraging voice with short sentences.
+
+Reply with only JSON in this exact shape:
+{"ingredients": [string, ...every food item identified],
+ "title": string,
+ "skill_id": one of ${JSON.stringify(SKILLS.map(s => s.id))},
+ "time_min": number,
+ "uses": [strings copied exactly from "ingredients" that the recipe uses],
+ "missing": [short list of anything essential they don't have, ideally empty],
+ "why_this": "one or two sentences to the learner on why this recipe fits their progress",
+ "concept": "2–3 sentences explaining the technique and why it works",
+ "steps": [{"text": string, "tip": string or "", "scene": the illustration that best shows the action, one of ${JSON.stringify(SCENE_IDS)}, "timer_sec": seconds to time this step, or 0 if it isn't timed}],
+ "quiz": {"q": string, "options": [3 strings], "answer": index of the correct option, "explain": string},
+ "alternatives": [{"title": string, "skill_id": string}, up to 2]}`;
+}
+const valid = l => l && typeof l.title === "string" && Array.isArray(l.steps) && l.steps.length && l.quiz && Array.isArray(l.quiz.options) && l.quiz.options.length;
+
+let samplePromise = null;
+function getSample() {
+  if (!samplePromise) samplePromise = window.claude?.use ? window.claude.use("sample").catch(() => null) : Promise.resolve(null);
+  return samplePromise;
+}
+(async () => {
+  const s = await getSample();
+  if (!s) { status("Open this page on claude.ai to get AI lessons. The example lesson shows how it works."); return; }
+  const caps = await s.limits().catch(() => null);
+  if (!caps?.images) { shot.hidden = true; $("extra").placeholder = "List what's in your fridge: chicken thighs, lemon, spinach, eggs…"; }
+})();
+
+$("go").addEventListener("click", async () => {
+  const extra = $("extra").value.trim();
+  if (!photoFile && !extra) { status("Snap a fridge photo or list a few ingredients first.", true); say("Hmm, I can't see anything yet. <b>Snap your fridge</b> first!"); $("heroMascot").innerHTML = mascot("hmm"); return; }
+  const s = await getSample();
+  if (!s) { status("AI lessons need this page open on claude.ai.", true); return; }
+  if (busy) return;
+  busy = true;
+  const btn = $("go"); btn.disabled = true;
+  $("heroMascot").innerHTML = mascot("wow");
+  say(photoFile ? "Ooh, let me look in there…" : "Let me think about what you can make…");
+  status(`<span class="thinking"><i></i><i></i><i></i></span>&nbsp; Tomi is planning your lesson`);
+  try {
+    const opts = { modelTier: "default" };
+    if (photoFile) opts.images = [photoFile];
+    const res = await s.json(buildPrompt(extra), opts);
+    if (!valid(res)) throw { code: "bad_shape" };
+    if (!skillById(res.skill_id) || !unlocked(res.skill_id)) res.skill_id = state.focus;
+    res.ingredients = Array.isArray(res.ingredients) ? res.ingredients : [];
+    res.uses = Array.isArray(res.uses) ? res.uses : [];
+    res.steps = res.steps.map(st => typeof st === "string" ? { text: st, tip: "" } : st).map(st => ({ ...st, scene: SCENES[st.scene] ? st.scene : "plate", timer_sec: Math.min(Math.max(Number(st.timer_sec) || 0, 0), 4 * 3600) }));
+    res.quiz.answer = Number(res.quiz.answer) || 0;
+    lesson = res;
+    if (state.sample) { state.sample = false; save(); }
+    renderAll(); status("");
+    $("heroMascot").innerHTML = mascot("happy");
+    say(`Found it! Tonight you're learning <b>${esc(skillById(res.skill_id).name)}</b>.`);
+    $("lesson").scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (e) {
+    const msg = {
+      not_granted: "Allow Claude access for this page to get lessons.",
+      rate_limited: "Tomi needs a breather. Try again in a minute.",
+      image_rejected: "That photo couldn't be read. Try a JPEG or PNG.",
+      images_unavailable: "Photos aren't supported here. List your ingredients instead.",
+      refused: "Couldn't make a lesson from that. Try a different photo.",
+    }[e?.code] || "Something went wrong planning your lesson. Try again.";
+    status(msg, true);
+    $("heroMascot").innerHTML = mascot("hmm");
+    say("Oops, that didn't work. Let's try again!");
+  } finally { btn.disabled = false; busy = false; }
+});
+
+$("heroMascot").innerHTML = mascot("happy");
+renderAll();
+</script>
+
+</body>
+</html>
