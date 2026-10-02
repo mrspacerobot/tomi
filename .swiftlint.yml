@@ -1,0 +1,59 @@
+# Size and clarity limits from AGENTS.md. Formatting itself belongs to swift-format.
+included:
+  - Tomi
+  - TomiTests
+  - TomiUITests
+  - Packages/TomiCore/Sources
+  - Packages/TomiCore/Tests
+
+disabled_rules:
+  - trailing_comma
+  - opening_brace
+  - todo
+
+opt_in_rules:
+  - closure_body_length
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  - fatal_error_message
+  - first_where
+  - empty_count
+  - file_name
+
+function_body_length:
+  warning: 10
+closure_body_length:
+  warning: 10
+type_body_length:
+  warning: 80
+file_length:
+  warning: 150
+  ignore_comment_only_lines: true
+function_parameter_count:
+  warning: 3
+cyclomatic_complexity:
+  warning: 5
+  ignores_case_statements: true
+nesting:
+  type_level: 1
+  function_level: 2
+line_length:
+  warning: 120
+large_tuple:
+  warning: 2
+identifier_name:
+  min_length: 2
+
+custom_rules:
+  hard_coded_text:
+    name: "Hard-coded text"
+    included: "Tomi/.*\\.swift"
+    regex: '\b(Text|Button|Label|Toggle|Picker|Section|TextField|SecureField|Link|Menu|navigationTitle|accessibilityLabel|accessibilityHint|accessibilityValue|alert|confirmationDialog)\(\s*"|String\(localized:\s*"'
+    message: "Put user-facing text in Localizable.xcstrings and use its generated symbol."
+    severity: error
+  no_print:
+    name: "No print"
+    included: "(Tomi|Packages/TomiCore/Sources)/.*\\.swift"
+    regex: '\bprint\('
+    message: "Use Logger, and never log photos, ingredients or chat text."
+    severity: error
