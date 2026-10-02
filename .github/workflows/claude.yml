@@ -1,0 +1,42 @@
+name: Claude on pull requests and issues
+
+# The owner writes "@claude ..." in a comment and an agent acts on it on the owner's Mac.
+# See docs/agent-on-pull-requests.md.
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+
+concurrency:
+  group: claude-${{ github.event.issue.number || github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  claude:
+    # Only the owner can summon the agent, and only by naming it.
+    if: >-
+      github.actor == 'mrspacerobot' &&
+      (contains(github.event.comment.body, '@claude') || contains(github.event.review.body, '@claude'))
+    # The owner's Mac: the only machine with Xcode 27, the simulator and SwiftLint.
+    runs-on: [self-hosted, tomi-mac]
+    timeout-minutes: 60
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # The workflow's own token, so no GitHub app has to be installed on the repository.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          claude_args: |
+            --allowedTools "Bash(./scripts/check.sh),Bash(xcodebuild:*),Bash(xcrun:*),Bash(swift:*),Bash(swiftlint:*)"
+            --disallowedTools "Bash(gh pr merge:*),Bash(git push origin main:*),Bash(git push --force:*)"
