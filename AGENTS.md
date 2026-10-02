@@ -119,6 +119,7 @@ Models are trained on years of older code. Use the current API, and check Apple'
 - **An agent's work ends at an open pull request.** Push your branch, open the pull request, say it is ready, and stop. The owner reviews and merges it.
 - **Never rewrite `main`'s history** (no force push, no rebase of `main`) and never delete it.
 - GitHub cannot enforce this on this repository, so the rule is the only protection. Treat it as absolute.
+- **Summoned from a GitHub comment?** Push only to the branch of the pull request you were called on. For an issue, create `<issue number>-short-name` and open a pull request. See `docs/agent-on-pull-requests.md`.
 
 ## Project hygiene
 
