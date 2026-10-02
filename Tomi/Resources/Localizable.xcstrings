@@ -1,0 +1,390 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "course.buildingFlavor.title": {
+      "comment": "Name of a course on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Building flavor"
+          }
+        }
+      }
+    },
+    "course.foundations.title": {
+      "comment": "Name of a course on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Foundations"
+          }
+        }
+      }
+    },
+    "course.heatControl.title": {
+      "comment": "Name of a course on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heat control"
+          }
+        }
+      }
+    },
+    "course.puttingItTogether.title": {
+      "comment": "Name of a course on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Putting it together"
+          }
+        }
+      }
+    },
+    "mascot.label": {
+      "comment": "VoiceOver description of the mascot.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi the tomato chef"
+          }
+        }
+      }
+    },
+    "skill.balance.name": {
+      "comment": "Name of a technique, shown as a dish line on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balancing flavor"
+          }
+        }
+      }
+    },
+    "skill.balance.summary": {
+      "comment": "One-line description under the technique name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salt, acid, fat, heat, sweet"
+          }
+        }
+      }
+    },
+    "skill.boil.name": {
+      "comment": "Name of a technique, shown as a dish line on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boil & blanch"
+          }
+        }
+      }
+    },
+    "skill.boil.summary": {
+      "comment": "One-line description under the technique name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salted water, timing, shocking veg"
+          }
+        }
+      }
+    },
+    "skill.braise.name": {
+      "comment": "Name of a technique, shown as a dish line on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Braising"
+          }
+        }
+      }
+    },
+    "skill.braise.summary": {
+      "comment": "One-line description under the technique name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Low and slow in liquid"
+          }
+        }
+      }
+    },
+    "skill.eggs.name": {
+      "comment": "Name of a technique, shown as a dish line on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eggs 101"
+          }
+        }
+      }
+    },
+    "skill.eggs.summary": {
+      "comment": "One-line description under the technique name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scramble, fry, soft-boil"
+          }
+        }
+      }
+    },
+    "skill.emulsion.name": {
+      "comment": "Name of a technique, shown as a dish line on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emulsions"
+          }
+        }
+      }
+    },
+    "skill.emulsion.summary": {
+      "comment": "One-line description under the technique name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vinaigrettes, mayo, why they hold"
+          }
+        }
+      }
+    },
+    "skill.knife.name": {
+      "comment": "Name of a technique, shown as a dish line on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Knife basics"
+          }
+        }
+      }
+    },
+    "skill.knife.summary": {
+      "comment": "One-line description under the technique name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dice, mince and slice safely"
+          }
+        }
+      }
+    },
+    "skill.pansauce.name": {
+      "comment": "Name of a technique, shown as a dish line on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pan sauces"
+          }
+        }
+      }
+    },
+    "skill.pansauce.summary": {
+      "comment": "One-line description under the technique name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deglaze the fond, reduce, mount with butter"
+          }
+        }
+      }
+    },
+    "skill.pasta.name": {
+      "comment": "Name of a technique, shown as a dish line on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pasta & starch water"
+          }
+        }
+      }
+    },
+    "skill.pasta.summary": {
+      "comment": "One-line description under the technique name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Al dente, glossy sauces"
+          }
+        }
+      }
+    },
+    "skill.rice.name": {
+      "comment": "Name of a technique, shown as a dish line on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rice & grains"
+          }
+        }
+      }
+    },
+    "skill.rice.summary": {
+      "comment": "One-line description under the technique name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ratios, absorption, resting"
+          }
+        }
+      }
+    },
+    "skill.roast.name": {
+      "comment": "Name of a technique, shown as a dish line on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Roasting"
+          }
+        }
+      }
+    },
+    "skill.roast.summary": {
+      "comment": "One-line description under the technique name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "High oven heat, spacing, browning"
+          }
+        }
+      }
+    },
+    "skill.saute.name": {
+      "comment": "Name of a technique, shown as a dish line on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauté"
+          }
+        }
+      }
+    },
+    "skill.saute.summary": {
+      "comment": "One-line description under the technique name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hot pan, small pieces, keep it moving"
+          }
+        }
+      }
+    },
+    "skill.sear.name": {
+      "comment": "Name of a technique, shown as a dish line on the menu.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Searing"
+          }
+        }
+      }
+    },
+    "skill.sear.summary": {
+      "comment": "One-line description under the technique name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dry surface, hot pan, hands off"
+          }
+        }
+      }
+    },
+    "welcome.kicker": {
+      "comment": "Small heading above the welcome title. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chez Tomi"
+          }
+        }
+      }
+    },
+    "welcome.subtitle": {
+      "comment": "Line under the masthead. First number is the count of techniques, second the count of courses.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld techniques in %2$lld courses"
+          }
+        }
+      }
+    },
+    "welcome.title": {
+      "comment": "Masthead title on the first screen.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonight at Tomi's"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
