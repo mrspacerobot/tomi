@@ -28,7 +28,6 @@ jobs:
       contents: write
       pull-requests: write
       issues: write
-      id-token: write
       actions: read
     steps:
       - uses: actions/checkout@v4
@@ -36,6 +35,8 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # The workflow's own token, so no GitHub app has to be installed on the repository.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           claude_args: |
             --allowedTools "Bash(./scripts/check.sh),Bash(xcodebuild:*),Bash(xcrun:*),Bash(swift:*),Bash(swiftlint:*)"
             --disallowedTools "Bash(gh pr merge:*),Bash(git push origin main:*),Bash(git push --force:*)"

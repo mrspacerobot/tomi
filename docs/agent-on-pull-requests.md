@@ -17,20 +17,21 @@ If the Mac is off or asleep, the job waits in the queue until it is back.
 
 ## One-time setup
 
-1. **Install the Claude GitHub app** on this repository: https://github.com/apps/claude
-2. **Add the secret.** In the Terminal app:
+1. **Add the secret.** In the Terminal app:
    ```
    claude setup-token
    gh secret set CLAUDE_CODE_OAUTH_TOKEN -R mrspacerobot/tomi
    ```
    The first command prints a token after you sign in. The second asks you to paste it.
-3. **Register the Mac as a runner.** On GitHub: Settings > Actions > Runners > New self-hosted runner > macOS, ARM64. Run the commands it shows in the Terminal app, from a new folder `~/actions-runner-tomi`. When asked for labels, enter `tomi-mac`.
-4. **Keep it running in the background:**
+2. **Register the Mac as a runner.** On GitHub: Settings > Actions > Runners > New self-hosted runner > macOS, ARM64. Run the commands it shows in the Terminal app, from a new folder `~/actions-runner-tomi`. When asked for labels, enter `tomi-mac`.
+3. **Keep it running in the background:**
    ```
    cd ~/actions-runner-tomi
    ./svc.sh install
    ./svc.sh start
    ```
+
+No GitHub app is installed. The workflow uses its own built-in token, so the agent's commits and replies appear as `github-actions`.
 
 ## Day to day
 
