@@ -4,7 +4,7 @@
 
 Snap a photo of your fridge. Tomi, a tomato chef mascot, picks tonight's recipe so it uses what you already have *and* practices the next skill on your cooking skill path. You cook along with illustrated, voice-guided steps, answer a quick quiz, and earn XP and streaks as you go.
 
-> Status: working web prototype. Native iPhone app planned (see [docs/plan.md](docs/plan.md)).
+> Status: native iPhone app in progress. Design approved, project scaffold built. See the [implementation plan](docs/implementation-plan.md), the [design mockups](docs/design/) and the [rules for contributors](AGENTS.md). The web prototype below is the original proof of concept.
 
 ## Try the prototype
 
@@ -26,8 +26,15 @@ Progress is saved in the browser (localStorage) for now.
 ## Repository layout
 
 ```
-prototype/index.html   Single-file web prototype (HTML/CSS/JS, no build step)
-docs/plan.md           Research, business model, AI costs, iPhone plan, next steps
+Tomi.xcodeproj         Xcode project (open this)
+Tomi/                  The iPhone app (SwiftUI)
+TomiTests/             Unit tests
+TomiUITests/           End-to-end UI tests
+Packages/TomiCore/     Rules and data types, plain Swift, with tests
+scripts/check.sh       Every check a change must pass
+AGENTS.md              Rules for people and coding agents
+docs/                  Product plan, implementation plan, design mockups
+prototype/index.html   Original single-file web prototype
 ```
 
 ## Key decisions so far
@@ -36,6 +43,7 @@ docs/plan.md           Research, business model, AI costs, iPhone plan, next ste
 |---|---|
 | Name | **Tomi**, after the mascot. "Anyone Can Cook" was rejected: it's already under US trademark application for a cooking app and is Pixar's *Ratatouille* motto. |
 | Platform | Native iPhone app (Swift / SwiftUI, iOS 27) |
+| Design | "Tasting menu": the skill path is a menu of four courses and twelve dishes |
 | Everyday AI | Apple Foundation Models (on-device, free): ingredient scan, recipe adapting, Ask Tomi chat, voice commands |
 | Voice | Apple SpeechAnalyzer (listening) + AVSpeechSynthesizer (speaking), both on-device and free |
 | Recipes | Written in bulk by a top Claude model into a reviewed lesson library, not generated live for every user |
