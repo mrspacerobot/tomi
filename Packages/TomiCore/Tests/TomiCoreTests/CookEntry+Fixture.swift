@@ -31,6 +31,20 @@ extension CookEntry {
         )
     }
 
+    /// The same cook, with the quiz at the end answered wrong.
+    func withTheQuizWrong() -> CookEntry {
+        CookEntry(
+            id: id,
+            lesson: lesson,
+            skill: skill,
+            level: level,
+            date: date,
+            stoppedEarly: stoppedEarly,
+            quizCorrect: false,
+            weeklyGoal: weeklyGoal
+        )
+    }
+
     func with(weeklyGoal: Int) -> CookEntry {
         CookEntry(
             id: id,

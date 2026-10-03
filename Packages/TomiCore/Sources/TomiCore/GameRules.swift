@@ -20,6 +20,14 @@ public enum GameRules {
     /// Finished cooks at one level of a skill before that level is complete and the next one opens.
     public static let cooksToCompleteLevel = 2
 
+    /// What one finished cook earns: the cook itself, plus the quiz when it was answered right.
+    public static func xpForFinishedCook(quizCorrect: Bool) -> Int {
+        if quizCorrect {
+            return xpPerCook + xpForCorrectQuiz
+        }
+        return xpPerCook
+    }
+
     static func clampedWeeklyGoal(_ goal: Int) -> Int {
         min(max(goal, weeklyGoalOptions.lowerBound), weeklyGoalOptions.upperBound)
     }
