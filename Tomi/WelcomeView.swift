@@ -11,6 +11,7 @@ struct WelcomeView: View {
                 .frame(width: 180, height: 180)
                 .accessibilityLabel(Text(.mascotLabel))
             WelcomeMasthead(catalog: catalog)
+            Text("hello")
         }
         .padding(24)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
