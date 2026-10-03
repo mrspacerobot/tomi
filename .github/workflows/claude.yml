@@ -6,21 +6,74 @@ name: Claude on pull requests and issues
 on:
   issue_comment:
     types: [created]
-  pull_request_review_comment:
-    types: [created]
+  # Every inline comment and every thread reply also arrives as a submitted review, so this one event covers
+  # them all. Listening to each inline comment as well would start one run per comment.
   pull_request_review:
     types: [submitted]
 
-concurrency:
-  group: claude-${{ github.event.issue.number || github.event.pull_request.number }}
-  cancel-in-progress: false
+# No concurrency group on purpose. A group keeps only one waiting run and cancels the rest, which dropped
+# requests. The single runner on the owner's Mac already runs one job at a time, and waiting jobs queue.
 
 jobs:
-  claude:
-    # Only the owner can summon the agent, and only by naming it.
+  requests:
+    # Only the owner can summon the agent. A comment must name it; a review is searched below.
     if: >-
       github.actor == 'mrspacerobot' &&
-      (contains(github.event.comment.body, '@claude') || contains(github.event.review.body, '@claude'))
+      (github.event_name == 'pull_request_review' || contains(github.event.comment.body, '@claude'))
+    # Runs on GitHub's machine, so a review without a request never wakes the Mac.
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: read
+    outputs:
+      count: ${{ steps.find.outputs.count }}
+      prompt: ${{ steps.find.outputs.prompt }}
+    steps:
+      - name: List every @claude request in the review
+        id: find
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT: ${{ github.event_name }}
+          REPOSITORY: ${{ github.repository }}
+          PULL_REQUEST: ${{ github.event.pull_request.number }}
+          REVIEW: ${{ github.event.review.id }}
+          REVIEW_BODY: ${{ github.event.review.body }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT" = "issue_comment" ]; then
+            # The comment itself is the request and the agent reads it directly.
+            echo "count=1" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # One line per inline comment of this review that names the agent, with its file and line.
+          gh api --paginate "repos/$REPOSITORY/pulls/$PULL_REQUEST/comments" --jq '
+            .[]
+            | select(.pull_request_review_id == (env.REVIEW | tonumber))
+            | select(.body | test("@claude"; "i"))
+            | "- \(.path), line \(.line // .original_line // "unknown"): \(.body | gsub("\\s+"; " "))"
+          ' > requests.txt
+          if printf '%s' "$REVIEW_BODY" | grep -qi '@claude'; then
+            printf -- '- The whole pull request: %s\n' "$(printf '%s' "$REVIEW_BODY" | tr '\r\n' '  ')" >> requests.txt
+          fi
+
+          count=$(wc -l < requests.txt | tr -d ' ')
+          {
+            echo "count=$count"
+            echo "prompt<<END_OF_REQUESTS"
+            echo "Requests for you in this review: $count. Address every one of them in this run, not only the first:"
+            echo
+            cat requests.txt
+            echo
+            echo "Start your progress comment with this list as a checklist. When you finish, each item must be"
+            echo "ticked with one line on what you changed, or say plainly why you did not change it."
+            echo "If a request is unclear, do the others and ask about that one in the same comment."
+            echo "END_OF_REQUESTS"
+          } >> "$GITHUB_OUTPUT"
+
+  claude:
+    needs: requests
+    if: needs.requests.outputs.count != '0'
     # The owner's Mac: the only machine with Xcode 27, the simulator and SwiftLint.
     runs-on: [self-hosted, tomi-mac]
     timeout-minutes: 60
@@ -37,6 +90,10 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           # The workflow's own token, so no GitHub app has to be installed on the repository.
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # A review may name the agent only in its inline comments. These two inputs make the action work on
+          # the pull request anyway and hand it the list from the job above. Both are empty for a comment.
+          track_progress: ${{ github.event_name == 'pull_request_review' }}
+          prompt: ${{ needs.requests.outputs.prompt }}
           claude_args: |
             --allowedTools "Bash(./scripts/check.sh),Bash(xcodebuild:*),Bash(xcrun:*),Bash(swift:*),Bash(swiftlint:*)"
             --disallowedTools "Bash(gh pr merge:*),Bash(git push origin main:*),Bash(git push --force:*)"
