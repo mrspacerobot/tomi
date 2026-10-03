@@ -14,12 +14,10 @@ public struct StreakRules: Sendable {
     public func streak(for cooks: [CompletedCook], goal: Int, now: Date) -> Streak {
         let weeks = CookingWeeks(cooks: cooks, calendar: calendar)
         let thisWeek = calendar.startOfWeek(containing: now)
-        let goal = GameRules.clampedWeeklyGoal(goal)
-        let daysThisWeek = weeks.daysCooked(inWeekStarting: thisWeek)
         return Streak(
-            weeks: metWeeksInARow(before: thisWeek, in: weeks) + (daysThisWeek >= goal ? 1 : 0),
-            daysThisWeek: daysThisWeek,
-            goal: goal,
+            weeksBeforeThisWeek: metWeeksInARow(before: thisWeek, in: weeks),
+            daysThisWeek: weeks.daysCooked(inWeekStarting: thisWeek),
+            goal: GameRules.clampedWeeklyGoal(goal),
             daysLeftInWeek: calendar.daysLeftInWeek(from: now)
         )
     }

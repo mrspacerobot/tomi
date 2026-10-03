@@ -1,14 +1,19 @@
 /// The cook's weekly streak right now: how many weeks in a row they met their goal, and how this week is going.
 /// Computed from the cook log on demand, never stored.
 public struct Streak: Hashable, Sendable {
-    /// Consecutive weeks with the goal met. The week in progress counts once it is met and never breaks it before.
-    public let weeks: Int
+    /// Consecutive weeks with the goal met, up to the end of last week.
+    public let weeksBeforeThisWeek: Int
     /// Days this week with at least one finished cook.
     public let daysThisWeek: Int
     /// This week's goal in cooking days.
     public let goal: Int
     /// Days left in this week, today included.
     public let daysLeftInWeek: Int
+
+    /// Consecutive weeks with the goal met. The week in progress adds one once it is met and never breaks it before.
+    public var weeks: Int {
+        isThisWeekMet ? weeksBeforeThisWeek + 1 : weeksBeforeThisWeek
+    }
 
     public var isThisWeekMet: Bool {
         daysThisWeek >= goal
