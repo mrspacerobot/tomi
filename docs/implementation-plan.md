@@ -74,7 +74,7 @@ Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replace
 
 ## Lesson library
 
-- The skill catalog is part of the library, not the app: `catalog.json` holds courses, skills, prerequisites, levels and their names, with a schema version and a library version. A new technique or level ships with the library, without an app release. The validator checks unique ids, known and non-empty courses, prerequisites that exist and come earlier on the menu, levels numbered 1 to n, and English text everywhere.
+- The skill catalog is part of the library, not the app: `catalog.json` holds courses, skills, prerequisites, levels and their names, with a schema version and a library version. A new technique or level ships with the library, without an app release. The validator checks at least one course, unique ids, known and non-empty courses, prerequisites that exist and come earlier on the menu, levels numbered 1 to n, and English text everywhere.
 - Each skill has levels, from the first version of the technique to the hardest (roux: white for béchamel, blond for velouté, brown). The next level opens once the one before is cooked.
 - One file per lesson, grouped by skill, plus an index built by the generator carrying the library and schema versions. The index holds every field the filter needs, so a full lesson is read only once it is picked.
 - Each lesson has a stable id, a revision, a skill and level, a cuisine, ingredients, equipment, steps (each naming a scene from the closed scene list), a quiz, and swaps.

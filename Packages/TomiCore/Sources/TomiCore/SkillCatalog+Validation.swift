@@ -14,16 +14,18 @@ extension SkillCatalog {
         let known = Set(courses.map(\.id))
         let unknown = skills.filter { !known.contains($0.course) }.map { CatalogIssue.unknownCourse($0.id, $0.course) }
         let empty = courses.filter { skills(in: $0.id).isEmpty }.map { CatalogIssue.emptyCourse($0.id) }
-        return unknown + empty + courseOrderIssues
+        let none: [CatalogIssue] = courses.isEmpty ? [.noCourses] : []
+        return none + unknown + empty + courseOrderIssues
     }
 
     /// Skills of one course sit together, and courses follow each other in menu order.
+    /// Skills in an unknown course are already reported, so they are left out rather than blamed on their neighbours.
     private var courseOrderIssues: [CatalogIssue] {
         let rank = firstPositions(of: courses.map(\.id))
-        let ranks = skills.map { rank[$0.course] }
-        return skills.indices.dropFirst()
-            .filter { index in (ranks[index] ?? .max) < (ranks[index - 1] ?? .max) }
-            .map { CatalogIssue.skillOutOfCourseOrder(skills[$0].id) }
+        let placed = skills.compactMap { skill in rank[skill.course].map { (id: skill.id, rank: $0) } }
+        return placed.indices.dropFirst()
+            .filter { placed[$0].rank < placed[$0 - 1].rank }
+            .map { CatalogIssue.skillOutOfCourseOrder(placed[$0].id) }
     }
 
     private var prerequisiteIssues: [CatalogIssue] {

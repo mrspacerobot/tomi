@@ -9,16 +9,30 @@ import Testing
         #expect(text.resolved(preferredLanguages: ["pt-BR", "fr"]) == "Caldos")
     }
 
-    @Test func aRegionalLanguageFallsBackToItsBaseLanguage() {
-        #expect(text.resolved(preferredLanguages: ["fr-CA"]) == "Fonds")
+    @Test(arguments: ["fr-CA", "fr_CA"])
+    func aRegionalLanguageFallsBackToItsBaseLanguage(language: String) {
+        #expect(text.resolved(preferredLanguages: [language]) == "Fonds")
     }
 
-    @Test func anyOtherLanguageFallsBackToEnglish() {
-        #expect(text.resolved(preferredLanguages: ["ja-JP"]) == "Stocks")
+    @Test func theFirstLanguageWithTextWins() {
+        #expect(text.resolved(preferredLanguages: ["ja-JP", "fr", "pt-BR"]) == "Fonds")
     }
 
-    @Test func blankEnglishCountsAsMissing() {
-        #expect(LocalizedText(["en": "  "]).isMissingSourceText)
+    @Test(arguments: [["ja-JP"], []])
+    func anyOtherLanguageFallsBackToEnglish(languages: [String]) {
+        #expect(text.resolved(preferredLanguages: languages) == "Stocks")
+    }
+
+    @Test func textWithNoMatchAndNoEnglishIsEmpty() {
+        #expect(LocalizedText(["fr": "Fonds"]).resolved(preferredLanguages: ["ja"]) == "")
+    }
+
+    @Test(arguments: [LocalizedText(["en": "  "]), LocalizedText(["en": ""]), LocalizedText(["fr": "Fonds"])])
+    func blankOrAbsentEnglishCountsAsMissing(text: LocalizedText) {
+        #expect(text.isMissingSourceText)
+    }
+
+    @Test func englishTextIsNotMissing() {
         #expect(!text.isMissingSourceText)
     }
 }

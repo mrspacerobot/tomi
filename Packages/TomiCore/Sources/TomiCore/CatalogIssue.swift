@@ -1,5 +1,7 @@
 /// One way a skill catalog can be wrong. The validator lists them all so a library build can report every problem.
 public enum CatalogIssue: Hashable, Sendable {
+    /// An empty menu would leave the cook with nothing to learn.
+    case noCourses
     case duplicateCourse(CourseID)
     case duplicateSkill(SkillID)
     case unknownCourse(SkillID, CourseID)

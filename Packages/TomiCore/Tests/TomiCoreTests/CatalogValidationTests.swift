@@ -11,6 +11,10 @@ import Testing
         #expect(SkillCatalog.fixture().issues.isEmpty)
     }
 
+    @Test func aCatalogServesAtLeastOneCourse() {
+        #expect(SkillCatalog.fixture(courses: [], skills: []).issues == [.noCourses])
+    }
+
     @Test func aSkillIDMayAppearOnlyOnce() {
         let catalog = SkillCatalog.fixture(skills: [knife, eggs, eggs, roux])
         #expect(catalog.issues == [.duplicateSkill("eggs")])
@@ -28,6 +32,13 @@ import Testing
         )
     }
 
+    @Test func aSkillInAnUnknownCourseDoesNotPutItsNeighboursOutOfOrder() {
+        let stray = Skill.fixture("stray", in: "desserts")
+        #expect(
+            SkillCatalog.fixture(skills: [stray, knife, eggs, roux]).issues == [.unknownCourse("stray", "desserts")]
+        )
+    }
+
     @Test func everyCourseServesAtLeastOneSkill() {
         let catalog = SkillCatalog.fixture(courses: [.fixture("basics"), .fixture("sauces"), .fixture("desserts")])
         #expect(catalog.issues == [.emptyCourse("desserts")])
@@ -38,13 +49,13 @@ import Testing
         #expect(catalog.issues == [.skillOutOfCourseOrder("eggs")])
     }
 
-    @Test func aPrerequisiteMustExist() {
-        let roux = Skill.fixture("roux", in: "sauces", needs: ["stock"])
-        #expect(SkillCatalog.fixture(skills: [knife, eggs, roux]).issues == [.unknownPrerequisite("roux", "stock")])
+    @Test func coursesAreServedInTheOrderTheyAreListed() {
+        let catalog = SkillCatalog.fixture(skills: [Skill.fixture("roux", in: "sauces"), knife, eggs])
+        #expect(catalog.issues == [.skillOutOfCourseOrder("knife")])
     }
 
-    @Test func aPrerequisiteMustComeEarlierOnTheMenu() {
-        let knife = Skill.fixture("knife", in: "basics", needs: ["eggs"])
-        #expect(SkillCatalog.fixture(skills: [knife, eggs, roux]).issues == [.prerequisiteNotEarlier("knife", "eggs")])
+    @Test func everyProblemIsReportedAtOnce() {
+        let catalog = SkillCatalog.fixture(skills: [knife, eggs.with(levels: []), eggs, roux.with(name: .init([:]))])
+        #expect(catalog.issues == [.duplicateSkill("eggs"), .noLevels("eggs"), .missingSkillText("roux")])
     }
 }

@@ -19,4 +19,8 @@ extension Skill {
     func with(name: LocalizedText) -> Skill {
         Skill(id: id, course: course, name: name, summary: summary, prerequisites: prerequisites, levels: levels)
     }
+
+    func with(summary: LocalizedText) -> Skill {
+        Skill(id: id, course: course, name: name, summary: summary, prerequisites: prerequisites, levels: levels)
+    }
 }
