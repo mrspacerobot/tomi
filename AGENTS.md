@@ -16,6 +16,8 @@ It runs the formatter's lint, SwiftLint (size limits, hard-coded text, banned ca
 
 Report honestly: if a check fails or you skipped a step, say so.
 
+**Every pull request to `main` runs the same check automatically** (`.github/workflows/check.yml`), on the owner's Mac. It shows on the pull request as "Check". If the Mac is busy, asleep or off, the check waits and runs when the Mac is free. GitHub cannot require a green check on this repository, so the rule is written here instead: the owner merges only when the check is green. Running it yourself first is still required; the automatic run is the proof, not the first try.
+
 ## How we work: tests first
 
 1. **Write the failing test first.** For a rule, a unit test in `Packages/TomiCore`. For a screen or flow, a UI test that drives the app the way a cook would. Watch it fail for the right reason, then write the code.
