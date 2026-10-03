@@ -1,0 +1,54 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "mascot.label": {
+      "comment": "VoiceOver description of the mascot.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi the tomato chef"
+          }
+        }
+      }
+    },
+    "welcome.kicker": {
+      "comment": "Small heading above the welcome title. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chez Tomi"
+          }
+        }
+      }
+    },
+    "welcome.subtitle": {
+      "comment": "Line under the masthead. First number is the count of techniques, second the count of courses.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld techniques in %2$lld courses"
+          }
+        }
+      }
+    },
+    "welcome.title": {
+      "comment": "Masthead title on the first screen.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonight at Tomi's"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

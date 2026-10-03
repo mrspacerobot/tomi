@@ -1,0 +1,578 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		242E7230AA266EA6BC18C84D /* TomiCore in Frameworks */ = {isa = PBXBuildFile; productRef = CF675283D6F6964DE4C721A5 /* TomiCore */; };
+		95114B4D3ADFC7B862067D06 /* TomiCore in Frameworks */ = {isa = PBXBuildFile; productRef = D98A890595931FADE91BA730 /* TomiCore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4BEFEAD7F8EDA5B63B07367C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E7BF1B84C4BA75C17C514DF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6FEC55F93B43F37518F6EC29;
+			remoteInfo = Tomi;
+		};
+		CA32A7362418696DF62047F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E7BF1B84C4BA75C17C514DF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6FEC55F93B43F37518F6EC29;
+			remoteInfo = Tomi;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		86A118A35D6590955C3FE170 /* TomiUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TomiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0167B14E8717776A1F8D71C /* Tomi.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Tomi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0931DB2A7162214F4D013E7 /* TomiTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TomiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F93C2DD7D2A4145B3157F5DF /* TomiCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TomiCore; path = Packages/TomiCore; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		3F7C187B55C46C86C0169809 /* Tomi */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Tomi;
+			sourceTree = "<group>";
+		};
+		7D16A68F98E895B27832DF8C /* TomiTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TomiTests;
+			sourceTree = "<group>";
+		};
+		E69F773BD35E71CDFA036008 /* TomiUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TomiUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9A85956FF4EF967D8999013C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				95114B4D3ADFC7B862067D06 /* TomiCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2AB3A52776A00B65D26FEBD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				242E7230AA266EA6BC18C84D /* TomiCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2582859D6C9B45B71F8F0A20 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				F93C2DD7D2A4145B3157F5DF /* TomiCore */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		402E821A67D8D7C05CCFE826 = {
+			isa = PBXGroup;
+			children = (
+				2582859D6C9B45B71F8F0A20 /* Packages */,
+				3F7C187B55C46C86C0169809 /* Tomi */,
+				7D16A68F98E895B27832DF8C /* TomiTests */,
+				E69F773BD35E71CDFA036008 /* TomiUITests */,
+				68908AD19C09C2D014696518 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		68908AD19C09C2D014696518 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A0167B14E8717776A1F8D71C /* Tomi.app */,
+				D0931DB2A7162214F4D013E7 /* TomiTests.xctest */,
+				86A118A35D6590955C3FE170 /* TomiUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3F8376A7718F7D29C3156DCA /* TomiUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E47A6188F208B2D64318648 /* Build configuration list for PBXNativeTarget "TomiUITests" */;
+			buildPhases = (
+				B70006480C144545AF2846CD /* Sources */,
+				161A18BEDD40C8E7D1339F78 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D21C51C0DDAD81B7AA4CAB39 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				E69F773BD35E71CDFA036008 /* TomiUITests */,
+			);
+			name = TomiUITests;
+			packageProductDependencies = (
+			);
+			productName = TomiUITests;
+			productReference = 86A118A35D6590955C3FE170 /* TomiUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		633EE2B3532B66D5655CF1E1 /* TomiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6F3FAF8907E79188CCA17F30 /* Build configuration list for PBXNativeTarget "TomiTests" */;
+			buildPhases = (
+				93894339211ADFFCA5AFB310 /* Sources */,
+				A3F84D6A406DFAA6F7CC0BB3 /* Resources */,
+				B2AB3A52776A00B65D26FEBD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				294BEC1B483190E8E5DA89CA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7D16A68F98E895B27832DF8C /* TomiTests */,
+			);
+			name = TomiTests;
+			packageProductDependencies = (
+				CF675283D6F6964DE4C721A5 /* TomiCore */,
+			);
+			productName = TomiTests;
+			productReference = D0931DB2A7162214F4D013E7 /* TomiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6FEC55F93B43F37518F6EC29 /* Tomi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AEA3C5D85C5E8AB11170206C /* Build configuration list for PBXNativeTarget "Tomi" */;
+			buildPhases = (
+				C75F20E5250A81767D6A90E9 /* Sources */,
+				F3636C4A041BFE1609D2CD60 /* Resources */,
+				9A85956FF4EF967D8999013C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3F7C187B55C46C86C0169809 /* Tomi */,
+			);
+			name = Tomi;
+			packageProductDependencies = (
+				D98A890595931FADE91BA730 /* TomiCore */,
+			);
+			productName = Tomi;
+			productReference = A0167B14E8717776A1F8D71C /* Tomi.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3E7BF1B84C4BA75C17C514DF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					3F8376A7718F7D29C3156DCA = {
+						TestTargetID = 6FEC55F93B43F37518F6EC29;
+					};
+				};
+			};
+			buildConfigurationList = 0ED7A7FD7B90F282D21BD60B /* Build configuration list for PBXProject "Tomi" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 402E821A67D8D7C05CCFE826;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0F9944CEEA9748A0C9DA538C /* XCLocalSwiftPackageReference "Packages/TomiCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 68908AD19C09C2D014696518 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6FEC55F93B43F37518F6EC29 /* Tomi */,
+				633EE2B3532B66D5655CF1E1 /* TomiTests */,
+				3F8376A7718F7D29C3156DCA /* TomiUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		161A18BEDD40C8E7D1339F78 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A3F84D6A406DFAA6F7CC0BB3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F3636C4A041BFE1609D2CD60 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		93894339211ADFFCA5AFB310 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B70006480C144545AF2846CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C75F20E5250A81767D6A90E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		294BEC1B483190E8E5DA89CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6FEC55F93B43F37518F6EC29 /* Tomi */;
+			targetProxy = CA32A7362418696DF62047F5 /* PBXContainerItemProxy */;
+		};
+		D21C51C0DDAD81B7AA4CAB39 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6FEC55F93B43F37518F6EC29 /* Tomi */;
+			targetProxy = 4BEFEAD7F8EDA5B63B07367C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		396F5BAB9A502B6D2446D90A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrspacerobot.tomi.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tomi.app/Tomi";
+			};
+			name = Release;
+		};
+		4B6FE299A66C4CFDA46AFD6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Tomi;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrspacerobot.tomi;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4C3123578B50622F5CDEAEE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrspacerobot.tomi.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tomi.app/Tomi";
+			};
+			name = Debug;
+		};
+		64F355AFA7DDF4DE27B656F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		7FC3A39C0B5F4F04110C0AD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Tomi;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrspacerobot.tomi;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		89ADCD2038C0D90BDEB299B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		D773B5D0721E19397502570C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrspacerobot.tomi.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Tomi;
+			};
+			name = Debug;
+		};
+		F6843D2CF2D2941E025D48FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrspacerobot.tomi.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Tomi;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0E47A6188F208B2D64318648 /* Build configuration list for PBXNativeTarget "TomiUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D773B5D0721E19397502570C /* Debug */,
+				F6843D2CF2D2941E025D48FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0ED7A7FD7B90F282D21BD60B /* Build configuration list for PBXProject "Tomi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				64F355AFA7DDF4DE27B656F7 /* Debug */,
+				89ADCD2038C0D90BDEB299B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		6F3FAF8907E79188CCA17F30 /* Build configuration list for PBXNativeTarget "TomiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C3123578B50622F5CDEAEE5 /* Debug */,
+				396F5BAB9A502B6D2446D90A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		AEA3C5D85C5E8AB11170206C /* Build configuration list for PBXNativeTarget "Tomi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7FC3A39C0B5F4F04110C0AD4 /* Debug */,
+				4B6FE299A66C4CFDA46AFD6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		0F9944CEEA9748A0C9DA538C /* XCLocalSwiftPackageReference "Packages/TomiCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/TomiCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CF675283D6F6964DE4C721A5 /* TomiCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TomiCore;
+		};
+		D98A890595931FADE91BA730 /* TomiCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TomiCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 3E7BF1B84C4BA75C17C514DF /* Project object */;
+}
