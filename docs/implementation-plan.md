@@ -78,7 +78,10 @@ Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replace
 ## Lesson library
 
 - The skill catalog is part of the library, not the app: `catalog.json` holds courses, skills, prerequisites, levels and their names, with a schema version and a library version. A new technique or level ships with the library, without an app release. The validator checks at least one course, ids that are not blank and are unique, known and non-empty courses, prerequisites that exist and come earlier on the menu, levels numbered 1 to n, and English text everywhere.
-- Each skill has levels, from the first version of the technique to the hardest (roux: white for béchamel, blond for velouté, brown). The next level opens once the one before is cooked.
+- Each skill has levels, from the first version of the technique to the hardest (roux: white for béchamel, blond for velouté, brown). A level is complete after two finished cooks at it (`GameRules.cooksToCompleteLevel`), and the next level opens once every level before it is complete.
+- A skill is served (unlocked) when level 1 of every prerequisite is complete, and mastered when all of its own levels are complete. Asking for every level of a prerequisite would hold the next techniques back for weeks.
+- A finished cook always counts at the level its lesson taught, even if that level or skill was not open yet, so progress depends only on which cooks are in the log and never on the order two devices merged them. A cook stopped early never counts.
+- The focus (next up) is the cook's chosen skill while it is served and not mastered, otherwise the first such skill in menu order.
 - One file per lesson, grouped by skill, plus an index built by the generator carrying the library and schema versions. The index holds every field the filter needs, so a full lesson is read only once it is picked.
 - Each lesson has a stable id, a revision, a skill and level, a cuisine, ingredients, equipment, steps (each naming a scene from the closed scene list), a quiz, and swaps.
 - Diet and allergen tags are computed from the ingredient table, never typed and never produced by a model.
@@ -91,12 +94,12 @@ Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replace
 | Model | Fields |
 |---|---|
 | Profile | focus skill, weekly goal, voice on, diet, avoid list, cuisine preferences, cupboard staples, equipment, servings, units, onboarding done |
-| CookLog | lesson id, lesson revision, skill, level, date, weekly goal at the time, swaps used, quiz correct, XP earned, rating, plate photo file name |
+| CookLog | lesson id, lesson revision, skill, level, date, stopped early, weekly goal at the time, swaps used, quiz correct, XP earned, rating, plate photo file name |
 | ActiveLesson | the adapted lesson, tonight's ingredient list, current step |
 
 Plate photos are files in the app's own storage on the phone. Only the file name is in the cook log, so the log syncs through iCloud and the photos do not; on a second device the dish simply shows without a photo.
 
-The cook log is the source of truth. XP, rank, streak and mastery are computed from it. Every record has a stable id and timestamp. All fields are optional or defaulted and changes are additive, so the layout is safe for iCloud.
+The cook log is the source of truth. XP, rank, streak and mastery are computed from it. Every record has a stable id and timestamp, and the same id on two devices is the same cook, counted once. All fields are optional or defaulted and changes are additive, so the layout is safe for iCloud.
 
 ## Phases
 

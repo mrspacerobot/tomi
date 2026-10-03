@@ -43,6 +43,12 @@ large_tuple:
   warning: 2
 identifier_name:
   min_length: 2
+# "Mastered" is Tomi's word for a skill with every level complete, so code may say it. Other uses stay banned.
+inclusive_language:
+  override_allowed_terms:
+    - mastercard
+    - mastered
+    - mastery
 
 custom_rules:
   hard_coded_text:

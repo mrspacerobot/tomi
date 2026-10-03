@@ -17,7 +17,14 @@ public enum GameRules {
     public static let weeklyGoalOptions = 1...7
     public static let defaultWeeklyGoal = 3
 
+    /// Finished cooks at one level of a skill before that level is complete and the next one opens.
+    public static let cooksToCompleteLevel = 2
+
     static func clampedWeeklyGoal(_ goal: Int) -> Int {
         min(max(goal, weeklyGoalOptions.lowerBound), weeklyGoalOptions.upperBound)
+    }
+
+    static func isLevelComplete(cooks: Int) -> Bool {
+        cooks >= cooksToCompleteLevel
     }
 }

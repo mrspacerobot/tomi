@@ -45,7 +45,7 @@ Report honestly: if a check fails or you skipped a step, say so.
 - **The catalog and lesson schemas live in TomiCore** and are shared with the generator. Changing one means bumping its schema version and updating the validator and its tests. The shipped files are checked by tests in TomiCore and in the app.
 - **Diet and allergen tags are computed by code** from the ingredient table. They are never typed by a person or produced by a model. An ingredient missing from the table fails the build.
 - **Food-safety facts come only from the safety table.** No temperature, time or allergen claim may be hard-coded in a view, a prompt or a lesson step without passing that check. Tomi never judges from a photo whether food is cooked through or safe to eat.
-- **Game numbers live in one place** (`GameRules` in TomiCore): XP per cook, cooks to master, XP per rank. No magic numbers in views.
+- **Game numbers live in one place** (`GameRules` in TomiCore): XP per cook, cooks to complete a level, XP per rank. No magic numbers in views.
 - **Step scenes are a closed list.** A lesson may only name a scene that exists in the scene kit.
 
 ## Design system
