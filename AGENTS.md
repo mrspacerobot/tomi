@@ -88,6 +88,8 @@ A person should understand any function without scrolling and any file without a
 - **One type per file,** named after the type. Extensions go in `Type+Purpose.swift`.
 - **No duplication.** Before writing a helper, search for one. Shared logic goes to TomiCore, shared UI to DesignSystem. The second copy is the moment to extract.
 - **At most three parameters.** More means a missing type: group them into a struct.
+- **Plain statements over clever expressions.** No ternaries. Do not pack `?.`, `??`, `.map` and closures into one line: unwrap with `guard let` or `if let`, give each step a name, and let the names tell the story. A reader who knows Java or Kotlin but not Swift should be able to follow it.
+- **Typed values, not strings, in tests too.** A date is built from numbers (`.october(5)`), never parsed from text like `"2026-10-05"`.
 - **Names say what, comments say why.** No abbreviations, no commented-out code, no TODO without an issue number.
 - **No force unwraps, `try!` or `fatalError` in app code.** Handle the failure and show Tomi's words for it from the string catalog. Tests may force unwrap.
 - **No `print`.** Use `Logger`. Never log photos, ingredients or chat text.

@@ -398,7 +398,7 @@ def celebrate_a():
     body = ('<div class="c-wrap">' + tomi(B, "cheer", 118) + '<p class="b-k" style="margin-top:8px">Friday 2 October</p><h1 class="b-d">Dinner is served.</h1>'
             '<p class="sub b-it">Your first pan sauce. One more and it earns the stamp.</p>'
             '<div class="c-ink"><span class="b-k">Inked onto your menu</span>' + line + '</div></div>' +
-            house(("Earned", "50 XP", "40 dish, 10 quiz"), ("Streak", "4 nights", "one more than yesterday"), ("New rank", "Cook", "level 3")).replace('class="b-xp"', 'class="b-xp" style="display:none"') +
+            house(("Earned", "50 XP", "40 dish, 10 quiz"), ("Streak", "3 weeks", "2 of 3 this week"), ("New rank", "Cook", "level 3")).replace('class="b-xp"', 'class="b-xp" style="display:none"') +
             '<div class="b-foot col"><div class="b-btn" role="button">Back to the menu</div><div class="r-link" role="button">Save this dish to cook again</div></div>')
     return shot("lp-celebrate", "1j", "Celebration, progress toward the stamp", "<b>The reward is the menu changing.</b> The dish line is written in with its first diamond filled, under a double rule, as if the card had just been reprinted. XP, streak and the new rank use the same three columns as home. In the app the line draws in left to right and the diamond fills last.", body)
 
@@ -411,7 +411,7 @@ def celebrate_b():
             '<p class="sub b-it">Boil &amp; blanch is yours. It stays on the menu to cook whenever you like.</p>'
             '<div class="c-ink"><span class="b-k">Mastered</span>' + line + '<div class="c-press">' + stamp2(92) + '</div></div>'
             '<div class="c-ink" style="border-top:1px solid var(--blue);margin-top:14px"><span class="b-k">Now served</span>' + new + '</div></div>' +
-            house(("Earned", "50 XP", "40 dish, 10 quiz"), ("Streak", "4 nights", "one more than yesterday"), ("First course", "3 of 3", "all stamped")).replace('class="b-xp"', 'class="b-xp" style="display:none"') +
+            house(("Earned", "50 XP", "40 dish, 10 quiz"), ("Streak", "4 weeks", "goal met"), ("First course", "3 of 3", "all stamped")).replace('class="b-xp"', 'class="b-xp" style="display:none"') +
             '<div class="b-foot col"><div class="b-btn" role="button">Back to the menu</div></div>')
     return shot("lp-celebrate-stamp", "1k", "Celebration, stamp earned", "The second cook presses the stamp, large and off-square, over the dish line; in the app it lands with a short press and a haptic. Below it, anything newly unlocked is added to the menu with a \"New\" tag. Shown for Boil &amp; blanch, because mastering it serves Rice &amp; grains.", body)
 
@@ -544,7 +544,7 @@ def profile():
     hist = "".join('<div class="r-alt"><div class="row"><span class="nm b-d">' + d + '</span><span class="ld"></span><span class="sk">' + s + '</span></div><p class="b-it">' + w + "</p></div>" for w, d, s in HISTORY)
     body = (stop("Home", '<div class="b-ib" role="button" aria-label="Settings">' + icon("gear", 24, 1.8) + "</div>") +
             '<header class="b-mast" style="padding-top:0">' + tomi(B, "happy", 66) + '<h1 class="b-d">Your record</h1><p class="b-k">Cooking since 21 September</p></header>' +
-            house(("Cooked", "7 dishes", "3 stamps"), ("Streak", "3 nights", "best 3"), ("Rank", "Commis", "level 2")) +
+            house(("Cooked", "7 dishes", "3 stamps"), ("Streak", "3 weeks", "best 3"), ("Rank", "Commis", "level 2")) +
             '<div class="s-body"><div class="l-sec" style="margin-top:22px"><div class="hd"><span class="b-k">The brigade</span><span class="b-it">150 XP a rank</span></div>' + lad + '</div>'
             '<div class="l-sec" style="margin-top:26px"><div class="hd"><span class="b-k">Cooked so far</span><span class="b-it">newest first</span></div>' + hist + '</div></div><div style="height:50px"></div>')
     return shot("profile", "6a", "Profile: rank ladder and history", "<b>The proposed ladder, level 1 upward: Novice, Commis, Cook, Saucier, Sous, Chef, Patron, Toque.</b> Every name is seven letters or fewer so it fits the stats column at 24 pt. 150 XP a rank puts Toque at 1,050 XP, about where all twelve stamps land. History is a dated list of dish lines; each opens its recipe.", body, height=None)
@@ -607,11 +607,11 @@ def edge_noai():
 
 
 def edge_streak():
-    hs = (("Streak", "0 nights", "was 12, your best"), ("Rank", "Cook", "level 3"), ("To level 4", "65 XP", "385 of 450"))
+    hs = (("Streak", "0 weeks", "was 12, your best"), ("Rank", "Cook", "level 3"), ("To level 4", "134 XP", "366 of 500"))
     body = (mast("think") + house(*hs).replace('class="b-xp"', 'class="b-xp" style="--x:1"') +
-            '<div class="n-box" style="margin:18px 16px 0"><span class="b-k" style="color:var(--red)">The stove went cold</span>A night was missed, so the count starts again. Your stamps, rank and recipes are all still here.</div>'
+            '<div class="n-box" style="margin:18px 16px 0"><span class="b-k" style="color:var(--red)">The stove went cold</span>Last week ended short of your 3 cooking days, so the count starts again. Your stamps, rank and recipes are all still here.</div>'
             '<section class="b-special" style="margin-top:22px"><span class="flag b-k">Tonight\'s special</span><div class="blank"><span class="b-it">to be written</span><i></i></div>'
-            '<h2 class="b-d" style="font-size:22px;line-height:27px">Start a new run tonight. What have you got?</h2>'
+            '<h2 class="b-d" style="font-size:22px;line-height:27px">Start a new run this week. What have you got?</h2>'
             '<div class="b-btn" role="button">' + icon("camera", 20, 1.8) + ' Scan your fridge</div><div class="r-link" role="button" style="min-height:40px">' + icon("keyboard", 20, 1.8) + ' Type what you have</div></section>'
             '<section class="b-menu">' + MENU_H + '</section>')
     return shot("edge-streak-lost", "7d", "Streak lost", "No guilt and no \"repair\" upsell. The streak column tells the truth (0, and the best run), one note says what was lost and what was not, and the screen moves straight on to tonight. Tomi is thoughtful, not sad.", body, height=844, cls="b-screen r-crop", cap="first screenful")
@@ -619,7 +619,7 @@ def edge_streak():
 
 def edge_all():
     done = [(s[0], s[1], s[2], s[3], "mastered", 2, "", []) for s in SKILLS]
-    hs = (("Stamps", "12 of 12", "the whole menu"), ("Rank", "Toque", "level 8"), ("Streak", "31 nights", "best 31"))
+    hs = (("Stamps", "12 of 12", "the whole menu"), ("Rank", "Toque", "level 8"), ("Streak", "31 weeks", "best 31"))
     body = (mast("cheer") + house(*hs).replace('class="b-xp"', 'class="b-xp" style="display:none"') +
             '<section class="b-special"><span class="flag b-k">Chef\'s choice</span><h2 class="b-d">Every dish is stamped.</h2>'
             '<p class="from b-it">Nothing left to unlock, so I will pick whatever suits your fridge and keeps a technique sharp. Guest menus with new cuisines arrive here.</p>'

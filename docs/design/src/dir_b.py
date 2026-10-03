@@ -148,9 +148,9 @@ def home():
         menu += '<div class="b-course"><p class="b-k">%s</p><h3 class="b-d">%s</h3><p class="b-it">%s of %s mastered</p></div>' % (ORD[u], uname, done, len(sk))
         menu += "".join(dish(s) for s in sk)
     body = ('<header class="b-mast">%s<h1 class="b-d">Tonight at Tomi\'s</h1><p class="b-k">Friday 2 October, dinner</p></header>'
-            '<div class="b-house" role="group" aria-label="Your progress"><div><span class="b-k">Streak</span><span class="v b-d">3 nights</span><span class="s">cook tonight for 4</span></div>'
+            '<div class="b-house" role="group" aria-label="Your progress"><div><span class="b-k">Streak</span><span class="v b-d">3 weeks</span><span class="s">1 of 3 this week</span></div>'
             '<div><span class="b-k">Rank</span><span class="v b-d">Commis</span><span class="s">level 2</span></div>'
-            '<div><span class="b-k">To level 3</span><span class="v b-d">40 XP</span><span class="s">110 of 150</span></div><span class="b-xp" role="img" aria-label="110 of 150 XP"></span></div>'
+            '<div><span class="b-k">To level 3</span><span class="v b-d">67 XP</span><span class="s">183 of 250</span></div><span class="b-xp" role="img" aria-label="183 of 250 XP to the next rank"></span></div>'
             '<section class="b-special"><span class="flag b-k">Tonight\'s special</span><h2 class="b-d">%s</h2>'
             '<p class="from b-it">From your fridge: chicken thighs, lemon, garlic, butter, spinach and white wine.</p>'
             '<p class="meta b-u">Practises <b>Pan sauces</b> &middot; 30 min &middot; +40 XP</p>'

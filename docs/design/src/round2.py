@@ -120,6 +120,16 @@ CSS = r"""
 .r-lv .d{font-size:16px;line-height:22px}
 .r-lv.sel{background:var(--tint);margin:0 -20px;padding-left:22px;padding-right:22px}
 .r-lv.sel .d{color:var(--ink)}
+.r-lv.c{padding:11px 2px 11px}
+.r-lv.c:last-child{border-bottom:0}
+.r-lv.c .nm{font-size:22px;line-height:28px}
+.r-lv.c .d{font-size:15px;line-height:20px}
+/* weekly goal */
+.r-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1.5px solid var(--blue);border-radius:4px;margin-top:10px;overflow:hidden}
+.r-days > div{min-height:48px;display:grid;place-items:center;font-size:22px;color:var(--blue)}
+.r-days > div + div{border-left:1px solid var(--rule)}
+.r-days > .on{background:var(--blue);color:#fff}
+.r-days-cap{display:flex;justify-content:space-between;margin-top:6px;font:500 13.5px/18px "Figtree",system-ui,sans-serif;color:var(--muted)}
 /* table for */
 .r-step{display:flex;align-items:center;justify-content:center;gap:30px;margin-top:20px}
 .r-step .n{font-size:92px;line-height:96px;min-width:70px;text-align:center}
@@ -345,12 +355,16 @@ def ob_level():
             ("The basics", "Start at the first course, with shorter explanations.", True, ""),
             ("Comfortable", "The first course arrives already stamped. You start at Heat control.", False, stamp2(30))]
     for name, desc, sel, extra in data:
-        rows += '<div class="r-lv%s" role="radio" aria-checked="%s">%s<span class="nm b-d">%s%s</span><span class="d b-it">%s</span></div>' % (
+        rows += '<div class="r-lv c%s" role="radio" aria-checked="%s">%s<span class="nm b-d">%s%s</span><span class="d b-it">%s</span></div>' % (
             " sel" if sel else "", "true" if sel else "false", box(sel), name, extra, desc)
-    body = top(5) + '<div class="r-body">%s<div style="margin-top:18px;border-top:1px solid var(--blue)">%s</div></div>%s' % (
-        head("Question 5 of 7", "How much have you cooked?", "This sets where your menu begins."), rows,
-        foot(None, hint="Tap one and we move on. Skipping starts you at the first dish."))
-    return shot("ob-level", "1f", "How much have you cooked?", "One tap, advances on tap. Each answer says what it changes. \"Comfortable\" shows the stamp so the reward is visible before it is earned.", body)
+    days = "".join('<div class="b-d%s" role="radio" aria-checked="%s" aria-label="%s days a week">%s</div>' % (
+        " on" if n == 3 else "", "true" if n == 3 else "false", n, n) for n in range(1, 8))
+    goal = ('<div class="r-sep" style="margin-top:18px"><p class="b-k">Cooking days a week</p><div class="r-days" role="radiogroup">%s</div>'
+            '<div class="r-days-cap"><span>now and then</span><span>every night</span></div></div>') % days
+    body = top(5) + '<div class="r-body">%s<div style="margin-top:14px;border-top:1px solid var(--blue)">%s</div>%s</div>%s' % (
+        head("Question 5 of 7", "How much do you cook?", "This sets where your menu begins, and your weekly goal."), rows, goal,
+        foot("Continue", hint="Your streak counts the weeks you reach it."))
+    return shot("ob-level", "1f", "How much do you cook?", "Two decisions with defaults, so Continue is the only tap needed: where the menu begins (\"The basics\") and the weekly goal (3 days). The streak counts weeks with the goal met, so it survives nights off. Two dishes on one night count as one day. \"Comfortable\" shows the stamp so the reward is visible before it is earned.", body)
 
 
 def ob_table():
@@ -438,7 +452,7 @@ def ob_notify():
 
 def ob_done():
     rows = [("Diet", "Vegetarian"), ("Never", "Nuts, shellfish"), ("Cuisines", "Loves Italian and Japanese. No Mexican."),
-            ("Kitchen", "Stovetop, oven, microwave"), ("Starting at", "The first course"), ("Table", "For 2, metric"), ("Cupboard", "12 staples")]
+            ("Kitchen", "Stovetop, oven, microwave"), ("Starting at", "The first course"), ("Weekly goal", "3 cooking days"), ("Table", "For 2, metric"), ("Cupboard", "12 staples")]
     body = ('<div class="r-wel" style="padding-top:76px"><div style="display:flex;align-items:flex-end;gap:2px">%s%s</div>'
             '<h1 class="b-d" style="margin-top:6px">Your menu is written.</h1>'
             '<p class="b-it" style="max-width:none;margin-top:8px;font-size:17px">Twelve techniques, four courses, all of it yours.</p>'
@@ -483,8 +497,8 @@ def house(a, b, c, zero=False):
     return '<div class="b-house" role="group" aria-label="Your progress">%s%s%s<span class="b-xp%s"></span></div>' % (cell(*a), cell(*b), cell(*c), " x0" if zero else "")
 
 
-HOUSE0 = (("Streak", "0 nights", "starts tonight"), ("Rank", "Novice", "level 1"), ("To level 2", "150 XP", "0 of 150"))
-HOUSE3 = (("Streak", "3 nights", "cook tonight for 4"), ("Rank", "Commis", "level 2"), ("To level 3", "40 XP", "110 of 150"))
+HOUSE0 = (("Streak", "0 weeks", "0 of 3 this week"), ("Rank", "Novice", "level 1"), ("To level 2", "150 XP", "0 of 150"))
+HOUSE3 = (("Streak", "3 weeks", "1 of 3 this week"), ("Rank", "Commis", "level 2"), ("To level 3", "67 XP", "183 of 250"))
 MENU_H = '<div class="b-menu-h"><h2 class="b-d">The menu</h2><p class="b-it">Twelve techniques in four courses. Cook a dish twice and it earns the chef\'s stamp.</p></div>'
 
 
