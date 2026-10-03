@@ -44,7 +44,7 @@ Report honestly: if a check fails or you skipped a step, say so.
 - **Skill and course ids are permanent,** like saved fields: cook logs keep them forever. Never rename or reuse one. Levels are numbered from 1 and a published number never changes meaning.
 - **The catalog and lesson schemas live in TomiCore** and are shared with the generator. Changing one means bumping its schema version and updating the validator and its tests. The shipped files are checked by tests in TomiCore and in the app.
 - **Diet and allergen tags are computed by code** from the ingredient table. They are never typed by a person or produced by a model. An ingredient missing from the table fails the build.
-- **Food-safety facts come only from the safety table.** No temperature, time or allergen claim may be hard-coded in a view, a prompt or a lesson step without passing that check.
+- **Food-safety facts come only from the safety table.** No temperature, time or allergen claim may be hard-coded in a view, a prompt or a lesson step without passing that check. Tomi never judges from a photo whether food is cooked through or safe to eat.
 - **Game numbers live in one place** (`GameRules` in TomiCore): XP per cook, cooks to master, XP per rank. No magic numbers in views.
 - **Step scenes are a closed list.** A lesson may only name a scene that exists in the scene kit.
 
@@ -88,6 +88,8 @@ A person should understand any function without scrolling and any file without a
 - **One type per file,** named after the type. Extensions go in `Type+Purpose.swift`.
 - **No duplication.** Before writing a helper, search for one. Shared logic goes to TomiCore, shared UI to DesignSystem. The second copy is the moment to extract.
 - **At most three parameters.** More means a missing type: group them into a struct.
+- **Plain statements over clever expressions.** No ternaries. Do not pack `?.`, `??`, `.map` and closures into one line: unwrap with `guard let` or `if let`, give each step a name, and let the names tell the story. A reader who knows Java or Kotlin but not Swift should be able to follow it.
+- **Typed values, not strings, in tests too.** A date is built from numbers (`.october(5)`), never parsed from text like `"2026-10-05"`.
 - **Names say what, comments say why.** No abbreviations, no commented-out code, no TODO without an issue number.
 - **No force unwraps, `try!` or `fatalError` in app code.** Handle the failure and show Tomi's words for it from the string catalog. Tests may force unwrap.
 - **No `print`.** Use `Logger`. Never log photos, ingredients or chat text.
