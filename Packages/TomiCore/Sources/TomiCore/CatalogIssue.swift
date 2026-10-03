@@ -2,6 +2,9 @@
 public enum CatalogIssue: Hashable, Sendable {
     /// An empty menu would leave the cook with nothing to learn.
     case noCourses
+    /// A blank id is found by where it sits in its list, counting from 0, since it has no name to report.
+    case blankCourseID(position: Int)
+    case blankSkillID(position: Int)
     case duplicateCourse(CourseID)
     case duplicateSkill(SkillID)
     case unknownCourse(SkillID, CourseID)

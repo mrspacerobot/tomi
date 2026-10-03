@@ -2,7 +2,7 @@
 extension SkillCatalog {
     /// Every problem in the catalog, empty when it is fit to serve.
     public var issues: [CatalogIssue] {
-        duplicateIssues + courseIssues + prerequisiteIssues + levelIssues + textIssues
+        blankIDIssues + duplicateIssues + courseIssues + prerequisiteIssues + levelIssues + textIssues
     }
 
     private var duplicateIssues: [CatalogIssue] {

@@ -25,8 +25,16 @@ public struct LocalizedText: Hashable, Codable, Sendable {
 
     /// The best text for the cook's languages, in order of preference (pass `Locale.preferredLanguages`).
     public func resolved(preferredLanguages: [String]) -> String {
-        let candidates = preferredLanguages.flatMap { [$0, baseLanguage(of: $0)] } + [Self.sourceLanguage]
+        let candidates = preferredLanguages.flatMap(candidates(for:)) + [Self.sourceLanguage]
         return candidates.lazy.compactMap { translations[$0] }.first ?? ""
+    }
+
+    /// The language itself, then its base, then any other region of it, as Apple's own localization lookup does:
+    /// a Portuguese cook would rather read Brazilian Portuguese than their second language.
+    private func candidates(for language: String) -> [String] {
+        let base = baseLanguage(of: language)
+        let otherRegions = translations.keys.filter { baseLanguage(of: $0) == base }.sorted()
+        return [language, base] + otherRegions
     }
 
     private func baseLanguage(of language: String) -> String {

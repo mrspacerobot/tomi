@@ -14,6 +14,21 @@ import Testing
         #expect(text.resolved(preferredLanguages: [language]) == "Fonds")
     }
 
+    @Test(arguments: ["pt-PT", "pt", "pt_PT"])
+    func anotherRegionOfTheSameLanguageBeatsTheNextLanguage(language: String) {
+        #expect(text.resolved(preferredLanguages: [language, "fr"]) == "Caldos")
+    }
+
+    @Test func theCooksRegionBeatsAnotherRegion() {
+        let regional = LocalizedText(["en": "Stocks", "pt-BR": "Caldos", "pt-PT": "Fundos"])
+        #expect(regional.resolved(preferredLanguages: ["pt-PT"]) == "Fundos")
+    }
+
+    @Test func otherRegionsAreTriedInAStableOrder() {
+        let regional = LocalizedText(["en": "Stocks", "pt-PT": "Fundos", "pt-BR": "Caldos"])
+        #expect(regional.resolved(preferredLanguages: ["pt-AO"]) == "Caldos")
+    }
+
     @Test func theFirstLanguageWithTextWins() {
         #expect(text.resolved(preferredLanguages: ["ja-JP", "fr", "pt-BR"]) == "Fonds")
     }
