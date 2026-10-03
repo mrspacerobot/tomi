@@ -16,6 +16,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Project | A standard Xcode project committed to git, with synchronized folders |
 | Test phone | iPhone 15 Pro or newer (Apple Intelligence) |
 | Everyday AI | Apple Foundation Models on the phone: ingredient spotting, ranking and adapting lessons, Ask Tomi, voice commands. Available in the iOS 27 simulator on the development Mac |
+| Curriculum | Classical French technique and its kitchen words (mirepoix, roux, deglaze, monter au beurre, beurre blanc), without presenting the app as "French cooking". Twelve techniques in four courses (Foundations, Heat control, Sauces, Putting it together), each with levels |
 | Lessons | Written in bulk by a top Claude model into a reviewed library. One file per lesson. Never generated live in version 1 |
 | Tomi and step scenes | Drawn and animated in SwiftUI code from shared parts, behind one small interface so a richer mascot can replace it later |
 | Onboarding | Nine screens: welcome, diet, things to avoid, cuisines, kitchen, experience, table and units, camera primer, done. Notifications are asked at the first timer, the cupboard at the first scan |
@@ -30,7 +31,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Question | Default |
 |---|---|
 | XP per cooked dish | 50, plus 10 for a correct quiz (the prototype's values; mockups show 40) |
-| Rank ladder | Novice, Commis, Cook, Saucier, Sous, Chef, Patron, Toque, 150 XP each |
+| Rank ladder | Novice, Commis, Cook, Saucier, Sous, Chef, Patron, Toque, 150 XP each. At this rate a regular cook reaches Toque in about six weeks, so steeper or open-ended steps are likely |
 | Wrong quiz answer | Costs nothing, the question returns in a later lesson |
 | "I stopped early" | Does not count toward the streak |
 | Hands-free mode | Keeps a slim Next button so touch always works |
@@ -42,7 +43,7 @@ Three layers:
 
 1. **Screens** (SwiftUI): onboarding, home and menu, scan, lesson player, Ask Tomi, profile and settings.
 2. **App services**: ProgressStore (SwiftData), LessonLibrary, TomiAI (Foundation Models), Voice (speech in and out), Timers (AlarmKit). Each sits behind a protocol with a fake for previews and tests.
-3. **TomiCore** (plain Swift package): skill catalog, progress rules, lesson schema, lesson matcher, ingredient table, safety table. Shared with the lesson generator.
+3. **TomiCore** (plain Swift package): skill catalog schema and validator, progress rules, lesson schema, lesson matcher, ingredient table, safety table. Shared with the lesson generator.
 
 ```
 Tomi.xcodeproj
@@ -51,7 +52,8 @@ Tomi/                  app target
   Onboarding/ Home/ Menu/ Scan/ Player/ Scenes/ AskTomi/ Voice/ Settings/
   AI/                  Foundation Models implementations
   Persistence/         SwiftData models, ProgressStore
-  Resources/           Assets, fonts, Localizable.xcstrings, Lessons/
+  Library/             BundledLibrary: reads the shipped library
+  Resources/           Assets, fonts, Localizable.xcstrings, Library/ (catalog.json, lessons/)
 TomiTests/ TomiUITests/
 Packages/TomiCore/     rules, schema, generator, tests
 server/                Go service (later)
@@ -72,8 +74,10 @@ Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replace
 
 ## Lesson library
 
-- One file per lesson, grouped by skill, plus an index built by the generator carrying the library and schema versions.
-- Each lesson has a stable id, a revision, a skill, a cuisine, ingredients, equipment, steps (each naming a scene from the closed scene list), a quiz, and swaps.
+- The skill catalog is part of the library, not the app: `catalog.json` holds courses, skills, prerequisites, levels and their names, with a schema version and a library version. A new technique or level ships with the library, without an app release. The validator checks at least one course, ids that are not blank and are unique, known and non-empty courses, prerequisites that exist and come earlier on the menu, levels numbered 1 to n, and English text everywhere.
+- Each skill has levels, from the first version of the technique to the hardest (roux: white for béchamel, blond for velouté, brown). The next level opens once the one before is cooked.
+- One file per lesson, grouped by skill, plus an index built by the generator carrying the library and schema versions. The index holds every field the filter needs, so a full lesson is read only once it is picked.
+- Each lesson has a stable id, a revision, a skill and level, a cuisine, ingredients, equipment, steps (each naming a scene from the closed scene list), a quiz, and swaps.
 - Diet and allergen tags are computed from the ingredient table, never typed and never produced by a model.
 - A swap is a reviewed substitution that removes an allergen or changes the diet (butter to olive oil removes dairy).
 - Coverage rule: every skill has several lessons for every diet, even after any one cuisine is excluded. The generator reports gaps.
@@ -84,7 +88,7 @@ Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replace
 | Model | Fields |
 |---|---|
 | Profile | focus skill, voice on, diet, avoid list, cuisine preferences, cupboard staples, equipment, servings, units, onboarding done |
-| CookLog | lesson id, lesson revision, skill, date, swaps used, quiz correct, XP earned, rating |
+| CookLog | lesson id, lesson revision, skill, level, date, swaps used, quiz correct, XP earned, rating |
 | ActiveLesson | the adapted lesson, tonight's ingredient list, current step |
 
 The cook log is the source of truth. XP, rank, streak and mastery are computed from it. Every record has a stable id and timestamp. All fields are optional or defaulted and changes are additive, so the layout is safe for iCloud.

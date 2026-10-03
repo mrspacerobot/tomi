@@ -27,7 +27,7 @@ Report honestly: if a check fails or you skipped a step, say so.
 ## Text and translation
 
 - **No user-facing text in Swift files.** Every word the cook can see or VoiceOver can read lives in `Tomi/Resources/Localizable.xcstrings`. SwiftLint fails the build on string literals in `Text`, `Button`, labels, titles and alerts.
-- **Keys are semantic and dotted:** `screen.element` or `thing.id.field`, for example `welcome.title`, `skill.sear.name`. Never use the English sentence as the key.
+- **Keys are semantic and dotted:** `screen.element` or `thing.id.field`, for example `welcome.title`, `onboarding.diet.title`. Never use the English sentence as the key.
 - **Use the generated symbols:** `Text(.welcomeTitle)`, `Text(.welcomeSubtitle(12, 4))`. They are compile-checked, so a renamed or missing key breaks the build instead of shipping blank.
 - **Every key has a comment** telling a translator where it appears and what the placeholders are.
 - **Never build sentences by joining pieces.** Use one key with placeholders. Use the catalog's plural variations for counts.
@@ -38,8 +38,11 @@ Report honestly: if a check fails or you skipped a step, say so.
 
 ## Content is data, not code
 
-- **Lessons are files, never Swift.** One file per lesson under `Tomi/Resources/Lessons/<skill>/`, loaded through `LessonLibrary`. The app must not care whether a lesson came from the bundle or a download.
-- **The lesson schema lives in TomiCore** and is shared with the generator. Changing it means bumping the schema version and updating the validator and its tests.
+- **The skill menu is a file, never Swift.** Courses, skills, prerequisites and levels live in `Tomi/Resources/Library/catalog.json`, read through `SkillCatalog.decode(from:)`. No Swift file may name a specific skill or course; anything special about one (a starter skill, say) is a field in the data.
+- **Lessons are files, never Swift.** One file per lesson under `Tomi/Resources/Library/lessons/<skill>/`, named by its lesson id, loaded through `LessonLibrary`. Xcode copies the library into the app flat, so every file name in it must be unique. The app must not care whether a lesson came from the bundle or a download.
+- **Content words travel with the content.** Course, skill and level names and lesson text are `LocalizedText` in the library, English required, other languages optional. Screen words stay in the string catalog.
+- **Skill and course ids are permanent,** like saved fields: cook logs keep them forever. Never rename or reuse one. Levels are numbered from 1 and a published number never changes meaning.
+- **The catalog and lesson schemas live in TomiCore** and are shared with the generator. Changing one means bumping its schema version and updating the validator and its tests. The shipped files are checked by tests in TomiCore and in the app.
 - **Diet and allergen tags are computed by code** from the ingredient table. They are never typed by a person or produced by a model. An ingredient missing from the table fails the build.
 - **Food-safety facts come only from the safety table.** No temperature, time or allergen claim may be hard-coded in a view, a prompt or a lesson step without passing that check.
 - **Game numbers live in one place** (`GameRules` in TomiCore): XP per cook, cooks to master, XP per rank. No magic numbers in views.
