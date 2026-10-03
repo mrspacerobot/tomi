@@ -6,8 +6,8 @@ extension SkillCatalog {
     }
 
     private var duplicateIssues: [CatalogIssue] {
-        duplicates(in: courses.map(\.id)).map(CatalogIssue.duplicateCourse)
-            + duplicates(in: skills.map(\.id)).map(CatalogIssue.duplicateSkill)
+        courses.map(\.id).duplicates.map(CatalogIssue.duplicateCourse)
+            + skills.map(\.id).duplicates.map(CatalogIssue.duplicateSkill)
     }
 
     private var courseIssues: [CatalogIssue] {
@@ -62,10 +62,6 @@ extension SkillCatalog {
 
     private func isMissingText(_ skill: Skill) -> Bool {
         ([skill.name, skill.summary] + skill.levels.map(\.name)).contains(where: \.isMissingSourceText)
-    }
-
-    private func duplicates<ID: Comparable & Hashable>(in ids: [ID]) -> [ID] {
-        Dictionary(grouping: ids) { $0 }.filter { $0.value.count > 1 }.keys.sorted()
     }
 
     private func firstPositions<ID: Hashable>(of ids: [ID]) -> [ID: Int] {
