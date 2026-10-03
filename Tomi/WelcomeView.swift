@@ -1,13 +1,16 @@
 import SwiftUI
+import TomiCore
 
 /// Placeholder first screen for the project scaffold. Replaced by onboarding and home in later phases.
 struct WelcomeView: View {
+    let catalog: SkillCatalog?
+
     var body: some View {
         VStack(spacing: 20) {
             TomiMascot()
                 .frame(width: 180, height: 180)
                 .accessibilityLabel(Text(.mascotLabel))
-            WelcomeMasthead()
+            WelcomeMasthead(catalog: catalog)
         }
         .padding(24)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -16,5 +19,5 @@ struct WelcomeView: View {
 }
 
 #Preview {
-    WelcomeView()
+    WelcomeView(catalog: BundledLibrary.catalog())
 }

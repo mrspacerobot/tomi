@@ -2,6 +2,9 @@ import SwiftUI
 import TomiCore
 
 struct WelcomeMasthead: View {
+    /// Nil only if the bundled library failed to load; the line counting the menu is then left out.
+    let catalog: SkillCatalog?
+
     var body: some View {
         VStack(spacing: 6) {
             Text(.welcomeKicker)
@@ -9,13 +12,15 @@ struct WelcomeMasthead: View {
             Text(.welcomeTitle)
                 .textStyle(.title)
                 .accessibilityIdentifier("welcome-title")
-            Text(.welcomeSubtitle(SkillCatalog.all.count, Course.allCases.count))
-                .textStyle(.subtitle)
-                .accessibilityIdentifier("welcome-subtitle")
+            if let catalog {
+                Text(.welcomeSubtitle(catalog.skills.count, catalog.courses.count))
+                    .textStyle(.subtitle)
+                    .accessibilityIdentifier("welcome-subtitle")
+            }
         }
     }
 }
 
 #Preview {
-    WelcomeMasthead()
+    WelcomeMasthead(catalog: BundledLibrary.catalog())
 }

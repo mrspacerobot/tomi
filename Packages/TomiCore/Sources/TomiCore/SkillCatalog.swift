@@ -1,28 +1,20 @@
-/// The twelve techniques Tomi teaches, in menu order.
-public enum SkillCatalog {
-    public static let all: [Skill] = [
-        Skill(id: .knife, course: .foundations),
-        Skill(id: .eggs, course: .foundations),
-        Skill(id: .boil, course: .foundations),
-        Skill(id: .saute, course: .heatControl, prerequisites: [.knife]),
-        Skill(id: .sear, course: .heatControl, prerequisites: [.knife]),
-        Skill(id: .rice, course: .heatControl, prerequisites: [.boil]),
-        Skill(id: .roast, course: .buildingFlavor, prerequisites: [.knife]),
-        Skill(id: .pansauce, course: .buildingFlavor, prerequisites: [.sear]),
-        Skill(id: .emulsion, course: .buildingFlavor, prerequisites: [.knife]),
-        Skill(id: .pasta, course: .puttingItTogether, prerequisites: [.boil, .saute]),
-        Skill(id: .braise, course: .puttingItTogether, prerequisites: [.sear, .roast]),
-        Skill(id: .balance, course: .puttingItTogether, prerequisites: [.pansauce, .emulsion]),
-    ]
+/// Every technique Tomi teaches, grouped into courses, in menu order.
+/// It is content, not code: it ships in the lesson library and is read with `decode(from:)`.
+public struct SkillCatalog: Hashable, Codable, Sendable {
+    /// The catalog layout this build understands. Bump it, and the validator, when the layout changes.
+    public static let supportedSchemaVersion = 1
 
-    public static func skill(_ id: SkillID) -> Skill {
-        guard let skill = all.first(where: { $0.id == id }) else {
-            preconditionFailure("SkillCatalog is missing \(id)")
-        }
-        return skill
+    public let schemaVersion: Int
+    /// Increases with every published library, so a newer download can be told from the bundled copy.
+    public let libraryVersion: Int
+    public let courses: [Course]
+    public let skills: [Skill]
+
+    public func skill(_ id: SkillID) -> Skill? {
+        skills.first { $0.id == id }
     }
 
-    public static func skills(in course: Course) -> [Skill] {
-        all.filter { $0.course == course }
+    public func skills(in course: CourseID) -> [Skill] {
+        skills.filter { $0.course == course }
     }
 }
