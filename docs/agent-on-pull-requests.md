@@ -6,14 +6,20 @@ Write `@claude` followed by what you want in a pull request comment, a review, o
 @claude the stamp is too small on the menu, make it match the mockup
 ```
 
+## Several requests in one review
+
+Put `@claude` in as many inline comments as you like and submit them as one review. The agent gets all of them in one run, each with its file and line, and answers with a checklist in a single comment on the pull request: one ticked line per request saying what changed, or why it did not.
+
+A single inline comment or a reply in a thread works the same way, as a review with one request. An inline comment without `@claude` is left alone.
+
 ## How it works
 
-1. The comment starts the workflow in `.github/workflows/claude.yml`. Workflows started by comments always run the version on `main`.
-2. The workflow only continues if the comment was written by the owner and contains `@claude`.
-3. GitHub hands the job to the self-hosted runner on the owner's Mac (label `tomi-mac`), because building and testing an iPhone app needs Xcode and the simulator.
+1. A comment or a submitted review starts the workflow in `.github/workflows/claude.yml`. Workflows started this way always run the version on `main`.
+2. A short first job on GitHub's own machine checks that the owner wrote it and collects every request that names `@claude`. If there is none, nothing else runs and the Mac is not woken.
+3. GitHub hands the work to the self-hosted runner on the owner's Mac (label `tomi-mac`), because building and testing an iPhone app needs Xcode and the simulator.
 4. Claude Code runs there, reads `AGENTS.md`, and follows it. It never merges and never pushes to `main`.
 
-If the Mac is off or asleep, the job waits in the queue until it is back.
+The Mac runs one job at a time. If it is busy, off or asleep, jobs wait in the queue and run in order when it is free. This relies on there being exactly one runner with the `tomi-mac` label: with two, two agents could push to the same branch at once.
 
 ## One-time setup
 
