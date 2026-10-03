@@ -19,14 +19,14 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Curriculum | Classical French technique and its kitchen words (mirepoix, roux, deglaze, monter au beurre, beurre blanc), without presenting the app as "French cooking". Twelve techniques in four courses (Foundations, Heat control, Sauces, Putting it together), each with levels |
 | Lessons | Written in bulk by a top Claude model into a reviewed library. One file per lesson. Never generated live in version 1 |
 | Tomi and step scenes | Drawn and animated in SwiftUI code from shared parts, behind one small interface so a richer mascot can replace it later |
-| Onboarding | Nine screens: welcome, diet, things to avoid, cuisines, kitchen, experience, table and units, camera primer, done. Notifications are asked at the first timer, the cupboard at the first scan |
+| Onboarding | Nine screens: welcome, diet, things to avoid, cuisines, kitchen, experience and weekly goal, table and units, camera primer, done. Notifications are asked at the first timer, the cupboard at the first scan |
 | Cuisines | Love, happy to try, or never, from day one. "Never" hides those dishes, including alternatives. Cuisines never gate skills. More arrive later as "guest menus" |
 | Pantry | Saved cupboard staples, switchable per evening, plus typing anything the photo missed |
 | Unsure ingredients | Not counted until the cook confirms them |
 | Backend | Local first. iCloud (CloudKit) sync, a hosted signed lesson library, and one small Go service for anonymous ratings and usage events, all switched on before TestFlight. Own accounts and sync only if Android or web arrives |
 | Languages | English first. All text in a string catalog |
 | Streak and rank | The streak is the everyday hook and leads on home; rank is the slow, long goal behind it |
-| Weekly streak | The cook sets a goal of 1 to 7 cooking days a week (default 3). The streak counts consecutive weeks with the goal met. Days, not cooks, so two lessons in one evening count once. The week in progress never breaks the streak, and each week is judged by the goal recorded with its cooks, so raising the goal never wipes an earned streak. Weeks follow the phone's calendar |
+| Weekly streak | The cook sets a goal of 1 to 7 cooking days a week (default 3). The streak counts consecutive weeks with the goal met. Days, not cooks, so two lessons in one evening count once. The week in progress never breaks the streak, and each week is judged by the goal recorded with its cooks, so raising the goal never wipes an earned streak. Weeks follow the phone's calendar. The goal is asked on the experience screen (`ob-level`) and can be changed in Settings |
 | Rank ladder | Novice, Commis, Cook, Saucier, Sous, Chef, Patron, Toque at 0, 150, 400, 900, 1,800, 3,300, 6,000 and 11,000 XP: Commis in the first week, Toque after about a year at three or four cooks a week. Then open-ended: Toque II, III and on, every 3,000 XP, about one a season. All in `GameRules` |
 
 ### Open decisions (default used until the owner decides)
@@ -36,7 +36,6 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | XP per cooked dish | 50, plus 10 for a correct quiz (the prototype's values; mockups show 40) |
 | Wrong quiz answer | Costs nothing, the question returns in a later lesson |
 | "I stopped early" | Does not count toward the streak |
-| Where onboarding asks the weekly goal | On the experience screen, default 3 days. Not in the mockups yet |
 | Hands-free mode | Keeps a slim Next button so touch always works |
 | Onboarding extras | Weeknight time budget is not asked |
 
