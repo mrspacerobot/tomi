@@ -25,13 +25,14 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Unsure ingredients | Not counted until the cook confirms them |
 | Backend | Local first. iCloud (CloudKit) sync, a hosted signed lesson library, and one small Go service for anonymous ratings and usage events, all switched on before TestFlight. Own accounts and sync only if Android or web arrives |
 | Languages | English first. All text in a string catalog |
+| Streak and rank | The streak is the everyday hook and leads on home; rank is the slow, long goal behind it |
+| Rank ladder | Novice, Commis, Cook, Saucier, Sous, Chef, Patron, Toque at 0, 150, 400, 900, 1,800, 3,300, 6,000 and 11,000 XP: Commis in the first week, Toque after about a year at three or four cooks a week. Then open-ended: Toque II, III and on, every 3,000 XP, about one a season. All in `GameRules` |
 
 ### Open decisions (default used until the owner decides)
 
 | Question | Default |
 |---|---|
 | XP per cooked dish | 50, plus 10 for a correct quiz (the prototype's values; mockups show 40) |
-| Rank ladder | Novice, Commis, Cook, Saucier, Sous, Chef, Patron, Toque, 150 XP each. At this rate a regular cook reaches Toque in about six weeks, so steeper or open-ended steps are likely |
 | Wrong quiz answer | Costs nothing, the question returns in a later lesson |
 | "I stopped early" | Does not count toward the streak |
 | Hands-free mode | Keeps a slim Next button so touch always works |
