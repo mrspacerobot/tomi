@@ -12,7 +12,10 @@ public struct Streak: Hashable, Sendable {
 
     /// Consecutive weeks with the goal met. The week in progress adds one once it is met and never breaks it before.
     public var weeks: Int {
-        isThisWeekMet ? weeksBeforeThisWeek + 1 : weeksBeforeThisWeek
+        if isThisWeekMet {
+            return weeksBeforeThisWeek + 1
+        }
+        return weeksBeforeThisWeek
     }
 
     public var isThisWeekMet: Bool {

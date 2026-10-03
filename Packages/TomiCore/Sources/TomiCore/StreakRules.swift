@@ -25,7 +25,7 @@ public struct StreakRules: Sendable {
     private func metWeeksInARow(before thisWeek: Date, in weeks: CookingWeeks) -> Int {
         var count = 0
         var week = calendar.startOfWeek(before: thisWeek)
-        while let start = week, weeks.wasMet(weekStarting: start) {
+        while let start = week, weeks.wasGoalMet(inWeekStarting: start) {
             count += 1
             week = calendar.startOfWeek(before: start)
         }

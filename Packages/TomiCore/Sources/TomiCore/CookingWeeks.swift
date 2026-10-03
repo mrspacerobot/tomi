@@ -1,29 +1,31 @@
 import Foundation
 
-/// Finished cooks grouped into the cook's calendar weeks: the days cooked in each week and the goal it had.
+/// Finished cooks grouped into the cook's calendar weeks. Each week is found by the date it starts on.
 struct CookingWeeks {
-    private struct Week {
-        var days: Set<Date> = []
-        var goal = GameRules.defaultWeeklyGoal
-    }
-
-    private var weeks: [Date: Week] = [:]
+    private var weeksByStart: [Date: CookingWeek] = [:]
 
     init(cooks: [CompletedCook], calendar: Calendar) {
-        for cook in cooks.sorted(by: { $0.date < $1.date }) {
-            let start = calendar.startOfWeek(containing: cook.date)
-            weeks[start, default: Week()].days.insert(calendar.startOfDay(for: cook.date))
-            weeks[start]?.goal = GameRules.clampedWeeklyGoal(cook.weeklyGoal)
+        for cook in cooks {
+            let weekStart = calendar.startOfWeek(containing: cook.date)
+            let day = calendar.startOfDay(for: cook.date)
+            var week = weeksByStart[weekStart, default: CookingWeek()]
+            week.add(cook, day: day)
+            weeksByStart[weekStart] = week
         }
     }
 
-    func daysCooked(inWeekStarting start: Date) -> Int {
-        weeks[start]?.days.count ?? 0
+    func daysCooked(inWeekStarting weekStart: Date) -> Int {
+        guard let week = weeksByStart[weekStart] else {
+            return 0
+        }
+        return week.daysCooked.count
     }
 
-    /// Judged by the goal of the week's latest cook, the goal the cook was working to at the time.
-    func wasMet(weekStarting start: Date) -> Bool {
-        guard let week = weeks[start] else { return false }
-        return week.days.count >= week.goal
+    /// A week with no cooks never meets its goal.
+    func wasGoalMet(inWeekStarting weekStart: Date) -> Bool {
+        guard let week = weeksByStart[weekStart] else {
+            return false
+        }
+        return week.isGoalMet
     }
 }
