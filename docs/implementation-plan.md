@@ -25,6 +25,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Unsure ingredients | Not counted until the cook confirms them |
 | Backend | Local first. iCloud (CloudKit) sync, a hosted signed lesson library, and one small Go service for anonymous ratings and usage events, all switched on before TestFlight. Own accounts and sync only if Android or web arrives |
 | Languages | English first. All text in a string catalog |
+| Plate photo | Optional, offered on the celebration card ("Show me the plate"). The streak day, XP and stamp are earned by finishing the lesson, never by the photo. Tomi makes one warm remark about what the technique should show, never a score and never a claim that the dish is cooked through or safe. The photo is kept with the dish on the menu and stays on the phone. Without Apple Intelligence it is kept with no remark. Mockup: `round3.html`, `lp-plate` |
 | Streak and rank | The streak is the everyday hook and leads on home; rank is the slow, long goal behind it |
 | Weekly streak | The cook sets a goal of 1 to 7 cooking days a week (default 3). The streak counts consecutive weeks with the goal met. Days, not cooks, so two lessons in one evening count once. The week in progress never breaks the streak, and each week is judged by the goal recorded with its cooks, so raising the goal never wipes an earned streak. Weeks follow the phone's calendar. The goal is asked on the experience screen (`ob-level`) and can be changed in Settings |
 | Rank ladder | Novice, Commis, Cook, Saucier, Sous, Chef, Patron, Toque at 0, 150, 400, 900, 1,800, 3,300, 6,000 and 11,000 XP: Commis in the first week, Toque after about a year at three or four cooks a week. Then open-ended: Toque II, III and on, every 3,000 XP, about one a season. All in `GameRules` |
@@ -90,8 +91,10 @@ Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replace
 | Model | Fields |
 |---|---|
 | Profile | focus skill, weekly goal, voice on, diet, avoid list, cuisine preferences, cupboard staples, equipment, servings, units, onboarding done |
-| CookLog | lesson id, lesson revision, skill, level, date, weekly goal at the time, swaps used, quiz correct, XP earned, rating |
+| CookLog | lesson id, lesson revision, skill, level, date, weekly goal at the time, swaps used, quiz correct, XP earned, rating, plate photo file name |
 | ActiveLesson | the adapted lesson, tonight's ingredient list, current step |
+
+Plate photos are files in the app's own storage on the phone. Only the file name is in the cook log, so the log syncs through iCloud and the photos do not; on a second device the dish simply shows without a photo.
 
 The cook log is the source of truth. XP, rank, streak and mastery are computed from it. Every record has a stable id and timestamp. All fields are optional or defaulted and changes are additive, so the layout is safe for iCloud.
 
@@ -108,8 +111,8 @@ Each phase ends with something runnable. GitHub milestones mirror these.
 | 4 | Lesson player | The example lesson can be cooked start to finish, earning XP, a day toward the weekly goal and a stamp |
 | A | Milestone | A real app in Tomi's own design, no AI yet |
 | 5 | Lesson library | The app picks among real library lessons for a typed list, and a vegan nut-free profile is never shown a dish it cannot eat |
-| 6 | Fridge scan | A real fridge photo produces a sensible special, and the same flow works without Apple Intelligence |
-| 7 | Ask Tomi | Safety questions are always answered from the table, in any phrasing tried |
+| 6 | Fridge scan | A real fridge photo produces a sensible special, and the same flow works without Apple Intelligence. A plate photo can be kept after a cook |
+| 7 | Ask Tomi | Safety questions are always answered from the table, in any phrasing tried. Tomi remarks on a plate photo without ever judging doneness |
 | 8 | Hands-free voice | A lesson can be finished without touching the phone, with an extractor fan running |
 | B | Milestone | Everything in the README works on device |
 | 9 | Sync, backend, proof and polish | iCloud sync, hosted library and ratings service are live, a friend installs from TestFlight and cooks dinner |
