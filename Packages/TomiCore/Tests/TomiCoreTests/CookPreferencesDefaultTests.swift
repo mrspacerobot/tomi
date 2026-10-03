@@ -1,0 +1,54 @@
+import Testing
+
+@testable import TomiCore
+
+/// What Tomi assumes before the cook has answered anything.
+@Suite struct CookPreferencesDefaultTests {
+    let preferences = CookPreferences()
+
+    @Test func theCookEatsEverythingAndAvoidsNothing() {
+        #expect(preferences.diet == .everything)
+        #expect(preferences.avoid.isEmpty)
+    }
+
+    @Test func noCuisineHasAnAnswerYet() {
+        #expect(preferences.cuisines.answers.isEmpty)
+        #expect(preferences.cuisines.preference(for: "italian") == .try)
+    }
+
+    @Test func theKitchenHasAStovetopAnOvenAndAMicrowave() {
+        #expect(preferences.equipment == [.stovetop, .oven, .microwave])
+        #expect(Equipment.standard == [.stovetop, .oven, .microwave])
+    }
+
+    @Test func theCookKnowsTheBasics() {
+        #expect(preferences.experience == .basics)
+    }
+
+    @Test func theTableIsSetForTwo() {
+        #expect(preferences.servings == 2)
+        #expect(CookPreferences.defaultServings == 2)
+    }
+
+    @Test func theWeeklyGoalIsTheGameDefault() {
+        #expect(preferences.weeklyGoal == GameRules.defaultWeeklyGoal)
+    }
+
+    @Test func theCupboardIsEmpty() {
+        #expect(preferences.cupboardStaples.isEmpty)
+    }
+
+    @Test func noUnitsAreChosenSoTheLocaleDecides() {
+        #expect(preferences.chosenUnits == nil)
+    }
+
+    @Test func theClosedListsHoldExactlyTheAnswersOnTheScreens() {
+        #expect(Diet.allCases == [.everything, .vegetarian, .vegan, .pescatarian])
+        #expect(
+            AvoidItem.allCases == [.nuts, .dairy, .gluten, .eggs, .shellfish, .fish, .soy, .sesame, .pork, .alcohol]
+        )
+        #expect(Equipment.allCases == [.stovetop, .oven, .microwave, .thermometer, .blender, .riceCooker])
+        #expect(Experience.allCases == [.never, .basics, .comfortable])
+        #expect(CuisinePreference.allCases == [.love, .try, .never])
+    }
+}

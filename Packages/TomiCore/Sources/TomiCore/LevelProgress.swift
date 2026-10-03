@@ -6,8 +6,13 @@ public struct LevelProgress: Hashable, Sendable {
     public let cooks: Int
     /// Lessons of this level may be offered: the skill is served and every level before this one is complete.
     public let isOpen: Bool
+    /// The cook's experience answer covers this level, so it is complete without any cook.
+    public let isGranted: Bool
 
     public var isComplete: Bool {
-        GameRules.isLevelComplete(cooks: cooks)
+        if isGranted {
+            return true
+        }
+        return GameRules.isLevelComplete(cooks: cooks)
     }
 }

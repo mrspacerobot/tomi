@@ -2,9 +2,13 @@
 /// The catalog is a parameter, so the rules hold for any menu and never name a skill.
 public struct ProgressRules: Sendable {
     public let catalog: SkillCatalog
+    /// Skills the cook's experience answer covers. Every level of one is complete without a cook,
+    /// so nothing fake is ever written to the cook log, and a grant earns no XP.
+    public let grantedSkills: Set<SkillID>
 
-    public init(catalog: SkillCatalog) {
+    public init(catalog: SkillCatalog, experience: Experience) {
         self.catalog = catalog
+        self.grantedSkills = experience.grantedSkills(in: catalog)
     }
 
     /// Progress for every skill on the menu. Entries may come in any order and may repeat.
@@ -29,15 +33,17 @@ public struct ProgressRules: Sendable {
     private func levels(of skill: Skill, counts: CookCounts, isServed: Bool) -> [LevelProgress] {
         var levels: [LevelProgress] = []
         var isOpen = isServed
+        let isGranted = grantedSkills.contains(skill.id)
         for level in skill.levels {
             let cooks = counts.cooks(of: skill.id, level: level.number)
-            levels.append(LevelProgress(number: level.number, cooks: cooks, isOpen: isOpen))
-            isOpen = isOpen && GameRules.isLevelComplete(cooks: cooks)
+            let progress = LevelProgress(number: level.number, cooks: cooks, isOpen: isOpen, isGranted: isGranted)
+            levels.append(progress)
+            isOpen = isOpen && progress.isComplete
         }
         return levels
     }
 
-    /// A skill is served when the first level of every prerequisite is complete.
+    /// A skill is served when the first level of every prerequisite is complete, by cooking or by a grant.
     /// Asking for every level would hold the next techniques back for weeks.
     private func missingPrerequisites(of skill: Skill, counts: CookCounts) -> [SkillID] {
         var missing: [SkillID] = []
@@ -48,6 +54,9 @@ public struct ProgressRules: Sendable {
     }
 
     private func isFirstLevelComplete(of id: SkillID, counts: CookCounts) -> Bool {
+        if grantedSkills.contains(id) {
+            return true
+        }
         guard let skill = catalog.skill(id) else {
             return false
         }

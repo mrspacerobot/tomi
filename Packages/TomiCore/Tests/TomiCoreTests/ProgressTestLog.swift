@@ -5,9 +5,12 @@
 /// two levels each.
 struct ProgressTestLog {
     let catalog: SkillCatalog
+    /// What the cook answered on the experience screen. The basics, the screen's own default, unless a test says.
+    let experience: Experience
 
-    init(catalog: SkillCatalog = .fixture()) {
+    init(catalog: SkillCatalog = .fixture(), experience: Experience = .basics) {
         self.catalog = catalog
+        self.experience = experience
     }
 
     /// As many separate finished cooks of one skill at one level as asked for.
@@ -31,7 +34,7 @@ struct ProgressTestLog {
     }
 
     func progress(_ entries: [CookEntry]) -> CookProgress {
-        ProgressRules(catalog: catalog).progress(for: entries)
+        ProgressRules(catalog: catalog, experience: experience).progress(for: entries)
     }
 
     func progress(of skill: SkillID, after entries: [CookEntry]) -> SkillProgress {
