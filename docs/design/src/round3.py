@@ -157,6 +157,12 @@ CSS = r"""
 .c-ink{width:100%;text-align:left;margin-top:20px;border-top:3px double var(--blue);border-bottom:1px solid var(--blue);padding:4px 0 0;position:relative}
 .c-ink .b-dish{border-bottom:0}
 .c-ink .b-k{display:block;padding-top:8px}
+/* plate photo */
+.p-photo{width:236px;margin-top:18px;padding:8px 8px 0;border:1.5px solid var(--blue);background:#fff;transform:rotate(-2deg)}
+.p-photo svg{display:block;width:100%;height:auto}
+.p-photo figcaption{font-size:14.5px;line-height:19px;padding:8px 4px 9px;text-align:center}
+.s-line .ph{width:34px;height:34px;flex:none;margin:-6px 0 -6px 3px;border:1.5px solid var(--blue);background:#fff;overflow:hidden}
+.s-line .ph svg{display:block;width:100%;height:100%}
 .c-press{position:absolute;right:6px;top:10px;transform:rotate(-12deg)}
 .c-press .b-stamp{margin:0;transform:none}
 .c-new{display:inline-block;font:700 10.500px/16px "Figtree",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--red);padding:0 6px;border-radius:2px;margin-left:8px;vertical-align:3px}
@@ -399,8 +405,8 @@ def celebrate_a():
             '<p class="sub b-it">Your first pan sauce. One more and it earns the stamp.</p>'
             '<div class="c-ink"><span class="b-k">Inked onto your menu</span>' + line + '</div></div>' +
             house(("Earned", "50 XP", "40 dish, 10 quiz"), ("Streak", "3 weeks", "2 of 3 this week"), ("New rank", "Cook", "level 3")).replace('class="b-xp"', 'class="b-xp" style="display:none"') +
-            '<div class="b-foot col"><div class="b-btn" role="button">Back to the menu</div><div class="r-link" role="button">Save this dish to cook again</div></div>')
-    return shot("lp-celebrate", "1j", "Celebration, progress toward the stamp", "<b>The reward is the menu changing.</b> The dish line is written in with its first diamond filled, under a double rule, as if the card had just been reprinted. XP, streak and the new rank use the same three columns as home. In the app the line draws in left to right and the diamond fills last.", body)
+            '<div class="b-foot col"><div class="b-btn" role="button">Back to the menu</div><div class="b-btn sec" role="button">' + icon("camera", 20, 1.8) + ' Show me the plate</div><div class="r-link" role="button">Save this dish to cook again</div></div>')
+    return shot("lp-celebrate", "1j", "Celebration, progress toward the stamp", "<b>The reward is the menu changing.</b> The dish line is written in with its first diamond filled, under a double rule, as if the card had just been reprinted. XP, streak and the new rank use the same three columns as home. In the app the line draws in left to right and the diamond fills last. \"Show me the plate\" is an optional extra: everything on this card is already earned without it.", body)
 
 
 def celebrate_b():
@@ -412,8 +418,23 @@ def celebrate_b():
             '<div class="c-ink"><span class="b-k">Mastered</span>' + line + '<div class="c-press">' + stamp2(92) + '</div></div>'
             '<div class="c-ink" style="border-top:1px solid var(--blue);margin-top:14px"><span class="b-k">Now served</span>' + new + '</div></div>' +
             house(("Earned", "50 XP", "40 dish, 10 quiz"), ("Streak", "4 weeks", "goal met"), ("First course", "3 of 3", "all stamped")).replace('class="b-xp"', 'class="b-xp" style="display:none"') +
-            '<div class="b-foot col"><div class="b-btn" role="button">Back to the menu</div></div>')
+            '<div class="b-foot col"><div class="b-btn" role="button">Back to the menu</div><div class="b-btn sec" role="button">' + icon("camera", 20, 1.8) + ' Show me the plate</div></div>')
     return shot("lp-celebrate-stamp", "1k", "Celebration, stamp earned", "The second cook presses the stamp, large and off-square, over the dish line; in the app it lands with a short press and a haptic. Below it, anything newly unlocked is added to the menu with a \"New\" tag. Shown for Boil &amp; blanch, because mastering it serves Rice &amp; grains.", body)
+
+
+def plate_photo(label="Your photo of the finished dish", box="64 64 230 172"):
+    return ('<svg viewBox="' + box + '" role="img" aria-label="' + label + '"><rect x="0" y="0" width="358" height="300" fill="#EEF0F8"/>' +
+            scenes3.scene("plate") + '</svg>')
+
+
+def lp_plate():
+    body = ('<div class="c-wrap" style="padding-top:62px"><p class="b-k">Friday 2 October</p><h1 class="b-d">That looks like dinner.</h1>'
+            '<figure class="p-photo">' + plate_photo() + '<figcaption class="b-it">Seared chicken thighs with lemon-butter pan sauce</figcaption></figure>'
+            '<div class="l-why" style="width:100%;text-align:left;margin-top:20px">' + tomi(B, "happy", 74) +
+            '<div class="tx"><span class="b-k">Tomi says</span><p>Deep golden skin and a sauce that shines. That gloss is the butter you mounted at the end.</p></div></div></div>'
+            '<div class="b-foot col"><p class="r-hint b-it">Kept with Pan sauces. It stays on this phone.</p>'
+            '<div class="b-btn" role="button">Back to the menu</div><div class="r-link" role="button">Take it again</div></div>')
+    return shot("lp-plate", "1l", "Plate photo, kept", "<b>A keepsake, not a test.</b> Shown after \"Show me the plate\". Tomi makes one warm remark about what the technique should show (colour, gloss) and never gives a score. He never says a dish is cooked through or safe: a photo cannot tell. The photo is kept with the dish on the menu and stays on the phone. Without Apple Intelligence it is kept with no remark.", body)
 
 
 # ---------------------------------------------------------------- 3. ask tomi
@@ -509,11 +530,11 @@ def skill_mastered():
             '<p class="sub b-it">Dry surface, hot pan, hands off</p>'
             '<p class="tx">Browning is flavour. A dry surface and a properly hot pan build a crust; moving the food too soon tears it off. You learned to wait.</p>'
             '<div class="l-sec"><div class="hd"><span class="b-k">Cooked for it</span><span class="b-it">2 of 2, mastered</span></div>' +
-            sline("Seared mushrooms on toast", "Thu 1 Oct " + icon("chev", 14, 2.2)) + sline("Crisp-skin chicken thighs", "Wed 30 Sep " + icon("chev", 14, 2.2)) + '</div>'
+            sline("Seared mushrooms on toast", "1 Oct " + icon("chev", 14, 2.2)) + sline("Crisp-skin chicken thighs", "30 Sep " + '<span class="ph">' + plate_photo("Your photo of this dish", "104 82 150 150") + '</span>') + '</div>'
             '<div class="l-sec"><div class="hd"><span class="b-k">It unlocked</span><span class="b-it">on your menu now</span></div>' +
             sline("Pan sauces", "Next up " + dir_b.pips(0)) + sline("Braising", icon("lock", 13, 2) + " also needs Roasting") + '</div></div>'
             '<div class="b-foot col"><div class="b-btn sec" role="button">Practise it again tonight</div></div>')
-    return shot("skill-mastered", "5a", "Skill detail, mastered", "What opens when a dish line is tapped. Title with its stamp, the technique in three sentences, the two dishes cooked for it (each opens the recipe to cook again), and what it unlocked. A mastered skill can still be chosen for tonight, as a secondary action.", body)
+    return shot("skill-mastered", "5a", "Skill detail, mastered", "What opens when a dish line is tapped. Title with its stamp, the technique in three sentences, the two dishes cooked for it (each opens the recipe to cook again; a dish with a plate photo shows it in place of the arrow), and what it unlocked. A mastered skill can still be chosen for tonight, as a secondary action.", body)
 
 
 def skill_ready():
@@ -781,7 +802,7 @@ def build():
              "<style>\n", PAGE_CSS, dir_b.CSS, r2.CSS, CSS, "</style>\n</head>\n<body>\n<div class=\"wrap\">\n",
              header(),
              section("lesson-player", "1", "Lesson player", "From the intro to the celebration, in the order a cook meets them. The sample is round 1's pan sauce lesson.",
-                     [lp_intro(), lp_step_timer(), lp_notify(), lp_timer_done(), lp_step_plain(), lp_quiz(), lp_quiz_right(), lp_quiz_wrong(), lp_finish(), celebrate_a(), celebrate_b()]),
+                     [lp_intro(), lp_step_timer(), lp_notify(), lp_timer_done(), lp_step_plain(), lp_quiz(), lp_quiz_right(), lp_quiz_wrong(), lp_finish(), celebrate_a(), celebrate_b(), lp_plate()]),
              section("step-scenes", "2", "Step scenes", "Fifteen actions drawn from one kit of parts on a shared stage. Under each: the parts it uses. \"Main\" is the swappable food part.", kit(), grid=False),
              section("ask-tomi", "3", "Ask Tomi", "A sheet over the step. The timer above it keeps running.", [ask_open(), ask_thread(), ask_off()]),
              section("voice", "4", "Hands-free voice", "Listening, speaking, the hold-to-talk fallback, and the primer shown the first time.", [voice_listen(), voice_speak(), voice_hold(), voice_primer()]),
