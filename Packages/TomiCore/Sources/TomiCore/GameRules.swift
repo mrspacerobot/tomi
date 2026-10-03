@@ -12,4 +12,12 @@ public enum GameRules {
 
     /// Past Toque the ladder never ends: a new tier (Toque II, III...) every this much XP, about one a season.
     public static let xpPerTierPastTop = 3_000
+
+    /// The streak counts weeks in which the cook cooked on at least this many days. Asked in onboarding.
+    public static let weeklyGoalOptions = 1...7
+    public static let defaultWeeklyGoal = 3
+
+    static func clampedWeeklyGoal(_ goal: Int) -> Int {
+        min(max(goal, weeklyGoalOptions.lowerBound), weeklyGoalOptions.upperBound)
+    }
 }

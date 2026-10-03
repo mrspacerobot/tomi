@@ -26,6 +26,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Backend | Local first. iCloud (CloudKit) sync, a hosted signed lesson library, and one small Go service for anonymous ratings and usage events, all switched on before TestFlight. Own accounts and sync only if Android or web arrives |
 | Languages | English first. All text in a string catalog |
 | Streak and rank | The streak is the everyday hook and leads on home; rank is the slow, long goal behind it |
+| Weekly streak | The cook sets a goal of 1 to 7 cooking days a week (default 3). The streak counts consecutive weeks with the goal met. Days, not cooks, so two lessons in one evening count once. The week in progress never breaks the streak, and each week is judged by the goal recorded with its cooks, so raising the goal never wipes an earned streak. Weeks follow the phone's calendar |
 | Rank ladder | Novice, Commis, Cook, Saucier, Sous, Chef, Patron, Toque at 0, 150, 400, 900, 1,800, 3,300, 6,000 and 11,000 XP: Commis in the first week, Toque after about a year at three or four cooks a week. Then open-ended: Toque II, III and on, every 3,000 XP, about one a season. All in `GameRules` |
 
 ### Open decisions (default used until the owner decides)
@@ -35,6 +36,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | XP per cooked dish | 50, plus 10 for a correct quiz (the prototype's values; mockups show 40) |
 | Wrong quiz answer | Costs nothing, the question returns in a later lesson |
 | "I stopped early" | Does not count toward the streak |
+| Where onboarding asks the weekly goal | On the experience screen, default 3 days. Not in the mockups yet |
 | Hands-free mode | Keeps a slim Next button so touch always works |
 | Onboarding extras | Weeknight time budget is not asked |
 
@@ -88,8 +90,8 @@ Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replace
 
 | Model | Fields |
 |---|---|
-| Profile | focus skill, voice on, diet, avoid list, cuisine preferences, cupboard staples, equipment, servings, units, onboarding done |
-| CookLog | lesson id, lesson revision, skill, level, date, swaps used, quiz correct, XP earned, rating |
+| Profile | focus skill, weekly goal, voice on, diet, avoid list, cuisine preferences, cupboard staples, equipment, servings, units, onboarding done |
+| CookLog | lesson id, lesson revision, skill, level, date, weekly goal at the time, swaps used, quiz correct, XP earned, rating |
 | ActiveLesson | the adapted lesson, tonight's ingredient list, current step |
 
 The cook log is the source of truth. XP, rank, streak and mastery are computed from it. Every record has a stable id and timestamp. All fields are optional or defaulted and changes are additive, so the layout is safe for iCloud.
@@ -104,7 +106,7 @@ Each phase ends with something runnable. GitHub milestones mirror these.
 | 1 | Design pass | Done. Mockups approved in `docs/design/` |
 | 2 | Rules and design system | Every rule is in TomiCore with tests, and a gallery of every component matches the mockups in light and dark |
 | 3 | Onboarding, home, menu, saved progress | A fresh install walks through onboarding, answers survive a force-quit, and "vegetarian" changes the example special |
-| 4 | Lesson player | The example lesson can be cooked start to finish, earning XP, a streak day and a stamp |
+| 4 | Lesson player | The example lesson can be cooked start to finish, earning XP, a day toward the weekly goal and a stamp |
 | A | Milestone | A real app in Tomi's own design, no AI yet |
 | 5 | Lesson library | The app picks among real library lessons for a typed list, and a vegan nut-free profile is never shown a dish it cannot eat |
 | 6 | Fridge scan | A real fridge photo produces a sensible special, and the same flow works without Apple Intelligence |
