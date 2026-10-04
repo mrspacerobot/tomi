@@ -21,6 +21,16 @@ A single inline comment or a reply in a thread works the same way, as a review w
 
 The Mac runs one job at a time. If it is busy, off or asleep, jobs wait in the queue and run in order when it is free. This relies on there being exactly one runner with the `tomi-mac` label: with two, two agents could push to the same branch at once.
 
+## The check on every pull request
+
+The same runner also runs `./scripts/check.sh` on every pull request to `main` (`.github/workflows/check.yml`). It costs nothing, because a self-hosted runner uses no GitHub minutes.
+
+- It runs when a pull request is opened and on every push to it. A new push cancels the older run of that pull request.
+- It shares the one runner with the agent, so a check and an agent job never run at the same time: one waits for the other.
+- It only runs while the Mac is awake. Until then the check shows as waiting on the pull request.
+- It skips pull requests from forks, so nobody else's code runs on the Mac.
+- GitHub cannot require it before a merge on this plan. The owner merges only when it is green.
+
 ## One-time setup
 
 1. **Add the secret.** In the Terminal app:

@@ -1,0 +1,31 @@
+name: Check
+
+# Runs ./scripts/check.sh on every pull request to main, so the owner can see it is green before merging.
+# See AGENTS.md and docs/agent-on-pull-requests.md.
+
+on:
+  pull_request:
+    branches: [main]
+
+# A new push makes the older run of the same pull request pointless, so it is cancelled and the Mac is freed.
+concurrency:
+  group: check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    # Only branches of this repository. A self-hosted runner must never run code from a fork.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    # The owner's Mac: the only machine with Xcode 27, the simulator and SwiftLint. It costs no minutes.
+    # If the Mac is busy, asleep or off, the job waits in the queue.
+    runs-on: [self-hosted, tomi-mac]
+    # A full run takes a few minutes. The limit only stops a stuck simulator from holding the Mac.
+    timeout-minutes: 30
+    # The check only reads the code. It never pushes or comments.
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run every check
+        run: ./scripts/check.sh
