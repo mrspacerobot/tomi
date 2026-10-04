@@ -148,6 +148,32 @@ def noodles():
     return [L('path d="M%s 84c6 -10 -6 -16 0 -26s-6 -14 0 -22"' % x, "yolk", 4) for x in (150, 166, 182, 198, 212)]
 
 
+def omelette():   # a rolled omelette, on the same footprint as the other mains
+    return [F('path d="M128 117C128 104 150 98 179 98C208 98 230 104 230 117C230 128 208 132 179 132C150 132 128 128 128 117Z"', "yolk"),
+            L('path d="M142 114C160 106 198 106 216 114"', "gold_d", 3.2),
+            F('path d="M224 110c8 -6 18 -4 22 3c-7 5 -16 5 -22 -3z"', "green")]
+
+
+def egg_sheet():  # beaten egg spread over the base of the pan
+    return [F('ellipse cx="179" cy="127" rx="70" ry="11"', "yolk")]
+
+
+def leaves(pts):  # spinach leaves, each a pointed oval with a midrib
+    S = []
+    for x, y, r in pts:
+        t = ' transform="translate(%s %s) rotate(%s)"' % (x, y, r)
+        S.append(F('path d="M-15 0c8 -10 22 -10 30 0c-8 10 -22 10 -30 0z"' + t, "green"))
+        S.append(L('path d="M-9 0h18"' + t, "ink", 1.400))
+    return S
+
+
+def flecks(pts):  # grated cheese
+    return [F('rect x="%s" y="%s" width="9" height="4" rx="2" transform="rotate(%s %s %s)"' % (x - 4.5, y - 2, r, x, y), "white") for x, y, r in pts]
+
+
+MAINS = {"chicken": chicken, "tofu": tofu, "omelette": omelette}
+
+
 # ---------------------------------------------------------------- motion
 def steam(pts=((150, 84), (180, 76), (210, 86)), short=False):
     d = "c-7 -7 7 -12 0 -20" if short else "c-7 -7 7 -12 0 -20s7 -12 0 -20"
@@ -172,7 +198,7 @@ def drops(xs=(150, 170, 190, 210), y=152):
 
 # ---------------------------------------------------------------- scenes
 def scene(name, food="chicken"):
-    main = tofu() if food == "tofu" else chicken()
+    main = MAINS[food]()
     if name == "chop":
         return R(board()) + G(84, 150, carrot()) + G(196, 156, coins(3)) + G(228, 96, knife(), -28) + R(arc("M248 70q14 10 10 28", "M252 94l6 5 5 -7"))
     if name == "crack":
@@ -206,10 +232,26 @@ def scene(name, food="chicken"):
             R(steam(((150, 118), (206, 118)), True))
     if name == "plate":
         return R(ground()) + R(plate()) + '<g transform="translate(-6 38) scale(.96)">%s</g>' % R(main) + \
-            R([F('path d="M224 160c8 -16 34 -14 38 0z"', "green"), L('path d="M112 174q40 12 96 6"', "yolk", 5)])
+            R([F('path d="M224 160c8 -16 34 -14 38 0z"', "green")]) + (R([L('path d="M112 174q40 12 96 6"', "yolk", 5)]) if food != "omelette" else "")
     if name == "temp":
         return R(board()) + '<g transform="translate(-20 44)">%s</g>' % R(main) + G(232, 56, thermo(), 28) + \
             '<text x="286" y="74" font-family="Gloock, Georgia, serif" font-size="30" fill="#172A6E">74&#176;</text>'
+    if name == "wilt":
+        return R(hob()) + R(pan(oil=False)) + R(leaves(((146, 124, -12), (176, 129, 8), (208, 123, -6), (190, 118, 24), (160, 117, 16)))) + \
+            G(278, 60, spatula(), 50) + R(steam(((122, 98), (150, 88), (178, 98)), True))
+    if name == "scramble":
+        return R(hob(3, small=True)) + R(pan(oil=False)) + R(egg_sheet()) + G(274, 58, spatula(), 46) + \
+            R(arc("M150 124q28 -12 54 0", "M197 117l8 7 -9 5")) + R(arc("M206 131q-28 9 -54 -1", "M159 136l-8 -6 9 -6"))
+    if name == "fill":
+        return R(hob(3, small=True)) + R(pan(oil=False)) + R(egg_sheet()) + R(leaves(((152, 126, -8), (182, 128, 6), (210, 125, -10)))) + \
+            R(flecks(((166, 121, 20), (196, 122, -30), (176, 132, 60), (222, 130, 10), (140, 130, -20)))) + \
+            R(flecks(((160, 70, 30), (186, 58, -20), (206, 76, 50)))) + R(arc("M183 84v18", "M177 96l6 8 6 -8"))
+    if name == "roll":
+        return R(hob()) + '<g transform="rotate(-9 179 150)">%s%s</g>' % (R(pan(oil=False)), '<g transform="translate(8 6)">%s</g>' % R(main)) + \
+            R(arc("M232 92q-34 -38 -78 -10", "M160 74l-9 9 12 4"))
+    if name == "mount":
+        return R(hob(0)) + R(pan()) + R(cubes(((150, 124, 8), (176, 128, -14)), ("yolk", "yolk"))) + G(232, 20, whisk(), 30) + \
+            R(arc("M132 118q46 -20 84 -2", "M208 108l9 8 -10 6"))
     return ""
 
 
@@ -229,6 +271,11 @@ SCENES = [
     ("rest", "Rest", "board, main, clock, steam"),
     ("plate", "Plate", "plate, main, greens, sauce"),
     ("temp", "Check temperature", "board, main, thermometer, reading"),
+    ("wilt", "Wilt greens", "hob, pan, leaves, spatula, steam"),
+    ("scramble", "Stir in the pan", "low hob, pan, egg, spatula, swirl"),
+    ("fill", "Fill", "low hob, pan, egg, leaves, cheese"),
+    ("roll", "Roll or fold", "hob, tilted pan, main, arc"),
+    ("mount", "Mount with butter", "hob off, pan, butter, whisk, swirl"),
 ]
 
 

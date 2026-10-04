@@ -6,6 +6,7 @@ extension Lesson {
         var issues = identityIssues(catalog: catalog)
         issues += numberIssues
         issues += ingredientIssues(table: table)
+        issues += mainIssues
         issues += stepIssues
         issues += quiz.issues
         issues += swapIssues(table: table)
@@ -23,6 +24,13 @@ extension Lesson {
             issues.append(.blankCuisine)
         }
         return issues
+    }
+
+    private var mainIssues: [LessonIssue] {
+        if main == nil {
+            return [.unknownMain(mainName)]
+        }
+        return []
     }
 
     /// The lesson must teach a level that its skill really has, or a finished cook would count for nothing.

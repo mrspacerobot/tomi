@@ -63,9 +63,11 @@ import Testing
         var lesson = Lesson.fixture()
         lesson.skill = "juggling"
         lesson.ingredients.append(.fixture("dragon-fruit"))
+        lesson.steps[0].sceneName = "juggle"
         lesson.quiz.correctAnswer = nil
         let expected: [LessonIssue] = [
-            .unknownSkill("juggling"), .unknownIngredient("dragon-fruit"), .noCorrectAnswer,
+            .unknownSkill("juggling"), .unknownIngredient("dragon-fruit"), .unknownScene(step: 0, "juggle"),
+            .noCorrectAnswer,
         ]
         #expect(lesson.issuesInTheFixtureLibrary() == expected)
     }
