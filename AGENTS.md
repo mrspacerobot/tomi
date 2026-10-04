@@ -168,7 +168,7 @@ For any agent or person reviewing a pull request here. Formatting, size limits a
 
 - Progress, XP, rank and streak are computed from the cook log on demand. A stored total is a bug.
 - The same entry id arriving twice counts once. Two logs merged in either order give the same result. No result may depend on the order of the entries.
-- An entry for a skill, level or lesson this version does not know is ignored for progress and never crashes. An entry marked stopped early counts for nothing.
+- An entry for a skill or level this version does not know is ignored for progress and never crashes. An entry for an unknown lesson still counts when its skill and level are known: the entry records both itself, and a newer library may add lessons to a technique an older app already has. An entry marked stopped early counts for nothing.
 - Week and day arithmetic uses the `Calendar` passed in. Inside TomiCore, `Calendar.current`, `Date()` and fixed lengths such as seven times 24 hours are bugs: they break at a daylight saving change, a different first weekday, or in a test.
 
 **Saved data and ids**
