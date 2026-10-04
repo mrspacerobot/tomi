@@ -20,7 +20,10 @@ public struct LocalizedText: Hashable, Codable, Sendable {
     }
 
     public var isMissingSourceText: Bool {
-        translations[Self.sourceLanguage]?.allSatisfy(\.isWhitespace) ?? true
+        guard let sourceText = translations[Self.sourceLanguage] else {
+            return true
+        }
+        return sourceText.isBlank
     }
 
     /// The best text for the cook's languages, in order of preference (pass `Locale.preferredLanguages`).

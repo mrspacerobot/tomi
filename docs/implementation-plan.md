@@ -55,8 +55,8 @@ Tomi/                  app target
   Onboarding/ Home/ Menu/ Scan/ Player/ Scenes/ AskTomi/ Voice/ Settings/
   AI/                  Foundation Models implementations
   Persistence/         SwiftData models, ProgressStore
-  Library/             BundledLibrary: reads the shipped library
-  Resources/           Assets, fonts, Localizable.xcstrings, Library/ (catalog.json, lessons/)
+  Library/             LessonLibrary (protocol), BundledLessonLibrary over the file reader BundledLibrary, FakeLessonLibrary
+  Resources/           Assets, fonts, Localizable.xcstrings, Library/ (catalog.json, ingredients.json, lessons/<skill>/<lesson id>.lesson.json)
 TomiTests/ TomiUITests/
 Packages/TomiCore/     rules, schema, generator, tests
 server/                Go service (later)
@@ -83,10 +83,14 @@ Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replace
 - A finished cook always counts at the level its lesson taught, even if that level or skill was not open yet, so progress depends only on which cooks are in the log and never on the order two devices merged them. A cook stopped early never counts.
 - The focus (next up) is the cook's chosen skill while it is served and not mastered, otherwise the first such skill in menu order.
 - A cook who answers "comfortable" in onboarding gets every technique of the first course on the menu as mastered. It is an input to the progress rules (`ProgressRules(catalog:experience:)`), read from the catalog, never a fake entry in the cook log, so it earns no XP and no streak. "Never" and "basics" grant nothing; they differ only in how much Tomi explains.
-- One file per lesson, grouped by skill, plus an index built by the generator carrying the library and schema versions. The index holds every field the filter needs, so a full lesson is read only once it is picked.
-- Each lesson has a stable id, a revision, a skill and level, a cuisine, ingredients, equipment, steps (each naming a scene from the closed scene list), a quiz, and swaps.
-- Diet and allergen tags are computed from the ingredient table, never typed and never produced by a model.
-- A swap is a reviewed substitution that removes an allergen or changes the diet (butter to olive oil removes dairy).
+- One file per lesson, grouped by skill: `lessons/<skill>/<lesson id>.lesson.json`. The app bundle is flat, so the `.lesson.json` ending is what marks a lesson file and the id in the name keeps it unique. An index built by the generator, carrying the library and schema versions and every field the filter needs, comes with the generator (#32); until then the app reads every lesson file.
+- Each lesson (schema version 1, `Lesson` in TomiCore) has a stable id, a revision, a skill and level, a cuisine, a title, a time in minutes, why-this and concept text, ingredients, equipment, steps, a quiz, and swaps. All words are `LocalizedText`, English required.
+- Each ingredient line names an ingredient of the table and its amount twice, in metric and in cups. An amount is a number and a unit from a closed list (gram, millilitre, cup, tablespoon, teaspoon, piece), never free text, so code can scale servings and format units. Step text names no amounts.
+- Each step has text, an optional tip, a scene from the closed scene list (`StepScene`) and an optional timer in seconds, four hours at most (`LessonStep.longestTimerSeconds`). The quiz has a question, two or more answers, the position of the right one and an explanation.
+- The validator (`Lesson.issues(catalog:table:)`) lists every problem: a blank id or cuisine, an unknown skill or level, a revision or time below 1, no ingredients, a duplicate or unknown ingredient, an amount that is not positive or uses a unit of the other system, no steps, an unknown scene, a timer that is not positive or runs over four hours, fewer than two answers, a missing or out-of-range correct answer, a swap of an ingredient the lesson lacks, a swap replacement that is unknown or already in the lesson, and missing English text. A file from another schema version, or with a field the schema does not have, is rejected before that.
+- Diet and allergen tags are computed from the ingredient table (`Lesson.tags(in:)`), never typed, never stored in the lesson file and never produced by a model. An ingredient the table does not know is an error, never "suitable".
+- A swap is a reviewed substitution of one ingredient of the lesson for another ingredient of the table, with its own amounts, that removes an allergen or changes the diet (butter to olive oil removes dairy). `Lesson.applying(_:)` gives the swapped lesson, and its tags are computed again.
+- The app reads the library through the `LessonLibrary` protocol (catalog, ingredient table, lessons). `BundledLessonLibrary` reads the app bundle; a lesson file that fails validation is skipped and logged, never shown. `FakeLessonLibrary` serves previews and tests.
 - Coverage rule: every skill has several lessons for every diet, even after any one cuisine is excluded. The generator reports gaps.
 - The library ships in the app and can be replaced by a newer signed download, so a lesson can be fixed or withdrawn the same day.
 

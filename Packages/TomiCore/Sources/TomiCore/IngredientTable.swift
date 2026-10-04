@@ -17,6 +17,11 @@ public struct IngredientTable: Hashable, Codable, Sendable {
         return ingredient
     }
 
+    /// Whether the table lists this ingredient.
+    public func contains(_ id: IngredientID) -> Bool {
+        ingredients.contains { $0.id == id }
+    }
+
     public func allowingDiets(for id: IngredientID) throws -> Set<Diet> {
         try ingredient(id).allowingDiets
     }
