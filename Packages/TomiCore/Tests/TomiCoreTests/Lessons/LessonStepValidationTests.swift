@@ -3,11 +3,20 @@ import Testing
 @testable import TomiCore
 
 @Suite struct LessonStepValidationTests {
-    @Test func aSceneOutsideTheClosedListIsReportedWithItsStep() {
+    @Test func aSceneThisBuildCannotDrawIsListedButDoesNotRejectTheLesson() {
         var lesson = Lesson.fixture()
         lesson.steps[1].sceneName = "juggle"
         #expect(lesson.steps[1].scene == nil)
-        #expect(lesson.issuesInTheFixtureLibrary() == [.unknownScene(step: 1, "juggle")])
+        #expect(lesson.unknownSceneNames == ["juggle"])
+        #expect(lesson.issuesInTheFixtureLibrary().isEmpty)
+    }
+
+    @Test func aStepWithoutASceneIsDrawnPlainAndIsNotUnknown() {
+        var lesson = Lesson.fixture()
+        lesson.steps[1].sceneName = nil
+        #expect(lesson.steps[1].scene == nil)
+        #expect(lesson.unknownSceneNames.isEmpty)
+        #expect(lesson.issuesInTheFixtureLibrary().isEmpty)
     }
 
     @Test(arguments: StepScene.allCases)
