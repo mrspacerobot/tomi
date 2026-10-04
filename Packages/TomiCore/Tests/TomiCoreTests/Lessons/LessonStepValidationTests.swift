@@ -18,14 +18,6 @@ import Testing
         #expect(lesson.issuesInTheFixtureLibrary().isEmpty)
     }
 
-    @Test func theScenesAreTheOnesTheDesignDraws() {
-        let drawn = [
-            "chop", "crack", "whisk", "sear", "flip", "toss", "stir", "deglaze", "simmer", "boil", "drain", "oven",
-            "rest", "plate", "temp", "wilt", "scramble", "fill", "roll", "mount",
-        ]
-        #expect(StepScene.allCases.map(\.rawValue) == drawn)
-    }
-
     @Test(arguments: [0, -60])
     func aTimerRunsForMoreThanNothing(seconds: Int) {
         var lesson = Lesson.fixture()

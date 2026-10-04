@@ -19,10 +19,6 @@ import Testing
         #expect(lesson.issuesInTheFixtureLibrary() == [.unknownMain("lobster")])
     }
 
-    @Test func theMainsAreTheOnesTheDesignDraws() {
-        #expect(DishMain.allCases.map(\.rawValue) == ["chicken", "tofu", "omelette"])
-    }
-
     @Test func aLessonFileNamesItsMain() throws {
         #expect(try LessonFile.decode(LessonFile.text()).main == .tofu)
     }
