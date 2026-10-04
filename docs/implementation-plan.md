@@ -55,8 +55,8 @@ Tomi/                  app target
   Onboarding/ Home/ Menu/ Scan/ Player/ Scenes/ AskTomi/ Voice/ Settings/
   AI/                  Foundation Models implementations
   Persistence/         SwiftData models, ProgressStore
-  Library/             BundledLibrary: reads the shipped library
-  Resources/           Assets, fonts, Localizable.xcstrings, Library/ (catalog.json, lessons/)
+  Library/             LessonLibrary (protocol), BundledLessonLibrary over the file reader BundledLibrary, FakeLessonLibrary
+  Resources/           Assets, fonts, Localizable.xcstrings, Library/ (catalog.json, ingredients.json, lessons/<skill>/<lesson id>.lesson.json)
 TomiTests/ TomiUITests/
 Packages/TomiCore/     rules, schema, generator, tests
 server/                Go service (later)
@@ -78,11 +78,23 @@ Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replace
 ## Lesson library
 
 - The skill catalog is part of the library, not the app: `catalog.json` holds courses, skills, prerequisites, levels and their names, with a schema version and a library version. A new technique or level ships with the library, without an app release. The validator checks at least one course, ids that are not blank and are unique, known and non-empty courses, prerequisites that exist and come earlier on the menu, levels numbered 1 to n, and English text everywhere.
-- Each skill has levels, from the first version of the technique to the hardest (roux: white for béchamel, blond for velouté, brown). The next level opens once the one before is cooked.
-- One file per lesson, grouped by skill, plus an index built by the generator carrying the library and schema versions. The index holds every field the filter needs, so a full lesson is read only once it is picked.
-- Each lesson has a stable id, a revision, a skill and level, a cuisine, ingredients, equipment, steps (each naming a scene from the closed scene list), a quiz, and swaps.
-- Diet and allergen tags are computed from the ingredient table, never typed and never produced by a model.
-- A swap is a reviewed substitution that removes an allergen or changes the diet (butter to olive oil removes dairy).
+- Each skill has levels, from the first version of the technique to the hardest (roux: white for béchamel, blond for velouté, brown). A level is complete after two finished cooks at it (`GameRules.cooksToCompleteLevel`), and the next level opens once every level before it is complete.
+- A skill is served (unlocked) when level 1 of every prerequisite is complete, and mastered when all of its own levels are complete. Asking for every level of a prerequisite would hold the next techniques back for weeks.
+- A finished cook always counts at the level its lesson taught, even if that level or skill was not open yet, so progress depends only on which cooks are in the log and never on the order two devices merged them. A cook stopped early never counts. A cook of a lesson this version's library does not know still counts, because the entry records its own skill and level; a cook of an unknown skill or level is ignored for progress.
+- The focus (next up) is the cook's chosen skill while it is served and not mastered, otherwise the first such skill in menu order.
+- A cook who answers "comfortable" in onboarding gets every technique of the first course on the menu as mastered. It is an input to the progress rules (`ProgressRules(catalog:experience:)`), read from the catalog, never a fake entry in the cook log, so it earns no XP and no streak. "Never" and "basics" grant nothing; they differ only in how much Tomi explains.
+- One file per lesson, grouped by skill: `lessons/<skill>/<lesson id>.lesson.json`. The app bundle is flat, so the `.lesson.json` ending is what marks a lesson file and the id in the name keeps it unique. An index built by the generator, carrying the library and schema versions and every field the filter needs, comes with the generator (#32); until then the app reads every lesson file.
+- Each lesson (schema version 1, `Lesson` in TomiCore) has a stable id, a revision, a skill and level, a cuisine, a title, a time in minutes, why-this and concept text, ingredients, equipment, steps, a quiz, and swaps. All words are `LocalizedText`, English required.
+- Each ingredient line names an ingredient of the table and its amount twice, in metric and in cups. An amount is a number and a unit from a closed list (gram, millilitre, cup, tablespoon, teaspoon, piece), never free text, so code can scale servings and format units. Step text names no amounts.
+- Each step has text, an optional tip, a scene from the closed scene list (`StepScene`) and an optional timer in seconds, four hours at most (`LessonStep.longestTimerSeconds`). The quiz has a question, two or more answers, the position of the right one and an explanation.
+- The validator (`Lesson.issues(catalog:table:)`) lists every problem: a blank id or cuisine, an unknown skill or level, a revision or time below 1, no ingredients, a duplicate or unknown ingredient, an amount that is not positive or uses a unit of the other system, no steps, an unknown scene or main, a timer that is not positive or runs over four hours, fewer than two answers, a missing or out-of-range correct answer, a swap of an ingredient the lesson lacks, a swap replacement that is unknown or already in the lesson, and missing English text. A file from another schema version, or with a field the schema does not have, is rejected before that.
+- Every step names a scene from the closed scene list, and the lesson names its main food (`DishMain`: chicken, tofu, omelette), which the scenes that show the food draw. A scene must show what the step does, with the right vessel and tool. When none fits, the scene is drawn in the kit first: there is no blank or fallback drawing. A lesson that names a scene or main an older app does not know is not shown there until the app is updated, so new scenes ship in the app before a library uses them.
+- Diet and allergen tags are computed from the ingredient table (`Lesson.tags(in:)`), never typed, never stored in the lesson file and never produced by a model. An ingredient the table does not know is an error, never "suitable".
+- The ingredient table (`ingredients.json`) declares everything about who may eat what: the list of facts an ingredient can have, the avoid items with the facts that trigger each, the diets with the facts each rules out, and every ingredient with its facts. Code names none of them, so a new avoid item or diet is a data change. The validator replaces the compiler: undeclared facts, unknown fields, an avoid item nothing triggers and a diet that rules nothing out all reject the file.
+- The filter fails closed. An ingredient the table does not list is an error. A diet or avoid item in the cook's preferences that the table does not list, including one saved by a newer app or one that could not be read, makes every dish unavailable until the cook updates or answers again.
+- A model never adds to the lists. Skills, levels, facts, avoid items, diets and ingredients are added only by a person in a reviewed change. The generator writes lessons only, from closed lists read out of the catalog and the ingredient table.
+- A swap is a reviewed substitution of one ingredient of the lesson for another ingredient of the table, with its own amounts, that removes an allergen or changes the diet (butter to olive oil removes dairy). `Lesson.applying(_:)` gives the swapped lesson, and its tags are computed again.
+- The app reads the library through the `LessonLibrary` protocol (catalog, ingredient table, lessons). `BundledLessonLibrary` reads the app bundle; a lesson file that fails validation is skipped and logged, never shown. `FakeLessonLibrary` serves previews and tests.
 - Coverage rule: every skill has several lessons for every diet, even after any one cuisine is excluded. The generator reports gaps.
 - The library ships in the app and can be replaced by a newer signed download, so a lesson can be fixed or withdrawn the same day.
 
@@ -90,13 +102,15 @@ Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replace
 
 | Model | Fields |
 |---|---|
-| Profile | focus skill, weekly goal, voice on, diet, avoid list, cuisine preferences, cupboard staples, equipment, servings, units, onboarding done |
-| CookLog | lesson id, lesson revision, skill, level, date, weekly goal at the time, swaps used, quiz correct, XP earned, rating, plate photo file name |
+| Profile | focus skill, weekly goal, voice on, diet, avoid list, cuisine preferences, cupboard staples, equipment, experience, servings, units, onboarding done |
+| CookLog | lesson id, lesson revision, skill, level, date, stopped early, weekly goal at the time, swaps used, quiz correct, XP earned, rating, plate photo file name |
 | ActiveLesson | the adapted lesson, tonight's ingredient list, current step |
 
 Plate photos are files in the app's own storage on the phone. Only the file name is in the cook log, so the log syncs through iCloud and the photos do not; on a second device the dish simply shows without a photo.
 
-The cook log is the source of truth. XP, rank, streak and mastery are computed from it. Every record has a stable id and timestamp. All fields are optional or defaulted and changes are additive, so the layout is safe for iCloud.
+The cook log is the source of truth. XP, rank, streak and mastery are computed from it. Screens ask one place for the game: `GameStateRules` in TomiCore gives total XP, rank and streak for a log at a moment. An entry stopped early earns no XP, and an entry for a skill or level the menu no longer knows still earns XP and still counts for the streak. Every record has a stable id and timestamp, and the same id on two devices is the same cook, counted once. All fields are optional or defaulted and changes are additive, so the layout is safe for iCloud.
+
+The cook's answers are one value, `CookPreferences` in TomiCore. Experience and units are closed lists in code, because code decides what they do. Diets, avoid items, equipment, cuisines and cupboard staples are ids that arrive with the library, so adding one is a data change, and a cuisine without an answer counts as "try". The diets and avoid items the onboarding screens offer, with their names, are listed in the ingredient table data next to the ingredients they describe. The equipment list, its names and the kitchen Tomi assumes until the cook answers are library data too. No diet means the cook eats everything. Equipment and units stay unset until the cook picks, and follow the library's standard kitchen and the locale until then. Reading saved preferences never fails on a single field: a missing field keeps its default, and a value only a newer app knows is dropped (from a closed list) or falls back to the default (a single answer). Diet and avoid answers are never weakened: every saved id is kept, and a field that is there but cannot be read becomes the blank id. A diet or avoid id the ingredient table does not know, the blank one included, makes every dish unavailable, so every library validator must reject blank ids.
 
 ## Phases
 
@@ -127,7 +141,7 @@ Each phase ends with something runnable. GitHub milestones mirror these.
 ## Risks
 
 - **The on-device model may read fridges badly.** Tested in Phase 0 before any scan UI. The scanner sits behind a protocol, so Apple's cloud model or Claude can replace it.
-- **Allergens are a safety feature.** Tags come from one code-owned table, unknown ingredients fail the build, the filter runs again after AI adaptation, and the app never claims a dish is "safe".
+- **Allergens are a safety feature.** Tags come from one reviewed table that only a person changes, an unknown ingredient, diet or avoid item refuses the dish, the filter runs again after AI adaptation, and the app never claims a dish is "safe".
 - **Diets and cuisines multiply the library** to roughly 150 to 200 lessons. Generation is cheap; human spot-checking is the real cost.
 - **A live iCloud layout can only grow.** The saved-data design is a review point before TestFlight.
 - **Not every iPhone has Apple Intelligence.** The typed path and code-only ranking must always work.

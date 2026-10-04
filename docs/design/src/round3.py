@@ -592,7 +592,7 @@ def settings():
 def scan_review_first():
     found = ["eggs", "spinach", "parmesan", "lemon", "cherry tomatoes", "cucumber", "butter", "milk", "white wine"]
     urow = lambda n, why: ('<div class="u-row"><div class="nm">' + n + "?<small>" + why + '</small></div><div class="u-yes" role="button">' + icon("check", 16, 2.6) + 'I have it</div><div class="u-no" role="button">' + icon("close", 16, 2.2) + "No</div></div>")
-    staples = "".join(chip(n, "lock") for n in ("Oil", "Salt", "Pepper")) + "".join(chip(n, "on" if on else "off") for n, on in r2.STAPLES)
+    staples = "".join(chip(n, "lock") for n in ("Olive oil", "Salt", "Pepper")) + "".join(chip(n, "on" if on else "off") for n, on in r2.STAPLES)
     body = ('<div class="r-top"><div class="b-ib" role="button" aria-label="Back">' + icon("back", 22, 2) + '</div><div style="flex:1"></div></div>'
             '<div class="r-body" style="padding-top:0"><div class="r-revh"><div class="tx"><p class="b-k">Check my list</p><h1 class="b-d">Here is what I found.</h1></div>'
             '<div class="r-mini" role="button"><div>' + fridge_open(52, 66) + '</div>Retake</div></div>'
@@ -621,7 +621,7 @@ def edge_noai():
     body = (mast("happy") + house(*r2.HOUSE0, zero=True) +
             '<section class="b-special"><span class="flag b-k">Tonight\'s special</span><div class="blank"><span class="b-it">to be written</span><i></i></div>'
             '<h2 class="b-d">What have you got tonight?</h2><p class="from b-it">Type a few ingredients and I will write the special from them.</p>'
-            '<div class="b-btn" role="button">' + icon("keyboard", 20, 1.8) + ' Type what you have</div><p class="r-cup">Cupboard: oil, salt, pepper and 7 more. <u>Edit</u></p></section>'
+            '<div class="b-btn" role="button">' + icon("keyboard", 20, 1.8) + ' Type what you have</div><p class="r-cup">Cupboard: olive oil, salt, pepper and 7 more. <u>Edit</u></p></section>'
             '<div class="n-box" style="margin:18px 16px 0"><span class="b-k">On this iPhone</span>Reading fridge photos and Ask Tomi need Apple Intelligence, which this iPhone does not have. Lessons, timers, voice reading and your menu all work.</div>'
             '<section class="b-menu" style="padding-top:26px">' + MENU_H + menu(r2.zero_skills(), only=(0,)) + '</section>')
     return shot("edge-no-ai", "7c", "No Apple Intelligence", "Home on an older iPhone. The scan button is not shown disabled, it is simply absent: typing is the one way in. A single note explains what is missing and what still works. Inside lessons the Ask Tomi button is hidden and the footer is Back and Next only.", body, height=844, cls="b-screen r-crop", cap="first screenful")
@@ -675,11 +675,14 @@ def d_cuisines():
 def kit():
     out = ""
     for name, label, parts in SCENES:
-        out += '<figure id="scene-' + name + '">' + scene_svg(name, label=label) + "<b>" + label + "</b><span>" + parts + "</span></figure>"
+        food = "omelette" if name == "roll" else "chicken"
+        out += '<figure id="scene-' + name + '">' + scene_svg(name, food, label=label) + "<b>" + label + "</b><span>" + parts + "</span></figure>"
     out += ('<figure class="swap" id="scene-swap-sear">' + scene_svg("sear", "chicken", label="Sear, chicken") + scene_svg("sear", "tofu", label="Sear, tofu") +
             '<b>Food swap: sear</b><span>Only the main part changes: chicken thigh to tofu.</span></figure>')
     out += ('<figure class="swap" id="scene-swap-plate">' + scene_svg("plate", "chicken", label="Plate, chicken") + scene_svg("plate", "tofu", label="Plate, tofu") +
             '<b>Food swap: plate</b><span>Same plate, greens and sauce. The main is the only new part.</span></figure>')
+    out += ('<figure class="swap" id="scene-swap-omelette">' + scene_svg("roll", "omelette", label="Roll, omelette") + scene_svg("plate", "omelette", label="Plate, omelette") +
+            '<b>Food swap: omelette</b><span>A third main. A dish with no pan sauce is plated without the sauce stroke.</span></figure>')
     return '<div class="kit">' + out + "</div>"
 
 
@@ -777,7 +780,7 @@ def closing():
             '<div id="oq-not-done"><h3>Not covered, or thin</h3><ul>'
             '<li><b>Motion is described, not shown.</b> The stamp press, the line being inked and the timer rule draining need a prototype in SwiftUI to judge.</li>'
             '<li><b>Dark theme covers six screens.</b> The camera, celebration, profile and settings screens were not drawn in dark; they use the same tokens.</li>'
-            '<li><b>Scenes are static.</b> Fifteen are drawn. Slice, mince, peel, grate, measure, pat dry, scramble, fry egg, blanch, fluff, toss pasta and taste are still to draw from the same parts.</li>'
+            '<li><b>Scenes are static.</b> Twenty are drawn. Slice, mince, peel, grate, measure, pat dry, scramble, fry egg, blanch, fluff, toss pasta and taste are still to draw from the same parts.</li>'
             '<li><b>Dynamic Type and long translations</b> were not tested. Dish lines and the stats column are the tightest places.</li>'
             '<li><b>Reset, the iOS permission dialogs and the keyboard-up states</b> are not drawn.</li></ul></div></div>'
             '<div class="rec" id="recommendation"><p class="pg-kick">Recommendation</p><h3>Build the lesson player first, with the dish line and stamp as its reward.</h3>'
@@ -803,7 +806,7 @@ def build():
              header(),
              section("lesson-player", "1", "Lesson player", "From the intro to the celebration, in the order a cook meets them. The sample is round 1's pan sauce lesson.",
                      [lp_intro(), lp_step_timer(), lp_notify(), lp_timer_done(), lp_step_plain(), lp_quiz(), lp_quiz_right(), lp_quiz_wrong(), lp_finish(), celebrate_a(), celebrate_b(), lp_plate()]),
-             section("step-scenes", "2", "Step scenes", "Fifteen actions drawn from one kit of parts on a shared stage. Under each: the parts it uses. \"Main\" is the swappable food part.", kit(), grid=False),
+             section("step-scenes", "2", "Step scenes", "Twenty actions drawn from one kit of parts on a shared stage. Under each: the parts it uses. \"Main\" is the swappable food part.", kit(), grid=False),
              section("ask-tomi", "3", "Ask Tomi", "A sheet over the step. The timer above it keeps running.", [ask_open(), ask_thread(), ask_off()]),
              section("voice", "4", "Hands-free voice", "Listening, speaking, the hold-to-talk fallback, and the primer shown the first time.", [voice_listen(), voice_speak(), voice_hold(), voice_primer()]),
              section("skill-detail", "5", "Skill detail", "What opens when a dish line on the menu is tapped.", [skill_mastered(), skill_ready()]),

@@ -43,6 +43,12 @@ large_tuple:
   warning: 2
 identifier_name:
   min_length: 2
+# "Mastered" is Tomi's word for a skill with every level complete, so code may say it. Other uses stay banned.
+inclusive_language:
+  override_allowed_terms:
+    - mastercard
+    - mastered
+    - mastery
 
 custom_rules:
   hard_coded_text:
@@ -50,6 +56,16 @@ custom_rules:
     included: "Tomi/.*\\.swift"
     regex: '\b(Text|Button|Label|Toggle|Picker|Section|TextField|SecureField|Link|Menu|navigationTitle|accessibilityLabel|accessibilityHint|accessibilityValue|alert|confirmationDialog)\(\s*"|String\(localized:\s*"'
     message: "Put user-facing text in Localizable.xcstrings and use its generated symbol."
+    severity: error
+  no_ambient_clock:
+    name: "No ambient clock, calendar or locale in the rules package"
+    included: "Packages/TomiCore/Sources/.*\\.swift"
+    regex: '\b(Calendar|Locale|TimeZone)\.(current|autoupdatingCurrent)\b|\bDate\(\)|\bDate\.now\b'
+    excluded_match_kinds:
+      - comment
+      - doccomment
+      - string
+    message: "Take the calendar, locale and the moment as parameters, so the rule gives the same answer in a test."
     severity: error
   no_print:
     name: "No print"

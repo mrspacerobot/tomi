@@ -1,0 +1,41 @@
+# Lesson coverage gaps: the levels that have no lesson for some cooks.
+# One line per level: "<skill> <level>: <diets with no lesson>". "any" is a cook who keeps no diet.
+# Checked by LessonCoverageTests, so this list can only shrink. After adding lessons, rewrite it with:
+#   TOMI_UPDATE_COVERAGE=1 swift test --package-path Packages/TomiCore
+knife-cuts 1: any vegetarian vegan pescatarian
+knife-cuts 2: any vegetarian vegan pescatarian
+knife-cuts 3: any vegetarian vegan pescatarian
+eggs 1: any vegetarian vegan pescatarian
+eggs 2: any vegetarian vegan pescatarian
+eggs 3: vegan
+stocks 1: any vegetarian vegan pescatarian
+stocks 2: any vegetarian vegan pescatarian
+stocks 3: any vegetarian vegan pescatarian
+saute 1: any vegetarian vegan pescatarian
+saute 2: any vegetarian vegan pescatarian
+saute 3: any vegetarian vegan pescatarian
+sear 1: any vegetarian vegan pescatarian
+sear 2: any vegetarian vegan pescatarian
+sear 3: any vegetarian vegan pescatarian
+poach 1: any vegetarian vegan pescatarian
+poach 2: any vegetarian vegan pescatarian
+poach 3: any vegetarian vegan pescatarian
+roux 1: any vegetarian vegan pescatarian
+roux 2: any vegetarian vegan pescatarian
+roux 3: any vegetarian vegan pescatarian
+pan-sauce 1: vegetarian vegan pescatarian
+pan-sauce 2: any vegetarian vegan pescatarian
+pan-sauce 3: any vegetarian vegan pescatarian
+emulsions 1: any vegetarian vegan pescatarian
+emulsions 2: any vegetarian vegan pescatarian
+emulsions 3: any vegetarian vegan pescatarian
+emulsions 4: any vegetarian vegan pescatarian
+braise 1: any vegetarian vegan pescatarian
+braise 2: any vegetarian vegan pescatarian
+braise 3: any vegetarian vegan pescatarian
+roast 1: any vegetarian vegan pescatarian
+roast 2: any vegetarian vegan pescatarian
+roast 3: any vegetarian vegan pescatarian
+gratin 1: any vegetarian vegan pescatarian
+gratin 2: any vegetarian vegan pescatarian
+gratin 3: any vegetarian vegan pescatarian
