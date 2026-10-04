@@ -37,9 +37,16 @@ import TomiCore
         #expect(BundledLessonLibrary(bundle: bundle).lessons == [omelette])
     }
 
-    @Test func aLessonWithAnUnknownSceneIsSkipped() throws {
+    @Test func aLessonWithASceneThisBuildCannotDrawIsStillServed() throws {
+        var newer = try LibraryFixture.shippedOmelette()
+        newer.steps[0].sceneName = "juggle"
+        let bundle = try LibraryFixture.bundle(lessonFiles: [newer.fileName: LibraryFixture.file(newer)])
+        #expect(BundledLessonLibrary(bundle: bundle).lessons == [newer])
+    }
+
+    @Test func aLessonWithAnUnknownIngredientIsSkipped() throws {
         var broken = try LibraryFixture.shippedOmelette()
-        broken.steps[0].sceneName = "juggle"
+        broken.ingredients[0].ingredient = "dragon-fruit"
         let bundle = try LibraryFixture.bundle(lessonFiles: [broken.fileName: LibraryFixture.file(broken)])
         #expect(BundledLessonLibrary(bundle: bundle).lessons.isEmpty)
     }

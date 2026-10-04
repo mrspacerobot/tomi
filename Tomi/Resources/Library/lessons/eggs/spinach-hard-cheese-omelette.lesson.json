@@ -30,29 +30,24 @@
     },
     {
       "text": { "en": "Melt half the butter in a pan over medium heat. Stir the spinach until it wilts, then tip it onto a plate." },
-      "scene": "toss",
       "timerSeconds": 60
     },
     {
       "text": { "en": "Melt the rest of the butter in the same pan. Pour in the eggs and stir in small circles until you see soft, wet curds." },
       "tip": { "en": "Small curds now make a tender omelette later." },
-      "scene": "stir",
       "timerSeconds": 60
     },
     {
       "text": { "en": "Stop stirring and let the bottom set. Scatter the spinach and the grated cheese down the middle." },
       "tip": { "en": "The top should still look a little wet. It keeps cooking as you roll." },
-      "scene": "simmer",
       "timerSeconds": 30
     },
     {
       "text": { "en": "Tilt the pan and roll the omelette over itself, from the handle side to the far edge." },
-      "tip": { "en": "Pale and smooth is the goal. Brown means the pan was too hot." },
-      "scene": "flip"
+      "tip": { "en": "Pale and smooth is the goal. Brown means the pan was too hot." }
     },
     {
-      "text": { "en": "Roll it out onto a plate, seam side down." },
-      "scene": "plate"
+      "text": { "en": "Roll it out onto a plate, seam side down." }
     }
   ],
   "quiz": {

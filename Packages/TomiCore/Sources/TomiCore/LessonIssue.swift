@@ -20,8 +20,6 @@ public enum LessonIssue: Hashable, Sendable {
     /// The amount of this ingredient for this unit system uses a unit of the other one, such as grams for cups.
     case unitOutsideSystem(IngredientID, Units)
     case noSteps
-    /// The step names a scene that is not a `StepScene`.
-    case unknownScene(step: Int, String)
     case timerNotPositive(step: Int)
     /// The step's timer runs longer than `LessonStep.longestTimerSeconds`.
     case timerTooLong(step: Int)

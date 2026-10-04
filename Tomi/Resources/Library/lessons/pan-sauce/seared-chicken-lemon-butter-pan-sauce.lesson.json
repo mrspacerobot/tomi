@@ -12,7 +12,7 @@
   "ingredients": [
     { "ingredient": "chicken-thigh", "metric": { "value": 4, "unit": "piece" }, "cups": { "value": 4, "unit": "piece" } },
     { "ingredient": "salt", "metric": { "value": 1, "unit": "teaspoon" }, "cups": { "value": 1, "unit": "teaspoon" } },
-    { "ingredient": "oil", "metric": { "value": 1, "unit": "tablespoon" }, "cups": { "value": 1, "unit": "tablespoon" } },
+    { "ingredient": "sunflower-oil", "metric": { "value": 1, "unit": "tablespoon" }, "cups": { "value": 1, "unit": "tablespoon" } },
     { "ingredient": "garlic", "metric": { "value": 2, "unit": "piece" }, "cups": { "value": 2, "unit": "piece" } },
     { "ingredient": "white-wine", "metric": { "value": 120, "unit": "millilitre" }, "cups": { "value": 0.5, "unit": "cup" } },
     { "ingredient": "butter", "metric": { "value": 30, "unit": "gram" }, "cups": { "value": 2, "unit": "tablespoon" } },
