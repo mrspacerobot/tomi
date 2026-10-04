@@ -4,10 +4,7 @@ import Foundation
 
 /// The ingredient table the app ships, read straight from the app's resources so no simulator is needed.
 enum ShippedIngredientTable {
-    static let url = URL(filePath: #filePath)
-        .deletingLastPathComponent()
-        .appending(path: "../../../../Tomi/Resources/Library/ingredients.json")
-        .standardized
+    static let url = ShippedLibrary.folder.appending(path: "ingredients.json")
 
     static func load() throws -> IngredientTable {
         try IngredientTable.decode(from: Data(contentsOf: url))

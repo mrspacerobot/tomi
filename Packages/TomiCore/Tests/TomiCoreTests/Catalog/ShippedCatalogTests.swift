@@ -5,10 +5,7 @@ import Testing
 
 /// Checks the catalog the app ships, so a content mistake fails here without needing the simulator.
 @Suite struct ShippedCatalogTests {
-    static let catalogURL = URL(filePath: #filePath)
-        .deletingLastPathComponent()
-        .appending(path: "../../../../Tomi/Resources/Library/catalog.json")
-        .standardized
+    static let catalogURL = ShippedLibrary.folder.appending(path: "catalog.json")
 
     @Test func theShippedCatalogIsValid() throws {
         let catalog = try SkillCatalog.decode(from: Data(contentsOf: Self.catalogURL))

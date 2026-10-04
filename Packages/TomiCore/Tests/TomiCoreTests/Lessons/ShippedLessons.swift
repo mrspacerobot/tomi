@@ -4,10 +4,7 @@ import Foundation
 
 /// The lessons the app ships, read straight from the app's resources so no simulator is needed.
 enum ShippedLessons {
-    static let folder = URL(filePath: #filePath)
-        .deletingLastPathComponent()
-        .appending(path: "../../../../Tomi/Resources/Library/lessons")
-        .standardized
+    static let folder = ShippedLibrary.folder.appending(path: "lessons")
 
     static let searedChicken: LessonID = "seared-chicken-lemon-butter-pan-sauce"
     static let omelette: LessonID = "spinach-hard-cheese-omelette"
