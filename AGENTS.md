@@ -137,40 +137,45 @@ Models are trained on years of older code. Use the current API, and check Apple'
 - **The pull request closes its issue** with `Closes #<number>` in the description.
 - **When a decision changes,** update `docs/implementation-plan.md` and this file in the same pull request.
 
-## Review guidelines
+## Code Review Rules
 
-For any agent or person reviewing a pull request here. The job is to find what is wrong, not what could be written differently.
+For any agent or person reviewing a pull request here. Formatting, size limits and hard-coded text are checked by `./scripts/check.sh`; do not review those.
 
-**How to report**
+**What counts as high priority here**
 
-- **Report only real problems.** No praise, no summary of the diff, no preferences. If nothing is wrong, say so in one line.
-- **Every bug needs a concrete failure:** the input or the order of events, what the code does, and what it should do. If you cannot construct one, ask it as a question and mark it as a question.
-- **Order findings by harm:** food safety, then lost or wrong saved data, then wrong behaviour, then a missing test, then a broken project rule. Say how sure you are of each.
-- **Read the linked issue first.** Name any acceptance criterion that is not met or has no test.
-- **Do not repeat the tools.** `./scripts/check.sh` already enforces formatting, size limits and hard-coded text. Mention the check only if it is red.
+- **P0, blocks the merge:** a cook can be shown food they said they cannot eat, or saved data can be lost or misread.
+- **P1, must be fixed:** a rule gives a wrong result for some input, a rule has no test that would catch it being broken, or a decision changed without its test and its documentation.
+- Report each finding with the input or order of events that goes wrong, what the code does, and what it should do. If you cannot construct one, ask it as a question.
 
-**Where bugs hide in this codebase.** Look hardest here:
+**Food safety**
 
-1. **Safety filters that fail open.** Anything unknown, missing or undecodable (an ingredient, a diet, an avoid item, a fact) must never end up meaning "allowed" or "suitable". Check the path a value takes when it is absent, and check that filtering runs again after anything adapts a lesson.
-2. **Dates and weeks.** Week boundaries, the first weekday, daylight saving, a time zone change between two cooks, midnight, and the phone's clock being set back.
-3. **Syncing.** The same record arriving twice, two logs merging in either order, records written by a newer app version, and results that depend on the order of a list when they should not.
-4. **Saved data.** A stored field renamed, removed or given a new meaning. A default that changes what old data says. Totals stored when they should be computed from the cook log.
-5. **Boundaries.** Empty lists, the first and last rank threshold, the last level of a skill, a goal at either end of its range, zero and negative amounts.
-6. **Content files.** A file the validator accepts but the app cannot use, or a rule the validator states but does not check. A change of layout without a schema version bump.
-7. **Concurrency.** Shared state touched off the main actor, and work that assumes an order between two tasks.
+- An ingredient, diet, avoid item or ingredient fact that is unknown, missing or cannot be read must make the dish unavailable. It must never be read as "allowed", "suitable" or "contains nothing". This holds for values written by a newer version of the app too.
+- Diet and allergen tags are computed from the ingredient table every time. They are never stored in a lesson file, typed by a person, or produced by a model.
+- After anything changes a lesson's ingredients (a swap, an AI adaptation, a different serving size), the lesson is checked against the cook's diet and avoid list again before it is shown.
+- A temperature, a cooking time claimed as safe, or a "safe to eat" statement comes only from the safety table. Tomi never judges from a photo whether food is cooked through.
+
+**The cook log and what follows from it**
+
+- Progress, XP, rank and streak are computed from the cook log on demand. A stored total is a bug.
+- The same entry id arriving twice counts once. Two logs merged in either order give the same result. No result may depend on the order of the entries.
+- An entry for a skill, level or lesson this version does not know is ignored for progress and never crashes. An entry marked stopped early counts for nothing.
+- Week and day arithmetic uses the `Calendar` passed in. Inside TomiCore, `Calendar.current`, `Date()` and fixed lengths such as seven times 24 hours are bugs: they break at a daylight saving change, a different first weekday, or in a test.
+
+**Saved data and ids**
+
+- A stored field or an id (skill, course, level number, lesson, ingredient, cuisine) is permanent. Renaming, removing or reusing one is a P0. New fields are optional or have a default.
+- Reading saved data must survive a missing field and a value from a newer version, without crashing and without weakening a safety filter.
+
+**Content files**
+
+- A change to the layout of a content file (catalog, ingredients, lesson) needs a schema version bump, a validator rule and a test with a failing file.
+- A file from an unknown schema version is rejected before anything else in it is read.
+- Whatever the validator accepts, the app must be able to use. Whatever a comment or document says the validator checks, it must check.
+- No Swift file names a specific skill, course, ingredient or cuisine. No game number lives outside `GameRules`.
 
 **Tests**
 
-- A rule with no test.
-- A test that would still pass if the rule were broken. Name the change that would slip through.
-- A test that depends on the real clock, time zone, locale, network, camera or model.
-
-**Project rules that tools cannot check**
-
-- Swift that names a specific skill, course, ingredient or cuisine.
-- A game number outside `GameRules`, or a food-safety fact outside its table.
-- A sentence built by joining pieces of text.
-- AI, voice, camera, clock or storage used without going through its protocol.
-- A decision changed without `docs/implementation-plan.md` and this file changing with it.
+- Every rule changed or added has a test that fails when the rule is broken. Name the change that would slip through if one does not.
+- A test never depends on the real clock, time zone, locale, network, camera or model.
 
 A reviewer never merges and never pushes to `main`.
