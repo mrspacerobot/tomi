@@ -1,0 +1,5 @@
+# SwiftUI's Layout protocol requires placeSubviews(in:proposal:subviews:cache:), which has four parameters,
+# and a conformance cannot group them into a type. This folder holds only layouts, so the limit is four
+# here and three everywhere else (AGENTS.md, Code style). Every other limit applies unchanged.
+function_parameter_count:
+  warning: 4
