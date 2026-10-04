@@ -38,12 +38,24 @@ import Testing
         let table = try ShippedIngredientTable.load()
         for file in try ShippedLessons.files() {
             let lesson = try ShippedLessons.lesson(at: file)
-            #expect(try lesson.tags(in: table).suitableDiets.contains(.everything))
+            #expect(try lesson.isAllowed(by: CookPreferences(), in: table))
             for swap in lesson.swaps {
                 #expect(throws: Never.self) {
                     try lesson.applying(swap).tags(in: table)
                 }
             }
+        }
+    }
+
+    /// Equipment is an id with no list in the library yet (#86), so nothing else would catch a mistyped one:
+    /// the lesson would ask for something no kitchen has and never be shown.
+    @Test func everyShippedLessonAsksOnlyForEquipmentOfTheKitchenScreen() throws {
+        let kitchenScreen: Set<EquipmentID> = [
+            "stovetop", "oven", "microwave", "thermometer", "blender", "rice-cooker",
+        ]
+        for file in try ShippedLessons.files() {
+            let lesson = try ShippedLessons.lesson(at: file)
+            #expect(lesson.equipment.isSubset(of: kitchenScreen), "\(lesson.id.rawValue)")
         }
     }
 }

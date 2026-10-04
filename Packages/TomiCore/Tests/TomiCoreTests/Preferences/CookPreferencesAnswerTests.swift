@@ -3,7 +3,7 @@ import Testing
 
 @testable import TomiCore
 
-/// Answers the cook changes: cuisines, units, and the two numbers that must stay in range.
+/// Answers the cook changes: cuisines, units, equipment, and the two numbers that must stay in range.
 @Suite struct CookPreferencesAnswerTests {
     @Test func aCuisineKeepsItsAnswerAndTheOthersStayOnTry() {
         var cuisines = CuisinePreferences()
@@ -32,6 +32,16 @@ import Testing
         #expect(preferences.units(for: unitedKingdom) == .metric)
         preferences.chosenUnits = .metric
         #expect(preferences.units(for: unitedStates) == .metric)
+    }
+
+    @Test func equipmentFollowsTheStandardKitchenUntilTheCookChooses() {
+        let standardKitchen: Set<EquipmentID> = ["stovetop", "oven"]
+        var preferences = CookPreferences()
+        #expect(preferences.equipment(assumingUntilChosen: standardKitchen) == standardKitchen)
+        preferences.chosenEquipment = ["microwave"]
+        #expect(preferences.equipment(assumingUntilChosen: standardKitchen) == ["microwave"])
+        preferences.chosenEquipment = []
+        #expect(preferences.equipment(assumingUntilChosen: standardKitchen).isEmpty)
     }
 
     @Test(arguments: [(1, 1), (7, 7), (4, 4), (0, 1), (-3, 1), (8, 7), (100, 7)])

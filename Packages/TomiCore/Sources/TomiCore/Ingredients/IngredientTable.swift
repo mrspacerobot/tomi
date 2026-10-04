@@ -1,11 +1,16 @@
-/// Every ingredient Tomi knows, with the facts that decide diets and the avoid list.
+/// Everything Tomi knows about who may eat what: the facts an ingredient can have, the things a cook can avoid,
+/// the diets a cook can keep, and every ingredient with its facts.
 /// It is content, not code: it ships in the lesson library and is read with `decode(from:)`.
-/// Diet and allergen answers come only from here. An ingredient that is not listed is an error, never a pass.
+/// Diet and allergen answers come only from here. Anything that is not listed is an error or a refusal, never a pass.
 public struct IngredientTable: Hashable, Codable, Sendable {
     /// The table layout this build understands. Bump it, and the validator, when the layout changes.
     public static let supportedSchemaVersion = 1
 
     public let schemaVersion: Int
+    /// The closed list of facts. Ingredients, avoid items and diets may only use these.
+    public let facts: [IngredientFactID]
+    public let avoidItems: [AvoidItem]
+    public let diets: [Diet]
     public let ingredients: [Ingredient]
 
     /// The ingredient with this id. Throws `IngredientTableError.unknownIngredient` when the table has none,
@@ -22,15 +27,13 @@ public struct IngredientTable: Hashable, Codable, Sendable {
         ingredients.contains { $0.id == id }
     }
 
-    public func allowingDiets(for id: IngredientID) throws -> Set<Diet> {
-        try ingredient(id).allowingDiets
+    /// The avoid item with this id, or nil when the table does not list it.
+    public func avoidItem(_ id: AvoidItemID) -> AvoidItem? {
+        avoidItems.first { $0.id == id }
     }
 
-    public func avoidItems(for id: IngredientID) throws -> Set<AvoidItem> {
-        try ingredient(id).avoidItems
-    }
-
-    public func isAllowed(_ id: IngredientID, by preferences: CookPreferences) throws -> Bool {
-        try ingredient(id).isAllowed(by: preferences)
+    /// The diet with this id, or nil when the table does not list it.
+    public func diet(_ id: DietID) -> Diet? {
+        diets.first { $0.id == id }
     }
 }

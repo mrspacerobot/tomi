@@ -34,7 +34,8 @@ import TomiCore
         #"{"id": "garlic", "name": {"en": "Garlic"}}"#,
     ])
     func aTableWithNoIngredientsOrAWrongOneGivesNoTable(ingredients: String) throws {
-        let contents = #"{"schemaVersion": 1, "ingredients": [\#(ingredients)]}"#
+        let lists = #""facts": [], "avoidItems": [], "diets": []"#
+        let contents = #"{"schemaVersion": 1, \#(lists), "ingredients": [\#(ingredients)]}"#
         let bundle = try Bundle.fixture(ingredients: Data(contents.utf8))
         #expect(BundledLibrary.ingredientTable(in: bundle) == nil)
     }

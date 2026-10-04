@@ -5,24 +5,24 @@ import Testing
 /// A swap changes the ingredients, so the tags of the swapped lesson are worked out again from the table.
 @Suite struct LessonSwapTagsTests {
     let table = IngredientTable.fixture(ingredients: [
-        .fixture("garlic"), .fixture("butter", contains: [.dairy]), .fixture("olive-oil"),
-        .fixture("bacon", contains: [.pork]),
+        .fixture("garlic"), .fixture("butter", contains: ["dairy"]), .fixture("olive-oil"),
+        .fixture("bacon", contains: ["pork"]),
     ])
     let butterToOliveOil = LessonSwap.fixture(replacing: "butter", with: "olive-oil")
 
     @Test func swappingButterForOliveOilRemovesDairy() throws {
         let lesson = Lesson.fixture()
-        #expect(try !lesson.isAllowed(by: .fixture(diet: .vegan), in: table))
+        #expect(try !lesson.isAllowed(by: .fixture(diet: "vegan"), in: table))
         let swapped = try lesson.applying(butterToOliveOil)
         #expect(swapped.ingredients.map(\.ingredient) == ["garlic", "olive-oil"])
         #expect(try swapped.tags(in: table).avoidItems.isEmpty)
-        #expect(try swapped.isAllowed(by: .fixture(diet: .vegan, avoid: [.dairy]), in: table))
+        #expect(try swapped.isAllowed(by: .fixture(diet: "vegan", avoid: ["dairy"]), in: table))
     }
 
     @Test func aSwapCanAlsoTakeADietAway() throws {
         let swapped = try Lesson.fixture().applying(.fixture(replacing: "garlic", with: "bacon"))
-        #expect(try swapped.tags(in: table).suitableDiets == [.everything])
-        #expect(try swapped.tags(in: table).avoidItems == [.dairy, .pork])
+        #expect(try swapped.tags(in: table).suitableDiets == [])
+        #expect(try swapped.tags(in: table).avoidItems == ["dairy", "pork"])
     }
 
     @Test func theReplacementBringsItsOwnAmount() throws {

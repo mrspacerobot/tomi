@@ -4,7 +4,7 @@ import Testing
 
 @Suite struct IngredientTableValidationTests {
     let garlic = Ingredient.fixture("garlic")
-    let butter = Ingredient.fixture("butter", contains: [.dairy])
+    let butter = Ingredient.fixture("butter", contains: ["dairy"])
 
     @Test func theFixtureIsValid() {
         #expect(IngredientTable.fixture().issues.isEmpty)
@@ -39,6 +39,15 @@ import Testing
         let table = IngredientTable.fixture(ingredients: [blank, butter, butter, nameless])
         let expected: [IngredientIssue] = [
             .blankIngredientID(position: 0), .duplicateIngredient("butter"), .missingIngredientName("garlic"),
+        ]
+        #expect(table.issues == expected)
+    }
+
+    @Test func anIngredientMayOnlyUseDeclaredFacts() {
+        let satay = Ingredient.fixture("satay", contains: ["nuts", "peanuts", "eggs"])
+        let table = IngredientTable.fixture(ingredients: [garlic, satay])
+        let expected: [IngredientIssue] = [
+            .undeclaredIngredientFact("satay", "eggs"), .undeclaredIngredientFact("satay", "peanuts"),
         ]
         #expect(table.issues == expected)
     }

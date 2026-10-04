@@ -26,6 +26,15 @@ import Testing
         #expect(knife.status == .served)
     }
 
+    /// A newer library may add lessons to a level this app knows. The entry records its own skill and level.
+    @Test func cooksOfLessonsTheLibraryDoesNotKnowCountAtTheirSkillAndLevel() {
+        let fromNewerLibrary = CookEntry.fixture("knife").with(lesson: "knife-julienne-from-a-newer-library")
+        let anotherOne = CookEntry.fixture("knife").with(lesson: "knife-brunoise-from-a-newer-library")
+        let knife = log.progress(of: "knife", after: [fromNewerLibrary, anotherOne])
+        #expect(knife.levels.map(\.cooks) == [2, 0])
+        #expect(knife.currentLevel == 2)
+    }
+
     @Test func theSameEntryTwiceCountsOnce() {
         let cook = CookEntry.fixture("knife")
         let knife = log.progress(of: "knife", after: [cook, cook])

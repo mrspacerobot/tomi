@@ -4,7 +4,7 @@ extension CookPreferences {
     /// Preferences with every answer different from its default, so a lost field shows in a test.
     static func fixtureWithEveryAnswerChanged() -> CookPreferences {
         var preferences = fixtureWithEveryFoodAnswerChanged()
-        preferences.equipment = [.stovetop, .blender, .riceCooker]
+        preferences.chosenEquipment = ["stovetop", "blender", "rice-cooker"]
         preferences.experience = .comfortable
         preferences.setServings(4)
         preferences.chosenUnits = .cups
@@ -14,8 +14,8 @@ extension CookPreferences {
 
     private static func fixtureWithEveryFoodAnswerChanged() -> CookPreferences {
         var preferences = CookPreferences()
-        preferences.diet = .pescatarian
-        preferences.avoid = [.nuts, .pork]
+        preferences.diet = "pescatarian"
+        preferences.avoid = ["nuts", "pork"]
         preferences.cuisines = .fixtureLovingItalianNeverThai()
         preferences.cupboardStaples = ["olive-oil", "salt"]
         return preferences
@@ -24,7 +24,7 @@ extension CookPreferences {
 
 extension CookPreferences {
     /// Default preferences with only the two answers the ingredient rules read.
-    static func fixture(diet: Diet, avoid: Set<AvoidItem> = []) -> CookPreferences {
+    static func fixture(diet: DietID?, avoid: Set<AvoidItemID> = []) -> CookPreferences {
         var preferences = CookPreferences()
         preferences.diet = diet
         preferences.avoid = avoid

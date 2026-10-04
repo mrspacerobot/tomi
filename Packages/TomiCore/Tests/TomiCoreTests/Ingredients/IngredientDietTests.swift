@@ -2,50 +2,36 @@ import Testing
 
 @testable import TomiCore
 
-/// Which diets allow an ingredient, decided fact by fact.
+/// Which diets allow food, decided by the facts each diet rules out.
 @Suite struct IngredientDietTests {
-    @Test func aPlainPlantIngredientSuitsEveryDiet() {
-        #expect(Ingredient.fixture("garlic").allowingDiets == Set(Diet.allCases))
+    static let everyDiet: Set<DietID> = ["vegetarian", "vegan", "pescatarian"]
+    let table = IngredientTable.fixture()
+
+    @Test func foodWithNoFactsSuitsEveryDiet() {
+        #expect(table.diets(allowing: []) == Self.everyDiet)
     }
 
-    @Test(arguments: [IngredientFact.meat, .pork, .slaughterProduct])
-    func meatAndSlaughterProductsSuitOnlyTheCookWhoEatsEverything(fact: IngredientFact) {
-        #expect(Ingredient.fixture("food", contains: [fact]).allowingDiets == [.everything])
+    @Test(arguments: ["meat", "pork"] as [IngredientFactID])
+    func meatSuitsNoDiet(fact: IngredientFactID) {
+        #expect(table.diets(allowing: [fact]).isEmpty)
     }
 
-    @Test(arguments: [IngredientFact.fish, .shellfish])
-    func fishAndShellfishSuitThePescatarianToo(fact: IngredientFact) {
-        #expect(Ingredient.fixture("food", contains: [fact]).allowingDiets == [.everything, .pescatarian])
+    @Test func fishSuitsOnlyThePescatarian() {
+        #expect(table.diets(allowing: ["fish"]) == ["pescatarian"])
     }
 
-    @Test(arguments: [IngredientFact.dairy, .egg, .animalProduct])
-    func dairyEggAndHoneySuitEveryoneButTheVegan(fact: IngredientFact) {
-        let diets = Ingredient.fixture("food", contains: [fact]).allowingDiets
-        #expect(diets == [.everything, .vegetarian, .pescatarian])
+    @Test(arguments: ["dairy", "egg"] as [IngredientFactID])
+    func dairyAndEggSuitEveryDietButTheVegan(fact: IngredientFactID) {
+        #expect(table.diets(allowing: [fact]) == ["vegetarian", "pescatarian"])
     }
 
-    @Test(arguments: [IngredientFact.alcohol, .nuts, .gluten, .soy, .sesame])
-    func factsThatAreNotAboutAnimalsLeaveEveryDietOpen(fact: IngredientFact) {
-        #expect(Ingredient.fixture("food", contains: [fact]).allowingDiets == Set(Diet.allCases))
-    }
-
-    @Test(arguments: IngredientFact.allCases)
-    func theCookWhoEatsEverythingIsNeverRefusedByDiet(fact: IngredientFact) {
-        #expect(Ingredient.fixture("food", contains: [fact]).allowingDiets.contains(.everything))
+    @Test(arguments: ["alcohol", "nuts"] as [IngredientFactID])
+    func aFactNoDietRulesOutLeavesEveryDietOpen(fact: IngredientFactID) {
+        #expect(table.diets(allowing: [fact]) == Self.everyDiet)
     }
 
     @Test func theStrictestFactDecides() {
-        let fishPie = Ingredient.fixture("fish-pie", contains: [.dairy, .fish])
-        let rennetCheese = Ingredient.fixture("rennet-cheese", contains: [.dairy, .slaughterProduct])
-        let surfAndTurf = Ingredient.fixture("surf-and-turf", contains: [.shellfish, .meat])
-        #expect(fishPie.allowingDiets == [.everything, .pescatarian])
-        #expect(rennetCheese.allowingDiets == [.everything])
-        #expect(surfAndTurf.allowingDiets == [.everything])
-    }
-
-    @Test func porkIsMeatWithoutSayingSo() {
-        #expect(Ingredient.fixture("bacon", contains: [.pork]).isMeat)
-        #expect(Ingredient.fixture("chicken", contains: [.meat]).isMeat)
-        #expect(!Ingredient.fixture("butter", contains: [.dairy]).isMeat)
+        #expect(table.diets(allowing: ["dairy", "fish"]) == ["pescatarian"])
+        #expect(table.diets(allowing: ["dairy", "meat"]).isEmpty)
     }
 }

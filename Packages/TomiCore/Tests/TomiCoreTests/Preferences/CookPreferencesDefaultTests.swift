@@ -7,7 +7,7 @@ import Testing
     let preferences = CookPreferences()
 
     @Test func theCookEatsEverythingAndAvoidsNothing() {
-        #expect(preferences.diet == .everything)
+        #expect(preferences.diet == nil)
         #expect(preferences.avoid.isEmpty)
     }
 
@@ -16,9 +16,8 @@ import Testing
         #expect(preferences.cuisines.preference(for: "italian") == .try)
     }
 
-    @Test func theKitchenHasAStovetopAnOvenAndAMicrowave() {
-        #expect(preferences.equipment == [.stovetop, .oven, .microwave])
-        #expect(Equipment.standard == [.stovetop, .oven, .microwave])
+    @Test func noEquipmentIsChosenSoTheLibraryDecides() {
+        #expect(preferences.chosenEquipment == nil)
     }
 
     @Test func theCookKnowsTheBasics() {
@@ -43,11 +42,6 @@ import Testing
     }
 
     @Test func theClosedListsHoldExactlyTheAnswersOnTheScreens() {
-        #expect(Diet.allCases == [.everything, .vegetarian, .vegan, .pescatarian])
-        #expect(
-            AvoidItem.allCases == [.nuts, .dairy, .gluten, .eggs, .shellfish, .fish, .soy, .sesame, .pork, .alcohol]
-        )
-        #expect(Equipment.allCases == [.stovetop, .oven, .microwave, .thermometer, .blender, .riceCooker])
         #expect(Experience.allCases == [.never, .basics, .comfortable])
         #expect(CuisinePreference.allCases == [.love, .try, .never])
     }
