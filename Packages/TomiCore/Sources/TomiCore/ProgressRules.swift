@@ -14,6 +14,8 @@ public struct ProgressRules: Sendable {
     /// Progress for every skill on the menu. Entries may come in any order and may repeat.
     /// Entries for a skill or level the catalog does not know are left out,
     /// because an older app may read a log written by a newer one.
+    /// An entry for a lesson the library does not know still counts at its skill and level:
+    /// a newer library may add lessons to a level this app already has, and the cook did cook it.
     public func progress(for entries: [CookEntry]) -> CookProgress {
         let counts = CookCounts(entries: entries)
         var skills: [SkillProgress] = []

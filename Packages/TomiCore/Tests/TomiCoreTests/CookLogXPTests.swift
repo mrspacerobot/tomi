@@ -49,4 +49,10 @@ import Testing
         #expect(Rank.forXP(below.earnedXP).title == .novice)
         #expect(Rank.forXP(across.earnedXP).title == .commis)
     }
+
+    @Test func theWayACookEndedDecidesWhatItEarns() {
+        #expect(GameRules.xp(for: .stoppedEarly) == 0)
+        #expect(GameRules.xp(for: .finished(quizCorrect: false)) == GameRules.xpPerCook)
+        #expect(GameRules.xp(for: .finished(quizCorrect: true)) == GameRules.xpPerCook + GameRules.xpForCorrectQuiz)
+    }
 }

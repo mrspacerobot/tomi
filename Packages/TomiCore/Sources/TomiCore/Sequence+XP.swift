@@ -5,7 +5,7 @@ extension Sequence where Element == CookEntry {
     public var earnedXP: Int {
         var total = 0
         for cook in finishedCooks {
-            total += GameRules.xpForFinishedCook(quizCorrect: cook.quizCorrect)
+            total += GameRules.xp(for: cook.session.result)
         }
         return total
     }
