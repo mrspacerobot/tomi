@@ -7,7 +7,7 @@ extension Sequence where Element == CookEntry {
     public var finishedCooks: [CookEntry] {
         var seenIDs: Set<UUID> = []
         var finished: [CookEntry] = []
-        for entry in self where !entry.stoppedEarly {
+        for entry in self where entry.session.result.isFinished {
             let isFirstCopy = seenIDs.insert(entry.id).inserted
             if isFirstCopy {
                 finished.append(entry)
@@ -20,7 +20,8 @@ extension Sequence where Element == CookEntry {
     public var completedCooks: [CompletedCook] {
         var cooks: [CompletedCook] = []
         for entry in finishedCooks {
-            cooks.append(CompletedCook(date: entry.date, weeklyGoal: entry.weeklyGoal))
+            let session = entry.session
+            cooks.append(CompletedCook(date: session.date, weeklyGoal: session.weeklyGoal))
         }
         return cooks
     }
