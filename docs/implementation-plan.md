@@ -51,12 +51,13 @@ Three layers:
 ```
 Tomi.xcodeproj
 Tomi/                  app target
-  DesignSystem/        tokens, components, TomiMascot
+  DesignSystem/        tokens (ColorRole and Tokens.xcassets, TextStyle, Spacing, Radius, RuleWeight), components, TomiMascot
   Onboarding/ Home/ Menu/ Scan/ Player/ Scenes/ AskTomi/ Voice/ Settings/
   AI/                  Foundation Models implementations
   Persistence/         SwiftData models, ProgressStore
   Library/             LessonLibrary (protocol), BundledLessonLibrary over the file reader BundledLibrary, FakeLessonLibrary
   Resources/           Assets, fonts, Localizable.xcstrings, Library/ (catalog.json, ingredients.json, lessons/<skill>/<lesson id>.lesson.json)
+Config/                Tomi-Info.plist: the Info.plist keys that have no build setting (the bundled fonts)
 TomiTests/ TomiUITests/
 Packages/TomiCore/     rules, schema, generator, tests
 server/                Go service (later)
