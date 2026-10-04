@@ -40,25 +40,24 @@ import Testing
 
     @Test func aFieldThatIsPresentIsKeptWhileTheRestFallBack() throws {
         var expected = CookPreferences()
-        expected.diet = .vegan
-        expected.equipment = []
+        expected.diet = "vegan"
+        expected.chosenEquipment = []
         #expect(try decode(#"{"diet": "vegan", "equipment": []}"#) == expected)
     }
 
-    @Test func unknownValuesInAListAreDroppedAndTheKnownOnesKept() throws {
-        let preferences = try decode(
-            #"{"equipment": ["oven", "air-fryer"], "avoid": ["nuts", "celery"], "#
-                + #""cuisines": {"italian": "love", "thai": "adore"}}"#
-        )
-        #expect(preferences.equipment == [.oven])
-        #expect(preferences.avoid == [.nuts])
+    @Test func unknownCuisineAnswersAreDroppedAndTheKnownOnesKept() throws {
+        let preferences = try decode(#"{"cuisines": {"italian": "love", "thai": "adore"}}"#)
         #expect(preferences.cuisines.preference(for: "italian") == .love)
         #expect(preferences.cuisines.preference(for: "thai") == .try)
     }
 
+    @Test func everySavedEquipmentIdIsKeptEvenOneTheLibraryDoesNotKnowYet() throws {
+        let preferences = try decode(#"{"equipment": ["oven", "air-fryer"]}"#)
+        #expect(preferences.chosenEquipment == ["oven", "air-fryer"])
+    }
+
     @Test func anUnknownSingleAnswerFallsBackToItsDefault() throws {
-        let preferences = try decode(#"{"diet": "keto", "experience": "chef", "units": "stones", "servings": 3}"#)
-        #expect(preferences.diet == .everything)
+        let preferences = try decode(#"{"experience": "chef", "units": "stones", "servings": 3}"#)
         #expect(preferences.experience == .basics)
         #expect(preferences.chosenUnits == nil)
         #expect(preferences.servings == 3)
@@ -67,7 +66,7 @@ import Testing
     @Test func aFieldOfTheWrongShapeFallsBackToItsDefault() throws {
         let preferences = try decode(#"{"servings": "many", "equipment": "oven", "cuisines": [], "weeklyGoal": 4}"#)
         #expect(preferences.servings == CookPreferences.defaultServings)
-        #expect(preferences.equipment == Equipment.standard)
+        #expect(preferences.chosenEquipment == nil)
         #expect(preferences.cuisines == CuisinePreferences())
         #expect(preferences.weeklyGoal == 4)
     }

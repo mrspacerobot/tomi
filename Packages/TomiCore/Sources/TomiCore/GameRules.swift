@@ -28,6 +28,16 @@ public enum GameRules {
         return xpPerCook
     }
 
+    /// What a cook earns for the way it ended. A cook stopped early earns nothing.
+    public static func xp(for result: CookResult) -> Int {
+        switch result {
+        case .finished(let quizCorrect):
+            xpForFinishedCook(quizCorrect: quizCorrect)
+        case .stoppedEarly:
+            0
+        }
+    }
+
     static func clampedWeeklyGoal(_ goal: Int) -> Int {
         min(max(goal, weeklyGoalOptions.lowerBound), weeklyGoalOptions.upperBound)
     }
