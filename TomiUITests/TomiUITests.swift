@@ -8,6 +8,7 @@ final class TomiUITests: XCTestCase {
     @MainActor
     func testLaunchShowsTomi() {
         let app = XCUIApplication()
+        app.launchArguments = ["--store-in-memory"]
         app.launch()
 
         XCTAssertTrue(app.staticTexts["welcome-title"].waitForExistence(timeout: 5))

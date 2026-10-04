@@ -13,6 +13,30 @@
         }
       }
     },
+    "savedData.unavailable.message": {
+      "comment": "Explanation under the title shown instead of the app when saved data cannot be opened or read.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Without your diet and the things you avoid, Tomi will not suggest a dish. Close the app and open it again."
+          }
+        }
+      }
+    },
+    "savedData.unavailable.title": {
+      "comment": "Title shown instead of the app when the cook's saved answers and progress cannot be opened or read.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi cannot read your saved answers"
+          }
+        }
+      }
+    },
     "welcome.kicker": {
       "comment": "Small heading above the welcome title. Shown in capitals by the design.",
       "extractionState": "manual",
@@ -21,6 +45,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Chez Tomi"
+          }
+        }
+      }
+    },
+    "welcome.mastered": {
+      "comment": "Line on the first screen. The number is how many techniques the cook has mastered.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Techniques mastered: %lld"
           }
         }
       }
@@ -45,6 +81,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tonight at Tomi's"
+          }
+        }
+      }
+    },
+    "welcome.xp": {
+      "comment": "Line on the first screen. The number is the cook's total experience points. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld XP"
           }
         }
       }
