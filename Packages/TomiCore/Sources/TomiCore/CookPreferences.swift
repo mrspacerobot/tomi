@@ -8,7 +8,7 @@ public struct CookPreferences: Hashable, Codable, Sendable {
     public static let minimumServings = 1
 
     public var diet = Diet.everything
-    public var avoid: Set<AvoidItem> = []
+    public var avoid: Set<AvoidItemID> = []
     public var cuisines = CuisinePreferences()
     public var equipment = Equipment.standard
     public var experience = Experience.basics

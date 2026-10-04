@@ -47,13 +47,16 @@ import Testing
 
     @Test func unknownValuesInAListAreDroppedAndTheKnownOnesKept() throws {
         let preferences = try decode(
-            #"{"equipment": ["oven", "air-fryer"], "avoid": ["nuts", "celery"], "#
-                + #""cuisines": {"italian": "love", "thai": "adore"}}"#
+            #"{"equipment": ["oven", "air-fryer"], "cuisines": {"italian": "love", "thai": "adore"}}"#
         )
         #expect(preferences.equipment == [.oven])
-        #expect(preferences.avoid == [.nuts])
         #expect(preferences.cuisines.preference(for: "italian") == .love)
         #expect(preferences.cuisines.preference(for: "thai") == .try)
+    }
+
+    @Test func everySavedAvoidItemIsKeptEvenOneTheTableDoesNotKnowYet() throws {
+        let preferences = try decode(#"{"avoid": ["nuts", "lupin"]}"#)
+        #expect(preferences.avoid == ["nuts", "lupin"])
     }
 
     @Test func anUnknownSingleAnswerFallsBackToItsDefault() throws {

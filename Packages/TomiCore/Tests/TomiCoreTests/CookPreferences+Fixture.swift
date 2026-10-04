@@ -15,7 +15,7 @@ extension CookPreferences {
     private static func fixtureWithEveryFoodAnswerChanged() -> CookPreferences {
         var preferences = CookPreferences()
         preferences.diet = .pescatarian
-        preferences.avoid = [.nuts, .pork]
+        preferences.avoid = ["nuts", "pork"]
         preferences.cuisines = .fixtureLovingItalianNeverThai()
         preferences.cupboardStaples = ["olive-oil", "salt"]
         return preferences

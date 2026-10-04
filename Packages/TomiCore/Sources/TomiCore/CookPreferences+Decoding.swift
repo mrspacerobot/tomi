@@ -11,7 +11,7 @@ extension CookPreferences {
 
     private mutating func readFood(from container: KeyedDecodingContainer<CodingKeys>) {
         diet = container.knownValue(Diet.self, forKey: .diet) ?? diet
-        avoid = container.knownValues(AvoidItem.self, forKey: .avoid) ?? avoid
+        avoid = container.knownValues(AvoidItemID.self, forKey: .avoid) ?? avoid
         cuisines = container.value(CuisinePreferences.self, forKey: .cuisines) ?? cuisines
         cupboardStaples = container.knownValues(IngredientID.self, forKey: .cupboardStaples) ?? cupboardStaples
     }

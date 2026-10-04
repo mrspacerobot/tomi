@@ -44,9 +44,6 @@ import Testing
 
     @Test func theClosedListsHoldExactlyTheAnswersOnTheScreens() {
         #expect(Diet.allCases == [.everything, .vegetarian, .vegan, .pescatarian])
-        #expect(
-            AvoidItem.allCases == [.nuts, .dairy, .gluten, .eggs, .shellfish, .fish, .soy, .sesame, .pork, .alcohol]
-        )
         #expect(Equipment.allCases == [.stovetop, .oven, .microwave, .thermometer, .blender, .riceCooker])
         #expect(Experience.allCases == [.never, .basics, .comfortable])
         #expect(CuisinePreference.allCases == [.love, .try, .never])
