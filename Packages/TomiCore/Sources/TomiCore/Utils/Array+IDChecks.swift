@@ -1,4 +1,5 @@
-/// Checks on hand-typed ids, shared by the validators of the skill catalog and the ingredient table.
+/// Checks on hand-typed ids, shared by the validators of the skill catalog, the ingredient table
+/// and the equipment list.
 extension Array where Element: Hashable & Comparable {
     /// Each value that appears more than once, sorted.
     var duplicates: [Element] {

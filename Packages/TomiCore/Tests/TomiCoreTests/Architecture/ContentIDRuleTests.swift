@@ -25,7 +25,7 @@ import Testing
         let ids = try ShippedContentIDs.all()
         let oneOfEachKind: Set<String> = [
             "foundations", "sear", "butter", "dairy", "eggs", "vegan", "french", "stovetop",
-            "spinach-hard-cheese-omelette",
+            "rice-cooker", "spinach-hard-cheese-omelette",
         ]
         #expect(oneOfEachKind.isSubset(of: ids))
     }
