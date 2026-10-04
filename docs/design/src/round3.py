@@ -592,7 +592,7 @@ def settings():
 def scan_review_first():
     found = ["eggs", "spinach", "parmesan", "lemon", "cherry tomatoes", "cucumber", "butter", "milk", "white wine"]
     urow = lambda n, why: ('<div class="u-row"><div class="nm">' + n + "?<small>" + why + '</small></div><div class="u-yes" role="button">' + icon("check", 16, 2.6) + 'I have it</div><div class="u-no" role="button">' + icon("close", 16, 2.2) + "No</div></div>")
-    staples = "".join(chip(n, "lock") for n in ("Oil", "Salt", "Pepper")) + "".join(chip(n, "on" if on else "off") for n, on in r2.STAPLES)
+    staples = "".join(chip(n, "lock") for n in ("Olive oil", "Salt", "Pepper")) + "".join(chip(n, "on" if on else "off") for n, on in r2.STAPLES)
     body = ('<div class="r-top"><div class="b-ib" role="button" aria-label="Back">' + icon("back", 22, 2) + '</div><div style="flex:1"></div></div>'
             '<div class="r-body" style="padding-top:0"><div class="r-revh"><div class="tx"><p class="b-k">Check my list</p><h1 class="b-d">Here is what I found.</h1></div>'
             '<div class="r-mini" role="button"><div>' + fridge_open(52, 66) + '</div>Retake</div></div>'
@@ -621,7 +621,7 @@ def edge_noai():
     body = (mast("happy") + house(*r2.HOUSE0, zero=True) +
             '<section class="b-special"><span class="flag b-k">Tonight\'s special</span><div class="blank"><span class="b-it">to be written</span><i></i></div>'
             '<h2 class="b-d">What have you got tonight?</h2><p class="from b-it">Type a few ingredients and I will write the special from them.</p>'
-            '<div class="b-btn" role="button">' + icon("keyboard", 20, 1.8) + ' Type what you have</div><p class="r-cup">Cupboard: oil, salt, pepper and 7 more. <u>Edit</u></p></section>'
+            '<div class="b-btn" role="button">' + icon("keyboard", 20, 1.8) + ' Type what you have</div><p class="r-cup">Cupboard: olive oil, salt, pepper and 7 more. <u>Edit</u></p></section>'
             '<div class="n-box" style="margin:18px 16px 0"><span class="b-k">On this iPhone</span>Reading fridge photos and Ask Tomi need Apple Intelligence, which this iPhone does not have. Lessons, timers, voice reading and your menu all work.</div>'
             '<section class="b-menu" style="padding-top:26px">' + MENU_H + menu(r2.zero_skills(), only=(0,)) + '</section>')
     return shot("edge-no-ai", "7c", "No Apple Intelligence", "Home on an older iPhone. The scan button is not shown disabled, it is simply absent: typing is the one way in. A single note explains what is missing and what still works. Inside lessons the Ask Tomi button is hidden and the footer is Back and Next only.", body, height=844, cls="b-screen r-crop", cap="first screenful")
