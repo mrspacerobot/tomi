@@ -2,44 +2,46 @@ import Testing
 
 @testable import TomiCore
 
-/// Whether one cook may be served an ingredient: their diet and their avoid list must both agree.
+/// Whether one cook may be served food: their diet and their avoid list must both agree.
 @Suite struct IngredientPreferencesTests {
-    let garlic = Ingredient.fixture("garlic")
-    let butter = Ingredient.fixture("butter", contains: [.dairy])
-    let chicken = Ingredient.fixture("chicken", contains: [.meat])
-    let wine = Ingredient.fixture("wine", contains: [.alcohol])
+    let table = IngredientTable.fixture()
+    let plain: Set<IngredientFactID> = []
+    let dairy: Set<IngredientFactID> = ["dairy"]
+    let meat: Set<IngredientFactID> = ["meat"]
+    let alcohol: Set<IngredientFactID> = ["alcohol"]
 
     @Test func aCookWithNoRestrictionsIsAllowedEverything() {
         let preferences = CookPreferences()
-        #expect(garlic.isAllowed(by: preferences))
-        #expect(butter.isAllowed(by: preferences))
-        #expect(chicken.isAllowed(by: preferences))
+        #expect(table.allows(plain, for: preferences))
+        #expect(table.allows(dairy, for: preferences))
+        #expect(table.allows(meat, for: preferences))
     }
 
     @Test func theDietAloneCanRefuse() {
-        #expect(!chicken.isAllowed(by: .fixture(diet: .vegetarian)))
-        #expect(!butter.isAllowed(by: .fixture(diet: .vegan)))
-        #expect(butter.isAllowed(by: .fixture(diet: .vegetarian)))
+        #expect(!table.allows(meat, for: .fixture(diet: "vegetarian")))
+        #expect(!table.allows(dairy, for: .fixture(diet: "vegan")))
+        #expect(table.allows(dairy, for: .fixture(diet: "vegetarian")))
     }
 
     @Test func theAvoidListAloneCanRefuse() {
-        #expect(!butter.isAllowed(by: .fixture(diet: .everything, avoid: [.dairy])))
-        #expect(!wine.isAllowed(by: .fixture(diet: .vegan, avoid: [.alcohol])))
-        #expect(wine.isAllowed(by: .fixture(diet: .vegan, avoid: [.dairy])))
+        #expect(!table.allows(dairy, for: .fixture(diet: nil, avoid: ["dairy"])))
+        #expect(!table.allows(alcohol, for: .fixture(diet: "vegan", avoid: ["alcohol"])))
+        #expect(table.allows(alcohol, for: .fixture(diet: "vegan", avoid: ["dairy"])))
     }
 
     @Test func anAvoidedItemIsRefusedEvenWhenTheDietAllowsIt() {
-        #expect(!butter.isAllowed(by: .fixture(diet: .vegetarian, avoid: [.nuts, .dairy])))
+        #expect(!table.allows(dairy, for: .fixture(diet: "vegetarian", avoid: ["nuts", "dairy"])))
     }
 
-    @Test func anIngredientOutsideTheDietIsRefusedEvenWhenNothingIsAvoided() {
-        let bacon = Ingredient.fixture("bacon", contains: [.pork])
-        #expect(!bacon.isAllowed(by: .fixture(diet: .pescatarian)))
-        #expect(!bacon.isAllowed(by: .fixture(diet: .everything, avoid: [.pork])))
-        #expect(bacon.isAllowed(by: .fixture(diet: .everything, avoid: [.fish])))
+    @Test func foodOutsideTheDietIsRefusedEvenWhenNothingIsAvoided() {
+        let pork: Set<IngredientFactID> = ["pork"]
+        #expect(!table.allows(pork, for: .fixture(diet: "pescatarian")))
+        #expect(!table.allows(pork, for: .fixture(diet: nil, avoid: ["pork"])))
+        #expect(table.allows(pork, for: .fixture(diet: nil, avoid: ["dairy"])))
     }
 
-    @Test func aPlainPlantIngredientIsAllowedUnderTheStrictestPreferences() {
-        #expect(garlic.isAllowed(by: .fixture(diet: .vegan, avoid: Set(AvoidItem.allCases))))
+    @Test func foodWithNoFactsIsAllowedUnderTheStrictestPreferences() {
+        let everyItem = Set(IngredientTable.fixtureAvoidItems.map(\.id))
+        #expect(table.allows(plain, for: .fixture(diet: "vegan", avoid: everyItem)))
     }
 }

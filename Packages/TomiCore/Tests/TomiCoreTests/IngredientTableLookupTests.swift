@@ -7,14 +7,21 @@ import Testing
     let table = IngredientTable.fixture()
 
     @Test func aKnownIngredientIsFound() throws {
-        #expect(try table.ingredient("butter") == .fixture("butter", contains: [.dairy]))
+        #expect(try table.ingredient("butter") == .fixture("butter", contains: ["dairy"]))
     }
 
     @Test func theTableAnswersForAKnownIngredient() throws {
-        #expect(try table.allowingDiets(for: "butter") == [.everything, .vegetarian, .pescatarian])
-        #expect(try table.avoidItems(for: "bacon") == [.pork])
-        #expect(try table.isAllowed("garlic", by: .fixture(diet: .vegan)))
-        #expect(try !table.isAllowed("butter", by: .fixture(diet: .vegan)))
+        #expect(try table.diets(allowing: "butter") == ["vegetarian", "pescatarian"])
+        #expect(try table.avoidItems(for: "bacon") == ["pork"])
+        #expect(try table.isAllowed("garlic", by: .fixture(diet: "vegan")))
+        #expect(try !table.isAllowed("butter", by: .fixture(diet: "vegan")))
+    }
+
+    @Test func avoidItemsAndDietsAreFoundByID() {
+        #expect(table.avoidItem("dairy")?.triggeredBy == ["dairy"])
+        #expect(table.avoidItem("lupin") == nil)
+        #expect(table.diet("pescatarian")?.excludes == ["meat", "pork"])
+        #expect(table.diet("keto") == nil)
     }
 
     @Test func lookingUpAnUnknownIngredientIsAnError() {
@@ -25,7 +32,7 @@ import Testing
 
     @Test func anUnknownIngredientHasNoDiets() {
         #expect(throws: IngredientTableError.unknownIngredient("dragon-fruit")) {
-            try table.allowingDiets(for: "dragon-fruit")
+            try table.diets(allowing: "dragon-fruit")
         }
     }
 

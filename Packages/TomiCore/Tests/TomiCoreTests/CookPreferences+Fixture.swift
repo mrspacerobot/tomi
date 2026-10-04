@@ -24,7 +24,7 @@ extension CookPreferences {
 
 extension CookPreferences {
     /// Default preferences with only the two answers the ingredient rules read.
-    static func fixture(diet: Diet, avoid: Set<AvoidItem> = []) -> CookPreferences {
+    static func fixture(diet: DietID?, avoid: Set<AvoidItemID> = []) -> CookPreferences {
         var preferences = CookPreferences()
         preferences.diet = diet
         preferences.avoid = avoid

@@ -2,34 +2,33 @@ import Testing
 
 @testable import TomiCore
 
-/// Which avoid-list items an ingredient triggers. They are derived from its facts, never written beside them.
+/// Which avoid items food triggers. They are worked out from its facts, never written beside them.
 @Suite struct IngredientAvoidTests {
-    static let factsWithTheirAvoidItem: [(IngredientFact, AvoidItem)] = [
-        (.dairy, .dairy), (.egg, .eggs), (.fish, .fish), (.shellfish, .shellfish), (.pork, .pork),
-        (.alcohol, .alcohol), (.nuts, .nuts), (.gluten, .gluten), (.soy, .soy), (.sesame, .sesame),
-    ]
+    let table = IngredientTable.fixture()
 
-    @Test(arguments: factsWithTheirAvoidItem)
-    func aFactTriggersItsAvoidItem(fact: IngredientFact, item: AvoidItem) {
-        #expect(Ingredient.fixture("food", contains: [fact]).avoidItems == [item])
+    @Test(arguments: ["dairy", "pork", "nuts", "alcohol"])
+    func aFactTriggersTheAvoidItemThatListsIt(name: String) {
+        let fact = IngredientFactID(rawValue: name)
+        #expect(table.avoidItems(triggeredBy: [fact]) == [AvoidItemID(rawValue: name)])
     }
 
-    @Test(arguments: [IngredientFact.meat, .animalProduct, .slaughterProduct])
-    func aFactThatOnlyDecidesDietsTriggersNothing(fact: IngredientFact) {
-        #expect(Ingredient.fixture("food", contains: [fact]).avoidItems.isEmpty)
+    @Test(arguments: ["meat", "fish", "egg"] as [IngredientFactID])
+    func aFactNoAvoidItemListsTriggersNothing(fact: IngredientFactID) {
+        #expect(table.avoidItems(triggeredBy: [fact]).isEmpty)
     }
 
-    @Test func everyAvoidItemCanBeTriggeredByAFact() {
-        let reachable = Set(IngredientFact.allCases.compactMap(\.avoidItem))
-        #expect(reachable == Set(AvoidItem.allCases))
+    @Test func foodWithNoFactsTriggersNothing() {
+        #expect(table.avoidItems(triggeredBy: []).isEmpty)
     }
 
-    @Test func aPlainPlantIngredientTriggersNothing() {
-        #expect(Ingredient.fixture("garlic").avoidItems.isEmpty)
+    @Test func foodTriggersEveryItemItsFactsReach() {
+        #expect(table.avoidItems(triggeredBy: ["dairy", "nuts", "meat"]) == ["dairy", "nuts"])
     }
 
-    @Test func anIngredientTriggersEveryItemItContains() {
-        let soySauce = Ingredient.fixture("soy-sauce", contains: [.soy, .gluten])
-        #expect(soySauce.avoidItems == [.soy, .gluten])
+    @Test func anItemIsTriggeredByAnyOneOfItsFacts() {
+        let animal = AvoidItem.fixture("animal", triggeredBy: ["meat", "fish"])
+        let table = IngredientTable.fixture().with(avoidItems: [animal])
+        #expect(table.avoidItems(triggeredBy: ["fish"]) == ["animal"])
+        #expect(table.avoidItems(triggeredBy: ["dairy"]).isEmpty)
     }
 }

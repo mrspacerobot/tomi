@@ -86,6 +86,9 @@ Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replace
 - One file per lesson, grouped by skill, plus an index built by the generator carrying the library and schema versions. The index holds every field the filter needs, so a full lesson is read only once it is picked.
 - Each lesson has a stable id, a revision, a skill and level, a cuisine, ingredients, equipment, steps (each naming a scene from the closed scene list), a quiz, and swaps.
 - Diet and allergen tags are computed from the ingredient table, never typed and never produced by a model.
+- The ingredient table (`ingredients.json`) declares everything about who may eat what: the list of facts an ingredient can have, the avoid items with the facts that trigger each, the diets with the facts each rules out, and every ingredient with its facts. Code names none of them, so a new avoid item or diet is a data change. The validator replaces the compiler: undeclared facts, unknown fields, an avoid item nothing triggers and a diet that rules nothing out all reject the file.
+- The filter fails closed. An ingredient the table does not list is an error. A diet or avoid item in the cook's preferences that the table does not list, including one saved by a newer app or one that could not be read, makes every dish unavailable until the cook updates or answers again.
+- A model never adds to the lists. Skills, levels, facts, avoid items, diets and ingredients are added only by a person in a reviewed change. The generator writes lessons only, from closed lists read out of the catalog and the ingredient table.
 - A swap is a reviewed substitution that removes an allergen or changes the diet (butter to olive oil removes dairy).
 - Coverage rule: every skill has several lessons for every diet, even after any one cuisine is excluded. The generator reports gaps.
 - The library ships in the app and can be replaced by a newer signed download, so a lesson can be fixed or withdrawn the same day.
@@ -133,7 +136,7 @@ Each phase ends with something runnable. GitHub milestones mirror these.
 ## Risks
 
 - **The on-device model may read fridges badly.** Tested in Phase 0 before any scan UI. The scanner sits behind a protocol, so Apple's cloud model or Claude can replace it.
-- **Allergens are a safety feature.** Tags come from one code-owned table, unknown ingredients fail the build, the filter runs again after AI adaptation, and the app never claims a dish is "safe".
+- **Allergens are a safety feature.** Tags come from one reviewed table that only a person changes, an unknown ingredient, diet or avoid item refuses the dish, the filter runs again after AI adaptation, and the app never claims a dish is "safe".
 - **Diets and cuisines multiply the library** to roughly 150 to 200 lessons. Generation is cheap; human spot-checking is the real cost.
 - **A live iCloud layout can only grow.** The saved-data design is a review point before TestFlight.
 - **Not every iPhone has Apple Intelligence.** The typed path and code-only ranking must always work.
