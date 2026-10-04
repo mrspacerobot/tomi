@@ -12,7 +12,7 @@ import Testing
         #expect(lesson.level == 2)
         #expect(lesson.cuisine == "french")
         #expect(lesson.minutes == 20)
-        #expect(lesson.equipment == [.stovetop])
+        #expect(lesson.equipment == ["stovetop"])
         #expect(lesson.title.resolved(preferredLanguages: []) == "Garlic butter")
     }
 

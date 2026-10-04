@@ -21,7 +21,7 @@ public struct Lesson: Identifiable, Hashable, Codable, Sendable {
     /// The idea behind the technique, in a few sentences.
     public var concept: LocalizedText
     public var ingredients: [LessonIngredient]
-    public var equipment: Set<Equipment>
+    public var equipment: Set<EquipmentID>
     public var steps: [LessonStep]
     public var quiz: LessonQuiz
     public var swaps: [LessonSwap]

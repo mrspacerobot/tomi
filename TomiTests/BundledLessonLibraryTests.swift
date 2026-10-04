@@ -50,17 +50,17 @@ import TomiCore
         let table = try #require(BundledLibrary.ingredientTable())
         let omelette = try LibraryFixture.shippedOmelette()
         var vegetarian = CookPreferences()
-        vegetarian.diet = .vegetarian
+        vegetarian.diet = "vegetarian"
         #expect(try omelette.isAllowed(by: vegetarian, in: table))
-        #expect(try omelette.tags(in: table).avoidItems == [.eggs, .dairy])
+        #expect(try omelette.tags(in: table).avoidItems == ["eggs", "dairy"])
     }
 
     @Test func theSearedChickenIsNotVegetarian() throws {
         let library = BundledLessonLibrary()
         let table = try #require(library.ingredientTable)
         let chicken = try #require(library.lessons.first { $0.id == LibraryFixture.searedChicken })
-        #expect(try chicken.tags(in: table).suitableDiets == [.everything])
-        #expect(try chicken.tags(in: table).avoidItems == [.dairy, .alcohol])
+        #expect(try chicken.tags(in: table).suitableDiets.isEmpty)
+        #expect(try chicken.tags(in: table).avoidItems == ["dairy", "alcohol"])
     }
 
     @Test func everyShippedLessonReadsInTheCooksLanguage() {

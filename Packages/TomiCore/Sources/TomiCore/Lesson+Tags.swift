@@ -1,21 +1,31 @@
 /// Diet and avoid-list answers for a lesson. They come only from the ingredient table, and an ingredient
 /// the table does not list throws `IngredientTableError.unknownIngredient`: unknown is never "suitable".
 extension Lesson {
-    /// The diets the dish suits and the avoid items it triggers, added up over every ingredient.
-    public func tags(in table: IngredientTable) throws -> LessonTags {
-        var diets = Set(Diet.allCases)
-        var avoidItems: Set<AvoidItem> = []
+    /// Every fact of every ingredient of the dish.
+    public func facts(in table: IngredientTable) throws -> Set<IngredientFactID> {
+        var facts: Set<IngredientFactID> = []
         for line in ingredients {
             let ingredient = try table.ingredient(line.ingredient)
-            diets.formIntersection(ingredient.allowingDiets)
-            avoidItems.formUnion(ingredient.avoidItems)
+            facts.formUnion(ingredient.facts)
         }
-        return LessonTags(suitableDiets: diets, avoidItems: avoidItems)
+        return facts
+    }
+
+    /// The diets the dish suits and the avoid items it triggers, worked out from the facts of every ingredient.
+    public func tags(in table: IngredientTable) throws -> LessonTags {
+        let facts = try facts(in: table)
+        return LessonTags(
+            facts: facts,
+            suitableDiets: table.diets(allowing: facts),
+            avoidItems: table.avoidItems(triggeredBy: facts)
+        )
     }
 
     /// Whether this cook may be shown the lesson as written. Apply a swap first to ask about the swapped dish.
+    /// The table decides, so a diet or avoid item it does not list refuses the lesson.
     public func isAllowed(by preferences: CookPreferences, in table: IngredientTable) throws -> Bool {
-        try tags(in: table).allow(preferences)
+        let facts = try facts(in: table)
+        return table.allows(facts, for: preferences)
     }
 
     /// The lesson with one ingredient replaced. Its tags are then worked out from the new ingredient list,

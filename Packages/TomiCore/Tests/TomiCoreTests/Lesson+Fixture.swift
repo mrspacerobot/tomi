@@ -14,7 +14,7 @@ extension Lesson {
         whyThis: LocalizedText(["en": "Why tonight"]),
         concept: LocalizedText(["en": "What it teaches"]),
         ingredients: [.fixture("garlic"), .fixture("butter")],
-        equipment: [.stovetop],
+        equipment: ["stovetop"],
         steps: [.fixture(scene: .stir), .fixture(scene: .plate)],
         quiz: .fixture(),
         swaps: []

@@ -14,11 +14,11 @@ import Testing
         let table = try ShippedIngredientTable.load()
         let lesson = try ShippedLessons.lesson(ShippedLessons.searedChicken)
         let tags = try lesson.tags(in: table)
-        #expect(tags.suitableDiets == [.everything])
-        #expect(tags.avoidItems == [.dairy, .alcohol])
-        #expect(try lesson.isAllowed(by: .fixture(diet: .everything), in: table))
-        #expect(try !lesson.isAllowed(by: .fixture(diet: .vegetarian), in: table))
-        #expect(try !lesson.isAllowed(by: .fixture(diet: .everything, avoid: [.alcohol]), in: table))
+        #expect(tags.suitableDiets == [])
+        #expect(tags.avoidItems == ["dairy", "alcohol"])
+        #expect(try lesson.isAllowed(by: .fixture(diet: nil), in: table))
+        #expect(try !lesson.isAllowed(by: .fixture(diet: "vegetarian"), in: table))
+        #expect(try !lesson.isAllowed(by: .fixture(diet: nil, avoid: ["alcohol"]), in: table))
     }
 
     @Test func theSearedChickenWithOliveOilForButterIsFreeOfDairy() throws {
@@ -27,9 +27,9 @@ import Testing
         let swap = try #require(lesson.swaps.first { $0.ingredient == "butter" })
         #expect(swap.replacement.ingredient == "olive-oil")
         let swapped = try lesson.applying(swap)
-        #expect(try swapped.tags(in: table).avoidItems == [.alcohol])
-        #expect(try !lesson.isAllowed(by: .fixture(diet: .everything, avoid: [.dairy]), in: table))
-        #expect(try swapped.isAllowed(by: .fixture(diet: .everything, avoid: [.dairy]), in: table))
+        #expect(try swapped.tags(in: table).avoidItems == ["alcohol"])
+        #expect(try !lesson.isAllowed(by: .fixture(diet: nil, avoid: ["dairy"]), in: table))
+        #expect(try swapped.isAllowed(by: .fixture(diet: nil, avoid: ["dairy"]), in: table))
     }
 
     @Test func theOmeletteTeachesTheRolledOmelette() throws {
@@ -42,10 +42,10 @@ import Testing
         let table = try ShippedIngredientTable.load()
         let lesson = try ShippedLessons.lesson(ShippedLessons.omelette)
         let tags = try lesson.tags(in: table)
-        #expect(tags.suitableDiets == [.everything, .vegetarian, .pescatarian])
-        #expect(tags.avoidItems == [.eggs, .dairy])
-        #expect(try lesson.isAllowed(by: .fixture(diet: .vegetarian), in: table))
-        #expect(try !lesson.isAllowed(by: .fixture(diet: .vegan), in: table))
+        #expect(tags.suitableDiets == ["vegetarian", "pescatarian"])
+        #expect(tags.avoidItems == ["eggs", "dairy"])
+        #expect(try lesson.isAllowed(by: .fixture(diet: "vegetarian"), in: table))
+        #expect(try !lesson.isAllowed(by: .fixture(diet: "vegan"), in: table))
     }
 
     @Test func theOmeletteUsesTheVegetarianCheeseNotParmesan() throws {
