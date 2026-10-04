@@ -403,11 +403,11 @@ def ob_pantry():
             '<div class="r-grp"><div class="hd"><span class="b-k">Anything else?</span><span class="b-it">spices, sauces, tins</span></div>'
             '<div class="r-chips">%s%s</div><div class="r-field"><span class="b-it">Type one, for example cumin</span><div class="add" role="button" aria-label="Add">%s</div></div></div></div>%s') % (
                 head("Question 7 of 7", "What is always in your cupboard?", "So you never have to photograph the salt."),
-                "".join(chip(n, "lock") for n in ("Oil", "Salt", "Pepper")),
+                "".join(chip(n, "lock") for n in ("Olive oil", "Salt", "Pepper")),
                 "".join(chip(n, "on" if on else "off") for n, on in STAPLES),
-                chip("Chili flakes", "x"), chip("Olive oil", "x"), icon("plus", 20, 2.4),
+                chip("Chili flakes", "x"), chip("Sunflower oil", "x"), icon("plus", 20, 2.4),
                 '<div class="r-flow"><p class="r-hint b-it">12 staples saved. Edit them any evening.</p><div class="b-btn" role="button">Continue</div></div>')
-    return shot("ob-pantry", "1h", "Always in your cupboard", "The saved version of the prototype's pantry text field. Oil, salt and pepper are locked on. Seven common staples are pre-ticked so skipping still gives Tomi something to work with. The same list appears on the scan review, where a staple can be switched off for one night.", body, height=None, cap="scrolls a little, full height")
+    return shot("ob-pantry", "1h", "Always in your cupboard", "The saved version of the prototype's pantry text field. Olive oil, salt and pepper are locked on. The oil is named, never left as plain oil, because a cook who avoids nuts, sesame or soy has to know which one a dish means. Seven common staples are pre-ticked so skipping still gives Tomi something to work with. The same list appears on the scan review, where a staple can be switched off for one night.", body, height=None, cap="scrolls a little, full height")
 
 
 def fridge_closed():
@@ -509,7 +509,7 @@ def home_empty():
             '<h2 class="b-d">What is in your fridge tonight?</h2>'
             '<p class="from b-it">Show me, and I\'ll write the special from what you have. About ten seconds.</p>'
             '<div class="b-btn" role="button">%s Scan your fridge</div><div class="b-btn sec" role="button">%s Type what you have</div>'
-            '<p class="r-cup">Cupboard: oil, salt, pepper and 9 more. <u>Edit</u></p></section>'
+            '<p class="r-cup">Cupboard: olive oil, salt, pepper and 9 more. <u>Edit</u></p></section>'
             '<section class="b-menu">%s%s<p class="b-fine b-it">New dishes are served once the ones before them are mastered.</p></section>') % (
                 icon("camera", 20, 1.8), icon("keyboard", 20, 1.8), MENU_H, menu(zero_skills()))
     return shot("home-empty", "2a", "Home, first evening", "<b>The special's box stays, with the dish left blank.</b> The same frame that will hold tonight's dish asks the question instead, so the scan result lands exactly where the cook was looking. Scan is primary, typing is the visible second button, and the saved cupboard is one tap from editing. Zero progress: the first course is ready, everything else says what it is served after.", body, height=None, cap="full scroll height")
@@ -581,7 +581,7 @@ def scan_reading():
 
 
 FOUND = [("eggs", ""), ("spinach", ""), ("parmesan", ""), ("lemon", ""), ("cherry tomatoes", ""), ("cucumber", ""), ("butter", ""), ("milk", ""), ("white wine", ""), ("feta", "q"), ("spring onions", "q")]
-CUP = [("Oil", "lock"), ("Salt", "lock"), ("Pepper", "lock"), ("Rice", "on"), ("Pasta", "on"), ("Garlic", "on"), ("Onions", "out"), ("Tinned tomatoes", "on")]
+CUP = [("Olive oil", "lock"), ("Salt", "lock"), ("Pepper", "lock"), ("Rice", "on"), ("Pasta", "on"), ("Garlic", "on"), ("Onions", "out"), ("Tinned tomatoes", "on")]
 
 def cupboard():
     return ('<div class="r-grp"><div class="hd"><span class="b-k">From your cupboard</span><span class="b-it">tap to leave one out tonight</span></div><div class="r-chips">%s</div></div>') % (

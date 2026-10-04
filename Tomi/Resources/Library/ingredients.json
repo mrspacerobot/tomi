@@ -33,8 +33,8 @@
     { "id": "pescatarian", "name": {"en": "Pescatarian"}, "summary": {"en": "Fish, but no meat"}, "excludes": ["meat", "pork", "slaughterProduct"] }
   ],
   "ingredients": [
-    { "id": "oil", "name": {"en": "Cooking oil"}, "contains": [] },
     { "id": "olive-oil", "name": {"en": "Olive oil"}, "contains": [] },
+    { "id": "sunflower-oil", "name": {"en": "Sunflower oil"}, "contains": [] },
     { "id": "salt", "name": {"en": "Salt"}, "contains": [] },
     { "id": "black-pepper", "name": {"en": "Black pepper"}, "contains": [] },
     { "id": "chili-flakes", "name": {"en": "Chili flakes"}, "contains": [] },
