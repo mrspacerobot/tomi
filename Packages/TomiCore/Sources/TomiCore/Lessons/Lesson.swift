@@ -22,6 +22,9 @@ public struct Lesson: Identifiable, Hashable, Codable, Sendable {
     public var concept: LocalizedText
     public var ingredients: [LessonIngredient]
     public var equipment: Set<EquipmentID>
+    /// The dish's main food as the file writes it. It is kept as written, so that a name outside the closed list
+    /// reaches the validator and is reported with its lesson, instead of failing somewhere in decoding.
+    public var mainName: String
     public var steps: [LessonStep]
     public var quiz: LessonQuiz
     public var swaps: [LessonSwap]
@@ -40,6 +43,7 @@ public struct Lesson: Identifiable, Hashable, Codable, Sendable {
         case concept
         case ingredients
         case equipment
+        case mainName = "main"
         case steps
         case quiz
         case swaps

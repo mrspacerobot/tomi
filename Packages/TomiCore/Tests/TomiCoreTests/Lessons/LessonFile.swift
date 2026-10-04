@@ -19,7 +19,7 @@ enum LessonFile {
         #"{"schemaVersion": \#(schemaVersion), "id": "garlic-butter", "revision": 2, "skill": "eggs", "level": 2, "#
             + #""cuisine": "french", "title": {"en": "Garlic butter"}, "minutes": 20, "#
             + #""whyThis": {"en": "Why"}, "concept": {"en": "What"}, "ingredients": [\#(butterLine)], "#
-            + #""equipment": ["stovetop"], "steps": [\#(step)], "quiz": \#(quiz), "#
+            + #""equipment": ["stovetop"], "main": "tofu", "steps": [\#(step)], "quiz": \#(quiz), "#
             + #""swaps": [{"replace": "butter", "with": \#(baconLine)}]\#(extra)}"#
     }
 

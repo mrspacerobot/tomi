@@ -3,20 +3,11 @@ import Testing
 @testable import TomiCore
 
 @Suite struct LessonStepValidationTests {
-    @Test func aSceneThisBuildCannotDrawIsListedButDoesNotRejectTheLesson() {
+    @Test func aSceneOutsideTheClosedListIsReportedWithItsStep() {
         var lesson = Lesson.fixture()
         lesson.steps[1].sceneName = "juggle"
         #expect(lesson.steps[1].scene == nil)
-        #expect(lesson.unknownSceneNames == ["juggle"])
-        #expect(lesson.issuesInTheFixtureLibrary().isEmpty)
-    }
-
-    @Test func aStepWithoutASceneIsDrawnPlainAndIsNotUnknown() {
-        var lesson = Lesson.fixture()
-        lesson.steps[1].sceneName = nil
-        #expect(lesson.steps[1].scene == nil)
-        #expect(lesson.unknownSceneNames.isEmpty)
-        #expect(lesson.issuesInTheFixtureLibrary().isEmpty)
+        #expect(lesson.issuesInTheFixtureLibrary() == [.unknownScene(step: 1, "juggle")])
     }
 
     @Test(arguments: StepScene.allCases)
@@ -30,7 +21,7 @@ import Testing
     @Test func theScenesAreTheOnesTheDesignDraws() {
         let drawn = [
             "chop", "crack", "whisk", "sear", "flip", "toss", "stir", "deglaze", "simmer", "boil", "drain", "oven",
-            "rest", "plate", "temp",
+            "rest", "plate", "temp", "wilt", "scramble", "fill", "roll", "mount",
         ]
         #expect(StepScene.allCases.map(\.rawValue) == drawn)
     }

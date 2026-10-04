@@ -69,6 +69,13 @@ import Testing
         }
     }
 
+    @Test func anUnknownSceneIsReportedWithTheLessonIDNotADecodingCrash() {
+        let juggle = #"{"text": {"en": "Juggle."}, "scene": "juggle"}"#
+        #expect(throws: LessonError.invalid("garlic-butter", [.unknownScene(step: 0, "juggle")])) {
+            try LessonFile.decode(LessonFile.text(step: juggle))
+        }
+    }
+
     @Test func anInvalidLessonIsRejectedWithEveryIssue() {
         let tooLong = #"{"text": {"en": ""}, "scene": "rest", "timerSeconds": 14401}"#
         let issues: [LessonIssue] = [.timerTooLong(step: 0), .missingText(.stepText(step: 0))]

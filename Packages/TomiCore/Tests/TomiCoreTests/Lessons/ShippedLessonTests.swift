@@ -58,12 +58,4 @@ import Testing
             #expect(lesson.equipment.isSubset(of: kitchenScreen), "\(lesson.id.rawValue)")
         }
     }
-
-    /// The app would draw an unknown scene plain, so nothing else catches a mistyped one in our own lessons.
-    @Test func noShippedLessonNamesASceneThisBuildCannotDraw() throws {
-        for file in try ShippedLessons.files() {
-            let lesson = try ShippedLessons.lesson(at: file)
-            #expect(lesson.unknownSceneNames.isEmpty, "\(lesson.id.rawValue)")
-        }
-    }
 }

@@ -20,6 +20,7 @@
     { "ingredient": "spinach", "metric": { "value": 150, "unit": "gram" }, "cups": { "value": 5, "unit": "cup" } }
   ],
   "equipment": ["stovetop"],
+  "main": "chicken",
   "steps": [
     {
       "text": { "en": "Pat the chicken thighs dry and salt both sides. Lay them skin-side down in a hot pan with the oil. Leave them alone until the skin is deep golden." },
@@ -36,7 +37,7 @@
     {
       "text": { "en": "Pour off most of the fat. Add the minced garlic and stir until it smells sweet." },
       "tip": { "en": "Keep the brown bits in the pan. That is your fond." },
-      "scene": "stir",
+      "scene": "toss",
       "timerSeconds": 30
     },
     {
@@ -52,7 +53,7 @@
     {
       "text": { "en": "Take the pan off the heat. Whisk in the cold butter and the juice of the lemon half. Taste, then add salt if it needs it." },
       "tip": { "en": "Off the heat, so the butter turns the sauce glossy instead of greasy." },
-      "scene": "whisk"
+      "scene": "mount"
     },
     {
       "text": { "en": "Wilt the spinach in the same pan. Plate it with the chicken and spoon the sauce over." },

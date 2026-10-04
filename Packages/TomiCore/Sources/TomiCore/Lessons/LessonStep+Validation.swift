@@ -2,6 +2,9 @@ extension LessonStep {
     /// The problems of the step that sits at this position in its lesson, counting from 0.
     func issues(at position: Int) -> [LessonIssue] {
         var issues: [LessonIssue] = []
+        if scene == nil {
+            issues.append(.unknownScene(step: position, sceneName))
+        }
         if let timerSeconds {
             issues += timerIssues(seconds: timerSeconds, at: position)
         }

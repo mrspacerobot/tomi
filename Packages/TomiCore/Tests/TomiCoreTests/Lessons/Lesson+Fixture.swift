@@ -15,6 +15,7 @@ extension Lesson {
         concept: LocalizedText(["en": "What it teaches"]),
         ingredients: [.fixture("garlic"), .fixture("butter")],
         equipment: ["stovetop"],
+        mainName: "chicken",
         steps: [.fixture(scene: .stir), .fixture(scene: .plate)],
         quiz: .fixture(),
         swaps: []
