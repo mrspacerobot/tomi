@@ -16,6 +16,8 @@ It runs the formatter's lint, SwiftLint (size limits, hard-coded text, banned ca
 
 Report honestly: if a check fails or you skipped a step, say so.
 
+**Every pull request to `main` runs the same check automatically** (`.github/workflows/check.yml`), on the owner's Mac. It shows on the pull request as "Check". If the Mac is busy, asleep or off, the check waits and runs when the Mac is free. GitHub cannot require a green check on this repository, so the rule is written here instead: the owner merges only when the check is green. Running it yourself first is still required; the automatic run is the proof, not the first try.
+
 ## How we work: tests first
 
 1. **Write the failing test first.** For a rule, a unit test in `Packages/TomiCore`. For a screen or flow, a UI test that drives the app the way a cook would. Watch it fail for the right reason, then write the code.
@@ -136,3 +138,46 @@ Models are trained on years of older code. Use the current API, and check Apple'
 - **Every commit names its issue.** The subject says what changed, in the imperative, and ends with the issue number: `Add streak rules (#4)`. The body says why. No issue, no commit: open one first.
 - **The pull request closes its issue** with `Closes #<number>` in the description.
 - **When a decision changes,** update `docs/implementation-plan.md` and this file in the same pull request.
+
+## Code Review Rules
+
+For any agent or person reviewing a pull request here. Formatting, size limits and hard-coded text are checked by `./scripts/check.sh`; do not review those.
+
+**What counts as high priority here**
+
+- **P0, blocks the merge:** a cook can be shown food they said they cannot eat, or saved data can be lost or misread.
+- **P1, must be fixed:** a rule gives a wrong result for some input, a rule has no test that would catch it being broken, or a decision changed without its test and its documentation.
+- Report each finding with the input or order of events that goes wrong, what the code does, and what it should do. If you cannot construct one, ask it as a question.
+
+**Food safety**
+
+- An ingredient, diet, avoid item or ingredient fact that is unknown, missing or cannot be read must make the dish unavailable. It must never be read as "allowed", "suitable" or "contains nothing". This holds for values written by a newer version of the app too.
+- Diet and allergen tags are computed from the ingredient table every time. They are never stored in a lesson file, typed by a person, or produced by a model.
+- After anything changes a lesson's ingredients (a swap, an AI adaptation, a different serving size), the lesson is checked against the cook's diet and avoid list again before it is shown.
+- A temperature, a cooking time claimed as safe, or a "safe to eat" statement comes only from the safety table. Tomi never judges from a photo whether food is cooked through.
+
+**The cook log and what follows from it**
+
+- Progress, XP, rank and streak are computed from the cook log on demand. A stored total is a bug.
+- The same entry id arriving twice counts once. Two logs merged in either order give the same result. No result may depend on the order of the entries.
+- An entry for a skill, level or lesson this version does not know is ignored for progress and never crashes. An entry marked stopped early counts for nothing.
+- Week and day arithmetic uses the `Calendar` passed in. Inside TomiCore, `Calendar.current`, `Date()` and fixed lengths such as seven times 24 hours are bugs: they break at a daylight saving change, a different first weekday, or in a test.
+
+**Saved data and ids**
+
+- A stored field or an id (skill, course, level number, lesson, ingredient, cuisine) is permanent. Renaming, removing or reusing one is a P0. New fields are optional or have a default.
+- Reading saved data must survive a missing field and a value from a newer version, without crashing and without weakening a safety filter.
+
+**Content files**
+
+- A change to the layout of a content file (catalog, ingredients, lesson) needs a schema version bump, a validator rule and a test with a failing file.
+- A file from an unknown schema version is rejected before anything else in it is read.
+- Whatever the validator accepts, the app must be able to use. Whatever a comment or document says the validator checks, it must check.
+- No Swift file names a specific skill, course, ingredient or cuisine. No game number lives outside `GameRules`.
+
+**Tests**
+
+- Every rule changed or added has a test that fails when the rule is broken. Name the change that would slip through if one does not.
+- A test never depends on the real clock, time zone, locale, network, camera or model.
+
+A reviewer never merges and never pushes to `main`.
