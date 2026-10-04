@@ -10,7 +10,8 @@ import Testing
         let soySauce = #"{"id": "soy-sauce", "name": {"en": "Soy sauce"}, "contains": ["soy", "gluten"]}"#
         let table = try IngredientTable.decode(from: json(ingredients: "[\(Self.garlic), \(soySauce)]"))
         #expect(table.ingredients.map(\.id) == ["garlic", "soy-sauce"])
-        #expect(try table.ingredient("soy-sauce").facts == [.soy, .gluten])
+        #expect(try table.ingredient("soy-sauce").facts == ["soy", "gluten"])
+        #expect(try table.avoidItems(for: "soy-sauce") == ["soy"])
         #expect(try table.ingredient("garlic").name.resolved(preferredLanguages: []) == "Garlic")
     }
 
@@ -52,9 +53,11 @@ import Testing
         }
     }
 
-    @Test func aFactThatIsNotOnTheClosedListIsRejectedNotDropped() {
+    @Test func aFactThatIsNotDeclaredIsRejectedNotDropped() {
         let satay = #"{"id": "satay", "name": {"en": "Satay"}, "contains": ["soy", "peanuts", "eggs"]}"#
-        let issues: [IngredientIssue] = [.unknownFact("satay", "peanuts"), .unknownFact("satay", "eggs")]
+        let issues: [IngredientIssue] = [
+            .undeclaredIngredientFact("satay", "eggs"), .undeclaredIngredientFact("satay", "peanuts"),
+        ]
         #expect(throws: IngredientTableError.invalid(issues)) {
             try IngredientTable.decode(from: json(ingredients: "[\(Self.garlic), \(satay)]"))
         }
@@ -66,7 +69,8 @@ import Testing
         }
     }
 
+    /// A table declaring soy and gluten, with one avoid item and one diet, around the given ingredients.
     private func json(schemaVersion: Int = IngredientTable.supportedSchemaVersion, ingredients: String) -> Data {
-        Data(#"{"schemaVersion": \#(schemaVersion), "ingredients": \#(ingredients)}"#.utf8)
+        IngredientTableFile(schemaVersion: schemaVersion, ingredients: ingredients).data
     }
 }
