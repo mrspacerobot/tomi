@@ -7,10 +7,13 @@ public struct CookPreferences: Hashable, Codable, Sendable {
     public static let defaultServings = 2
     public static let minimumServings = 1
 
-    public var diet = Diet.everything
+    /// The diet the cook keeps, or nil when they eat everything.
+    public var diet: DietID?
     public var avoid: Set<AvoidItemID> = []
     public var cuisines = CuisinePreferences()
-    public var equipment = Equipment.standard
+    /// The equipment the cook ticked, or nil while they have not answered:
+    /// then `equipment(assumingUntilChosen:)` follows what the library says a kitchen has.
+    public var chosenEquipment: Set<EquipmentID>?
     public var experience = Experience.basics
     /// People at the table most nights. Change it with `setServings`, which keeps it at one or more.
     public private(set) var servings = CookPreferences.defaultServings
@@ -31,6 +34,14 @@ public struct CookPreferences: Hashable, Codable, Sendable {
         return Units.standard(for: locale)
     }
 
+    /// What the cook's kitchen has: their own answer, or the library's standard kitchen until they give one.
+    public func equipment(assumingUntilChosen standardKitchen: Set<EquipmentID>) -> Set<EquipmentID> {
+        if let chosenEquipment {
+            return chosenEquipment
+        }
+        return standardKitchen
+    }
+
     public mutating func setServings(_ servings: Int) {
         self.servings = max(servings, CookPreferences.minimumServings)
     }
@@ -44,7 +55,7 @@ public struct CookPreferences: Hashable, Codable, Sendable {
         case diet
         case avoid
         case cuisines
-        case equipment
+        case chosenEquipment = "equipment"
         case experience
         case servings
         case chosenUnits = "units"
