@@ -19,16 +19,9 @@ extension CookEntry {
 
     /// The same cook, with the quiz at the end answered wrong.
     func withTheQuizWrong() -> CookEntry {
-        CookEntry(
-            id: id,
-            lesson: lesson,
-            skill: skill,
-            level: level,
-            date: date,
-            stoppedEarly: stoppedEarly,
-            quizCorrect: false,
-            weeklyGoal: weeklyGoal
-        )
+        let result = CookResult.finished(quizCorrect: false)
+        let wrong = CookSession(date: session.date, result: result, weeklyGoal: session.weeklyGoal)
+        return CookEntry(id: id, lesson: lesson, session: wrong)
     }
 
     func with(weeklyGoal: Int) -> CookEntry {
