@@ -66,6 +66,22 @@ server/                Go service (later)
 docs/ prototype/
 ```
 
+### Shared components
+
+`Tomi/DesignSystem` supplies `TomiButtonStyle`, `TickRow`, `Chip`, `UseTag`, `StatsColumns`,
+`DoubleRuledBox`, `ProgressRule` and their shared rules and icons. The states follow the component cards
+in `docs/design/round3.html`; interactive states have localized accessibility words and at least 44-point
+touch targets. At accessibility text sizes tick-row notes and stats stack, chip names wrap, and box flags
+grow with their text. Selection rules live in TomiCore (`Selection`).
+
+Chips use SwiftUI's `Layout` protocol through `FlowLayout`; its required four-parameter
+`placeSubviews(in:proposal:subviews:cache:)` is the exception documented in `AGENTS.md` and the layout
+folder's lint configuration. `FlowCursor` holds the tested placement arithmetic.
+
+A debug build launched with `--component-gallery` opens a small interactive gallery for component UI tests
+and visual comparison. `--gallery-section` opens at a named section for screenshots. Release builds contain
+no gallery screen or launch-argument handling. The full gallery remains #12.
+
 ### From fridge photo to tonight's special
 
 1. Photo (or typed list).

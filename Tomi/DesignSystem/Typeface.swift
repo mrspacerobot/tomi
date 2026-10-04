@@ -11,6 +11,8 @@ nonisolated enum Typeface: CaseIterable, Sendable {
     case newsreaderItalic
     /// Newsreader 600 italic: the key phrase of a step.
     case newsreaderSemiBoldItalic
+    /// Figtree 500: the small line under a value.
+    case figtreeMedium
     /// Figtree 600: buttons, chips, states.
     case figtreeSemiBold
     /// Figtree 700: labels.
@@ -25,6 +27,7 @@ nonisolated enum Typeface: CaseIterable, Sendable {
         case .newsreaderMedium: "NewsreaderRoman-Medium"
         case .newsreaderItalic: "Newsreader16pt-Italic"
         case .newsreaderSemiBoldItalic: "NewsreaderItalic-SemiBold"
+        case .figtreeMedium: "Figtree-Medium"
         case .figtreeSemiBold: "Figtree-SemiBold"
         case .figtreeBold: "Figtree-Bold"
         }

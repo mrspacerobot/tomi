@@ -96,6 +96,726 @@
           }
         }
       }
+    },
+    "chip.locked.value": {
+      "comment": "VoiceOver state of a cupboard chip the cook cannot switch off, read after the ingredient name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Always there"
+          }
+        }
+      }
+    },
+    "chip.offTonight.value": {
+      "comment": "VoiceOver state of a cupboard chip the cook has left out for tonight, read after the ingredient name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left out tonight"
+          }
+        }
+      }
+    },
+    "chip.remove.label": {
+      "comment": "VoiceOver name of a chip that is removed from the list by a tap. The placeholder is the ingredient name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove %@"
+          }
+        }
+      }
+    },
+    "chip.unsure.value": {
+      "comment": "VoiceOver state of a chip for an ingredient Tomi is not sure he saw in the photo.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not sure"
+          }
+        }
+      }
+    },
+    "gallery.button.taps": {
+      "comment": "Debug component gallery only, never shown to a cook. How often the buttons above were tapped. The placeholder is the count.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Tapped %lld time"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Tapped %lld times"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "gallery.section.box": {
+      "comment": "Debug component gallery only, never shown to a cook. Heading of the double-ruled box.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Double-ruled box"
+          }
+        }
+      }
+    },
+    "gallery.section.buttons": {
+      "comment": "Debug component gallery only, never shown to a cook. Heading of the buttons.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buttons"
+          }
+        }
+      }
+    },
+    "gallery.section.chips": {
+      "comment": "Debug component gallery only, never shown to a cook. Heading of the chips.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chips"
+          }
+        }
+      }
+    },
+    "gallery.section.progress": {
+      "comment": "Debug component gallery only, never shown to a cook. Heading of the progress rule.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Progress rule"
+          }
+        }
+      }
+    },
+    "gallery.section.stats": {
+      "comment": "Debug component gallery only, never shown to a cook. Heading of the three stats columns.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stats columns"
+          }
+        }
+      }
+    },
+    "gallery.section.tags": {
+      "comment": "Debug component gallery only, never shown to a cook. Heading of the ingredient tags of a dish.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use tags"
+          }
+        }
+      }
+    },
+    "gallery.section.tickMultiple": {
+      "comment": "Debug component gallery only, never shown to a cook. Heading of the tick rows of a question with several answers.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tick rows, several answers"
+          }
+        }
+      }
+    },
+    "gallery.section.tickSingle": {
+      "comment": "Debug component gallery only, never shown to a cook. Heading of the tick rows of a question with one answer.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tick rows, one answer"
+          }
+        }
+      }
+    },
+    "gallery.state.disabled": {
+      "comment": "Debug component gallery only, never shown to a cook. Caption over a button that cannot be tapped.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disabled"
+          }
+        }
+      }
+    },
+    "gallery.state.pressed": {
+      "comment": "Debug component gallery only, never shown to a cook. Caption over buttons drawn as they look while a finger is on them.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pressed"
+          }
+        }
+      }
+    },
+    "gallery.title": {
+      "comment": "Debug component gallery only, never shown to a cook. Title of the screen.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Component gallery"
+          }
+        }
+      }
+    },
+    "progress.label": {
+      "comment": "VoiceOver name of the segmented rule at the top of a lesson, a quiz or onboarding.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Progress"
+          }
+        }
+      }
+    },
+    "progress.value": {
+      "comment": "VoiceOver value of the progress rule. First number is the segments done, second the count of segments.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "sample.box.description": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Line under the title inside the double-ruled box.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show me, and I'll write the special from what you have. About ten seconds."
+          }
+        }
+      }
+    },
+    "sample.box.flag": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Label set into the top edge of the double-ruled box. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonight's special"
+          }
+        }
+      }
+    },
+    "sample.box.scan": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Primary button inside the double-ruled box.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan your fridge"
+          }
+        }
+      }
+    },
+    "sample.box.title": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Title inside the double-ruled box.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What is in your fridge tonight?"
+          }
+        }
+      }
+    },
+    "sample.box.type": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Secondary button inside the double-ruled box.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type what you have"
+          }
+        }
+      }
+    },
+    "sample.button.disabled": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. A disabled button.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check"
+          }
+        }
+      }
+    },
+    "sample.button.next": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. A button that moves the progress rule one segment on.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next step"
+          }
+        }
+      }
+    },
+    "sample.button.primary": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. A primary button.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start cooking"
+          }
+        }
+      }
+    },
+    "sample.button.secondary": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. A secondary button with a camera drawing.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan again"
+          }
+        }
+      }
+    },
+    "sample.chip.locked": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. An ingredient that is always in the cupboard.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salt"
+          }
+        }
+      }
+    },
+    "sample.chip.off": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. A cupboard ingredient that is switched off.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flour"
+          }
+        }
+      }
+    },
+    "sample.chip.on": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. A cupboard ingredient that is switched on.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rice"
+          }
+        }
+      }
+    },
+    "sample.chip.removable": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. An ingredient found in the fridge.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "lemon"
+          }
+        }
+      }
+    },
+    "sample.chip.tonight": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. A cupboard ingredient left out for tonight.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Onions"
+          }
+        }
+      }
+    },
+    "sample.chip.unsure": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. An ingredient Tomi is not sure he saw.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "feta"
+          }
+        }
+      }
+    },
+    "sample.stat.level.detail": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Line under the value of the third stats column.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "183 of 250"
+          }
+        }
+      }
+    },
+    "sample.stat.level.label": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Heading of the third stats column.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To level 3"
+          }
+        }
+      }
+    },
+    "sample.stat.level.value": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Value of the third stats column.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "67 XP"
+          }
+        }
+      }
+    },
+    "sample.stat.rank.detail": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Line under the value of the second stats column.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "level 2"
+          }
+        }
+      }
+    },
+    "sample.stat.rank.label": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Heading of the second stats column.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rank"
+          }
+        }
+      }
+    },
+    "sample.stat.rank.value": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Value of the second stats column.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Commis"
+          }
+        }
+      }
+    },
+    "sample.stat.streak.detail": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Line under the value of the first stats column.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 of 3 this week"
+          }
+        }
+      }
+    },
+    "sample.stat.streak.label": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Heading of the first stats column.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Streak"
+          }
+        }
+      }
+    },
+    "sample.stat.streak.value": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. Value of the first stats column.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 weeks"
+          }
+        }
+      }
+    },
+    "sample.tag.cupboard": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. An ingredient of a dish that is in the cupboard.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "butter"
+          }
+        }
+      }
+    },
+    "sample.tag.fridge": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. An ingredient of a dish that is in the fridge.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "spinach"
+          }
+        }
+      }
+    },
+    "sample.tag.missing": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. An ingredient of a dish that the cook does not have.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "eggs"
+          }
+        }
+      }
+    },
+    "sample.tick.blender.name": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. A piece of kitchen equipment.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blender"
+          }
+        }
+      }
+    },
+    "sample.tick.blender.note": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. What the equipment is for.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "soups"
+          }
+        }
+      }
+    },
+    "sample.tick.everything.name": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. A diet.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything"
+          }
+        }
+      }
+    },
+    "sample.tick.everything.note": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. What the diet means.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "meat, fish, the lot"
+          }
+        }
+      }
+    },
+    "sample.tick.oven.name": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. A piece of kitchen equipment.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oven"
+          }
+        }
+      }
+    },
+    "sample.tick.oven.note": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. What the equipment is for.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "roasting"
+          }
+        }
+      }
+    },
+    "sample.tick.processor.name": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. A piece of kitchen equipment, shown without a note.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Food processor"
+          }
+        }
+      }
+    },
+    "sample.tick.vegan.name": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. A diet.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vegan"
+          }
+        }
+      }
+    },
+    "sample.tick.vegan.note": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. What the diet means.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "plants only"
+          }
+        }
+      }
+    },
+    "sample.tick.vegetarian.name": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. A diet.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vegetarian"
+          }
+        }
+      }
+    },
+    "sample.tick.vegetarian.note": {
+      "comment": "Sample text of the debug component gallery and of previews, never shown to a cook. What the diet means.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no meat or fish"
+          }
+        }
+      }
+    },
+    "useTag.cupboard.value": {
+      "comment": "VoiceOver state of an ingredient tag on a dish: the cook has it in the cupboard. Read after the ingredient name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From your cupboard"
+          }
+        }
+      }
+    },
+    "useTag.fridge.value": {
+      "comment": "VoiceOver state of an ingredient tag on a dish: the cook has it in the fridge. Read after the ingredient name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From your fridge"
+          }
+        }
+      }
+    },
+    "useTag.missing.value": {
+      "comment": "VoiceOver state of an ingredient tag on a dish: the cook does not have it. Read after the ingredient name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Missing"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

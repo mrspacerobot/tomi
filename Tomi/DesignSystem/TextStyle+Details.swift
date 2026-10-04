@@ -4,7 +4,7 @@ nonisolated extension TextStyle {
     /// The colour the style is set in unless the caller names another. Always one of `ColorRole.textRoles`.
     var defaultColor: ColorRole {
         switch self {
-        case .description, .label: .inkFaded
+        case .description, .label, .caption: .inkFaded
         default: .ink
         }
     }
@@ -30,11 +30,12 @@ nonisolated extension TextStyle {
         switch self {
         case .displayXL, .displayL, .displayM, .timer: .largeTitle
         case .title, .value: .title
-        case .dish, .step, .stepKeyPhrase: .title3
+        case .dish, .option, .step, .stepKeyPhrase: .title3
         case .body, .button: .body
         case .chip: .callout
         case .description: .subheadline
-        case .status: .footnote
+        case .status, .tag: .footnote
+        case .caption: .caption
         case .label: .caption2
         }
     }
