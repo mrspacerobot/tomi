@@ -6,30 +6,39 @@ extension CookEntry {
         if session.date != other.session.date {
             return session.date < other.session.date
         }
-        return orderWords.lexicographicallyPrecedes(other.orderWords)
+        return orderKey < other.orderKey
     }
 
-    private var orderWords: [String] {
-        [
-            id.uuidString,
-            resultWord,
-            String(session.weeklyGoal),
-            lesson.id.rawValue,
-            lesson.skill.rawValue,
-            String(lesson.level),
-        ]
+    private var orderKey: LogOrderKey {
+        LogOrderKey(
+            words: [id.uuidString, lesson.id.rawValue, lesson.skill.rawValue],
+            numbers: [resultRank, session.weeklyGoal, lesson.level]
+        )
     }
 
     /// Only used to order copies that disagree. The copy that earns least comes first and is the one kept.
-    private var resultWord: String {
+    private var resultRank: Int {
         switch session.result {
-        case .stoppedEarly: "0-stopped-early"
+        case .stoppedEarly: 0
         case .finished(let quizCorrect):
             if quizCorrect {
-                "2-finished-quiz-right"
+                2
             } else {
-                "1-finished-quiz-wrong"
+                1
             }
         }
+    }
+}
+
+/// Every field that tells two copies apart. Any fixed order will do, as long as it is the same everywhere.
+private struct LogOrderKey: Comparable {
+    let words: [String]
+    let numbers: [Int]
+
+    static func < (left: LogOrderKey, right: LogOrderKey) -> Bool {
+        if left.words != right.words {
+            return left.words.lexicographicallyPrecedes(right.words)
+        }
+        return left.numbers.lexicographicallyPrecedes(right.numbers)
     }
 }

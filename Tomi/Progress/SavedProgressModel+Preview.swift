@@ -3,7 +3,7 @@ import OSLog
 
 /// Fake saved data for previews. Nothing is read from the phone.
 extension SavedProgressModel {
-    private static let previewLogger = Logger(subsystem: "com.mrspacerobot.tomi", category: "preview")
+    private static let previewLogger = Logger(category: .preview)
 
     /// A cook with the progress of `KnownState`.
     static func previewWithProgress() -> SavedProgressModel {
