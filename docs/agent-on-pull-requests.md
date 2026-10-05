@@ -16,7 +16,7 @@ A single inline comment or a reply in a thread works the same way, as a review w
 
 Every pull request uses [the shared Markdown template](../.github/pull_request_template.md). Keep the headings and their order, complete each section, and remove its instructional comments and placeholders. Keep the description current after follow-up changes, including validation results and screenshots. The comment answering review requests is still a checklist; it does not replace the description.
 
-When creating a pull request with a CLI or API, explicitly read the template and fill it into a temporary Markdown file. Pass the completed file with `gh-axi pr create --body-file <path>` (or the equivalent body argument for the client). The GitHub web form can insert the template, but agents must not rely on a CLI or API doing so.
+When creating a pull request with a CLI or API, explicitly read the template and fill it into a temporary Markdown file. Pass the completed file with `gh pr create --body-file <path>` (or the equivalent body argument for the client). The GitHub web form can insert the template, but agents must not rely on a CLI or API doing so.
 
 ## Screenshots for UI tasks
 
