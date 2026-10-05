@@ -30,8 +30,7 @@ final class AppearanceUITests: XCTestCase {
         app.launch()
 
         XCTAssertTrue(app.staticTexts["welcome-title"].waitForExistence(timeout: 5))
-        XCUIDevice.shared.appearance = appearance
-        waitForAppearance(appearance, in: app)
+        showAppearance(appearance, in: app)
         return app.screenshot().groundBrightness
     }
     @MainActor private func prepareAppearance() {
@@ -40,14 +39,14 @@ final class AppearanceUITests: XCTestCase {
         addTeardownBlock { @MainActor in XCUIDevice.shared.appearance = original }
     }
 
-    /// Appearance updates arrive after the app is visible; wait for the rendered ground, not a delay.
-    @MainActor private func waitForAppearance(_ appearance: XCUIDevice.Appearance, in app: XCUIApplication) {
-        let expected = NSPredicate { _, _ in
-            let brightness = app.screenshot().groundBrightness
-            if appearance == .dark { return brightness < 0.25 }
-            return brightness > 0.8
+    /// Starting from light, establish a rendered dark screen before asking for either final appearance.
+    @MainActor private func showAppearance(_ appearance: XCUIDevice.Appearance, in app: XCUIApplication) {
+        XCUIDevice.shared.appearance = .dark
+        waitForAppearance(.dark, in: app)
+        if appearance == .light {
+            XCUIDevice.shared.appearance = .light
+            waitForAppearance(.light, in: app)
         }
-        let settled = XCTNSPredicateExpectation(predicate: expected, object: app)
-        wait(for: [settled], timeout: 5)
     }
+
 }

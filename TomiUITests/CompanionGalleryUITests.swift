@@ -30,9 +30,11 @@ final class CompanionGalleryUITests: XCTestCase {
         app.assertCanBeTapped(app.buttons["companion-state-celebrating"])
         app.buttons["companion-state-celebrating"].tap()
         XCTAssertTrue(app.buttons["companion-state-celebrating"].isSelected)
+        XCTAssertGreaterThan(app.buttons["companion-state-celebrating"].frame.width, app.frame.width * 0.7)
         app.assertCanBeTapped(app.buttons["companion-turn"])
         app.buttons["companion-turn"].tap()
         XCTAssertTrue(app.staticTexts["companion-motion-still"].exists)
+        captureLargestControls(in: app)
     }
 
     @MainActor func testDirectGalleryClosesAndReopens() {
@@ -51,5 +53,23 @@ final class CompanionGalleryUITests: XCTestCase {
         app.buttons["gallery-companion"].tap()
         XCTAssertTrue(app.staticTexts["companion-title"].waitForExistence(timeout: 5))
         return app
+    }
+
+    @MainActor private func captureLargestControls(in app: XCUIApplication) {
+        let original = XCUIDevice.shared.appearance
+        addTeardownBlock { @MainActor in XCUIDevice.shared.appearance = original }
+        XCUIDevice.shared.appearance = .dark
+        waitForAppearance(.dark, in: app)
+        capture(app, named: "Companion largest controls - dark")
+        XCUIDevice.shared.appearance = .light
+        waitForAppearance(.light, in: app)
+        capture(app, named: "Companion largest controls - light")
+    }
+
+    @MainActor private func capture(_ app: XCUIApplication, named name: String) {
+        let capture = XCTAttachment(screenshot: app.screenshot())
+        capture.name = name
+        capture.lifetime = .keepAlways
+        add(capture)
     }
 }

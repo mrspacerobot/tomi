@@ -4,7 +4,13 @@
     struct CompanionGalleryControls: View {
         @Binding var state: CompanionState
         @Binding var turned: Bool
-        private let columns = [GridItem(.flexible()), GridItem(.flexible())]
+        @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+        private var columns: [GridItem] {
+            let column = GridItem(.flexible())
+            if dynamicTypeSize.isAccessibilitySize { return [column] }
+            return [column, column]
+        }
 
         var body: some View {
             LazyVGrid(columns: columns, spacing: Spacing.small) {

@@ -34,7 +34,8 @@ by one of the five state raw values, `--companion-turn`, and `--companion-reduce
 
 Compare the identity with `docs/design/round3.html`, section `tomi-moods`. Inspect light and dark,
 small and large iPhones and the largest accessibility text size. The controls remain scrollable,
-wrap their labels, expose selection in words to VoiceOver and keep 44-point touch targets. Review
+stack into one column at accessibility text sizes, expose selection in words to VoiceOver and
+keep 44-point touch targets. Review
 motion live in the simulator; screenshots show expressions and layout, not animation quality.
 
 Tests cover gallery navigation, state and depth controls, rendered character presence, largest
