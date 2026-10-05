@@ -1,3 +1,4 @@
+import RealityKit
 import Testing
 
 @testable import Tomi
@@ -6,10 +7,12 @@ struct CompanionExpressionTests {
     @Test @MainActor func celebratingHasACurvedSmile() throws {
         let rig = CompanionRig()
         rig.configure(CompanionPresentation(state: .celebrating, moving: false))
-        #expect(rig.face.mouth.children.count > 2)
-        let corner = try #require(rig.face.mouth.children.first)
-        let middle = try #require(rig.face.mouth.children.dropFirst(6).first)
-        #expect(corner.position.y > middle.position.y)
+        let mouth = try #require(rig.face.mouth as? ModelEntity)
+        let model = try #require(mouth.model?.mesh.contents.models.first)
+        let part = try #require(model.parts.first)
+        let points = Array(part.positions)
+        #expect(points.allSatisfy { $0.z == 0 })
+        #expect(points.first!.y > points[13].y)
     }
 
     @Test @MainActor func celebratingLiftsTheBrowsAtTheMiddle() {
