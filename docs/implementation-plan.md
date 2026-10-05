@@ -14,6 +14,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Design | Direction B, "Tasting menu": navy ink on paper, red stamp, the skill path as a menu of four courses and twelve dishes. Not a Duolingo look |
 | Dependencies | No third-party dependencies in the app |
 | Project | A standard Xcode project committed to git, with synchronized folders |
+| Pull request evidence | Every PR uses `.github/pull_request_template.md`. UI tasks embed current screenshots of the running app in light and dark; capture or posting blockers keep the PR in draft. Capture and posting instructions are in `agent-on-pull-requests.md` |
 | Test phone | iPhone 15 Pro or newer (Apple Intelligence) |
 | Everyday AI | Apple Foundation Models on the phone: ingredient spotting, ranking and adapting lessons, Ask Tomi, voice commands. Available in the iOS 27 simulator on the development Mac |
 | Curriculum | Classical French technique and its kitchen words (mirepoix, roux, deglaze, monter au beurre, beurre blanc), without presenting the app as "French cooking". Twelve techniques in four courses (Foundations, Heat control, Sauces, Putting it together), each with levels |
@@ -174,6 +175,7 @@ Each phase ends with something runnable. GitHub milestones mirror these.
 - Rules: unit tests in TomiCore, written first.
 - Flows: UI tests that tap through the app in the simulator against fake AI, camera and clock.
 - Screens: run in the simulator after every change and compare with the mockup, light and dark, small and large phones, largest text size.
+- UI pull requests: embed screenshots of each changed screen or meaningful state from the final running app, in light and dark, with fake data. Keep the description and screenshots current after revisions, following `agent-on-pull-requests.md`.
 - Real AI, camera and microphone: a short checklist for the owner to run on the iPhone at the end of each AI phase.
 
 ## Risks

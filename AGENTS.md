@@ -16,6 +16,8 @@ It runs the formatter's lint, SwiftLint (size limits, hard-coded text, banned ca
 
 Report honestly: if a check fails or you skipped a step, say so.
 
+For every UI task, embed screenshots of the working screen in the pull request description, in light and dark. Capture each changed screen or meaningful state from the running app built from the final code, using fake data. Label the screen/state, device, iOS version and text size. Mockups and SwiftUI previews do not count. Keep the screenshots current after revisions. See `docs/agent-on-pull-requests.md` for capture and posting instructions. If screenshots cannot be captured or posted, explain the blocker in the description and leave the pull request in draft. No automated check reads the description, so this rule is enforced by review: the owner merges a UI pull request only when its description shows current light and dark captures of the final build, and a reviewer reports missing or stale ones as P1.
+
 **Every pull request to `main` runs the same check automatically** (`.github/workflows/check.yml`), on the owner's Mac. It shows on the pull request as "Check". If the Mac is busy, asleep or off, the check waits and runs when the Mac is free. GitHub cannot require a green check on this repository, so the rule is written here instead: the owner merges only when the check is green. Running it yourself first is still required; the automatic run is the proof, not the first try.
 
 ## How we work: tests first
@@ -112,6 +114,7 @@ A person should understand any function without scrolling and any file without a
 - **Names say what, comments say why.** No abbreviations, no commented-out code, no TODO without an issue number.
 - **No force unwraps, `try!` or `fatalError` in app code.** Handle the failure and show Tomi's words for it from the string catalog. Tests may force unwrap.
 - **No `print`.** Use `Logger`. Never log photos, ingredients or chat text.
+- **No magic strings.** A string that code compares, sorts or looks up by is an enum, a typed id or a constant, never a literal typed at the point of use. A value that must be the same everywhere is written once: the logging subsystem comes from the bundle identifier (`Logger(category:)`), never from a typed copy. Only text for the cook (string catalog) and test fixtures may be literals.
 - **Formatting is not a matter of taste:** `xcrun swift-format format --in-place --recursive Tomi TomiTests TomiUITests Packages/TomiCore` settles it.
 
 ## Modern Swift and SwiftUI
@@ -152,6 +155,7 @@ Models are trained on years of older code. Use the current API, and check Apple'
 - **One issue, one branch, one pull request.** Keep it small enough to review in one sitting. Name the branch `<issue number>-short-name`.
 - **Every commit names its issue.** The subject says what changed, in the imperative, and ends with the issue number: `Add streak rules (#4)`. The body says why. No issue, no commit: open one first.
 - **The pull request closes its issue** with `Closes #<number>` in the description.
+- **Every pull request uses `.github/pull_request_template.md`.** Keep its headings and order, fill every section, and remove instructional comments and placeholders. Agents creating a pull request through a CLI or API must read and fill the template explicitly and supply the completed Markdown as the body; do not assume the client inserts it. Update the description after revisions so it describes the final change and current validation and screenshots.
 - **When a decision changes,** update `docs/implementation-plan.md` and this file in the same pull request.
 
 ## Code Review Rules
@@ -195,5 +199,9 @@ For any agent or person reviewing a pull request here. Formatting, size limits a
 
 - Every rule changed or added has a test that fails when the rule is broken. Name the change that would slip through if one does not.
 - A test never depends on the real clock, time zone, locale, network, camera or model.
+
+**Pull request evidence**
+
+- A pull request that changes the UI has current light and dark screenshots of the running app in its description, labelled with screen/state, device, iOS version and text size. No automated check verifies this, so the reviewer does. If the UI changed after the captures were posted, or they are missing, it is a P1.
 
 A reviewer never merges and never pushes to `main`.

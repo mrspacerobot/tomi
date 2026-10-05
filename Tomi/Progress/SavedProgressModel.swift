@@ -5,7 +5,7 @@ import Observation
 /// The cook's progress as the screens see it, read from saved data.
 @Observable
 final class SavedProgressModel {
-    private static let logger = Logger(subsystem: "com.mrspacerobot.tomi", category: "progress")
+    private static let logger = Logger(category: .progress)
 
     /// Nil when saved data cannot be read. Nothing that depends on the cook's answers may be shown then,
     /// because the answers Tomi would fall back on say the cook eats everything.

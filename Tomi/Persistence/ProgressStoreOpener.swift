@@ -3,7 +3,7 @@ import TomiCore
 
 /// Opens the store for a launch.
 enum ProgressStoreOpener {
-    private static let logger = Logger(subsystem: "com.mrspacerobot.tomi", category: "persistence")
+    private static let logger = Logger(category: .persistence)
 
     /// The store the launch options ask for. When it cannot be opened, or a test's known state cannot be
     /// written, the answer is the store that fails every call. It is never an empty store standing in for
