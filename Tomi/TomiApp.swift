@@ -1,13 +1,12 @@
 import SwiftUI
-import TomiCore
 
 @main
 struct TomiApp: App {
-    @State private var catalog = BundledLibrary.catalog()
+    @State private var launch = AppLaunch(arguments: ProcessInfo.processInfo.arguments, now: .now)
 
     var body: some Scene {
         WindowGroup {
-            WelcomeView(catalog: catalog)
+            RootView(catalog: launch.catalog, progress: launch.progress)
         }
     }
 }

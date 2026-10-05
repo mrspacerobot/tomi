@@ -6,7 +6,7 @@ import TomiCore
 /// A file that cannot be read, fails validation or is named after another lesson is skipped and logged:
 /// one bad lesson must never stop the app or reach a cook.
 nonisolated struct LessonFileReader {
-    private static let logger = Logger(subsystem: "com.mrspacerobot.tomi", category: "library")
+    private static let logger = Logger(category: .library)
 
     let catalog: SkillCatalog
     let table: IngredientTable
