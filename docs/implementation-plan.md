@@ -53,17 +53,35 @@ Three layers:
 ```
 Tomi.xcodeproj
 Tomi/                  app target
-  DesignSystem/        tokens, components, TomiMascot
+  DesignSystem/        tokens (ColorRole and Tokens.xcassets, TextStyle, Spacing, Radius, RuleWeight), components, TomiMascot
   Onboarding/ Home/ Menu/ Scan/ Player/ Scenes/ AskTomi/ Voice/ Settings/
   AI/                  Foundation Models implementations
-  Persistence/         SwiftData models, ProgressStore
+  Persistence/         SwiftData records, ProgressStore (protocol), SwiftDataProgressStore, InMemoryProgressStore
+  Progress/            the saved progress the screens read (ProgressSummaryReader, SavedProgressModel)
   Library/             LessonLibrary (protocol), BundledLessonLibrary over the file reader BundledLibrary, FakeLessonLibrary
   Resources/           Assets, fonts, Localizable.xcstrings, Library/ (catalog.json, ingredients.json, lessons/<skill>/<lesson id>.lesson.json)
+Config/                Tomi-Info.plist: the Info.plist keys that have no build setting (the bundled fonts)
 TomiTests/ TomiUITests/
 Packages/TomiCore/     rules, schema, generator, tests
 server/                Go service (later)
 docs/ prototype/
 ```
+
+### Shared components
+
+`Tomi/DesignSystem` supplies `TomiButtonStyle`, `TickRow`, `Chip`, `UseTag`, `StatsColumns`,
+`DoubleRuledBox`, `ProgressRule` and their shared rules and icons. The states follow the component cards
+in `docs/design/round3.html`; interactive states have localized accessibility words and at least 44-point
+touch targets. At accessibility text sizes tick-row notes and stats stack, chip names wrap, and box flags
+grow with their text. Selection rules live in TomiCore (`Selection`).
+
+Chips use SwiftUI's `Layout` protocol through `FlowLayout`; its required four-parameter
+`placeSubviews(in:proposal:subviews:cache:)` is the exception documented in `AGENTS.md` and the layout
+folder's lint configuration. `FlowCursor` holds the tested placement arithmetic.
+
+A debug build launched with `--component-gallery` opens a small interactive gallery for component UI tests
+and visual comparison. `--gallery-section` opens at a named section for screenshots. Release builds contain
+no gallery screen or launch-argument handling. The full gallery remains #12.
 
 ### From fridge photo to tonight's special
 
@@ -102,15 +120,35 @@ Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replace
 
 ## Saved data
 
-| Model | Fields |
+The store is SwiftData, behind the `ProgressStore` protocol (`Tomi/Persistence`). Screens see only the protocol; `SwiftDataProgressStore` is the store on the phone, `InMemoryProgressStore` the fake for previews and tests, and `UnavailableProgressStore` the one Tomi holds when the real store could not be opened.
+
+The stored records and their fields. These names, and the names of the three record types, are permanent once released: fields are added, never renamed, removed or reused. Every field is optional and nothing is unique.
+
+| Record | Stored fields |
 |---|---|
-| Profile | focus skill, weekly goal, voice on, diet, avoid list, cuisine preferences, cupboard staples, equipment, experience, servings, units, onboarding done |
-| CookLog | lesson id, lesson revision, skill, level, date, stopped early, weekly goal at the time, swaps used, quiz correct, XP earned, rating, plate photo file name |
-| ActiveLesson | the adapted lesson, tonight's ingredient list, current step |
+| `ProfileRecord` | `stableID`, `updatedAt`, `diet`, `avoid`, `cuisinesLoved`, `cuisinesToTry`, `cuisinesNever`, `cupboardStaples`, `equipment`, `experience`, `servings`, `units`, `weeklyGoal`, `focusSkill`, `onboardingDone` |
+| `CookLogRecord` | `stableID`, `lesson`, `skill`, `level`, `date`, `stoppedEarly`, `quizCorrect`, `weeklyGoal` |
+| `ActiveLessonRecord` | `stableID`, `updatedAt`, `lesson`, `lessonRevision`, `swappedOut`, `swappedIn`, `ingredients`, `currentStep` |
+
+Ids of the library (diet, avoid items, cuisines, ingredients, equipment, skill, lesson) are stored as their strings, lists of ids as lists of strings, and `experience` and `units` as their raw values. Still to be added, each by the issue that first produces the value, as new optional fields: voice on (profile); lesson revision, swaps used, rating and plate photo file name (cook log). XP is not a field: it is worked out from how the cook ended.
+
+Each record has a plain twin in TomiCore (`SavedProfile`, `SavedCookEntry`, `SavedActiveLesson`) with the same field names. The SwiftData records only copy fields to and from the twin; every rule for reading them is in TomiCore and tested there without a store:
+
+- **Profile.** `SavedProfile.profile` reads by the rules of the preferences below. A stored diet or avoid id is kept as it is, known or not and blank or not. Because nothing is unique, iCloud can deliver a second profile record from another device. All records are then read as one (`mergedProfile`), the same in any order: the record changed last gives the ordinary answers, the avoid list is the union of every record's, a diet named by any record is kept, and two different diets become the unreadable diet, which refuses every dish until the cook answers again. Saving writes into the newest record and deletes the others, so the cook's new answer becomes the only one.
+- **Cook log.** `cookLog` reads every record that has all a cook entry needs, each id once, oldest first, by one fixed order that does not depend on how the store hands the records over. A record that lacks its id, lesson, skill, level, date, ending or weekly goal is left out, counts for nothing and stays in the store. A skill or level this app does not know is kept for the rules to judge.
+- **Lesson in progress.** The store keeps a bookmark, not a copy of the lesson: the lesson id and revision, the swaps applied (what went out and what came in), tonight's ingredients and the step. `ActiveLesson.resumed(from:for:in:)` builds the dish again from the library and checks it against the cook's diet and avoid list as they are now. A lesson that was withdrawn or corrected since, a swap the lesson does not list, a step it does not have, or a dish the cook may no longer eat is not resumed. Of two bookmarks the one changed last is read.
+
+Saved data fails closed. When the store cannot be opened or read, every call of the store throws, and the app shows a notice instead of its screens (`RootView`). It never carries on with default preferences, because the defaults say the cook eats everything.
+
+Conflicting copies with the same newest timestamp and stable id have no unambiguous newest record. A profile then asks for ordinary answers again while keeping every saved diet and avoid restriction; a conflicting lesson bookmark is not resumed. Identical copies still read as one record. Neither answer depends on the order the copies arrive in.
+
+iCloud sync is not switched on yet (phase 9). The store is opened with CloudKit off; the records are already laid out for it.
+
+For UI tests, launch arguments choose the store: `--store-in-memory` starts with an empty store in memory, `--store-ui-test-file` keeps the store in a file of its own between launches, `--store-unavailable` starts as if the store could not be opened, `--store-ui-test-unwritable-file` asks SwiftData for a file it cannot create, and `--seed-known-state` empties the store and fills it with a known state built from the menu (`KnownState`). Seeding is ignored for the cook's own store. A requested file that SwiftData changes to memory is refused, even when its configuration already says memory before the container opens.
 
 Plate photos are files in the app's own storage on the phone. Only the file name is in the cook log, so the log syncs through iCloud and the photos do not; on a second device the dish simply shows without a photo.
 
-The cook log is the source of truth. XP, rank, streak and mastery are computed from it. Screens ask one place for the game: `GameStateRules` in TomiCore gives total XP, rank and streak for a log at a moment. An entry stopped early earns no XP, and an entry for a skill or level the menu no longer knows still earns XP and still counts for the streak. Every record has a stable id and timestamp, and the same id on two devices is the same cook, counted once. All fields are optional or defaulted and changes are additive, so the layout is safe for iCloud.
+The cook log is the source of truth. XP, rank, streak and mastery are computed from it. Screens ask one place for the game: `GameStateRules` in TomiCore gives total XP, rank and streak for a log at a moment. An entry stopped early earns no XP, and an entry for a skill or level the menu no longer knows still earns XP and still counts for the streak. Every record has a stable id and a time, and the same id on two devices is the same cook, counted once. All fields are optional and changes are additive, so the layout is safe for iCloud.
 
 The cook's answers are one value, `CookPreferences` in TomiCore. Experience and units are closed lists in code, because code decides what they do. Diets, avoid items, equipment, cuisines and cupboard staples are ids that arrive with the library, so adding one is a data change, and a cuisine without an answer counts as "try". The diets and avoid items the onboarding screens offer, with their names, are listed in the ingredient table data next to the ingredients they describe. The equipment list, its names and the kitchen Tomi assumes until the cook answers are library data too. No diet means the cook eats everything. Equipment and units stay unset until the cook picks, and follow the library's standard kitchen and the locale until then. Reading saved preferences never fails on a single field: a missing field keeps its default, and a value only a newer app knows is dropped (from a closed list) or falls back to the default (a single answer). Diet and avoid answers are never weakened: every saved id is kept, and a field that is there but cannot be read becomes the blank id. A diet or avoid id the ingredient table does not know, the blank one included, makes every dish unavailable, so every library validator must reject blank ids.
 

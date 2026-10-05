@@ -11,22 +11,22 @@ struct VoiceTryoutView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: Spacing.medium) {
                 VoiceTryoutSamples(model: model)
                 VoiceTryoutLines(model: model)
                 if model.didFail {
-                    Text(.voiceTryoutFailed).textStyle(.subtitle)
+                    Text(.voiceTryoutFailed).textStyle(.body)
                 }
             }
-            .padding(24)
+            .padding(Spacing.xLarge)
         }
         .scrollDismissesKeyboard(.interactively)
         .safeAreaInset(edge: .bottom) {
             VoiceTryoutComposer(model: model)
-                .padding(24)
-                .background(Theme.paper)
+                .padding(Spacing.xLarge)
+                .background(ColorRole.paper.color)
         }
-        .background(Theme.paper)
+        .background(ColorRole.paper.color)
     }
 }
 

@@ -67,6 +67,36 @@ custom_rules:
       - string
     message: "Take the calendar, locale and the moment as parameters, so the rule gives the same answer in a test."
     severity: error
+  raw_colour:
+    name: "Raw colour outside the design system"
+    included: "Tomi/.*\\.swift"
+    excluded: "Tomi/DesignSystem/.*\\.swift"
+    regex: '\b(UIColor|CGColor)\b|#colorLiteral|\bColor\(\s*(\.sRGB|\.displayP3|red:|hue:|white:|"|\.)|(\bColor|[(,:]\s*)\.(red|orange|yellow|green|mint|teal|cyan|blue|indigo|purple|pink|brown|white|gray|black|primary|secondary|accentColor)\b'
+    excluded_match_kinds:
+      - comment
+      - doccomment
+    message: "Use a colour role of Tomi/DesignSystem (ColorRole). If one is missing, add it there, in light and dark."
+    severity: error
+  raw_font:
+    name: "Raw font outside the design system"
+    included: "Tomi/.*\\.swift"
+    excluded: "Tomi/DesignSystem/.*\\.swift"
+    regex: '\.font\(|\bFont\.|\bUIFont\b|\.fontWeight\(|\.fontDesign\('
+    excluded_match_kinds:
+      - comment
+      - doccomment
+    message: "Use a text style of Tomi/DesignSystem (textStyle). If one is missing, add it there."
+    severity: error
+  raw_spacing:
+    name: "Raw spacing, radius or line weight outside the design system"
+    included: "Tomi/.*\\.swift"
+    excluded: "Tomi/DesignSystem/.*\\.swift"
+    regex: '\.(padding|safeAreaPadding|contentMargins|offset)\([^)\n]*\d|\b(spacing|cornerRadius|cornerSize|lineWidth|lineSpacing|minLength):\s*-?\d'
+    excluded_match_kinds:
+      - comment
+      - doccomment
+    message: "Use Spacing, Radius or RuleWeight of Tomi/DesignSystem. If a value is missing, add it there."
+    severity: error
   no_print:
     name: "No print"
     included: "(Tomi|Packages/TomiCore/Sources)/.*\\.swift"

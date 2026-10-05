@@ -8,7 +8,7 @@ struct VoiceTryoutSamples: View {
     ]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: Spacing.xSmall) {
             ForEach(samples.indices, id: \.self) { index in
                 VoiceTryoutSampleButton(model: model, line: samples[index])
                     .accessibilityIdentifier("voice-tryout-sample-\(index)")

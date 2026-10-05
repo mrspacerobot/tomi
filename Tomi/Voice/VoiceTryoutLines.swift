@@ -5,7 +5,7 @@ struct VoiceTryoutLines: View {
     let model: VoiceTryoutModel
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: Spacing.xSmall) {
             ForEach(model.said.reversed(), id: \.self) { line in
                 Button {
                     Task { await model.say(line) }

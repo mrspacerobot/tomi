@@ -6,7 +6,7 @@ struct VoiceTryoutComposer: View {
     @FocusState private var isTyping: Bool
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: Spacing.small) {
             TextField(.voiceTryoutPlaceholder, text: $model.draft)
                 .textFieldStyle(.roundedBorder)
                 .focused($isTyping)

@@ -16,7 +16,7 @@ It first fetches the voice model that ships in the app (about 100 MB, once, see 
 
 Report honestly: if a check fails or you skipped a step, say so.
 
-For every UI task, embed screenshots of the working screen in the pull request description, in light and dark. Capture each changed screen or meaningful state from the running app built from the final code, using fake data. Label the screen/state, device, iOS version and text size. Mockups and SwiftUI previews do not count. Keep the screenshots current after revisions. See `docs/agent-on-pull-requests.md` for capture and posting instructions. If screenshots cannot be captured or posted, explain the blocker in the description and leave the pull request in draft.
+For every UI task, embed screenshots of the working screen in the pull request description, in light and dark. Capture each changed screen or meaningful state from the running app built from the final code, using fake data. Label the screen/state, device, iOS version and text size. Mockups and SwiftUI previews do not count. Keep the screenshots current after revisions. See `docs/agent-on-pull-requests.md` for capture and posting instructions. If screenshots cannot be captured or posted, explain the blocker in the description and leave the pull request in draft. No automated check reads the description, so this rule is enforced by review: the owner merges a UI pull request only when its description shows current light and dark captures of the final build, and a reviewer reports missing or stale ones as P1.
 
 **Every pull request to `main` runs the same check automatically** (`.github/workflows/check.yml`), on the owner's Mac. It shows on the pull request as "Check". If the Mac is busy, asleep or off, the check waits and runs when the Mac is free. GitHub cannot require a green check on this repository, so the rule is written here instead: the owner merges only when the check is green. Running it yourself first is still required; the automatic run is the proof, not the first try.
 
@@ -62,7 +62,10 @@ For every UI task, embed screenshots of the working screen in the pull request d
 
 ## Design system
 
-- **No raw colours, fonts, spacing or radii in screens.** Use the tokens and components in `Tomi/DesignSystem`. If a token is missing, add it there, in light and dark.
+- **No raw colours, fonts, spacing or radii in screens.** Use the tokens and components in `Tomi/DesignSystem`. If a token is missing, add it there, in light and dark. SwiftLint fails the build on a raw colour, a raw font, or a number for padding, spacing, a corner radius or a line weight outside that folder.
+- **The tokens are the handoff table of `docs/design/round3.html`.** A colour is a `ColorRole`, with its light and dark value in `Tomi/DesignSystem/Tokens.xcassets`. Text is set with `textStyle(_:)` and a `TextStyle`, which grows with the cook's text size. Spacing, radii, line weights and touch targets are `Spacing`, `Radius`, `RuleWeight` and `TouchTarget`.
+- **Text must be readable in light and dark.** Every pair of text and ground is listed in `ColorRole.bodyTextPairings`, and a test holds each to 4.5 to 1 (`ContrastRule` in TomiCore) in both appearances. A component that sets text on a new fill adds its pairing there first. If a pair fails, change the colour, never the test.
+- **The fonts are bundled:** Gloock, Newsreader and Figtree, with their licence texts, in `Tomi/Resources/Fonts`, listed in `Config/Tomi-Info.plist` and named only in `Typeface`. A test fails when a cut does not load, because a missing font falls back to the system font without a word.
 - **Reuse before you build.** Search `DesignSystem` first. The second time something is needed, extract it into a component instead of copying it.
 - **Illustrations are drawn in code** from shared parts. No image assets for Tomi or the scenes.
 - **Every view has a `#Preview`** with fake data, and renders correctly at the largest Dynamic Type size.
@@ -72,12 +75,16 @@ For every UI task, embed screenshots of the working screen in the pull request d
 - **Feature folders.** Code is grouped by feature (`Onboarding`, `Home`, `Player`), not by kind.
 - **Three layers.** Screens (SwiftUI) call app services. Services call TomiCore and Apple frameworks. TomiCore imports nothing from Apple's UI, data or AI frameworks.
 - **All rules live in `Packages/TomiCore`:** skills, unlocks, mastery, XP, streak, lesson matching, diet and allergen filtering. If it can be decided without a screen, it belongs there with a test.
-- **TomiCore is grouped by domain folder,** and its tests mirror the same folders: `Catalog` (skills, courses, levels), `Ingredients`, `Lessons`, `Preferences`, `Progress` (the cook log and what follows from it), `Game` (XP, rank, streak) and `Utils` (small shared helpers). No Swift file sits in the root of `Sources/TomiCore` or `Tests/TomiCoreTests`. It stays one package and one module; folders are free, a second module is not.
-- **The rules above are tests, not hopes.** `Packages/TomiCore/Tests/TomiCoreTests/Architecture` reads the source and fails when: the rules package imports anything but Foundation; app code imports a service framework (FoundationModels, Speech, FluidAudio, AVFoundation, SwiftData, CloudKit, AlarmKit, UIKit) outside its service folder (`Tomi/AI`, `Tomi/Voice`, `Tomi/Camera`, `Tomi/Persistence`, `Tomi/Timers`); a Swift file names an id of the shipped library as a string; a Swift file sits in the root of the rules package; or the scenes and mains in code differ from the ones the design kit draws. SwiftLint fails on `Calendar.current`, `Locale.current`, `Date()` and the like inside the rules package. When a rule here changes, change its test in the same pull request.
+- **TomiCore is grouped by domain folder,** and its tests mirror the same folders: `Catalog` (skills, courses, levels), `Ingredients`, `Lessons`, `Preferences`, `Progress` (the cook log and what follows from it), `Game` (XP, rank, streak), `Design` (colour contrast) and `Utils` (small shared helpers). No Swift file sits in the root of `Sources/TomiCore` or `Tests/TomiCoreTests`. It stays one package and one module; folders are free, a second module is not.
+- **The rules above are tests, not hopes.** `Packages/TomiCore/Tests/TomiCoreTests/Architecture` reads the source and fails when: the rules package imports anything but Foundation; app code imports a service framework (FoundationModels, Speech, FluidAudio, AVFoundation, SwiftData, CloudKit, AlarmKit, UIKit) outside its service folder (`Tomi/AI`, `Tomi/Voice`, `Tomi/Camera`, `Tomi/Persistence`, `Tomi/Timers`); a Swift file names an id of the shipped library as a string; a Swift file sits in the root of the rules package; the scenes and mains in code differ from the ones the design kit draws; or a stored record has a property that is neither optional nor defaulted, a unique constraint, or a field the plan does not list. SwiftLint fails on `Calendar.current`, `Locale.current`, `Date()` and the like inside the rules package. When a rule here changes, change its test in the same pull request.
 - **AI, voice, camera, clock and storage sit behind protocols.** Each has a real implementation and a fake. Screens never import FoundationModels, Speech, AVFoundation or SwiftData directly.
 - **The app must work without Apple Intelligence.** Every AI feature has a typed or code-only fallback.
 - **The cook log is the source of truth.** XP, streak and mastery are computed from it, not stored as running totals.
-- **Saved data must stay iCloud-safe:** every stored property optional or defaulted, no unique constraints, changes additive only. Never rename or remove a stored field after release.
+- **Saved data must stay iCloud-safe:** every stored property optional or defaulted, no unique constraints, changes additive only. Never rename or remove a stored field after release. The stored fields are listed in `docs/implementation-plan.md` (Saved data): a new field is added there in the same pull request.
+- **Stored records hold no rules.** A SwiftData record in `Tomi/Persistence` only copies its fields to and from its plain twin in TomiCore (`SavedProfile`, `SavedCookEntry`, `SavedActiveLesson`), which has the same field names. How a record is read, how two records from two devices become one answer, and when a record is refused are decided in TomiCore and tested there without a store. Nothing is unique in the store, so every read must give the same answer for the same records in any order, with a cook entry counted once.
+- **Saved data fails closed.** When the store cannot be opened or read, the store throws and the app shows that saved data is unavailable (`RootView`). Never carry on with a default profile: the defaults say the cook eats everything. Two profile records that disagree are read with the strictest diet and avoid list of both.
+- **Conflicting copies never depend on arrival order.** When different records share the newest id and timestamp, ordinary profile answers must be given again, with every saved food restriction kept; a conflicting lesson bookmark is not resumed. Identical copies still read once.
+- **UI tests never touch the cook's own store.** They launch with `--store-in-memory`, or `--store-ui-test-file` when a test relaunches the app, and `--seed-known-state` for a known starting state (`StoreLaunchOptions`, `KnownState`).
 - **No third-party dependencies in the app** without the owner's approval. Approved so far: FluidAudio (Apache-2.0, pinned to an exact version), which runs Tomi's voice, only inside `Tomi/Voice` (#96).
 - **Photos, chat and voice never leave the phone.**
 
@@ -101,12 +108,13 @@ A person should understand any function without scrolling and any file without a
 - **Split views into new `View` structs,** not computed properties or helper functions returning views.
 - **One type per file,** named after the type. Extensions go in `Type+Purpose.swift`.
 - **No duplication.** Before writing a helper, search for one. Shared logic goes to TomiCore, shared UI to DesignSystem. The second copy is the moment to extract.
-- **At most three parameters.** More means a missing type: group them into a struct.
+- **At most three parameters.** More means a missing type: group them into a struct. The one exception is a function Apple's protocol dictates: SwiftUI's `Layout` requires `placeSubviews(in:proposal:subviews:cache:)`. Layouts live in `Tomi/DesignSystem/Layout`, where that folder's `.swiftlint.yml` allows four; their arithmetic sits in a plain type with a unit test.
 - **Plain statements over clever expressions.** No ternaries. Do not pack `?.`, `??`, `.map` and closures into one line: unwrap with `guard let` or `if let`, give each step a name, and let the names tell the story. A reader who knows Java or Kotlin but not Swift should be able to follow it.
 - **Typed values, not strings, in tests too.** A date is built from numbers (`.october(5)`), never parsed from text like `"2026-10-05"`.
 - **Names say what, comments say why.** No abbreviations, no commented-out code, no TODO without an issue number.
 - **No force unwraps, `try!` or `fatalError` in app code.** Handle the failure and show Tomi's words for it from the string catalog. Tests may force unwrap.
 - **No `print`.** Use `Logger`. Never log photos, ingredients or chat text.
+- **No magic strings.** A string that code compares, sorts or looks up by is an enum, a typed id or a constant, never a literal typed at the point of use. A value that must be the same everywhere is written once: the logging subsystem comes from the bundle identifier (`Logger(category:)`), never from a typed copy. Only text for the cook (string catalog) and test fixtures may be literals.
 - **Formatting is not a matter of taste:** `xcrun swift-format format --in-place --recursive Tomi TomiTests TomiUITests Packages/TomiCore` settles it.
 
 ## Modern Swift and SwiftUI
@@ -191,5 +199,9 @@ For any agent or person reviewing a pull request here. Formatting, size limits a
 
 - Every rule changed or added has a test that fails when the rule is broken. Name the change that would slip through if one does not.
 - A test never depends on the real clock, time zone, locale, network, camera or model.
+
+**Pull request evidence**
+
+- A pull request that changes the UI has current light and dark screenshots of the running app in its description, labelled with screen/state, device, iOS version and text size. No automated check verifies this, so the reviewer does. If the UI changed after the captures were posted, or they are missing, it is a P1.
 
 A reviewer never merges and never pushes to `main`.
