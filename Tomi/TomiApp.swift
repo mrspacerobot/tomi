@@ -6,7 +6,13 @@ struct TomiApp: App {
 
     var body: some Scene {
         WindowGroup {
-            AppRoot(catalog: launch.catalog, progress: launch.progress)
+            AppRoot(
+                catalog: launch.catalog,
+                progress: launch.progress,
+                ingredientTable: launch.ingredientTable,
+                onboarding: launch.onboarding
+            )
+            .preferredColorScheme(launch.colorScheme)
         }
     }
 }

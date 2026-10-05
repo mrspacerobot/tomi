@@ -17,7 +17,11 @@ struct ProgressSummaryReader {
         let goal = profile.preferences.weeklyGoal
         let game = GameStateRules(calendar: calendar).gameState(for: log, goal: goal, now: now)
         let mastered = masteredCount(in: log, experience: profile.preferences.experience)
-        return ProgressSummary(game: game, masteredCount: mastered)
+        return ProgressSummary(
+            game: game,
+            masteredCount: mastered,
+            isOnboardingDone: profile.isOnboardingDone
+        )
     }
 
     private func masteredCount(in log: [CookEntry], experience: Experience) -> Int? {

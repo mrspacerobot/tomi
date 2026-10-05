@@ -20,18 +20,23 @@ final class AppearanceUITests: XCTestCase {
         XCTAssertLessThan(ground, 0.25)
     }
 
-    /// Launches the app with the phone in the given appearance, checks the title is on screen and
-    /// returns how bright the ground behind it is.
+    /// Launches the app in the given appearance and returns how bright the ground behind the title is.
+    /// The app is told the appearance by a launch argument, because `XCUIDevice.appearance` has no effect
+    /// on this simulator and the test would then see whatever the phone happens to be set to.
     @MainActor
     private func groundBrightnessOfWelcome(in appearance: XCUIDevice.Appearance) -> Double {
-        XCUIDevice.shared.appearance = appearance
-        addTeardownBlock { @MainActor in
-            XCUIDevice.shared.appearance = .light
-        }
         let app = XCUIApplication()
+        app.launchArguments = ["--store-in-memory", "--seed-known-state", argument(for: appearance)]
         app.launch()
 
         XCTAssertTrue(app.staticTexts["welcome-title"].waitForExistence(timeout: 5))
         return app.screenshot().groundBrightness
+    }
+
+    private func argument(for appearance: XCUIDevice.Appearance) -> String {
+        if appearance == .dark {
+            return "--appearance-dark"
+        }
+        return "--appearance-light"
     }
 }

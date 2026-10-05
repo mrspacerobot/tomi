@@ -18,11 +18,10 @@ final class SavedDataUITests: XCTestCase {
     }
 
     @MainActor
-    func testAnEmptyStoreShowsNoProgress() {
+    func testAnEmptyStoreStartsOnboardingAndShowsNoProgress() {
         let app = launch(["--store-in-memory"])
-        XCTAssertTrue(app.staticTexts["welcome-xp"].waitForExistence(timeout: 5))
-        XCTAssertEqual(app.staticTexts["welcome-xp"].label, "0 XP")
-        XCTAssertEqual(app.staticTexts["welcome-mastered"].label, "Techniques mastered: 0")
+        XCTAssertTrue(app.staticTexts["onboarding-welcome-title"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts["welcome-xp"].exists)
     }
 
     @MainActor

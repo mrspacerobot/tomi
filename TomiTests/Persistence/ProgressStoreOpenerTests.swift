@@ -58,6 +58,19 @@ import TomiCore
         #expect(throws: ProgressStoreError.unavailable) { try store.profile() }
     }
 
+    @Test func aStoreThatStartsEmptyForgetsWhatAnEarlierLaunchSaved() throws {
+        let location = try StoreFixture.temporaryFile()
+        let earlier = StoreLaunchOptions(location: location, seedsKnownState: false)
+        var profile = CookProfile()
+        profile.preferences.diet = "vegetarian"
+        try ProgressStoreOpener.store(for: earlier, catalog: catalog).saveProfile(profile, at: .october(5))
+
+        let later = StoreLaunchOptions(location: location, seedsKnownState: false, startsEmpty: true)
+        let store = ProgressStoreOpener.store(for: later, catalog: catalog)
+
+        #expect(try store.profile().preferences.diet == nil)
+    }
+
     private func open(at location: StoreLocation) -> any ProgressStore {
         let options = StoreLaunchOptions(location: location, seedsKnownState: false)
         return ProgressStoreOpener.store(for: options, catalog: catalog)

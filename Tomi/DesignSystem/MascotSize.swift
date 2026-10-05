@@ -4,4 +4,6 @@ import CoreGraphics
 nonisolated enum MascotSize {
     /// On the welcome screen.
     static let welcome: CGFloat = 164
+    /// Beside a line Tomi says, as on the diet question of onboarding.
+    static let greeting: CGFloat = 56
 }

@@ -6,20 +6,37 @@ import TomiCore
 struct AppRoot: View {
     let catalog: SkillCatalog?
     let progress: SavedProgressModel
+    let ingredientTable: IngredientTable?
+    let onboarding: OnboardingModel?
 
     var body: some View {
         #if DEBUG
             if GalleryLaunch.isRequested {
                 ComponentGallery()
             } else {
-                RootView(catalog: catalog, progress: progress)
+                RootView(
+                    catalog: catalog,
+                    progress: progress,
+                    ingredientTable: ingredientTable,
+                    onboarding: onboarding
+                )
             }
         #else
-            RootView(catalog: catalog, progress: progress)
+            RootView(
+                catalog: catalog,
+                progress: progress,
+                ingredientTable: ingredientTable,
+                onboarding: onboarding
+            )
         #endif
     }
 }
 
 #Preview {
-    AppRoot(catalog: BundledLibrary.catalog(), progress: .previewWithProgress())
+    AppRoot(
+        catalog: BundledLibrary.catalog(),
+        progress: .previewWithProgress(),
+        ingredientTable: BundledLibrary.ingredientTable(),
+        onboarding: .preview()
+    )
 }

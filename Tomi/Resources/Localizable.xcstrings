@@ -816,6 +816,258 @@
           }
         }
       }
+    },
+    "onboarding.avoid.none": {
+      "comment": "Answer to the avoid question: the cook avoids nothing. Ticking it clears the other ticks.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None of these"
+          }
+        }
+      }
+    },
+    "onboarding.avoid.note": {
+      "comment": "Note under the avoid list. \"I\" is Tomi.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I leave these out of every dish and check again after any swap. I cannot read packaging, so please still check the labels."
+          }
+        }
+      }
+    },
+    "onboarding.avoid.note.kicker": {
+      "comment": "Small red heading of the note under the avoid list. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please note"
+          }
+        }
+      }
+    },
+    "onboarding.avoid.subtitle": {
+      "comment": "Line under the title of the avoid question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allergies and things you never eat. Tick all that apply."
+          }
+        }
+      }
+    },
+    "onboarding.avoid.summary": {
+      "comment": "Line above Continue on the avoid question. The placeholder is the names of the ticked items as a list, such as \"Nuts and Shellfish\".",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avoiding %@."
+          }
+        }
+      }
+    },
+    "onboarding.avoid.title": {
+      "comment": "Title of the question about allergies and foods the cook never eats.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anything to avoid?"
+          }
+        }
+      }
+    },
+    "onboarding.back": {
+      "comment": "VoiceOver name of the Back button at the top left of every onboarding question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
+          }
+        }
+      }
+    },
+    "onboarding.continue": {
+      "comment": "Button under an onboarding question that has several answers.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue"
+          }
+        }
+      }
+    },
+    "onboarding.diet.everything.name": {
+      "comment": "Answer to the diet question: the cook eats all food.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything"
+          }
+        }
+      }
+    },
+    "onboarding.diet.everything.note": {
+      "comment": "Small line under the \"Everything\" answer of the diet question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meat, fish, the lot"
+          }
+        }
+      }
+    },
+    "onboarding.diet.hint": {
+      "comment": "Line under the answers of the diet question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap one and we move on. You can change it later in Settings."
+          }
+        }
+      }
+    },
+    "onboarding.diet.subtitle": {
+      "comment": "Line under the title of the diet question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dishes that do not fit never reach your menu."
+          }
+        }
+      }
+    },
+    "onboarding.diet.title": {
+      "comment": "Title of the diet question in onboarding.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What do you eat?"
+          }
+        }
+      }
+    },
+    "onboarding.question": {
+      "comment": "Small heading above an onboarding question. First number is this question, second the count of questions. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Question %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "onboarding.required": {
+      "comment": "Small red word at the top right of onboarding questions that cannot be skipped. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Required"
+          }
+        }
+      }
+    },
+    "onboarding.saveFailed": {
+      "comment": "Shown under an onboarding question when the answer could not be saved.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi could not save that answer. Please try again."
+          }
+        }
+      }
+    },
+    "onboarding.welcome.body": {
+      "comment": "Line under the title on the welcome screen. \"I\" is Tomi.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show me what you have. I write a menu that teaches you one technique at a time."
+          }
+        }
+      }
+    },
+    "onboarding.welcome.hint": {
+      "comment": "Small line above the start button on the welcome screen. It says how long onboarding takes.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About a minute. Eleven taps if you are in a hurry."
+          }
+        }
+      }
+    },
+    "onboarding.welcome.start": {
+      "comment": "The one button of the welcome screen. It starts onboarding.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Write my menu"
+          }
+        }
+      }
+    },
+    "onboarding.welcome.title": {
+      "comment": "Title of the first onboarding screen, the welcome.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Learn to cook, starting from your fridge."
+          }
+        }
+      }
+    },
+    "onboarding.diet.greeting": {
+      "comment": "What Tomi says above the first onboarding question, in quotation marks. I is Tomi.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Good evening. A few questions, then I write your menu.”"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
