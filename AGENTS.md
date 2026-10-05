@@ -16,7 +16,7 @@ It runs the formatter's lint, SwiftLint (size limits, hard-coded text, banned ca
 
 Report honestly: if a check fails or you skipped a step, say so.
 
-For every UI task, embed screenshots of the working screen in the pull request description, in light and dark. Capture each changed screen or meaningful state from the running app built from the final code, using fake data. Label the screen/state, device, iOS version and text size. Mockups and SwiftUI previews do not count. Keep the screenshots current after revisions. See `docs/agent-on-pull-requests.md` for capture and posting instructions. If screenshots cannot be captured or posted, explain the blocker in the description and leave the pull request in draft.
+For every UI task, embed screenshots of the working screen in the pull request description, in light and dark. Capture each changed screen or meaningful state from the running app built from the final code, using fake data. Label the screen/state, device, iOS version and text size. Mockups and SwiftUI previews do not count. Keep the screenshots current after revisions. See `docs/agent-on-pull-requests.md` for capture and posting instructions. If screenshots cannot be captured or posted, explain the blocker in the description and leave the pull request in draft. No automated check reads the description, so this rule is enforced by review: the owner merges a UI pull request only when its description shows current light and dark captures of the final build, and a reviewer reports missing or stale ones as P1.
 
 **Every pull request to `main` runs the same check automatically** (`.github/workflows/check.yml`), on the owner's Mac. It shows on the pull request as "Check". If the Mac is busy, asleep or off, the check waits and runs when the Mac is free. GitHub cannot require a green check on this repository, so the rule is written here instead: the owner merges only when the check is green. Running it yourself first is still required; the automatic run is the proof, not the first try.
 
@@ -191,5 +191,9 @@ For any agent or person reviewing a pull request here. Formatting, size limits a
 
 - Every rule changed or added has a test that fails when the rule is broken. Name the change that would slip through if one does not.
 - A test never depends on the real clock, time zone, locale, network, camera or model.
+
+**Pull request evidence**
+
+- A pull request that changes the UI has current light and dark screenshots of the running app in its description, labelled with screen/state, device, iOS version and text size. No automated check verifies this, so the reviewer does. If the UI changed after the captures were posted, or they are missing, it is a P1.
 
 A reviewer never merges and never pushes to `main`.
