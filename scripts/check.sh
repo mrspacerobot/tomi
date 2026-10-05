@@ -5,6 +5,9 @@ cd "$(dirname "$0")/.."
 
 DESTINATION="${TOMI_DESTINATION:-platform=iOS Simulator,name=iPhone 17}"
 
+echo "== Voice model (fetched once, about 100 MB)"
+./scripts/fetch-voice-model.sh
+
 echo "== Format and lint"
 xcrun swift-format lint --strict --recursive Tomi TomiTests TomiUITests Packages/TomiCore
 

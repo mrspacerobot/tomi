@@ -13,6 +13,102 @@
         }
       }
     },
+    "voiceTryout.againHint": {
+      "comment": "VoiceOver hint of a line already said on the voice try-out screen. Tapping it says the line again.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Says this line again"
+          }
+        }
+      }
+    },
+    "voiceTryout.failed": {
+      "comment": "Shown on the voice try-out screen when no voice could speak the line. Developer builds only.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi could not say that."
+          }
+        }
+      }
+    },
+    "voiceTryout.placeholder": {
+      "comment": "Placeholder of the text field on the voice try-out screen, which only developer builds show.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type something for Tomi to say"
+          }
+        }
+      }
+    },
+    "voiceTryout.sampleHeat": {
+      "comment": "A sample line on the voice try-out screen that a developer taps to hear Tomi's voice. Developer builds only.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heat the pan on medium. When the butter foams, add the onions."
+          }
+        }
+      }
+    },
+    "voiceTryout.sampleHello": {
+      "comment": "A sample line on the voice try-out screen that a developer taps to hear Tomi's voice. Developer builds only.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hi, I'm Tomi. Let's cook something simple tonight."
+          }
+        }
+      }
+    },
+    "voiceTryout.samplePraise": {
+      "comment": "A sample line on the voice try-out screen that a developer taps to hear Tomi's voice. Developer builds only.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nice work! Give it a gentle stir, then let it rest."
+          }
+        }
+      }
+    },
+    "voiceTryout.speak": {
+      "comment": "Button on the voice try-out screen that says the typed line aloud. Developer builds only.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speak"
+          }
+        }
+      }
+    },
+    "voiceTryout.stop": {
+      "comment": "Button on the voice try-out screen that stops Tomi speaking. Developer builds only.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop"
+          }
+        }
+      }
+    },
     "welcome.kicker": {
       "comment": "Small heading above the welcome title. Shown in capitals by the design.",
       "extractionState": "manual",

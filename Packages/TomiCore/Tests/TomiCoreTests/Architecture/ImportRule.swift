@@ -8,6 +8,7 @@ enum ImportRule {
     static let serviceFolders: [String: [String]] = [
         "FoundationModels": ["Tomi/AI/"],
         "Speech": ["Tomi/Voice/"],
+        "FluidAudio": ["Tomi/Voice/"],
         "AVFoundation": ["Tomi/Voice/", "Tomi/Camera/"],
         "SwiftData": ["Tomi/Persistence/"],
         "CloudKit": ["Tomi/Persistence/"],

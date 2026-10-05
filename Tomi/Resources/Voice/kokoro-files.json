@@ -1,0 +1,27 @@
+{
+  "folders": {
+    "kokoro-82m-coreml/ANE": [
+      "KokoroAlbert.mlmodelc",
+      "KokoroAlignment.mlmodelc",
+      "KokoroNoise_v2.mlmodelc",
+      "KokoroPostAlbert.mlmodelc",
+      "KokoroProsody_v2.mlmodelc",
+      "KokoroTail_v2.mlmodelc",
+      "KokoroVocoder.mlmodelc",
+      "am_fenrir.bin",
+      "vocab.json"
+    ],
+    "kokoro": [
+      "G2PDecoder.mlmodelc",
+      "G2PEncoder.mlmodelc",
+      "config.json",
+      "g2p_vocab.json",
+      "gb_gold.json",
+      "gb_silver.json",
+      "us_gold.json",
+      "us_lexicon_cache.json",
+      "us_silver.json",
+      "vocab_index.json"
+    ]
+  }
+}

@@ -12,7 +12,7 @@ Tomi is a native iPhone app (SwiftUI, iOS 27) that teaches cooking from what is 
 ./scripts/check.sh
 ```
 
-It runs the formatter's lint, SwiftLint (size limits, hard-coded text, banned calls), the rules package tests, and the app's unit and UI tests in the simulator. Tools needed once: Xcode 27 and `brew install swiftlint`. It must pass with no warnings you introduced. Then run the app in the simulator and look at what you changed, in light and dark, next to the mockup. If something looks off, even something you did not touch, fix it or open an issue.
+It first fetches the voice model that ships in the app (about 100 MB, once, see `docs/voice-model.md`), then runs the formatter's lint, SwiftLint (size limits, hard-coded text, banned calls), the rules package tests, and the app's unit and UI tests in the simulator. Tools needed once: Xcode 27 and `brew install swiftlint`. It must pass with no warnings you introduced. Then run the app in the simulator and look at what you changed, in light and dark, next to the mockup. If something looks off, even something you did not touch, fix it or open an issue.
 
 Report honestly: if a check fails or you skipped a step, say so.
 
@@ -73,12 +73,12 @@ For every UI task, embed screenshots of the working screen in the pull request d
 - **Three layers.** Screens (SwiftUI) call app services. Services call TomiCore and Apple frameworks. TomiCore imports nothing from Apple's UI, data or AI frameworks.
 - **All rules live in `Packages/TomiCore`:** skills, unlocks, mastery, XP, streak, lesson matching, diet and allergen filtering. If it can be decided without a screen, it belongs there with a test.
 - **TomiCore is grouped by domain folder,** and its tests mirror the same folders: `Catalog` (skills, courses, levels), `Ingredients`, `Lessons`, `Preferences`, `Progress` (the cook log and what follows from it), `Game` (XP, rank, streak) and `Utils` (small shared helpers). No Swift file sits in the root of `Sources/TomiCore` or `Tests/TomiCoreTests`. It stays one package and one module; folders are free, a second module is not.
-- **The rules above are tests, not hopes.** `Packages/TomiCore/Tests/TomiCoreTests/Architecture` reads the source and fails when: the rules package imports anything but Foundation; app code imports a service framework (FoundationModels, Speech, AVFoundation, SwiftData, CloudKit, AlarmKit, UIKit) outside its service folder (`Tomi/AI`, `Tomi/Voice`, `Tomi/Camera`, `Tomi/Persistence`, `Tomi/Timers`); a Swift file names an id of the shipped library as a string; a Swift file sits in the root of the rules package; or the scenes and mains in code differ from the ones the design kit draws. SwiftLint fails on `Calendar.current`, `Locale.current`, `Date()` and the like inside the rules package. When a rule here changes, change its test in the same pull request.
+- **The rules above are tests, not hopes.** `Packages/TomiCore/Tests/TomiCoreTests/Architecture` reads the source and fails when: the rules package imports anything but Foundation; app code imports a service framework (FoundationModels, Speech, FluidAudio, AVFoundation, SwiftData, CloudKit, AlarmKit, UIKit) outside its service folder (`Tomi/AI`, `Tomi/Voice`, `Tomi/Camera`, `Tomi/Persistence`, `Tomi/Timers`); a Swift file names an id of the shipped library as a string; a Swift file sits in the root of the rules package; or the scenes and mains in code differ from the ones the design kit draws. SwiftLint fails on `Calendar.current`, `Locale.current`, `Date()` and the like inside the rules package. When a rule here changes, change its test in the same pull request.
 - **AI, voice, camera, clock and storage sit behind protocols.** Each has a real implementation and a fake. Screens never import FoundationModels, Speech, AVFoundation or SwiftData directly.
 - **The app must work without Apple Intelligence.** Every AI feature has a typed or code-only fallback.
 - **The cook log is the source of truth.** XP, streak and mastery are computed from it, not stored as running totals.
 - **Saved data must stay iCloud-safe:** every stored property optional or defaulted, no unique constraints, changes additive only. Never rename or remove a stored field after release.
-- **No third-party dependencies in the app** without the owner's approval.
+- **No third-party dependencies in the app** without the owner's approval. Approved so far: FluidAudio (Apache-2.0, pinned to an exact version), which runs Tomi's voice, only inside `Tomi/Voice` (#96).
 - **Photos, chat and voice never leave the phone.**
 
 ## Code style: small enough to read at a glance

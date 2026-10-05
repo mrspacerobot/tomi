@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		242E7230AA266EA6BC18C84D /* TomiCore in Frameworks */ = {isa = PBXBuildFile; productRef = CF675283D6F6964DE4C721A5 /* TomiCore */; };
 		95114B4D3ADFC7B862067D06 /* TomiCore in Frameworks */ = {isa = PBXBuildFile; productRef = D98A890595931FADE91BA730 /* TomiCore */; };
+		A1B2C3D4E5F60718293A4B01 /* FluidAudio in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F60718293A4B02 /* FluidAudio */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,9 +30,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		86A118A35D6590955C3FE170 /* TomiUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TomiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0167B14E8717776A1F8D71C /* Tomi.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Tomi.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D0931DB2A7162214F4D013E7 /* TomiTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TomiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		86A118A35D6590955C3FE170 /* TomiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TomiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0167B14E8717776A1F8D71C /* Tomi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tomi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0931DB2A7162214F4D013E7 /* TomiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TomiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F93C2DD7D2A4145B3157F5DF /* TomiCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TomiCore; path = Packages/TomiCore; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -59,6 +60,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95114B4D3ADFC7B862067D06 /* TomiCore in Frameworks */,
+				A1B2C3D4E5F60718293A4B01 /* FluidAudio in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +171,7 @@
 			name = Tomi;
 			packageProductDependencies = (
 				D98A890595931FADE91BA730 /* TomiCore */,
+				A1B2C3D4E5F60718293A4B02 /* FluidAudio */,
 			);
 			productName = Tomi;
 			productReference = A0167B14E8717776A1F8D71C /* Tomi.app */;
@@ -181,7 +184,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 2700;
 				TargetAttributes = {
 					3F8376A7718F7D29C3156DCA = {
 						TestTargetID = 6FEC55F93B43F37518F6EC29;
@@ -199,6 +202,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				0F9944CEEA9748A0C9DA538C /* XCLocalSwiftPackageReference "Packages/TomiCore" */,
+				A1B2C3D4E5F60718293A4B03 /* XCRemoteSwiftPackageReference "FluidAudio" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 68908AD19C09C2D014696518 /* Products */;
@@ -369,6 +373,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -391,6 +396,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
@@ -461,6 +467,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -476,6 +483,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 6.0;
@@ -563,7 +571,23 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		A1B2C3D4E5F60718293A4B03 /* XCRemoteSwiftPackageReference "FluidAudio" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/FluidInference/FluidAudio.git";
+			requirement = {
+				kind = exactVersion;
+				version = 0.17.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		A1B2C3D4E5F60718293A4B02 /* FluidAudio */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1B2C3D4E5F60718293A4B03 /* XCRemoteSwiftPackageReference "FluidAudio" */;
+			productName = FluidAudio;
+		};
 		CF675283D6F6964DE4C721A5 /* TomiCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TomiCore;
