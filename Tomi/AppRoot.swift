@@ -9,7 +9,9 @@ struct AppRoot: View {
 
     var body: some View {
         #if DEBUG
-            if GalleryLaunch.isRequested {
+            if CompanionGalleryLaunch.requested {
+                CompanionGallery()
+            } else if GalleryLaunch.isRequested {
                 ComponentGallery()
             } else {
                 RootView(catalog: catalog, progress: progress)
