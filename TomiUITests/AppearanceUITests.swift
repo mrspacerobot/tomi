@@ -20,18 +20,34 @@ final class AppearanceUITests: XCTestCase {
         XCTAssertLessThan(ground, 0.25)
     }
 
-    /// Launches the app with the phone in the given appearance, checks the title is on screen and
+    /// Changes the phone appearance with the welcome visible, checks the title is on screen and
     /// returns how bright the ground behind it is.
     @MainActor
     private func groundBrightnessOfWelcome(in appearance: XCUIDevice.Appearance) -> Double {
-        XCUIDevice.shared.appearance = appearance
-        addTeardownBlock { @MainActor in
-            XCUIDevice.shared.appearance = .light
-        }
+        prepareAppearance()
         let app = XCUIApplication()
+        app.launchArguments = ["--store-in-memory"]
         app.launch()
 
         XCTAssertTrue(app.staticTexts["welcome-title"].waitForExistence(timeout: 5))
+        XCUIDevice.shared.appearance = appearance
+        waitForAppearance(appearance, in: app)
         return app.screenshot().groundBrightness
+    }
+    @MainActor private func prepareAppearance() {
+        let original = XCUIDevice.shared.appearance
+        XCUIDevice.shared.appearance = .light
+        addTeardownBlock { @MainActor in XCUIDevice.shared.appearance = original }
+    }
+
+    /// Appearance updates arrive after the app is visible; wait for the rendered ground, not a delay.
+    @MainActor private func waitForAppearance(_ appearance: XCUIDevice.Appearance, in app: XCUIApplication) {
+        let expected = NSPredicate { _, _ in
+            let brightness = app.screenshot().groundBrightness
+            if appearance == .dark { return brightness < 0.25 }
+            return brightness > 0.8
+        }
+        let settled = XCTNSPredicateExpectation(predicate: expected, object: app)
+        wait(for: [settled], timeout: 5)
     }
 }
