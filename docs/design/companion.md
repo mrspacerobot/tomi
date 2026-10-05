@@ -16,7 +16,9 @@ The component opens no microphone, camera or model and reads no cook data.
 The rig owns the body, shoulder pivots, hands, eyes, brows and smiling mouth. Coordinated poses
 change gaze, head angle, arm position and expression. Breathing, blinks, explaining gestures and
 a restrained celebration bounce use elapsed render time, never a wall clock. Pose transitions ease
-from the current pose, including when interrupted by another state.
+from the current pose, including the thinking hand's depth and when interrupted by another state.
+Thinking pairs a hand at the cheek with an upward glance, gently lifted inner brows and a quiet
+smile. The relaxed head angle and open expression should read as considerate curiosity.
 
 Reduce Motion shows each state's complete still pose immediately. Hidden or inactive views cancel
 the render subscription; a visible, active view resumes it. The subscription captures the rig weakly.

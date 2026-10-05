@@ -7,8 +7,7 @@ extension CompanionRig {
         body.orientation = orientation(for: pose)
         CompanionSculpt.turn(leftArm, by: pose.leftArm)
         CompanionSculpt.turn(rightArm, by: pose.rightArm)
-        rightArm.position.z = 0.04
-        if presentation.state == .thinking { rightArm.position.z = 0.44 }
+        rightArm.position.z = pose.rightArmDepth
         face.apply(pose)
     }
 

@@ -8,6 +8,7 @@ nonisolated struct CompanionPose: Equatable {
     var squash: Float = 1
     var leftArm: Float = -0.45
     var rightArm: Float = 0.45
+    var rightArmDepth: Float = 0.04
     var gaze: SIMD2<Float> = .zero
     var brow: Float = 0
     var mouth: Float = 0.045

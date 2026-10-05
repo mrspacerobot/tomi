@@ -9,6 +9,7 @@ extension CompanionPose {
         squash += (target.squash - squash) * fraction
         leftArm += (target.leftArm - leftArm) * fraction
         rightArm += (target.rightArm - rightArm) * fraction
+        rightArmDepth += (target.rightArmDepth - rightArmDepth) * fraction
         expression(toward: target, fraction: fraction)
     }
 
