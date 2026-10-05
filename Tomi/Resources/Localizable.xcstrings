@@ -878,13 +878,13 @@
       }
     },
     "companion.demoNote": {
-      "comment": "Explains the scope of this debug animation demonstration.",
+      "comment": "Instruction beneath the character gallery controls.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Character study. These are scripted reactions; no microphone or AI is running."
+            "value": "Pick a mood, then turn Tomi to see him from the side."
           }
         }
       }

@@ -35,6 +35,17 @@ final class CompanionGalleryUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["companion-motion-still"].exists)
     }
 
+    @MainActor func testDirectGalleryClosesAndReopens() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--companion-gallery", "--store-in-memory"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["companion-title"].waitForExistence(timeout: 5))
+        app.buttons["companion-close"].tap()
+        XCTAssertTrue(app.staticTexts["gallery-title"].waitForExistence(timeout: 5))
+        app.buttons["gallery-companion"].tap()
+        XCTAssertTrue(app.staticTexts["companion-title"].waitForExistence(timeout: 5))
+    }
+
     @MainActor private func companion(arguments: [String] = []) -> XCUIApplication {
         let app = XCUIApplication.launchingGallery(extraArguments: arguments)
         app.buttons["gallery-companion"].tap()

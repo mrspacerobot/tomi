@@ -16,6 +16,7 @@
                     .frame(height: MascotSize.companion)
                     .accessibilityIdentifier("companion-viewport")
                 Text(state.line).textStyle(.body).multilineTextAlignment(.center)
+                    .accessibilityIdentifier("companion-line")
                 if reduced {
                     Text(.companionMotionStill).textStyle(.caption).accessibilityIdentifier("companion-motion-still")
                 }

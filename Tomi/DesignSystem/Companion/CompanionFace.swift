@@ -14,7 +14,7 @@ final class CompanionFace {
         at: [0.21, 0.28, 0.49],
         material: CompanionMaterial.ink
     )
-    let mouth = CompanionSculpt.oval([0.12, 0.045, 0.025], at: [0, -0.19, 0.53], material: CompanionMaterial.ink)
+    let mouth = CompanionMouth.make()
 
     func attach(to body: Entity) {
         CompanionSculpt.attach([leftEye, rightEye, leftBrow, rightBrow, mouth], to: body)
@@ -25,8 +25,8 @@ final class CompanionFace {
         rightEye.position = [0.21 + pose.gaze.x, 0.09 + pose.gaze.y, 0.53]
         leftEye.scale.y = pose.eyes
         rightEye.scale.y = pose.eyes
-        CompanionSculpt.turn(leftBrow, by: -pose.brow)
-        CompanionSculpt.turn(rightBrow, by: pose.brow)
-        mouth.scale.y = pose.mouth
+        CompanionSculpt.turn(leftBrow, by: pose.brow)
+        CompanionSculpt.turn(rightBrow, by: -pose.brow)
+        CompanionMouth.apply(pose.mouth, to: mouth)
     }
 }

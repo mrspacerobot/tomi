@@ -6,7 +6,9 @@
 
         var body: some View {
             VStack(alignment: .leading, spacing: Spacing.small) {
-                Button(.companionClose, action: close).buttonStyle(.tomiSecondary)
+                Button(.companionClose, action: close)
+                    .buttonStyle(.tomiSecondary)
+                    .accessibilityIdentifier("companion-close")
                 Text(.companionTitle).textStyle(.displayL).accessibilityIdentifier("companion-title")
                 Text(.companionSubtitle).textStyle(.body).foregroundStyle(ColorRole.inkFaded.color)
             }
