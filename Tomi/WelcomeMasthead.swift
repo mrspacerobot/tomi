@@ -6,18 +6,19 @@ struct WelcomeMasthead: View {
     let catalog: SkillCatalog?
 
     var body: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: Spacing.small) {
             Text(.welcomeKicker)
-                .textStyle(.kicker)
+                .textStyle(.label)
             Text(.welcomeTitle)
-                .textStyle(.title)
+                .textStyle(.displayXL)
                 .accessibilityIdentifier("welcome-title")
             if let catalog {
                 Text(.welcomeSubtitle(catalog.skills.count, catalog.courses.count))
-                    .textStyle(.subtitle)
+                    .textStyle(.description)
                     .accessibilityIdentifier("welcome-subtitle")
             }
         }
+        .multilineTextAlignment(.center)
     }
 }
 

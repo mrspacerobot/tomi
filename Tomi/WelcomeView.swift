@@ -4,20 +4,32 @@ import TomiCore
 /// Placeholder first screen for the project scaffold. Replaced by onboarding and home in later phases.
 struct WelcomeView: View {
     let catalog: SkillCatalog?
+    let summary: ProgressSummary
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: Spacing.xLarge) {
             TomiMascot()
-                .frame(width: 180, height: 180)
+                .frame(width: MascotSize.welcome, height: MascotSize.welcome)
                 .accessibilityLabel(Text(.mascotLabel))
             WelcomeMasthead(catalog: catalog)
+            WelcomeProgress(summary: summary)
         }
-        .padding(24)
+        .padding(Spacing.xLarge)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Theme.paper)
+        .background(ColorRole.paper.color)
     }
 }
 
 #Preview {
-    WelcomeView(catalog: BundledLibrary.catalog())
+    if let summary = SavedProgressModel.previewWithProgress().summary {
+        WelcomeView(catalog: BundledLibrary.catalog(), summary: summary)
+    }
+}
+
+#Preview("Dark, largest text") {
+    if let summary = SavedProgressModel.previewWithProgress().summary {
+        WelcomeView(catalog: BundledLibrary.catalog(), summary: summary)
+            .preferredColorScheme(.dark)
+            .dynamicTypeSize(.accessibility5)
+    }
 }

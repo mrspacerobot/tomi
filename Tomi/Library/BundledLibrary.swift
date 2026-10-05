@@ -4,7 +4,7 @@ import TomiCore
 
 /// The lesson library that ships inside the app. A signed download replaces it once the hosted library is live.
 enum BundledLibrary {
-    nonisolated private static let logger = Logger(subsystem: "com.mrspacerobot.tomi", category: "library")
+    nonisolated private static let logger = Logger(category: .library)
 
     /// The skill catalog, or nil if the bundled file is missing or invalid, which the app's tests rule out.
     /// Tests pass their own bundle to reach the failure path.

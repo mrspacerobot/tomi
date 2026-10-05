@@ -2,9 +2,12 @@ import SwiftUI
 
 /// Tomi the tomato chef, drawn in code and scaled to fit.
 struct TomiMascot: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     var body: some View {
+        let drawing = MascotDrawing(palette: .palette(for: colorScheme))
         Canvas { context, size in
-            MascotDrawing.draw(in: MascotDrawing.fitted(context, to: size))
+            drawing.draw(in: MascotDrawing.fitted(context, to: size))
         }
         .accessibilityElement()
     }
@@ -12,7 +15,7 @@ struct TomiMascot: View {
 
 #Preview {
     TomiMascot()
-        .frame(width: 240, height: 240)
+        .frame(width: MascotSize.welcome, height: MascotSize.welcome)
         .padding()
-        .background(Theme.paper)
+        .background(ColorRole.paper.color)
 }
