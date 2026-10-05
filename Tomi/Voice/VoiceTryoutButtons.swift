@@ -1,6 +1,7 @@
 import SwiftUI
 
 /// Speak says the typed line. Stop is on only while Tomi is speaking.
+/// The large control size makes each button itself at least 44 points tall, so the whole button can be tapped.
 struct VoiceTryoutButtons: View {
     let model: VoiceTryoutModel
 
@@ -15,6 +16,17 @@ struct VoiceTryoutButtons: View {
                 .buttonStyle(.bordered)
                 .disabled(!model.isSpeaking)
         }
-        .frame(minHeight: 44)
+        .controlSize(.large)
     }
+}
+
+#Preview {
+    VoiceTryoutButtons(model: VoiceTryoutModel(speaker: FakeSpeaker()))
+        .padding()
+}
+
+#Preview("Largest text") {
+    VoiceTryoutButtons(model: VoiceTryoutModel(speaker: FakeSpeaker()))
+        .padding()
+        .dynamicTypeSize(.accessibility5)
 }

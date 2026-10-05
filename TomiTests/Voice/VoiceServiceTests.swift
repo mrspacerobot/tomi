@@ -18,6 +18,13 @@ import Testing
         #expect(speaker is FallbackSpeaker)
     }
 
+    @Test func theSettingsChooseTheEngine() {
+        let kokoro = VoiceService.speaker(for: VoiceSettings(engine: .kokoro, voice: "any_voice"))
+        let system = VoiceService.speaker(for: VoiceSettings(engine: .system, voice: "any_voice"))
+        #expect(kokoro is FallbackSpeaker)
+        #expect(system is SystemSpeaker)
+    }
+
     @Test func withoutVoiceSettingsOnlyTheSystemVoiceIsUsed() {
         let speaker = VoiceService.speaker(arguments: [], bundle: testBundle)
         #expect(speaker is SystemSpeaker)

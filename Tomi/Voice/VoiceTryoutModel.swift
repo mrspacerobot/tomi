@@ -9,9 +9,11 @@ final class VoiceTryoutModel {
     private(set) var didFail = false
     private(set) var isSpeaking = false
     private let speaker: any Speaker
+    private var latestRequest = 0
 
-    init(speaker: any Speaker) {
+    init(speaker: any Speaker, said: [String] = []) {
         self.speaker = speaker
+        self.said = said
     }
 
     func speak() async {
@@ -23,11 +25,17 @@ final class VoiceTryoutModel {
         await say(line)
     }
 
+    /// A second line stops the first, and the first then returns while the second is still being said.
+    /// Only the latest request may say that Tomi has stopped speaking.
     func say(_ line: String) async {
+        latestRequest += 1
+        let mine = latestRequest
         isSpeaking = true
         didFail = false
-        defer { isSpeaking = false }
         await trySpeaking(line)
+        if mine == latestRequest {
+            isSpeaking = false
+        }
     }
 
     func stop() {

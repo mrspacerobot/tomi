@@ -18,3 +18,14 @@ struct VoiceTryoutLines: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
+
+#Preview {
+    VoiceTryoutLines(model: VoiceTryoutModel(speaker: FakeSpeaker(), said: ["Heat the pan.", "Well done."]))
+        .padding()
+}
+
+#Preview("Largest text") {
+    VoiceTryoutLines(model: VoiceTryoutModel(speaker: FakeSpeaker(), said: ["Heat the pan.", "Well done."]))
+        .padding()
+        .dynamicTypeSize(.accessibility5)
+}

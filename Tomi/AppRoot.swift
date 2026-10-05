@@ -25,3 +25,8 @@ struct AppRoot: View {
 #Preview {
     AppRoot(catalog: BundledLibrary.catalog(), progress: .previewWithProgress())
 }
+
+#Preview("Largest text") {
+    AppRoot(catalog: BundledLibrary.catalog(), progress: .previewWithProgress())
+        .dynamicTypeSize(.accessibility5)
+}

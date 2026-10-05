@@ -1,9 +1,12 @@
 import AVFoundation
 
 /// Speaks with the voices built into the phone. Plain, but always there, so it is the fallback of every other voice.
+/// Callbacks name the utterance they are about, and only the one being spoken now counts: a late callback of a
+/// line that was interrupted must not end the line that replaced it.
 final class SystemSpeaker: NSObject, Speaker, AVSpeechSynthesizerDelegate {
     private let synthesizer = AVSpeechSynthesizer()
     private var finished: CheckedContinuation<Void, Never>?
+    private var active: ObjectIdentifier?
 
     override init() {
         super.init()
@@ -11,38 +14,63 @@ final class SystemSpeaker: NSObject, Speaker, AVSpeechSynthesizerDelegate {
     }
 
     func speak(_ line: String) async throws {
-        stop()
+        interrupt()
         try AudioPlayback.prepare()
+        let utterance = AVSpeechUtterance(string: line)
         await withTaskCancellationHandler {
-            await sayAndWait(line)
+            await sayAndWait(utterance)
         } onCancel: {
-            Task { @MainActor in self.stop() }
+            let identifier = ObjectIdentifier(utterance)
+            Task { @MainActor in self.stop(ifSpeaking: identifier) }
         }
         try Task.checkCancellation()
     }
 
-    private func sayAndWait(_ line: String) async {
-        await withCheckedContinuation { continuation in
-            finished = continuation
-            synthesizer.speak(AVSpeechUtterance(string: line))
+    func stop() {
+        interrupt()
+        AudioPlayback.release()
+    }
+
+    private func stop(ifSpeaking identifier: ObjectIdentifier) {
+        if active == identifier {
+            stop()
         }
     }
 
-    func stop() {
+    private func sayAndWait(_ utterance: AVSpeechUtterance) async {
+        await withCheckedContinuation { continuation in
+            active = ObjectIdentifier(utterance)
+            finished = continuation
+            synthesizer.speak(utterance)
+        }
+    }
+
+    private func interrupt() {
         synthesizer.stopSpeaking(at: .immediate)
         finish()
     }
 
     private func finish() {
+        active = nil
         finished?.resume()
         finished = nil
     }
 
+    private func utteranceEnded(_ identifier: ObjectIdentifier) {
+        guard active == identifier else {
+            return
+        }
+        finish()
+        AudioPlayback.release()
+    }
+
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        Task { @MainActor in finish() }
+        let identifier = ObjectIdentifier(utterance)
+        Task { @MainActor in utteranceEnded(identifier) }
     }
 
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
-        Task { @MainActor in finish() }
+        let identifier = ObjectIdentifier(utterance)
+        Task { @MainActor in utteranceEnded(identifier) }
     }
 }

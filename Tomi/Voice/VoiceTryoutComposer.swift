@@ -23,3 +23,14 @@ struct VoiceTryoutComposer: View {
         isTyping = true
     }
 }
+
+#Preview {
+    VoiceTryoutComposer(model: VoiceTryoutModel(speaker: FakeSpeaker()))
+        .padding()
+}
+
+#Preview("Largest text") {
+    VoiceTryoutComposer(model: VoiceTryoutModel(speaker: FakeSpeaker()))
+        .padding()
+        .dynamicTypeSize(.accessibility5)
+}

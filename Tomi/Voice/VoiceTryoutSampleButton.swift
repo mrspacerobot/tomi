@@ -19,3 +19,14 @@ struct VoiceTryoutSampleButton: View {
         .buttonBorderShape(.roundedRectangle)
     }
 }
+
+#Preview {
+    VoiceTryoutSampleButton(model: VoiceTryoutModel(speaker: FakeSpeaker()), line: .voiceTryoutSampleHeat)
+        .padding()
+}
+
+#Preview("Largest text") {
+    VoiceTryoutSampleButton(model: VoiceTryoutModel(speaker: FakeSpeaker()), line: .voiceTryoutSampleHeat)
+        .padding()
+        .dynamicTypeSize(.accessibility5)
+}

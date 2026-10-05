@@ -65,6 +65,6 @@ import Testing
     @Test func theVoiceNamedInTheSettingsIsAmongTheBundledFiles() throws {
         let settings = try #require(VoiceSettings.bundled())
         let names = try KokoroFileLayout.bundled().folders.values.flatMap { $0 }
-        #expect(names.contains("\(settings.kokoroVoice).bin"))
+        #expect(names.contains("\(settings.voice).bin"))
     }
 }

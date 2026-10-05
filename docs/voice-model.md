@@ -8,6 +8,8 @@ so speech works with no network.
 - About 100 MB of Core ML model and text files from `FluidInference/kokoro-82m-coreml` on Hugging Face,
   fetched by `scripts/fetch-voice-model.sh` into `Tomi/Resources/Voice/Models`. That folder is not in git.
   The script reads one pinned revision and checks every file against `scripts/voice-model.manifest`.
+  It downloads into a cache outside the checkout (`~/Library/Caches/Tomi/voice-model`, or
+  `TOMI_VOICE_MODEL_CACHE`) and copies from there, because a clean checkout deletes ignored files.
   `./scripts/check.sh` runs it first. Run it by hand before building the app in Xcode.
 - `Tomi/Resources/Voice/am_fenrir.bin` (0.5 MB), the voice, which is in git. The repository only offers
   this voice as a JSON file, so the engine converted it once. It is the voice named in `voice.json`.
@@ -17,6 +19,13 @@ so speech works with no network.
 
 Without the fetched files the app still works: the engine downloads them when it can, and otherwise
 the system voice speaks.
+
+## Changing the engine
+
+`voice.json` names the engine (`kokoro` or `system`) and the voice. `VoiceEngine` lists the engines and
+`VoiceService` builds the speaker for each, always with the system voice behind it. To add an engine, write
+a `Speaker` for it, add a case to `VoiceEngine` and a line to `VoiceService`, then name it in `voice.json`.
+No screen changes, because screens only know the `Speaker` protocol.
 
 ## Changing the voice
 

@@ -16,3 +16,14 @@ struct VoiceTryoutSamples: View {
         }
     }
 }
+
+#Preview {
+    VoiceTryoutSamples(model: VoiceTryoutModel(speaker: FakeSpeaker()))
+        .padding()
+}
+
+#Preview("Largest text") {
+    VoiceTryoutSamples(model: VoiceTryoutModel(speaker: FakeSpeaker()))
+        .padding()
+        .dynamicTypeSize(.accessibility5)
+}

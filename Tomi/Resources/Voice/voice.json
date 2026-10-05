@@ -1,3 +1,4 @@
 {
-  "kokoroVoice": "am_fenrir"
+  "engine": "kokoro",
+  "voice": "am_fenrir"
 }

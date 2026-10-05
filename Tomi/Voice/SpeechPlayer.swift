@@ -9,6 +9,12 @@ final class SpeechPlayer {
     private var epoch = 0
     private var waiting: CheckedContinuation<Void, Never>?
 
+    /// The node is attached once for the life of the player. A stopped engine keeps its nodes, so a restart
+    /// after a route change only connects and starts, and attaching again would raise an exception.
+    init() {
+        engine.attach(node)
+    }
+
     /// Queues one sentence of mono samples. It plays after the sentences queued before it.
     func enqueue(_ samples: [Float]) throws {
         let format = AVAudioFormat(standardFormatWithSampleRate: Self.sampleRate, channels: 1)
@@ -62,9 +68,14 @@ final class SpeechPlayer {
         if engine.isRunning {
             return
         }
-        engine.attach(node)
         try engine.connectNode(node, to: engine.mainMixerNode, format: format)
         try engine.start()
+    }
+
+    /// Stops the engine, so the phone can give the audio back. The next sentence starts it again.
+    func shutDown() {
+        stop()
+        engine.stop()
     }
 
     private static func buffer(of samples: [Float], in format: AVAudioFormat) -> AVAudioPCMBuffer? {

@@ -49,6 +49,27 @@ import Testing
         #expect(!model.didFail)
     }
 
+    @Test func anInterruptedLineDoesNotEndTheSpeakingOfTheLineThatReplacedIt() async {
+        let model = VoiceTryoutModel(speaker: speaker)
+        let (first, second) = await sayTwoLinesAtOnce(with: model)
+        speaker.finishOldestLine()
+        await first.value
+        #expect(model.isSpeaking)
+        speaker.finishOldestLine()
+        await second.value
+        #expect(!model.isSpeaking)
+    }
+
+    private func sayTwoLinesAtOnce(with model: VoiceTryoutModel) async -> (Task<Void, Never>, Task<Void, Never>) {
+        speaker.holdsLines = true
+        let first = Task { await model.say("One.") }
+        let second = Task { await model.say("Two.") }
+        while speaker.heldLineCount < 2 {
+            await Task.yield()
+        }
+        return (first, second)
+    }
+
     @Test func stoppingStopsTheSpeaker() {
         let model = VoiceTryoutModel(speaker: speaker)
         model.stop()

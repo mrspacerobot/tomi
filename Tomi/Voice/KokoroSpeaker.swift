@@ -18,21 +18,42 @@ final class KokoroSpeaker: Speaker {
     }
 
     func speak(_ line: String) async throws {
-        stop()
-        turn += 1
+        interrupt()
         let mine = turn
         try AudioPlayback.prepare()
         try await withTaskCancellationHandler {
             try await load()
             try await sayEach(SpokenSentences.split(line), turn: mine)
+            finish(turn: mine)
         } onCancel: {
-            Task { @MainActor in self.stop() }
+            Task { @MainActor in self.stop(ifTurn: mine) }
         }
     }
 
     func stop() {
+        interrupt()
+        finish(turn: turn)
+    }
+
+    /// Ends the line being made or played without giving the audio back, because another line may follow at once.
+    private func interrupt() {
         turn += 1
         player.stop()
+    }
+
+    private func stop(ifTurn mine: Int) {
+        if mine == turn {
+            stop()
+        }
+    }
+
+    /// Gives the audio back, unless a newer line has taken over.
+    private func finish(turn mine: Int) {
+        guard mine == turn else {
+            return
+        }
+        player.shutDown()
+        AudioPlayback.release()
     }
 
     private func sayEach(_ sentences: [String], turn mine: Int) async throws {
