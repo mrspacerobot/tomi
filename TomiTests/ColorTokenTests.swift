@@ -19,9 +19,9 @@ import TomiCore
         )
     }
 
-    @Test func theGroundAndThePrimaryButtonArePairedWithText() {
+    @Test func theGroundsAndTheFilledComponentsArePairedWithText() {
         let grounds = Set(ColorRole.bodyTextPairings.map(\.ground))
-        #expect(grounds == [.paper, .wash, .primaryFill])
+        #expect(grounds == [.paper, .wash, .primaryFill, .cobalt])
     }
 
     @Test(arguments: TextStyle.allCases)
