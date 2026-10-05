@@ -12,6 +12,36 @@ Put `@claude` in as many inline comments as you like and submit them as one revi
 
 A single inline comment or a reply in a thread works the same way, as a review with one request. An inline comment without `@claude` is left alone.
 
+## The pull request description
+
+Every pull request uses [the shared Markdown template](../.github/pull_request_template.md). Keep the headings and their order, complete each section, and remove its instructional comments and placeholders. Keep the description current after follow-up changes, including validation results and screenshots. The comment answering review requests is still a checklist; it does not replace the description.
+
+When creating a pull request with a CLI or API, explicitly read the template and fill it into a temporary Markdown file. Pass the completed file with `gh-axi pr create --body-file <path>` (or the equivalent body argument for the client). The GitHub web form can insert the template, but agents must not rely on a CLI or API doing so.
+
+## Screenshots for UI tasks
+
+A UI task includes changes to screens, navigation, components, design tokens, illustrations or visible text. Embed screenshots of each changed screen or meaningful state in the description's Screenshots section. Capture the working app from the final code in both light and dark mode, with fake data. For shared components or tokens, use the running component gallery or a representative screen that exercises the change. For flows, reach the changed state by using the app as a cook would.
+
+1. Build and run the branch in the simulator or on a device. Navigate to the changed screen with fake data, then exercise the changed behavior. Compare it with the approved mockup.
+2. Capture light and dark screenshots after the screen has settled in each appearance. For a simulator, use its device identifier rather than `booted` when several simulators are running:
+
+   ```sh
+   xcrun simctl ui <device-identifier> appearance light
+   xcrun simctl io <device-identifier> screenshot <screen>-light.png
+   xcrun simctl ui <device-identifier> appearance dark
+   xcrun simctl io <device-identifier> screenshot <screen>-dark.png
+   ```
+
+3. Post the images so the owner can see them directly in the pull request. Use GitHub image attachments when available. If the agent cannot upload attachments, commit the captures under `docs/pr-screenshots/<issue-number>/` on the issue branch and embed each with a URL of this form, replacing every placeholder:
+
+   ```md
+   ![Screen and state, iPhone model, iOS version, light, text size](https://github.com/mrspacerobot/tomi/blob/<commit-sha>/docs/pr-screenshots/<issue-number>/<screen>-light.png?raw=true)
+   ```
+
+4. Open the pull request and verify that the images render. Label each screen/state, device, iOS version, appearance and text size, and record how to reach it in Validation. Include the relevant mockup reference. Check small and large phones and the largest Dynamic Type size as required by the implementation plan; include extra captures when they show layout behavior the standard pair does not.
+
+Screenshots must come from the running app, not a mockup, generated image or SwiftUI preview. Refresh them after any revision that changes what they show. Local paths and test-result bundles alone are not posted pictures. If capture or posting is blocked, explain why and leave the pull request in draft until the evidence is available. For changes with no UI effect, keep the Screenshots heading and write "Not applicable - no UI changes."
+
 ## How it works
 
 1. A comment or a submitted review starts the workflow in `.github/workflows/claude.yml`. Workflows started this way always run the version on `main`.
