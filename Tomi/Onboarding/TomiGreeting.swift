@@ -6,9 +6,7 @@ struct TomiGreeting: View {
 
     var body: some View {
         HStack(spacing: Spacing.xSmall) {
-            TomiMascot()
-                .frame(width: MascotSize.greeting, height: MascotSize.greeting)
-                .accessibilityHidden(true)
+            CompanionSlot(state: .explaining, side: MascotSize.companionGreeting)
             Text(words)
                 .textStyle(.description)
                 .frame(maxWidth: .infinity, alignment: .leading)

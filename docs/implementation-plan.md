@@ -19,7 +19,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Everyday AI | Apple Foundation Models on the phone: ingredient spotting, ranking and adapting lessons, Ask Tomi, voice commands. Available in the iOS 27 simulator on the development Mac |
 | Curriculum | Classical French technique and its kitchen words (mirepoix, roux, deglaze, monter au beurre, beurre blanc), without presenting the app as "French cooking". Twelve techniques in four courses (Foundations, Heat control, Sauces, Putting it together), each with levels |
 | Lessons | Written in bulk by a top Claude model into a reviewed library. One file per lesson. Never generated live in version 1 |
-| Tomi and step scenes | Printed mascot and step scenes stay code-drawn in SwiftUI. A separate native RealityKit tomato chef, built from shared geometry with no downloaded model, supplies idle, listening, thinking, explaining and celebrating states for future conversations (#94). Callers supply the state; the companion opens no microphone or AI session |
+| Tomi and step scenes | Printed mascot and step scenes stay code-drawn in SwiftUI. A separate native RealityKit tomato chef, built from shared geometry with no downloaded model, supplies idle, listening, thinking, explaining and celebrating states for conversations and for onboarding (#94, #15). Callers supply the state; the companion opens no microphone or AI session |
 | Onboarding | Nine screens: welcome, diet, things to avoid, cuisines, kitchen, experience and weekly goal, table and units, camera primer, done. Notifications are asked at the first timer, the cupboard at the first scan |
 | Cuisines | Love, happy to try, or never, from day one. "Never" hides those dishes, including alternatives. Cuisines never gate skills. More arrive later as "guest menus" |
 | Pantry | Saved cupboard staples, switchable per evening, plus typing anything the photo missed |
@@ -86,6 +86,8 @@ The debug gallery also opens the animated 3D companion (#94). `TomiCompanion` ac
 `CompanionState`, a side-view choice and an optional Reduce Motion override. Its RealityKit rig
 uses elapsed render time, pauses when hidden or inactive, and shows distinct still poses when
 Reduce Motion is enabled. The printed mascot and its remaining mood work (#11) stay separate.
+Onboarding uses it too: the welcome shows it idle and the diet question explaining, through one
+`CompanionHost` per flow and a `CompanionSlot` on each screen (#15).
 See [the companion handoff](design/companion.md) for the forms, motion and inspection steps.
 
 ### From fridge photo to tonight's special

@@ -1,6 +1,6 @@
 # Tomi's animated companion
 
-Issue #94 adds a native 3D character for future cooking conversations. The printed mascot, its
+Issue #94 adds a native 3D character for cooking conversations; onboarding (#15) also shows it. The printed mascot, its
 remaining moods (#11), and the lesson scenes stay separate. The approved `round3.html` tomato
 chef supplies the identity: tomato-red body, cobalt facial features, periwinkle leaves, cream
 three-lobed toque, small hands and feet. Rounded shared geometry and matte materials give the
@@ -42,3 +42,11 @@ motion live in the simulator; screenshots show expressions and layout, not anima
 
 Tests cover gallery navigation, state and depth controls, rendered character presence, largest
 text, distinct still poses, reduced/inactive/hidden motion policy, pose changes and expression.
+
+## In onboarding
+
+Onboarding screens do not create a `TomiCompanion` each. A screen places a `CompanionSlot` (state and side,
+sizes in `MascotSize`) and the flow draws one companion with `CompanionHost` at the slot, so the same
+RealityView stays alive from the welcome to the diet question. Creating a new one just as the previous one
+went away left it blank for about five seconds in the simulator. A screen with no slot leaves it invisible.
+The welcome uses idle at the larger size; the diet greeting speaks, so it uses explaining at the smaller size.
