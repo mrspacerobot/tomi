@@ -3,7 +3,7 @@ import OSLog
 /// Speaks with the first choice, and with the fallback when the first choice cannot, so Tomi is never silent.
 /// Every line tries the first choice again, because a failure such as a model not yet loaded can pass.
 final class FallbackSpeaker: Speaker {
-    nonisolated private static let logger = Logger(subsystem: "com.mrspacerobot.tomi", category: "voice")
+    nonisolated private static let logger = Logger(category: .voice)
     private let primary: any Speaker
     private let fallback: any Speaker
 

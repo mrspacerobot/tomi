@@ -115,7 +115,7 @@ A person should understand any function without scrolling and any file without a
 - **Names say what, comments say why.** No abbreviations, no commented-out code, no TODO without an issue number.
 - **No force unwraps, `try!` or `fatalError` in app code.** Handle the failure and show Tomi's words for it from the string catalog. Tests may force unwrap.
 - **No `print`.** Use `Logger`. Never log photos, ingredients or chat text.
-- **No magic strings.** A string that code compares, sorts or looks up by is an enum, a typed id or a constant, never a literal typed at the point of use. A value that must be the same everywhere is written once: the logging subsystem comes from the bundle identifier (`Logger(category:)`), never from a typed copy. Only text for the cook (string catalog) and test fixtures may be literals.
+- **No magic strings.** A string that code compares, sorts or looks up by is an enum, a typed id or a constant, never a literal typed at the point of use. A value that must be the same everywhere is written once: the logging subsystem comes from the bundle identifier and the category from `LogCategory` (`Logger(category: .voice)`), never from a typed copy, and SwiftLint fails the build on `Logger(subsystem:` outside `Tomi/Logger+Tomi.swift`. Only text for the cook (string catalog) and test fixtures may be literals.
 - **Formatting is not a matter of taste:** `xcrun swift-format format --in-place --recursive Tomi TomiTests TomiUITests Packages/TomiCore` settles it.
 
 ## Modern Swift and SwiftUI

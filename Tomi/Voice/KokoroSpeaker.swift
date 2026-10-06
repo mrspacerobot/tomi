@@ -5,7 +5,7 @@ import TomiCore
 /// Speaks with Kokoro, a neural voice that runs on the phone. It is the voice Tomi is meant to have.
 /// A line is spoken a sentence at a time: the first plays while the next is still being made.
 final class KokoroSpeaker: Speaker {
-    nonisolated private static let logger = Logger(subsystem: "com.mrspacerobot.tomi", category: "voice")
+    nonisolated private static let logger = Logger(category: .voice)
     private let voice: String
     private let manager: KokoroAneManager
     private let player = SpeechPlayer()

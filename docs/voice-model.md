@@ -20,6 +20,25 @@ so speech works with no network.
 Without the fetched files the app still works: the engine downloads them when it can, and otherwise
 the system voice speaks.
 
+## When it is fetched, cached and built in
+
+- **Fetched:** only by `scripts/fetch-voice-model.sh`. `./scripts/check.sh` runs it first, so it runs on your
+  Mac before a pull request and again in the "Check" on every pull request. Xcode never runs it: before the
+  first build in Xcode, and before an archive for the App Store, run it by hand.
+- **Cached:** the download lands in `~/Library/Caches/Tomi/voice-model`, outside the checkout. The "Check"
+  runs on the owner's Mac, so its cache stays between runs and nothing is downloaded again. Every run still
+  compares all files with the manifest and copies them into the app folder, which takes a second or two.
+- **Built into the app:** yes. Whatever is in `Tomi/Resources/Voice/Models` when Xcode builds goes into the
+  app, and the phone downloads nothing. A unit test (`theShippedAppCarriesEveryFileOfTheLayout`) fails when
+  the built app lacks a file, so a green check proves the model is inside. An archive made without a check
+  is not guarded: if the folder is empty the app still builds, and the phone then downloads the model or
+  falls back to the system voice. There is no release workflow yet; when there is one, it runs the script
+  and the check before it archives.
+- **When to update:** nothing tells us, on purpose. The revision is pinned, so the model changes only when
+  a person changes it. Two reasons to do so: FluidAudio is moved to a new version that expects other files
+  (its version is pinned too, in the project), or FluidInference publishes a better conversion we want.
+  Either way follow "Updating the model" below and listen to the result before it ships.
+
 ## Changing the engine
 
 `voice.json` names the engine (`kokoro` or `system`) and the voice. `VoiceEngine` lists the engines and

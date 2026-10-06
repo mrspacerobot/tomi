@@ -25,31 +25,35 @@ final class VoiceTryoutModel {
         await say(line)
     }
 
-    /// A second line stops the first, and the first then returns while the second is still being said.
-    /// Only the latest request may say that Tomi has stopped speaking.
+    /// A second line stops the first, and the first then returns, or fails, while the second is still being said.
+    /// Only the latest request may say that Tomi has stopped speaking or could not speak.
     func say(_ line: String) async {
         latestRequest += 1
         let mine = latestRequest
         isSpeaking = true
         didFail = false
-        await trySpeaking(line)
-        if mine == latestRequest {
-            isSpeaking = false
+        let failed = await failsToSpeak(line)
+        guard mine == latestRequest else {
+            return
         }
+        didFail = failed
+        isSpeaking = false
     }
 
     func stop() {
         speaker.stop()
     }
 
-    private func trySpeaking(_ line: String) async {
+    /// A line that was cancelled did not fail: the cook, or the next line, asked for it to stop.
+    private func failsToSpeak(_ line: String) async -> Bool {
         do {
             try await speaker.speak(line)
             remember(line)
+            return false
         } catch is CancellationError {
-            return
+            return false
         } catch {
-            didFail = true
+            return true
         }
     }
 

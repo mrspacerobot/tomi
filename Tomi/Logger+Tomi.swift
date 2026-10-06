@@ -8,6 +8,7 @@ enum LogCategory: String {
     case persistence
     case preview
     case progress
+    case voice
 }
 
 extension Logger {

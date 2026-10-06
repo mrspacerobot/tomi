@@ -1,9 +1,9 @@
 /// A speaker for previews and tests. It says nothing aloud and remembers what it was asked to say.
-/// With `holdsLines` on, a line is not finished until the test calls `finishOldestLine()`.
+/// With `holdsLines` on, a line is not finished until the test calls `finishOldestLine()` or `failOldestLine(with:)`.
 final class FakeSpeaker: Speaker {
     private(set) var spoken: [String] = []
     private(set) var stopCount = 0
-    private var held: [CheckedContinuation<Void, Never>] = []
+    private var held: [CheckedContinuation<Void, any Error>] = []
     var failure: (any Error)?
     var holdsLines = false
 
@@ -17,7 +17,7 @@ final class FakeSpeaker: Speaker {
         }
         spoken.append(line)
         if holdsLines {
-            await withCheckedContinuation { held.append($0) }
+            try await withCheckedThrowingContinuation { held.append($0) }
         }
     }
 
@@ -30,5 +30,12 @@ final class FakeSpeaker: Speaker {
             return
         }
         held.removeFirst().resume()
+    }
+
+    func failOldestLine(with error: any Error) {
+        guard !held.isEmpty else {
+            return
+        }
+        held.removeFirst().resume(throwing: error)
     }
 }

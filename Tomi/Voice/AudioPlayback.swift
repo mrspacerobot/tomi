@@ -4,7 +4,7 @@ import OSLog
 /// Sets the phone up to play speech, so it is heard in silent mode, and gives the audio back afterwards.
 /// Music keeps playing, quieter, while Tomi talks. A podcast or audiobook pauses and carries on when Tomi is done.
 enum AudioPlayback {
-    nonisolated private static let logger = Logger(subsystem: "com.mrspacerobot.tomi", category: "voice")
+    nonisolated private static let logger = Logger(category: .voice)
 
     static func prepare() throws {
         let session = AVAudioSession.sharedInstance()

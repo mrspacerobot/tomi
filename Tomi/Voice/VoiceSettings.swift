@@ -4,7 +4,7 @@ import OSLog
 /// Which engine and which voice Tomi speaks with. It is data in a file, not a constant in code,
 /// so another voice or another engine is a data change.
 nonisolated struct VoiceSettings: Decodable, Equatable {
-    private static let logger = Logger(subsystem: "com.mrspacerobot.tomi", category: "voice")
+    private static let logger = Logger(category: .voice)
     let engine: VoiceEngine
     /// The name the engine knows the voice by. The system engine uses the phone's default voice and ignores it.
     let voice: String
