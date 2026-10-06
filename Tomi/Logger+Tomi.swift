@@ -3,6 +3,7 @@ import OSLog
 
 /// The parts of the app that log, so a category is never typed twice and never misspelled.
 enum LogCategory: String {
+    case companion
     case library
     case persistence
     case preview

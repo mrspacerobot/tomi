@@ -13,11 +13,9 @@ struct OnboardingFlow: View {
                 OnboardingHeader(completed: model.progressCompleted, back: model.back)
             }
             screen
+                .companionHost(identifier: "onboarding-companion")
             if model.couldNotSave {
-                Text(.onboardingSaveFailed)
-                    .textStyle(.description, color: .stampRed)
-                    .padding(Spacing.screenMargin)
-                    .accessibilityIdentifier("onboarding-save-failed")
+                OnboardingSaveFailed()
             }
         }
         .background(ColorRole.paper.color)

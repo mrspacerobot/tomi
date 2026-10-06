@@ -26,4 +26,28 @@ final class OnboardingUITests: XCTestCase {
 
         XCTAssertTrue(app.staticTexts["onboarding-avoid-title"].waitForExistence(timeout: 5))
     }
+
+    @MainActor
+    func testTheWelcomeShowsTheRenderedCompanion() {
+        let app = XCUIApplication.launchedAsNewCook()
+
+        let companion = app.otherElements["onboarding-companion"]
+        XCTAssertTrue(companion.waitForExistence(timeout: 5))
+        XCTAssertTrue(companion.waitForTomato())
+    }
+
+    @MainActor
+    func testTheCompanionStaysAndMovesBesideTheDietGreeting() {
+        let app = XCUIApplication.launchedAsNewCook()
+        let companion = app.otherElements["onboarding-companion"]
+        XCTAssertTrue(companion.waitForTomato())
+        let welcomeSize = companion.frame.width
+
+        app.buttons["onboarding-start"].tap()
+
+        XCTAssertTrue(app.staticTexts["onboarding-diet-title"].waitForExistence(timeout: 5))
+        XCTAssertTrue(companion.waitForTomato())
+        XCTAssertLessThan(companion.frame.width, welcomeSize)
+        XCTAssertLessThan(companion.frame.maxY, app.staticTexts["onboarding-diet-title"].frame.minY)
+    }
 }

@@ -12,6 +12,11 @@ extension Bundle {
         try fixture(file: "ingredients.json", contents: ingredients)
     }
 
+    /// A throwaway bundle holding the given equipment list file, or none.
+    static func fixture(equipment: Data?) throws -> Bundle {
+        try fixture(file: "equipment.json", contents: equipment)
+    }
+
     /// A throwaway bundle holding these files side by side, as the app's flat bundle does.
     /// Each call gets a fresh folder, because Foundation caches bundles by path.
     static func fixture(files: [String: Data]) throws -> Bundle {

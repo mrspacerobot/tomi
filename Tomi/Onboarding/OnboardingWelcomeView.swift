@@ -6,11 +6,7 @@ struct OnboardingWelcomeView: View {
 
     var body: some View {
         VStack(spacing: Spacing.large) {
-            Spacer()
-            OnboardingWelcomeText()
-            Spacer()
-            Text(.onboardingWelcomeHint)
-                .textStyle(.description)
+            OnboardingWelcomeReading()
             Button(action: start) {
                 Text(.onboardingWelcomeStart)
             }

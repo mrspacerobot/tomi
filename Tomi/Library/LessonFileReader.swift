@@ -2,14 +2,13 @@ import Foundation
 import OSLog
 import TomiCore
 
-/// Reads lesson files against one catalog and one ingredient table.
+/// Reads lesson files against the lists of one library: its catalog, ingredient table and equipment list.
 /// A file that cannot be read, fails validation or is named after another lesson is skipped and logged:
 /// one bad lesson must never stop the app or reach a cook.
 nonisolated struct LessonFileReader {
     private static let logger = Logger(category: .library)
 
-    let catalog: SkillCatalog
-    let table: IngredientTable
+    let lists: LibraryLists
 
     /// The lessons of the files that are fit to serve, sorted by lesson id.
     func lessons(at files: [URL]) -> [Lesson] {
@@ -26,7 +25,7 @@ nonisolated struct LessonFileReader {
     func lesson(at file: URL) -> Lesson? {
         let name = file.lastPathComponent
         do {
-            let lesson = try Lesson.decode(from: Data(contentsOf: file), catalog: catalog, table: table)
+            let lesson = try Lesson.decode(from: Data(contentsOf: file), lists: lists)
             return lessonIfNamedByItsID(lesson, fileName: name)
         } catch {
             let reason = String(describing: error)
