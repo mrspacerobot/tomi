@@ -1,5 +1,5 @@
 /// One dish that teaches one level of one technique.
-/// It is content, not code: one file per lesson in the lesson library, read with `decode(from:catalog:table:)`.
+/// It is content, not code: one file per lesson in the lesson library, read with `decode(from:lists:)`.
 /// Diets and avoid items are not fields: `tags(in:)` works them out from the ingredient table.
 public struct Lesson: Identifiable, Hashable, Codable, Sendable {
     /// The lesson layout this build understands. Bump it, and the validator, when the layout changes.

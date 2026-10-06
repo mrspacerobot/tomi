@@ -2,12 +2,12 @@ import Foundation
 
 extension Lesson {
     /// Reads a lesson file and accepts it only if this build understands its layout and it passes validation
-    /// against the skill catalog and the ingredient table of the same library.
-    public static func decode(from data: Data, catalog: SkillCatalog, table: IngredientTable) throws -> Lesson {
+    /// against the lists of the same library: the skill catalog, the ingredient table and the equipment list.
+    public static func decode(from data: Data, lists: LibraryLists) throws -> Lesson {
         try checkSchemaVersion(of: data)
         _ = try JSONDecoder().decode(LessonFieldCheck.self, from: data)
         let lesson = try JSONDecoder().decode(Lesson.self, from: data)
-        let issues = lesson.issues(catalog: catalog, table: table)
+        let issues = lesson.issues(in: lists)
         guard issues.isEmpty else {
             throw LessonError.invalid(lesson.id, issues)
         }
