@@ -9,12 +9,26 @@ enum LibraryFixture {
     static let omelette: LessonID = "spinach-hard-cheese-omelette"
     static let searedChicken: LessonID = "seared-chicken-lemon-butter-pan-sauce"
 
-    /// A bundle with the shipped catalog and ingredient table, and these lesson files by file name.
+    static let catalogFile = "catalog.json"
+    static let ingredientTableFile = "ingredients.json"
+    static let equipmentListFile = "equipment.json"
+
+    /// A bundle with the shipped catalog, ingredient table and equipment list, and these lesson files by file name.
     static func bundle(lessonFiles: [String: Data]) throws -> Bundle {
-        var files = lessonFiles
-        files["catalog.json"] = try BundledLibrary.catalogData()
-        files["ingredients.json"] = try BundledLibrary.ingredientTableData()
+        var files = try listFiles()
+        for (name, contents) in lessonFiles {
+            files[name] = contents
+        }
         return try Bundle.fixture(files: files)
+    }
+
+    /// The three list files the app ships, by file name.
+    static func listFiles() throws -> [String: Data] {
+        [
+            catalogFile: try BundledLibrary.catalogData(),
+            ingredientTableFile: try BundledLibrary.ingredientTableData(),
+            equipmentListFile: try BundledLibrary.equipmentListData(),
+        ]
     }
 
     /// The shipped omelette, a lesson known to be valid.

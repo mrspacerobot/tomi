@@ -21,13 +21,13 @@ extension Lesson {
         swaps: []
     )
 
-    /// A valid lesson for `SkillCatalog.fixture()` and `IngredientTable.fixture()`. Each test breaks it in one way.
+    /// A valid lesson for `LibraryLists.fixture()`. Each test breaks it in one way.
     static func fixture() -> Lesson {
         fixtureLesson
     }
 
-    /// Every problem of this lesson when checked against the fixture catalog and the fixture table.
+    /// Every problem of this lesson when checked against the fixture lists.
     func issuesInTheFixtureLibrary() -> [LessonIssue] {
-        issues(catalog: .fixture(), table: .fixture())
+        issues(in: .fixture())
     }
 }

@@ -4,5 +4,6 @@ import TomiCore
 nonisolated struct FakeLessonLibrary: LessonLibrary {
     var catalog: SkillCatalog?
     var ingredientTable: IngredientTable?
+    var equipmentList: EquipmentList?
     var lessons: [Lesson] = []
 }
