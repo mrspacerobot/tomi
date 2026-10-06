@@ -12,6 +12,7 @@
                     .padding(.horizontal, Spacing.screenMargin)
                     .accessibilityAddTraits(.isHeader)
                     .accessibilityIdentifier("gallery-title")
+                GalleryCompanionLink()
                 GalleryActions(model: model)
                 GalleryDisplays(model: model)
             }

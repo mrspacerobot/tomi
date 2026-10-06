@@ -19,7 +19,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Everyday AI | Apple Foundation Models on the phone: ingredient spotting, ranking and adapting lessons, Ask Tomi, voice commands. Available in the iOS 27 simulator on the development Mac |
 | Curriculum | Classical French technique and its kitchen words (mirepoix, roux, deglaze, monter au beurre, beurre blanc), without presenting the app as "French cooking". Twelve techniques in four courses (Foundations, Heat control, Sauces, Putting it together), each with levels |
 | Lessons | Written in bulk by a top Claude model into a reviewed library. One file per lesson. Never generated live in version 1 |
-| Tomi and step scenes | Drawn and animated in SwiftUI code from shared parts, behind one small interface so a richer mascot can replace it later |
+| Tomi and step scenes | Printed mascot and step scenes stay code-drawn in SwiftUI. A separate native RealityKit tomato chef, built from shared geometry with no downloaded model, supplies idle, listening, thinking, explaining and celebrating states for future conversations (#94). Callers supply the state; the companion opens no microphone or AI session |
 | Onboarding | Nine screens: welcome, diet, things to avoid, cuisines, kitchen, experience and weekly goal, table and units, camera primer, done. Notifications are asked at the first timer, the cupboard at the first scan |
 | Cuisines | Love, happy to try, or never, from day one. "Never" hides those dishes, including alternatives. Cuisines never gate skills. More arrive later as "guest menus" |
 | Pantry | Saved cupboard staples, switchable per evening, plus typing anything the photo missed |
@@ -81,6 +81,12 @@ folder's lint configuration. `FlowCursor` holds the tested placement arithmetic.
 A debug build launched with `--component-gallery` opens a small interactive gallery for component UI tests
 and visual comparison. `--gallery-section` opens at a named section for screenshots. Release builds contain
 no gallery screen or launch-argument handling. The full gallery remains #12.
+
+The debug gallery also opens the animated 3D companion (#94). `TomiCompanion` accepts a
+`CompanionState`, a side-view choice and an optional Reduce Motion override. Its RealityKit rig
+uses elapsed render time, pauses when hidden or inactive, and shows distinct still poses when
+Reduce Motion is enabled. The printed mascot and its remaining mood work (#11) stay separate.
+See [the companion handoff](design/companion.md) for the forms, motion and inspection steps.
 
 ### From fridge photo to tonight's special
 
