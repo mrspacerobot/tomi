@@ -7,6 +7,7 @@ enum ShippedContentIDs {
     static func all() throws -> Set<String> {
         var ids = try catalogIDs()
         ids.formUnion(try ingredientTableIDs())
+        ids.formUnion(try equipmentListIDs())
         ids.formUnion(try lessonIDs())
         return ids
     }
@@ -25,6 +26,11 @@ enum ShippedContentIDs {
         ids.formUnion(table.avoidItems.map(\.id.rawValue))
         ids.formUnion(table.diets.map(\.id.rawValue))
         return ids
+    }
+
+    private static func equipmentListIDs() throws -> Set<String> {
+        let list = try ShippedEquipmentList.load()
+        return Set(list.equipment.map(\.id.rawValue))
     }
 
     private static func lessonIDs() throws -> Set<String> {

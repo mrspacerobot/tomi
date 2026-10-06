@@ -9,7 +9,7 @@ struct AppRoot: View {
 
     var body: some View {
         #if DEBUG
-            if GalleryLaunch.isRequested {
+            if GalleryLaunch.isRequested || CompanionGalleryLaunch.requested {
                 ComponentGallery()
             } else if VoiceTryoutLaunch.isRequested {
                 VoiceTryoutView(speaker: VoiceService.speaker())

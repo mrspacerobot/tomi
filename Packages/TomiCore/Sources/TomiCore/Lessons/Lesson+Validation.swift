@@ -1,16 +1,24 @@
 /// The checks a lesson must pass before a cook may see it. Every library build and every load runs them.
-/// A lesson is checked against the skill catalog and the ingredient table of the same library.
+/// A lesson is checked against the lists of the same library: the skill catalog, the ingredient table
+/// and the equipment list.
 extension Lesson {
     /// Every problem in the lesson, empty when it is fit to serve.
-    public func issues(catalog: SkillCatalog, table: IngredientTable) -> [LessonIssue] {
-        var issues = identityIssues(catalog: catalog)
+    public func issues(in lists: LibraryLists) -> [LessonIssue] {
+        var issues = identityIssues(catalog: lists.catalog)
         issues += numberIssues
-        issues += ingredientIssues(table: table)
-        issues += mainIssues
+        issues += contentIssues(in: lists)
         issues += stepIssues
         issues += quiz.issues
-        issues += swapIssues(table: table)
+        issues += swapIssues(table: lists.ingredientTable)
         issues += textIssues
+        return issues
+    }
+
+    /// What goes into the dish, what the kitchen must have, and the main food the scenes draw.
+    private func contentIssues(in lists: LibraryLists) -> [LessonIssue] {
+        var issues = ingredientIssues(table: lists.ingredientTable)
+        issues += equipmentIssues(list: lists.equipmentList)
+        issues += mainIssues
         return issues
     }
 

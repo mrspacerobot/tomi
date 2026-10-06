@@ -49,6 +49,210 @@
         }
       }
     },
+    "companion.close": {
+      "comment": "Button closing the animated companion gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to components"
+          }
+        }
+      }
+    },
+    "companion.demoNote": {
+      "comment": "Instruction beneath the character gallery controls.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick a mood, then turn Tomi to see him from the side."
+          }
+        }
+      }
+    },
+    "companion.line.celebrating": {
+      "comment": "Example caption for the celebrating character in the debug gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There it is. You did that."
+          }
+        }
+      }
+    },
+    "companion.line.explaining": {
+      "comment": "Example caption for the explaining character in the debug gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One small step. I’ll show you how."
+          }
+        }
+      }
+    },
+    "companion.line.idle": {
+      "comment": "Example caption for the idle character in the debug gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I’m right here. Let’s cook something good."
+          }
+        }
+      }
+    },
+    "companion.line.listening": {
+      "comment": "Scripted listening caption; no actual microphone runs in the gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go on. I’m listening."
+          }
+        }
+      }
+    },
+    "companion.line.thinking": {
+      "comment": "Example caption for the thinking character in the debug gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let me think that through."
+          }
+        }
+      }
+    },
+    "companion.motion.still": {
+      "comment": "Shows that the gallery respects reduced motion, while expressions remain visible.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reduced motion: still poses"
+          }
+        }
+      }
+    },
+    "companion.open": {
+      "comment": "Debug gallery button opening the animated 3D character.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meet animated Tomi"
+          }
+        }
+      }
+    },
+    "companion.state.celebrating": {
+      "comment": "Celebrating companion state control.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Well done"
+          }
+        }
+      }
+    },
+    "companion.state.explaining": {
+      "comment": "Explaining companion state control; the gallery does not play audio.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speaking"
+          }
+        }
+      }
+    },
+    "companion.state.idle": {
+      "comment": "Idle companion state control.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ready"
+          }
+        }
+      }
+    },
+    "companion.state.listening": {
+      "comment": "Listening companion state control.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening"
+          }
+        }
+      }
+    },
+    "companion.state.thinking": {
+      "comment": "Thinking companion state control.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thinking"
+          }
+        }
+      }
+    },
+    "companion.subtitle": {
+      "comment": "Introduction to the animated companion gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The same tomato chef. A little depth, a lot of expression."
+          }
+        }
+      }
+    },
+    "companion.title": {
+      "comment": "Title of the animated Tomi gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A little more alive."
+          }
+        }
+      }
+    },
+    "companion.turn": {
+      "comment": "Gallery control switching between front and three-quarter inspection views.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn Tomi"
+          }
+        }
+      }
+    },
     "gallery.button.taps": {
       "comment": "Debug component gallery only, never shown to a cook. How often the buttons above were tapped. The placeholder is the count.",
       "extractionState": "manual",

@@ -13,27 +13,28 @@ import TomiCore
 
     /// Strict decoding throws with the reason, so an invalid shipped lesson fails here by name.
     @Test func everyShippedLessonFileIsValidAndNamedByItsID() throws {
-        let catalog = try #require(BundledLibrary.catalog())
-        let table = try #require(BundledLibrary.ingredientTable())
+        let lists = try #require(BundledLibrary.lists())
         let files = BundledLibrary.lessonFiles()
         #expect(files.count == BundledLessonLibrary().lessons.count)
         for file in files {
-            let lesson = try Lesson.decode(from: Data(contentsOf: file), catalog: catalog, table: table)
+            let lesson = try Lesson.decode(from: Data(contentsOf: file), lists: lists)
             #expect(file.lastPathComponent == lesson.fileName)
         }
     }
 
-    @Test func theCatalogAndTheIngredientTableAreNotTakenForLessons() {
+    @Test func theListsOfTheLibraryAreNotTakenForLessons() {
         let names = BundledLibrary.lessonFiles().map(\.lastPathComponent)
-        #expect(!names.contains("catalog.json"))
-        #expect(!names.contains("ingredients.json"))
+        #expect(!names.contains(LibraryFixture.catalogFile))
+        #expect(!names.contains(LibraryFixture.ingredientTableFile))
+        #expect(!names.contains(LibraryFixture.equipmentListFile))
         #expect(names.allSatisfy { $0.hasSuffix(".lesson.json") })
     }
 
-    @Test func theLibraryServesTheSameCatalogAndTableAsTheBundle() {
+    @Test func theLibraryServesTheSameListsAsTheBundle() {
         let library = BundledLessonLibrary()
         #expect(library.catalog == BundledLibrary.catalog())
         #expect(library.ingredientTable == BundledLibrary.ingredientTable())
+        #expect(library.equipmentList == BundledLibrary.equipmentList())
     }
 
     @Test func everyShippedLessonUsesOnlyIngredientsOfTheShippedTable() throws {

@@ -11,7 +11,8 @@ import Testing
         #expect(ids.contains(ShippedLessons.omelette))
     }
 
-    /// Decoding validates: an unknown ingredient, scene, skill or level in any shipped file fails here.
+    /// Decoding validates: an unknown ingredient, piece of equipment, scene, skill or level in any shipped file
+    /// fails here.
     @Test func everyShippedLessonIsValid() throws {
         for file in try ShippedLessons.files() {
             #expect(throws: Never.self, "\(file.lastPathComponent)") {
@@ -44,18 +45,6 @@ import Testing
                     try lesson.applying(swap).tags(in: table)
                 }
             }
-        }
-    }
-
-    /// Equipment is an id with no list in the library yet (#86), so nothing else would catch a mistyped one:
-    /// the lesson would ask for something no kitchen has and never be shown.
-    @Test func everyShippedLessonAsksOnlyForEquipmentOfTheKitchenScreen() throws {
-        let kitchenScreen: Set<EquipmentID> = [
-            "stovetop", "oven", "microwave", "thermometer", "blender", "rice-cooker",
-        ]
-        for file in try ShippedLessons.files() {
-            let lesson = try ShippedLessons.lesson(at: file)
-            #expect(lesson.equipment.isSubset(of: kitchenScreen), "\(lesson.id.rawValue)")
         }
     }
 }

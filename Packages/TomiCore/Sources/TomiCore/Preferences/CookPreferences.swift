@@ -12,7 +12,7 @@ public struct CookPreferences: Hashable, Codable, Sendable {
     public var avoid: Set<AvoidItemID> = []
     public var cuisines = CuisinePreferences()
     /// The equipment the cook ticked, or nil while they have not answered:
-    /// then `equipment(assumingUntilChosen:)` follows what the library says a kitchen has.
+    /// then `equipment(assumingUntilChosen:)` follows what the library's equipment list says a kitchen has.
     public var chosenEquipment: Set<EquipmentID>?
     public var experience = Experience.basics
     /// People at the table most nights. Change it with `setServings`, which keeps it at one or more.
@@ -34,12 +34,13 @@ public struct CookPreferences: Hashable, Codable, Sendable {
         return Units.standard(for: locale)
     }
 
-    /// What the cook's kitchen has: their own answer, or the library's standard kitchen until they give one.
-    public func equipment(assumingUntilChosen standardKitchen: Set<EquipmentID>) -> Set<EquipmentID> {
+    /// What the cook's kitchen has: their own answer, or the standard kitchen of the library's equipment list
+    /// until they give one.
+    public func equipment(assumingUntilChosen list: EquipmentList) -> Set<EquipmentID> {
         if let chosenEquipment {
             return chosenEquipment
         }
-        return standardKitchen
+        return list.standardKitchen
     }
 
     public mutating func setServings(_ servings: Int) {
