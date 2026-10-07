@@ -1,6 +1,6 @@
 # Tomi for iPhone: implementation plan
 
-Status on 2 October 2026: design approved (direction "Tasting menu"), project scaffold built, Phase 0 partly done. This document is the build plan. Product background and business reasoning are in [plan.md](plan.md). Coding rules are in [../AGENTS.md](../AGENTS.md). Mockups are in [design/](design/).
+Status on 8 October 2026: the product direction is a backend-led iOS client with a Rust service. The existing app and TomiCore still implement parts of the earlier local-first plan; the migration below is planned, not built. [backend-spec.md](backend-spec.md) defines what Rust replaces, data and API ownership, release gates and migration. Product background is in [plan.md](plan.md), coding rules are in [../AGENTS.md](../AGENTS.md), and mockups are in [design/](design/).
 
 ## Goal
 
@@ -15,8 +15,8 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Dependencies | No third-party dependencies in the app |
 | Project | A standard Xcode project committed to git, with synchronized folders |
 | Pull request evidence | Every PR uses `.github/pull_request_template.md`. UI tasks embed current screenshots of the running app in light and dark; capture or posting blockers keep the PR in draft. Capture and posting instructions are in `agent-on-pull-requests.md` |
-| Test phone | iPhone 15 Pro or newer (Apple Intelligence) |
-| Everyday AI | Apple Foundation Models on the phone: ingredient spotting, ranking and adapting lessons, Ask Tomi, voice commands. Available in the iOS 27 simulator on the development Mac |
+| Test phone | iPhone 15 Pro or newer for current device features; the backend-led flow must also work without Apple Intelligence |
+| Everyday AI | The backend owns ingredient resolution, lesson ranking and adaptation, and Ask Tomi answers. Photo and voice processing stay on the phone under the current privacy rule until a separate owner decision changes it. Typed entry always works |
 | Curriculum | Classical French technique and its kitchen words (mirepoix, roux, deglaze, monter au beurre, beurre blanc), without presenting the app as "French cooking". Twelve techniques in four courses (Foundations, Heat control, Sauces, Putting it together), each with levels |
 | Lessons | Written in bulk by a top Claude model into a reviewed library. One file per lesson. Never generated live in version 1 |
 | Tomi and step scenes | Printed mascot and step scenes stay code-drawn in SwiftUI. A separate native RealityKit tomato chef, built from shared geometry with no downloaded model, supplies idle, listening, thinking, explaining and celebrating states for future conversations (#94). Callers supply the state; the companion opens no microphone or AI session |
@@ -24,12 +24,12 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Cuisines | Love, happy to try, or never, from day one. "Never" hides those dishes, including alternatives. Cuisines never gate skills. More arrive later as "guest menus" |
 | Pantry | Saved cupboard staples, switchable per evening, plus typing anything the photo missed |
 | Unsure ingredients | Not counted until the cook confirms them |
-| Backend | Local first. iCloud (CloudKit) sync, a hosted signed lesson library, and one small Go service for anonymous ratings and usage events, all switched on before TestFlight. Own accounts and sync only if Android or web arrives |
+| Backend | Rust serves the Tomi API and indexes the private cooking graph's versioned JSON release artifact. It owns reviewed library delivery, matching, ranking, adaptation, canonical cook events, progress, ratings and opt-in leaderboards. The phone keeps a small independent safety guard and a reviewed offline lesson bundle. The graph reader can split into a private service only when measured need justifies it |
 | Languages | English first. All text in a string catalog |
 | Plate photo | Optional, offered on the celebration card ("Show me the plate"). The streak day, XP and stamp are earned by finishing the lesson, never by the photo. Tomi makes one warm remark about what the technique should show, never a score and never a claim that the dish is cooked through or safe. The photo is kept with the dish on the menu and stays on the phone. Without Apple Intelligence it is kept with no remark. Mockup: `round3.html`, `lp-plate` |
 | Streak and rank | The streak is the everyday hook and leads on home; rank is the slow, long goal behind it |
 | Weekly streak | The cook sets a goal of 1 to 7 cooking days a week (default 3). The streak counts consecutive weeks with the goal met. Days, not cooks, so two lessons in one evening count once. The week in progress never breaks the streak, and each week is judged by the goal recorded with its cooks, so raising the goal never wipes an earned streak. Weeks follow the phone's calendar. The goal is asked on the experience screen (`ob-level`) and can be changed in Settings |
-| Rank ladder | Novice, Commis, Cook, Saucier, Sous, Chef, Patron, Toque at 0, 150, 400, 900, 1,800, 3,300, 6,000 and 11,000 XP: Commis in the first week, Toque after about a year at three or four cooks a week. Then open-ended: Toque II, III and on, every 3,000 XP, about one a season. All in `GameRules` |
+| Rank ladder | Novice, Commis, Cook, Saucier, Sous, Chef, Patron, Toque at 0, 150, 400, 900, 1,800, 3,300, 6,000 and 11,000 XP: Commis in the first week, Toque after about a year at three or four cooks a week. Then open-ended: Toque II, III and on, every 3,000 XP, about one a season. Currently in `GameRules`; the Rust service takes over with versioned rules after parity is proven |
 
 ### Open decisions (default used until the owner decides)
 
@@ -40,29 +40,35 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | "I stopped early" | Does not count toward the streak |
 | Hands-free mode | Keeps a slim Next button so touch always works |
 | Onboarding extras | Weeknight time budget is not asked |
+| Photo and voice upload | Current rule keeps photos, chat and voice on the phone. Any remote vision or speech path needs an explicit owner decision, updated privacy rule and tests before implementation |
 
 ## Architecture
 
-Three layers:
+Target responsibilities:
 
-1. **Screens** (SwiftUI): onboarding, home and menu, scan, lesson player, Ask Tomi, profile and settings.
-2. **App services**: ProgressStore (SwiftData), LessonLibrary, TomiAI (Foundation Models), Voice (speech in and out), Timers (AlarmKit). Each sits behind a protocol with a fake for previews and tests.
-3. **TomiCore** (plain Swift package): skill catalog schema and validator, progress rules, lesson schema, lesson matcher, ingredient table, safety table. Shared with the lesson generator.
+1. **Screens** (SwiftUI) present backend responses, collect corrections and play reviewed lessons. They make no matching or adaptation decisions.
+2. **App services** handle the gateway client, local cache and outbox, camera, voice and timers behind protocols with deterministic fakes.
+3. **TomiCore** decodes versioned responses and reviewed offline content and performs a small, independent fail-closed check of ingredient facts, diets, avoid items and swaps before display. It does not choose or rank online lessons.
+4. **Rust Tomi service** owns the cook-facing API, identity, confirmed ingredient resolution, lesson selection, ranking, adaptation, canonical cook events, progress and ratings. It publishes a versioned reviewed library and rejects unknown restrictions.
+5. **Private graph reader** indexes a versioned JSON release artifact for the Tomi service. It can become a separate private service if measured need warrants it. The graph's [serving plan](https://github.com/mrspacerobot/cooking-graph/blob/40e1b8f/docs/serving-plan.md) defines draft and production channels; draft graph content cannot reach a release app.
+
+The current `ProgressStore`, `LessonLibrary` and TomiCore rules remain in use until each replacement has a tested end-to-end path. Do not delete their tests or change saved fields as part of this planning change.
 
 ```
 Tomi.xcodeproj
 Tomi/                  app target
   DesignSystem/        tokens (ColorRole and Tokens.xcassets, TextStyle, Spacing, Radius, RuleWeight), components, TomiMascot
   Onboarding/ Home/ Menu/ Scan/ Player/ Scenes/ AskTomi/ Voice/ Settings/
-  AI/                  Foundation Models implementations
+  AI/                  current on-device implementations; migrate feature by feature
+  Backend/             gateway client and response decoding (to be built)
   Persistence/         SwiftData records, ProgressStore (protocol), SwiftDataProgressStore, InMemoryProgressStore
   Progress/            the saved progress the screens read (ProgressSummaryReader, SavedProgressModel)
   Library/             LessonLibrary (protocol), BundledLessonLibrary over the file reader BundledLibrary, FakeLessonLibrary
   Resources/           Assets, fonts, Localizable.xcstrings, Library/ (catalog.json, ingredients.json, equipment.json, lessons/<skill>/<lesson id>.lesson.json)
 Config/                Tomi-Info.plist: the Info.plist keys that have no build setting (the bundled fonts)
 TomiTests/ TomiUITests/
-Packages/TomiCore/     rules, schema, generator, tests
-server/                Go service (later)
+Packages/TomiCore/     current rules and schema; retain local safety guard and offline decoding
+server/                Rust Tomi service (to be built)
 docs/ prototype/
 ```
 
@@ -90,17 +96,30 @@ See [the companion handoff](design/companion.md) for the forms, motion and inspe
 
 ### From fridge photo to tonight's special
 
-1. Photo (or typed list).
-2. On-device model returns a typed ingredient list.
-3. The cook confirms: fridge items, unsure items, cupboard staples, anything typed.
-4. Code filters the library by unlocked skill, diet, things to avoid, cuisine "never", equipment, ingredients.
-5. On-device model ranks the short list and applies listed swaps and servings.
-6. Code re-checks the result against the safety table and the avoid list.
-7. The special appears on home with up to two alternatives.
+1. A photo produces **observed labels** on the phone under the current privacy rule, or the cook types labels. Labels include uncertainty and are not ingredient ids.
+2. The cook confirms what is present. The gateway resolves each confirmed label to candidate ingredient ids and its basis; it never silently selects an ambiguous id. The cook confirms the exact id.
+3. The Rust service receives confirmed ids, restrictions, skill context and equipment. It selects and ranks reviewed lessons, applies only reviewed adaptations, and returns versioned candidates with provenance and ingredient facts.
+4. TomiCore independently rejects a candidate if the local reviewed safety data is missing, stale, incompatible, or conflicts with a restriction. It checks the final ingredients after every adaptation. Rejected candidates are not shown.
+5. The app displays the eligible special and alternatives. If the gateway is unavailable, it offers a reviewed bundled lesson or a retry; it never treats an unknown ingredient as allowed.
 
-Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replaced by ranking on ingredient overlap.
+The graph service receives ids and context from the gateway, not photos, audio or chat. The current graph is draft with unverified safety records and cannot supply cook-facing results. Typed entry and the offline bundle work on phones without Apple Intelligence.
+
+### Data ownership and migration
+
+| Data or decision | Target owner | Device responsibility |
+|---|---|---|
+| Observed photo labels and raw photo/voice | Device under the current privacy rule | Capture, recognize, let the cook correct; do not upload |
+| Confirmed ingredient ids and restrictions | Gateway for an opted-in request; canonical profile owner is a later identity decision | Collect, send only what the request needs, preserve restrictions and fail closed |
+| Graph claims and recipe relationships | Cooking graph authoring repository and reviewed release artifact | Never consume a draft artifact |
+| Lesson selection, ranking and adaptation | Gateway | Present candidates only after independent local safety check |
+| Reviewed lesson and safety snapshot | Gateway publishes a signed, versioned bundle | Keep a compatible reviewed bundle for offline use and reject unknown versions |
+| Cook log and computed progress | Rust service target; current SwiftData remains until migration | Queue offline cook events with stable ids; show only reconciled results when online |
+
+Move in small slices: (1) define versioned request/response fixtures and the local safety acceptance test; (2) add a fake-backed service client and drive one typed-list-to-special UI flow through it; (3) publish a reviewed library snapshot and wire the offline fallback; (4) migrate cook log and progress with idempotent event replay; (5) add photo and voice paths under the recorded privacy decision. Each slice keeps the current behavior working until its replacement passes UI and contract tests. Issues #34, #37, #39, #40, #41, #47, #48 and #46 need replanning against these boundaries.
 
 ## Lesson library
+
+The files and validators below describe the current bundled library. The Rust service will publish reviewed, versioned library and safety snapshots as specified in [backend-spec.md](backend-spec.md); the app keeps compatible reviewed lessons for offline cooking.
 
 - The skill catalog is part of the library, not the app: `catalog.json` holds courses, skills, prerequisites, levels and their names, with a schema version and a library version. A new technique or level ships with the library, without an app release. The validator checks at least one course, ids that are not blank and are unique, known and non-empty courses, prerequisites that exist and come earlier on the menu, levels numbered 1 to n, and English text everywhere.
 - Each skill has levels, from the first version of the technique to the hardest (roux: white for béchamel, blond for velouté, brown). A level is complete after two finished cooks at it (`GameRules.cooksToCompleteLevel`), and the next level opens once every level before it is complete.
@@ -127,6 +146,8 @@ Without Apple Intelligence: step 2 is skipped (typed list) and step 5 is replace
 
 ## Saved data
 
+This section describes the current SwiftData implementation and its safe migration inputs. The Rust service's target records and ownership are in [backend-spec.md](backend-spec.md). Do not switch the authoritative store or remove local records until cook events and restrictions reconcile across devices.
+
 The store is SwiftData, behind the `ProgressStore` protocol (`Tomi/Persistence`). Screens see only the protocol; `SwiftDataProgressStore` is the store on the phone, `InMemoryProgressStore` the fake for previews and tests, and `UnavailableProgressStore` the one Tomi holds when the real store could not be opened.
 
 The stored records and their fields. These names, and the names of the three record types, are permanent once released: fields are added, never renamed, removed or reused. Every field is optional and nothing is unique.
@@ -149,7 +170,7 @@ Saved data fails closed. When the store cannot be opened or read, every call of 
 
 Conflicting copies with the same newest timestamp and stable id have no unambiguous newest record. A profile then asks for ordinary answers again while keeping every saved diet and avoid restriction; a conflicting lesson bookmark is not resumed. Identical copies still read as one record. Neither answer depends on the order the copies arrive in.
 
-iCloud sync is not switched on yet (phase 9). The store is opened with CloudKit off; the records are already laid out for it.
+iCloud sync is not switched on. The current store opens with CloudKit off and its records were laid out for iCloud. The target canonical store is the Rust service; existing records must be reconciled before that ownership changes.
 
 For UI tests, launch arguments choose the store: `--store-in-memory` starts with an empty store in memory, `--store-ui-test-file` keeps the store in a file of its own between launches, `--store-unavailable` starts as if the store could not be opened, `--store-ui-test-unwritable-file` asks SwiftData for a file it cannot create, and `--seed-known-state` empties the store and fills it with a known state built from the menu (`KnownState`). Seeding is ignored for the cook's own store. A requested file that SwiftData changes to memory is refused, even when its configuration already says memory before the container opens.
 
@@ -176,7 +197,7 @@ Each phase ends with something runnable. GitHub milestones mirror these.
 | 7 | Ask Tomi | Safety questions are always answered from the table, in any phrasing tried. Tomi remarks on a plate photo without ever judging doneness |
 | 8 | Hands-free voice | A lesson can be finished without touching the phone, with an extractor fan running |
 | B | Milestone | Everything in the README works on device |
-| 9 | Sync, backend, proof and polish | iCloud sync, hosted library and ratings service are live, a friend installs from TestFlight and cooks dinner |
+| 9 | Sync, backend, proof and polish | The Rust service owns reviewed content, canonical cook events, progress and ratings; existing local records migrate without loss, offline cooking reconciles, and a friend cooks from TestFlight |
 
 ## Verification
 
