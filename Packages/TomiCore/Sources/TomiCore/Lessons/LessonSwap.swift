@@ -1,6 +1,5 @@
-/// A reviewed substitution: one ingredient of the lesson replaced by another ingredient of the table.
-/// A swap removes an avoid item or changes the diet, such as butter to olive oil, which removes dairy.
-/// What it changes is never written here: it is worked out again from the table after the swap is applied.
+/// A reviewed substitution: one ingredient of the lesson replaced by another, such as butter by olive oil.
+/// What it changes for a diet is never written here: Tomi's server works it out and checks every offer.
 public struct LessonSwap: Hashable, Codable, Sendable {
     /// The ingredient of the lesson that is taken out.
     public var ingredient: IngredientID

@@ -3,7 +3,7 @@ import Testing
 @testable import TomiCore
 
 @Suite struct LessonSwapValidationTests {
-    @Test func aSwapOfAnIngredientOfTheLessonForOneOfTheTableIsValid() {
+    @Test func aSwapOfAnIngredientOfTheLessonForAnotherIsValid() {
         var lesson = Lesson.fixture()
         lesson.swaps = [.fixture(replacing: "butter", with: "bacon")]
         #expect(lesson.issuesInTheFixtureLibrary().isEmpty)
@@ -13,12 +13,6 @@ import Testing
         var lesson = Lesson.fixture()
         lesson.swaps = [.fixture(replacing: "cream", with: "bacon")]
         #expect(lesson.issuesInTheFixtureLibrary() == [.swapOfIngredientNotInLesson("cream")])
-    }
-
-    @Test func aReplacementMissingFromTheTableIsReported() {
-        var lesson = Lesson.fixture()
-        lesson.swaps = [.fixture(replacing: "butter", with: "dragon-fruit")]
-        #expect(lesson.issuesInTheFixtureLibrary() == [.unknownSwapReplacement("dragon-fruit")])
     }
 
     @Test(arguments: ["garlic", "butter"] as [IngredientID])

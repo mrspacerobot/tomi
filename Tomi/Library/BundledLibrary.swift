@@ -17,40 +17,8 @@ enum BundledLibrary {
         }
     }
 
-    /// The ingredient table, or nil if the bundled file is missing or invalid, which the app's tests rule out.
-    /// Without a table no ingredient can be checked, so the caller must not serve anything.
-    nonisolated static func ingredientTable(in bundle: Bundle = .main) -> IngredientTable? {
-        do {
-            return try IngredientTable.decode(from: ingredientTableData(in: bundle))
-        } catch {
-            logger.error(
-                "The bundled ingredient table could not be read: \(String(describing: error), privacy: .public)"
-            )
-            return nil
-        }
-    }
-
-    /// The equipment list, or nil if the bundled file is missing or invalid, which the app's tests rule out.
-    /// Without a list no lesson's equipment can be checked, so the caller must not serve anything.
-    nonisolated static func equipmentList(in bundle: Bundle = .main) -> EquipmentList? {
-        do {
-            return try EquipmentList.decode(from: equipmentListData(in: bundle))
-        } catch {
-            logger.error("The bundled equipment list could not be read: \(String(describing: error), privacy: .public)")
-            return nil
-        }
-    }
-
     nonisolated static func catalogData(in bundle: Bundle = .main) throws -> Data {
         try data(ofFile: "catalog", in: bundle)
-    }
-
-    nonisolated static func ingredientTableData(in bundle: Bundle = .main) throws -> Data {
-        try data(ofFile: "ingredients", in: bundle)
-    }
-
-    nonisolated static func equipmentListData(in bundle: Bundle = .main) throws -> Data {
-        try data(ofFile: "equipment", in: bundle)
     }
 
     nonisolated private static func data(ofFile name: String, in bundle: Bundle) throws -> Data {

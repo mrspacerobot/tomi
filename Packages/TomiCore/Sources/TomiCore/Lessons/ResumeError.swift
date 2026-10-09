@@ -6,6 +6,4 @@ public enum ResumeError: Error, Equatable {
     case swapNotInLesson(AppliedSwap)
     /// The bookmark points past the last step, or before the first.
     case stepNotInLesson(Int)
-    /// The cook's diet or avoid list has changed, or cannot be read, and no longer allows the dish.
-    case notAllowedForTheCook
 }

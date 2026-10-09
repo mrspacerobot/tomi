@@ -11,8 +11,8 @@ import Testing
         #expect(ids.contains(ShippedLessons.omelette))
     }
 
-    /// Decoding validates: an unknown ingredient, piece of equipment, scene, skill or level in any shipped file
-    /// fails here.
+    /// Decoding validates: an unknown scene, main, skill or level in any shipped file fails here.
+    /// Ingredients and equipment are checked by the server against its own tables.
     @Test func everyShippedLessonIsValid() throws {
         for file in try ShippedLessons.files() {
             #expect(throws: Never.self, "\(file.lastPathComponent)") {
@@ -35,14 +35,13 @@ import Testing
         #expect(Set(ids).count == ids.count)
     }
 
-    @Test func everyShippedLessonHasTagsFromTheShippedTable() throws {
-        let table = try ShippedIngredientTable.load()
+    /// The player applies the swaps an offer names to the lesson file, so every listed swap must apply.
+    @Test func everySwapOfEveryShippedLessonApplies() throws {
         for file in try ShippedLessons.files() {
             let lesson = try ShippedLessons.lesson(at: file)
-            #expect(try lesson.isAllowed(by: CookPreferences(), in: table))
             for swap in lesson.swaps {
                 #expect(throws: Never.self) {
-                    try lesson.applying(swap).tags(in: table)
+                    try lesson.applying(swap)
                 }
             }
         }

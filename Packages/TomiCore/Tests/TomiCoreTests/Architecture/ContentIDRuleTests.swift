@@ -5,7 +5,7 @@ import Testing
     @Test func noSwiftFileNamesAnIDOfTheShippedLibrary() throws {
         let rule = ContentIDRule(ids: try ShippedContentIDs.all())
         let files = try Repository.swiftFiles(under: "Packages/TomiCore/Sources") + Repository.swiftFiles(under: "Tomi")
-        #expect(rule.ids.count > 40)
+        #expect(rule.ids.count > 30)
         #expect(rule.violations(in: files) == [])
     }
 
@@ -24,8 +24,7 @@ import Testing
     @Test func theShippedIDsCoverEveryKindOfContent() throws {
         let ids = try ShippedContentIDs.all()
         let oneOfEachKind: Set<String> = [
-            "foundations", "sear", "butter", "dairy", "eggs", "vegan", "french", "stovetop",
-            "rice-cooker", "spinach-hard-cheese-omelette",
+            "foundations", "sear", "butter", "olive-oil", "french", "stovetop", "spinach-hard-cheese-omelette",
         ]
         #expect(oneOfEachKind.isSubset(of: ids))
     }

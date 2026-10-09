@@ -21,12 +21,12 @@ extension Lesson {
         swaps: []
     )
 
-    /// A valid lesson for `LibraryLists.fixture()`. Each test breaks it in one way.
+    /// A valid lesson for `SkillCatalog.fixture()`. Each test breaks it in one way.
     static func fixture() -> Lesson {
         fixtureLesson
     }
 
-    /// Every problem of this lesson when checked against the fixture lists.
+    /// Every problem of this lesson when checked against the fixture catalog.
     func issuesInTheFixtureLibrary() -> [LessonIssue] {
         issues(in: .fixture())
     }

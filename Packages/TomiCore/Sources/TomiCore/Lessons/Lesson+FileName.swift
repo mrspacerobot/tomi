@@ -1,5 +1,5 @@
 /// How a lesson file is named. The app's bundle is flat, so the name alone must tell a lesson from the
-/// catalog and the ingredient table, and must be unique: it is the lesson id followed by this suffix.
+/// catalog, and must be unique: it is the lesson id followed by this suffix.
 extension Lesson {
     public static let fileNameSuffix = ".lesson.json"
 

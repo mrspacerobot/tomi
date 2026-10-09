@@ -25,11 +25,11 @@ import TomiCore
         #expect(BundledLessonLibrary(bundle: bundle).lessons.isEmpty)
     }
 
-    @Test func aLessonWithAnUnknownIngredientIsSkippedAndTheOthersAreKept() throws {
+    @Test func aLessonOfASkillTheMenuDoesNotHaveIsSkippedAndTheOthersAreKept() throws {
         let omelette = try LibraryFixture.shippedOmelette()
         var broken = omelette
-        broken.id = "dragon-omelette"
-        broken.ingredients[0].ingredient = "dragon-fruit"
+        broken.id = "juggled-omelette"
+        broken.skill = "juggling"
         let files = [
             omelette.fileName: try LibraryFixture.file(omelette), broken.fileName: try LibraryFixture.file(broken),
         ]
@@ -37,16 +37,18 @@ import TomiCore
         #expect(BundledLessonLibrary(bundle: bundle).lessons == [omelette])
     }
 
-    @Test func aLessonAskingForEquipmentTheListDoesNotKnowIsSkippedAndTheOthersAreKept() throws {
+    @Test func withoutACatalogNoLessonIsServed() throws {
         let omelette = try LibraryFixture.shippedOmelette()
-        var broken = omelette
-        broken.id = "wok-omelette"
-        broken.equipment.insert("wok")
-        let files = [
-            omelette.fileName: try LibraryFixture.file(omelette), broken.fileName: try LibraryFixture.file(broken),
-        ]
-        let bundle = try LibraryFixture.bundle(lessonFiles: files)
-        #expect(BundledLessonLibrary(bundle: bundle).lessons == [omelette])
+        let bundle = try Bundle.fixture(files: [omelette.fileName: LibraryFixture.file(omelette)])
+        #expect(BundledLessonLibrary(bundle: bundle).lessons.isEmpty)
+        #expect(BundledLessonLibrary(bundle: bundle).catalog == nil)
+    }
+
+    @Test func aLessonIsFoundByItsIDAndRevision() throws {
+        let omelette = try LibraryFixture.shippedOmelette()
+        let library = FakeLessonLibrary(lessons: [omelette])
+        #expect(library.lesson(omelette.id, revision: omelette.revision) == omelette)
+        #expect(library.lesson(omelette.id, revision: omelette.revision + 1) == nil)
     }
 
     @Test func aLessonWithAnUnknownSceneIsSkipped() throws {
@@ -73,8 +75,7 @@ import TomiCore
         let empty: any LessonLibrary = FakeLessonLibrary()
         let stocked: any LessonLibrary = FakeLessonLibrary(catalog: BundledLibrary.catalog(), lessons: [omelette])
         #expect(empty.lessons.isEmpty)
-        #expect(empty.ingredientTable == nil)
-        #expect(empty.equipmentList == nil)
+        #expect(empty.catalog == nil)
         #expect(stocked.lessons == [omelette])
         #expect(stocked.catalog == BundledLibrary.catalog())
     }

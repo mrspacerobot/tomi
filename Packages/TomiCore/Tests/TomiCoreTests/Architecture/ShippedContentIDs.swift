@@ -3,11 +3,11 @@ import Foundation
 @testable import TomiCore
 
 /// Every id written in the library the app ships: the words no Swift file may name.
+/// The diets, avoid items, cuisines, equipment and ingredients themselves live on the server; the ones the shipped
+/// lessons name are caught here too.
 enum ShippedContentIDs {
     static func all() throws -> Set<String> {
         var ids = try catalogIDs()
-        ids.formUnion(try ingredientTableIDs())
-        ids.formUnion(try equipmentListIDs())
         ids.formUnion(try lessonIDs())
         return ids
     }
@@ -19,20 +19,6 @@ enum ShippedContentIDs {
         return Set(courses + skills)
     }
 
-    private static func ingredientTableIDs() throws -> Set<String> {
-        let table = try ShippedIngredientTable.load()
-        var ids = Set(table.ingredients.map(\.id.rawValue))
-        ids.formUnion(table.facts.map(\.rawValue))
-        ids.formUnion(table.avoidItems.map(\.id.rawValue))
-        ids.formUnion(table.diets.map(\.id.rawValue))
-        return ids
-    }
-
-    private static func equipmentListIDs() throws -> Set<String> {
-        let list = try ShippedEquipmentList.load()
-        return Set(list.equipment.map(\.id.rawValue))
-    }
-
     private static func lessonIDs() throws -> Set<String> {
         var ids: Set<String> = []
         for file in try ShippedLessons.files() {
@@ -40,7 +26,14 @@ enum ShippedContentIDs {
             ids.insert(lesson.id.rawValue)
             ids.insert(lesson.cuisine.rawValue)
             ids.formUnion(lesson.equipment.map(\.rawValue))
+            ids.formUnion(ingredientIDs(of: lesson))
         }
+        return ids
+    }
+
+    private static func ingredientIDs(of lesson: Lesson) -> Set<String> {
+        var ids = Set(lesson.ingredients.map(\.ingredient.rawValue))
+        ids.formUnion(lesson.swaps.map(\.replacement.ingredient.rawValue))
         return ids
     }
 }

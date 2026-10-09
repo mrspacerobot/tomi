@@ -13,55 +13,29 @@ import TomiCore
 
     /// Strict decoding throws with the reason, so an invalid shipped lesson fails here by name.
     @Test func everyShippedLessonFileIsValidAndNamedByItsID() throws {
-        let lists = try #require(BundledLibrary.lists())
+        let catalog = try #require(BundledLibrary.catalog())
         let files = BundledLibrary.lessonFiles()
         #expect(files.count == BundledLessonLibrary().lessons.count)
         for file in files {
-            let lesson = try Lesson.decode(from: Data(contentsOf: file), lists: lists)
+            let lesson = try Lesson.decode(from: Data(contentsOf: file), catalog: catalog)
             #expect(file.lastPathComponent == lesson.fileName)
         }
     }
 
-    @Test func theListsOfTheLibraryAreNotTakenForLessons() {
+    @Test func theCatalogIsNotTakenForALesson() {
         let names = BundledLibrary.lessonFiles().map(\.lastPathComponent)
         #expect(!names.contains(LibraryFixture.catalogFile))
-        #expect(!names.contains(LibraryFixture.ingredientTableFile))
-        #expect(!names.contains(LibraryFixture.equipmentListFile))
         #expect(names.allSatisfy { $0.hasSuffix(".lesson.json") })
     }
 
-    @Test func theLibraryServesTheSameListsAsTheBundle() {
-        let library = BundledLessonLibrary()
-        #expect(library.catalog == BundledLibrary.catalog())
-        #expect(library.ingredientTable == BundledLibrary.ingredientTable())
-        #expect(library.equipmentList == BundledLibrary.equipmentList())
+    /// The food lists moved to the server: the app ships none of them.
+    @Test func theAppShipsNoIngredientTableAndNoEquipmentList() {
+        #expect(Bundle.main.url(forResource: "ingredients", withExtension: "json") == nil)
+        #expect(Bundle.main.url(forResource: "equipment", withExtension: "json") == nil)
     }
 
-    @Test func everyShippedLessonUsesOnlyIngredientsOfTheShippedTable() throws {
-        let library = BundledLessonLibrary()
-        let table = try #require(library.ingredientTable)
-        for lesson in library.lessons {
-            #expect(throws: Never.self) {
-                try lesson.tags(in: table)
-            }
-        }
-    }
-
-    @Test func theOmeletteIsVegetarian() throws {
-        let table = try #require(BundledLibrary.ingredientTable())
-        let omelette = try LibraryFixture.shippedOmelette()
-        var vegetarian = CookPreferences()
-        vegetarian.diet = "vegetarian"
-        #expect(try omelette.isAllowed(by: vegetarian, in: table))
-        #expect(try omelette.tags(in: table).avoidItems == ["eggs", "dairy"])
-    }
-
-    @Test func theSearedChickenIsNotVegetarian() throws {
-        let library = BundledLessonLibrary()
-        let table = try #require(library.ingredientTable)
-        let chicken = try #require(library.lessons.first { $0.id == LibraryFixture.searedChicken })
-        #expect(try chicken.tags(in: table).suitableDiets.isEmpty)
-        #expect(try chicken.tags(in: table).avoidItems == ["dairy", "alcohol"])
+    @Test func theLibraryServesTheSameCatalogAsTheBundle() {
+        #expect(BundledLessonLibrary().catalog == BundledLibrary.catalog())
     }
 
     @Test func everyShippedLessonReadsInTheCooksLanguage() {

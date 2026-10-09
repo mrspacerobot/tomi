@@ -33,7 +33,7 @@ import TomiCore
         try known.write(to: store)
         let summary = try reader().summary(at: .october(8))
         let log = try store.cookLog()
-        let goal = known.profile.preferences.weeklyGoal
+        let goal = known.profile.weeklyGoal
         let rules = ProgressRules(catalog: catalog, experience: .comfortable)
         #expect(summary.game == GameStateRules(calendar: calendar).gameState(for: log, goal: goal, now: .october(8)))
         #expect(summary.masteredCount == rules.progress(for: log).masteredCount)
@@ -41,7 +41,7 @@ import TomiCore
 
     @Test func theSavedExperienceAnswerCountsTowardsMastery() throws {
         var profile = CookProfile()
-        profile.preferences.experience = .comfortable
+        profile.experience = .comfortable
         try store.saveProfile(profile, at: .october(5))
         let firstCourse = try #require(catalog.courses.first)
         let granted = catalog.skills(in: firstCourse.id).count

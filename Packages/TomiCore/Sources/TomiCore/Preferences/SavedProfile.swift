@@ -1,12 +1,14 @@
 import Foundation
 
 /// The cook's profile as it lies in the store: one value per stored field, under the stored field's name.
+/// It is the phone's copy of the profile Tomi's server keeps, which uses the same field names.
 /// Every field may be missing, because an older app wrote fewer of them and iCloud delivers what it has.
-/// Field names are permanent once released: add fields, never rename or remove one.
+/// Field names are permanent once released: add fields, never rename or remove one, even one the app
+/// no longer reads.
 public struct SavedProfile: Hashable, Sendable, StampedRecord {
     public var stableID: UUID?
     public var updatedAt: Date?
-    /// A diet id, or nil when the cook eats everything.
+    /// A diet id of the server, or nil when the cook eats everything.
     public var diet: String?
     /// Avoid item ids.
     public var avoid: [String]?

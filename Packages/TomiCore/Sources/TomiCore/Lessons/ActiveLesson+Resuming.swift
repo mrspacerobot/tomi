@@ -1,19 +1,12 @@
 /// Picking a lesson up again after the app was closed.
 extension ActiveLesson {
     /// The dish as the cook left it: the library's lesson with the same swaps applied again.
-    /// It is checked against the cook's diet and avoid list as they are now, because both may have changed
-    /// since the lesson was started, and a restriction the table does not list refuses it.
-    public func resumed(
-        from lessons: [Lesson],
-        for preferences: CookPreferences,
-        in table: IngredientTable
-    ) throws -> ResumedLesson {
+    /// Whether the cook may still eat it is not decided here: the app forgets the bookmark whenever the cook's
+    /// diet or avoid list changes (`CookProfile.hasSameRestrictions(as:)`), because only the server can check a dish.
+    public func resumed(from lessons: [Lesson]) throws -> ResumedLesson {
         let adapted = try adaptedLesson(from: lessons)
         guard adapted.steps.indices.contains(currentStep) else {
             throw ResumeError.stepNotInLesson(currentStep)
-        }
-        guard try adapted.isAllowed(by: preferences, in: table) else {
-            throw ResumeError.notAllowedForTheCook
         }
         return ResumedLesson(lesson: adapted, ingredients: ingredients, currentStep: currentStep)
     }

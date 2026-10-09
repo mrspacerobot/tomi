@@ -3,7 +3,7 @@ import SwiftData
 import TomiCore
 
 /// The store on the phone. It only moves records in and out: what they mean is decided by TomiCore,
-/// which reads a profile from every profile record and a cook log from every cook record, in any order.
+/// which reads the cached profile from every profile record and a cook log from every cook record, in any order.
 final class SwiftDataProgressStore: ProgressStore {
     /// Kept for as long as the store lives: a context does not keep its container alive.
     private let container: ModelContainer
@@ -20,7 +20,7 @@ final class SwiftDataProgressStore: ProgressStore {
 
     func profile() throws -> CookProfile {
         let saved = try profiles.records().map(\.saved)
-        guard let profile = saved.mergedProfile else {
+        guard let profile = saved.cachedProfile else {
             return CookProfile()
         }
         return profile
