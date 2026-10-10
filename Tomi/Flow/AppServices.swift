@@ -9,6 +9,11 @@ struct AppServices {
     let store: any ProgressStore
     let photos: PhotoSource
 
+    /// Whether sign-in is the fake one, which needs no Apple account: UI tests tap a plain button instead.
+    var signsInWithFake: Bool {
+        auth is FakeAuthService
+    }
+
     /// Fakes over the given library and store, for previews and tests.
     static func fake(library: any LessonLibrary, store: any ProgressStore) -> AppServices {
         AppServices(
