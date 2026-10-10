@@ -25,6 +25,23 @@ import Testing
         #expect(lesson == Lesson.fixture())
     }
 
+    @Test func listedSwapsAreAppliedInOrderWithTheirOwnAmounts() throws {
+        let lesson = Lesson.fixtureWithOliveOilSwap()
+        let swapped = try lesson.applying(listed: [AppliedSwap(removed: "butter", added: "olive-oil")])
+        #expect(swapped.ingredients == [.fixture("garlic"), .fixture("olive-oil")])
+    }
+
+    @Test func aSwapTheLessonDoesNotListIsRefused() {
+        let invented = AppliedSwap(removed: "butter", added: "lard")
+        #expect(throws: LessonError.swapNotListed(invented)) {
+            try Lesson.fixtureWithOliveOilSwap().applying(listed: [invented])
+        }
+    }
+
+    @Test func noSwapsGiveTheLessonAsWritten() throws {
+        #expect(try Lesson.fixture().applying(listed: []) == Lesson.fixture())
+    }
+
     @Test func aSwapOfAnIngredientTheLessonLacksIsAnError() {
         #expect(throws: LessonError.swapOfIngredientNotInLesson("cream")) {
             try Lesson.fixture().applying(.fixture(replacing: "cream", with: "olive-oil"))
