@@ -13,6 +13,7 @@ struct SettingsView: View {
                 }
                 .accessibilityIdentifier("settings-" + question.identifier)
             }
+            PhotoConsentSection(flow: flow)
             Button(role: .destructive) {
                 Task { await flow.signOut() }
             } label: {
