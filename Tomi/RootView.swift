@@ -1,25 +1,26 @@
 import SwiftUI
-import TomiCore
 
-/// The first decision of every launch: with saved data that can be read, the app; without it, only the notice.
-/// Every screen that depends on the cook's answers belongs under the first branch.
+/// The first decision of every launch: with saved data that can be read and a server to talk to, the app;
+/// without them, only the notice. Every screen that keeps the cook log belongs under the app.
 struct RootView: View {
-    let catalog: SkillCatalog?
     let progress: SavedProgressModel
+    let flow: AppFlowModel?
 
     var body: some View {
-        if let summary = progress.summary {
-            WelcomeView(catalog: catalog, summary: summary)
-        } else {
+        if progress.summary == nil {
             SavedDataUnavailableView()
+        } else if let flow {
+            AppFlowView(flow: flow, progress: progress)
+        } else {
+            NotConfiguredView()
         }
     }
 }
 
 #Preview("Saved progress") {
-    RootView(catalog: BundledLibrary.catalog(), progress: .previewWithProgress())
+    RootView(progress: .previewWithProgress(), flow: .preview())
 }
 
 #Preview("Saved data unavailable") {
-    RootView(catalog: BundledLibrary.catalog(), progress: .previewUnavailable())
+    RootView(progress: .previewUnavailable(), flow: .preview())
 }

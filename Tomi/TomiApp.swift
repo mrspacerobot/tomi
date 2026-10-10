@@ -6,7 +6,7 @@ struct TomiApp: App {
 
     var body: some Scene {
         WindowGroup {
-            AppRoot(catalog: launch.catalog, progress: launch.progress)
+            AppRoot(progress: launch.progress, flow: launch.flow)
         }
     }
 }
