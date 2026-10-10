@@ -20,7 +20,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Without your diet and the things you avoid, Tomi will not suggest a dish. Close the app and open it again."
+            "value": "Tomi cannot keep your cooking log right now. Close the app and open it again."
           }
         }
       }
@@ -1017,6 +1017,1038 @@
           "stringUnit": {
             "state": "translated",
             "value": "There it is. You did that."
+          }
+        }
+      }
+    },
+    "problem.generic": {
+      "comment": "Shown when a call to Tomi's server failed for a reason the app has no words of its own for.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Something went wrong on Tomi's side. Try again in a moment."
+          }
+        }
+      }
+    },
+    "problem.notConfigured": {
+      "comment": "Shown instead of the app when the build has no server address. Developers only.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This build of Tomi does not know where its server is."
+          }
+        }
+      }
+    },
+    "problem.signedOut": {
+      "comment": "Shown when the cook's sign-in ran out or was refused.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You are signed out. Sign in again to carry on."
+          }
+        }
+      }
+    },
+    "problem.unreachable": {
+      "comment": "Shown when the phone could not reach Tomi's server.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi cannot reach the kitchen right now. Check your connection and try again."
+          }
+        }
+      }
+    },
+    "problem.accountDeleted": {
+      "comment": "Shown when the server says the cook's account was deleted.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This account has been deleted."
+          }
+        }
+      }
+    },
+    "problem.consentRequired": {
+      "comment": "Shown when the server refuses a scan because the cook has not agreed to the current photo text.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi needs your yes before it reads a photo."
+          }
+        }
+      }
+    },
+    "problem.photoTooLarge": {
+      "comment": "Shown when the server refuses a fridge photo for its size.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That photo is too big. Try another one."
+          }
+        }
+      }
+    },
+    "problem.photoUnreadable": {
+      "comment": "Shown when the server could not open a fridge photo.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi could not read that photo. Try another one, or type what you have."
+          }
+        }
+      }
+    },
+    "problem.aiUnavailable": {
+      "comment": "Shown when the server's photo reader is unavailable; the cook types ingredients instead.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi cannot look at photos right now. Type what you have instead."
+          }
+        }
+      }
+    },
+    "problem.notSaved": {
+      "comment": "Shown when the server refused a change of the cook's answers.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your answers were not saved. Try again."
+          }
+        }
+      }
+    },
+    "starting.label": {
+      "comment": "VoiceOver label of the spinner shown while the app signs in and fetches the cook's answers.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Getting your kitchen ready"
+          }
+        }
+      }
+    },
+    "loadFailed.title": {
+      "comment": "Title shown when the cook's profile could not be loaded from the server.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi could not fetch your answers"
+          }
+        }
+      }
+    },
+    "loadFailed.retry": {
+      "comment": "Button that tries to load the cook's profile again.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        }
+      }
+    },
+    "signIn.message": {
+      "comment": "Line under the title on the sign-in screen, above Apple's sign-in button.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in so your answers and your kitchen follow you. Tomi asks Apple for nothing but a sign-in."
+          }
+        }
+      }
+    },
+    "signIn.fake": {
+      "comment": "Button that signs in to the fake server in test builds. Never seen by a cook.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in"
+          }
+        }
+      }
+    },
+    "signIn.appleFailed": {
+      "comment": "Shown under Apple's button when Sign in with Apple was cancelled or failed.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign-in did not finish. Try again."
+          }
+        }
+      }
+    },
+    "question.diet.title": {
+      "comment": "Title of the diet question in onboarding and settings.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Do you keep a diet?"
+          }
+        }
+      }
+    },
+    "question.diet.hint": {
+      "comment": "Hint under the diet question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi only offers dishes that fit it."
+          }
+        }
+      }
+    },
+    "question.diet.none": {
+      "comment": "The row of the diet question for a cook who keeps no diet.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I eat everything"
+          }
+        }
+      }
+    },
+    "question.avoid.title": {
+      "comment": "Title of the question about things the cook avoids, for allergies, beliefs or taste.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anything you never eat?"
+          }
+        }
+      }
+    },
+    "question.avoid.hint": {
+      "comment": "Hint under the avoid question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tick all that apply. Tomi leaves out every dish that has them."
+          }
+        }
+      }
+    },
+    "question.cuisines.title": {
+      "comment": "Title of the cuisines question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Which kitchens do you like?"
+          }
+        }
+      }
+    },
+    "question.cuisines.hint": {
+      "comment": "Hint under the cuisines question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Love one to see it more often. Never hides it."
+          }
+        }
+      }
+    },
+    "question.cuisines.love": {
+      "comment": "Chip for loving a cuisine.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Love"
+          }
+        }
+      }
+    },
+    "question.cuisines.try": {
+      "comment": "Chip for being happy to try a cuisine. This is the answer every cuisine starts with.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Happy to try"
+          }
+        }
+      }
+    },
+    "question.cuisines.never": {
+      "comment": "Chip for never being offered a cuisine.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Never"
+          }
+        }
+      }
+    },
+    "question.kitchen.title": {
+      "comment": "Title of the equipment question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What is in your kitchen?"
+          }
+        }
+      }
+    },
+    "question.kitchen.hint": {
+      "comment": "Hint under the equipment question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Untick what you do not have."
+          }
+        }
+      }
+    },
+    "question.cupboard.title": {
+      "comment": "Title of the cupboard staples question in settings.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What do you always have?"
+          }
+        }
+      }
+    },
+    "question.cupboard.hint": {
+      "comment": "Hint under the cupboard staples question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi counts these as there every evening."
+          }
+        }
+      }
+    },
+    "question.experience.title": {
+      "comment": "Title of the experience question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How much do you cook?"
+          }
+        }
+      }
+    },
+    "question.experience.hint": {
+      "comment": "Hint under the experience question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi starts where you are."
+          }
+        }
+      }
+    },
+    "question.experience.goal": {
+      "comment": "Label of the weekly goal stepper. The number is the cook's goal of cooking days per week, 1 to 7.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Cook on %lld day a week"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Cook on %lld days a week"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "question.table.title": {
+      "comment": "Title of the question about units and servings.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Who is at the table?"
+          }
+        }
+      }
+    },
+    "question.table.hint": {
+      "comment": "Hint under the units and servings question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How Tomi writes amounts, and for how many."
+          }
+        }
+      }
+    },
+    "question.table.servings": {
+      "comment": "Label of the servings stepper. The number is how many people eat most nights.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cooking for %lld"
+          }
+        }
+      }
+    },
+    "onboarding.back": {
+      "comment": "Button that goes back to the previous onboarding question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
+          }
+        }
+      }
+    },
+    "onboarding.next": {
+      "comment": "Button that goes to the next onboarding question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
+          }
+        }
+      }
+    },
+    "onboarding.done": {
+      "comment": "Button on the last onboarding question that saves every answer and opens home.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That's me"
+          }
+        }
+      }
+    },
+    "confirmRemoval.title": {
+      "comment": "Title of the dialog shown before the cook removes a diet or a thing they avoid.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take this off your list?"
+          }
+        }
+      }
+    },
+    "confirmRemoval.message": {
+      "comment": "Explanation in the dialog shown before a diet or avoid item is removed.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi will start offering dishes it kept away from you until now."
+          }
+        }
+      }
+    },
+    "confirmRemoval.yes": {
+      "comment": "Button that confirms removing a diet or avoid item.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yes, take it off"
+          }
+        }
+      }
+    },
+    "confirmRemoval.no": {
+      "comment": "Button that keeps the diet or avoid item.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep it"
+          }
+        }
+      }
+    },
+    "home.scan": {
+      "comment": "Main button on home that starts the fridge scan.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Tomi your fridge"
+          }
+        }
+      }
+    },
+    "home.settings": {
+      "comment": "Button on home that opens the cook's answers and settings.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your answers"
+          }
+        }
+      }
+    },
+    "settings.title": {
+      "comment": "Title of the settings screen.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your answers"
+          }
+        }
+      }
+    },
+    "settings.signOut": {
+      "comment": "Button in settings that signs the cook out.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign out"
+          }
+        }
+      }
+    },
+    "settings.save": {
+      "comment": "Button that saves a changed answer in settings.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        }
+      }
+    },
+    "scan.checking": {
+      "comment": "Shown while the scan checks the cook's consents.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One moment"
+          }
+        }
+      }
+    },
+    "scan.reading": {
+      "comment": "Shown while the server reads the fridge photo.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi is looking in your fridge"
+          }
+        }
+      }
+    },
+    "scan.finding": {
+      "comment": "Shown while the server looks for tonight's special.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi is choosing tonight's dish"
+          }
+        }
+      }
+    },
+    "scan.typeInstead": {
+      "comment": "Button that skips the photo and lets the cook type their ingredients.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type what I have"
+          }
+        }
+      }
+    },
+    "scan.pickPhoto": {
+      "comment": "Button that opens the cook's photos to pick a fridge photo.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a photo of your fridge"
+          }
+        }
+      }
+    },
+    "consent.scan.title": {
+      "comment": "Title of the photo consent, version 1. Shown before the first fridge scan.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Can Tomi look at your photo?"
+          }
+        }
+      }
+    },
+    "consent.scan.body": {
+      "comment": "Text of the photo-scan consent, version 1. If its meaning changes, raise ConsentText.version and the server's version together.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To read your fridge, Tomi sends the photo to its server, where an AI model lists what it sees. Then the photo is dropped. You can always type instead."
+          }
+        }
+      }
+    },
+    "consent.scan.agree": {
+      "comment": "Button that agrees to the photo-scan consent, version 1.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yes, read my photo"
+          }
+        }
+      }
+    },
+    "consent.dataset.title": {
+      "comment": "Switch for the separate photo-dataset consent, version 1. Off unless the cook turns it on.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also keep my photo to help Tomi learn"
+          }
+        }
+      }
+    },
+    "consent.dataset.body": {
+      "comment": "Explanation under the photo-dataset switch, version 1.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi keeps a copy without its location or time, with the ingredients you confirm. You can withdraw this at any time and the photos are deleted."
+          }
+        }
+      }
+    },
+    "scan.ready.title": {
+      "comment": "Title of the screen where the cook picks a fridge photo.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Tomi your fridge"
+          }
+        }
+      }
+    },
+    "confirm.title": {
+      "comment": "Title of the screen where the cook confirms the ingredients.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What do you have tonight?"
+          }
+        }
+      }
+    },
+    "confirm.unknown": {
+      "comment": "Line for something the photo showed that matched no ingredient. The placeholder is what the model saw.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi did not know \"%@\""
+          }
+        }
+      }
+    },
+    "confirm.typePrompt": {
+      "comment": "Placeholder of the field where the cook types an ingredient.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type an ingredient"
+          }
+        }
+      }
+    },
+    "confirm.add": {
+      "comment": "Button that adds the typed ingredient.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add"
+          }
+        }
+      }
+    },
+    "confirm.whichOne": {
+      "comment": "Shown when a typed word could be several ingredients. The placeholder is the typed word.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Which \"%@\" do you mean?"
+          }
+        }
+      }
+    },
+    "confirm.notKnown": {
+      "comment": "Shown when a typed word matched no ingredient. The placeholder is the typed word.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi does not know \"%@\" yet"
+          }
+        }
+      }
+    },
+    "confirm.find": {
+      "comment": "Button that asks for tonight's special with the confirmed ingredients.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find tonight's special"
+          }
+        }
+      }
+    },
+    "nothingTonight.title": {
+      "comment": "Title shown when the server has no dish for the cook tonight. Not an error.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing to cook from this yet"
+          }
+        }
+      }
+    },
+    "nothingTonight.message": {
+      "comment": "Message shown when there is no special tonight.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi has no dish for this fridge at your level yet. Add a few more things, or come back as you learn more."
+          }
+        }
+      }
+    },
+    "nothingTonight.change": {
+      "comment": "Button that goes back to the ingredient list.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change what I have"
+          }
+        }
+      }
+    },
+    "nothingTonight.home": {
+      "comment": "Button that returns home.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back home"
+          }
+        }
+      }
+    },
+    "specials.kicker": {
+      "comment": "Label set into the top edge of the box holding tonight's special. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonight's special"
+          }
+        }
+      }
+    },
+    "specials.alternatives": {
+      "comment": "Heading above the alternatives to tonight's special. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Or instead"
+          }
+        }
+      }
+    },
+    "offer.line": {
+      "comment": "Line under a dish's name. First the minutes it takes, then the technique's name, then the level's name, both from the server.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld min · %2$@, %3$@"
+          }
+        }
+      }
+    },
+    "offer.cook": {
+      "comment": "Button that opens the lesson of a dish on offer.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cook this"
+          }
+        }
+      }
+    },
+    "offer.swap": {
+      "comment": "A swap Tomi made to the dish. First the ingredient put in, then the one taken out, both named by the server.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ instead of %2$@"
+          }
+        }
+      }
+    },
+    "offer.missing": {
+      "comment": "What the cook still needs for the dish. The placeholder is a list of ingredient names joined by the app.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To buy: %@"
+          }
+        }
+      }
+    },
+    "player.missing.title": {
+      "comment": "Title shown when the offered lesson is not in the phone's library.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This dish is not on your phone yet"
+          }
+        }
+      }
+    },
+    "player.missing.message": {
+      "comment": "Message shown when the offered lesson is not in the phone's library.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update Tomi to cook it. Your other dishes are still here."
+          }
+        }
+      }
+    },
+    "player.step": {
+      "comment": "Label above a lesson step. The number counts the steps from 1. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step %lld"
+          }
+        }
+      }
+    },
+    "player.next": {
+      "comment": "Button that moves the lesson player to the next page.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
+          }
+        }
+      }
+    },
+    "player.finish": {
+      "comment": "Button that ends the lesson after the question and logs the cook.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish"
+          }
+        }
+      }
+    },
+    "player.stop": {
+      "comment": "Button that ends the lesson early. Such a cook earns nothing.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I stopped"
+          }
+        }
+      }
+    },
+    "settings.photos": {
+      "comment": "Heading of the settings section about the photo consents.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fridge photos"
+          }
+        }
+      }
+    },
+    "settings.withdrawDataset": {
+      "comment": "Button that withdraws the photo-dataset consent; the server deletes every kept photo.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop keeping my photos and delete them"
+          }
+        }
+      }
+    },
+    "settings.withdrawScan": {
+      "comment": "Button that withdraws the photo-scan consent; Tomi will ask again before the next scan.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop sending photos"
           }
         }
       }
