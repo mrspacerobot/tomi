@@ -34,7 +34,7 @@ public struct ProfilePatch: Sendable {
         return try JSONSerialization.data(withJSONObject: fields, options: [.sortedKeys])
     }
 
-    private func changedFields() throws -> [String: Any] {
+    func changedFields() throws -> [String: Any] {
         let old = try Self.fields(of: before)
         var changed: [String: Any] = [:]
         for (name, value) in try Self.fields(of: after) where !Self.isSame(value, old[name]) {
@@ -43,7 +43,7 @@ public struct ProfilePatch: Sendable {
         return changed
     }
 
-    private static func fields(of profile: CookProfile) throws -> [String: Any] {
+    static func fields(of profile: CookProfile) throws -> [String: Any] {
         let data = try JSONEncoder().encode(profile)
         guard let fields = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             return [:]
