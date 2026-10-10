@@ -1,0 +1,45 @@
+import Foundation
+import TomiCore
+
+/// Tomi's server over the network.
+nonisolated struct URLSessionTomiAPI: TomiAPI {
+    let client: APIClient
+
+    func options() async throws -> LibraryOptions {
+        try await client.value(LibraryOptions.self, for: .options)
+    }
+
+    func profile() async throws -> ProfileEnvelope {
+        try await client.value(ProfileEnvelope.self, for: .profile)
+    }
+
+    func saveProfile(_ patch: ProfilePatch) async throws -> ProfileEnvelope {
+        try await client.value(ProfileEnvelope.self, for: .saveProfile(patch))
+    }
+
+    func consents() async throws -> [ConsentStatus] {
+        try await client.value([ConsentStatus].self, for: .consents)
+    }
+
+    func agree(to purpose: ConsentPurpose, version: Int) async throws {
+        let request = try APIRequest.consent(purpose, .put).sending(ConsentAgreement(version: version))
+        _ = try await client.data(for: request)
+    }
+
+    func withdraw(_ purpose: ConsentPurpose) async throws {
+        _ = try await client.data(for: .consent(purpose, .delete))
+    }
+
+    func scan(jpeg: Data) async throws -> ScanResult {
+        try await client.value(ScanResult.self, for: .scan(jpeg: jpeg))
+    }
+
+    func resolve(_ labels: [String]) async throws -> ResolveResponse {
+        let request = try APIRequest.resolve.sending(ResolveRequest(labels: labels))
+        return try await client.value(ResolveResponse.self, for: request)
+    }
+
+    func specials(_ request: SpecialsRequest) async throws -> SpecialsResponse {
+        try await client.value(SpecialsResponse.self, for: try APIRequest.specials.sending(request))
+    }
+}
