@@ -12,14 +12,7 @@ struct SpecialsView: View {
                 if let special = menu.special {
                     OfferCard(offer: special, flag: .specialsKicker) { path.append(.cook(special)) }
                 }
-                if !menu.alternatives.isEmpty {
-                    Text(.specialsAlternatives)
-                        .textStyle(.label)
-                        .textCase(.uppercase)
-                    ForEach(menu.alternatives) { offer in
-                        OfferCard(offer: offer, flag: nil) { path.append(.cook(offer)) }
-                    }
-                }
+                AlternativesList(offers: menu.alternatives, path: $path)
             }
             .padding(Spacing.screenMargin)
         }

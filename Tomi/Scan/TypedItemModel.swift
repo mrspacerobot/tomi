@@ -37,17 +37,21 @@ final class TypedItemModel {
 
     private func show(_ result: ResolvedLabel?, for label: String) -> NamedOption? {
         problem = nil
-        unknownLabel = nil
-        choosing = nil
         guard let result, result.basis != .noMatch else {
             unknownLabel = label
             return nil
         }
-        if let exact = result.exactIngredient {
-            text = ""
-            return exact
+        unknownLabel = nil
+        return exactOrChoosing(result)
+    }
+
+    private func exactOrChoosing(_ result: ResolvedLabel) -> NamedOption? {
+        guard let exact = result.exactIngredient else {
+            choosing = result
+            return nil
         }
-        choosing = result
-        return nil
+        choosing = nil
+        text = ""
+        return exact
     }
 }

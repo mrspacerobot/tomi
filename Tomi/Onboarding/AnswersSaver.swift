@@ -22,14 +22,17 @@ final class AnswersSaver {
         isSaving = true
         defer { isSaving = false }
         do {
-            let result = try await profile.save(answers, confirmedWeaker: confirmed)
-            problem = nil
-            isConfirming = result == .needsConfirmation
-            return result == .saved
+            return show(try await profile.save(answers, confirmedWeaker: confirmed))
         } catch {
             Self.logger.error("Answers were not saved: \(String(describing: error), privacy: .public)")
             problem = ProblemText(error)
             return false
         }
+    }
+
+    private func show(_ result: ProfileSaveResult) -> Bool {
+        problem = nil
+        isConfirming = result == .needsConfirmation
+        return result == .saved
     }
 }

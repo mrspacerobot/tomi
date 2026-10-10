@@ -13,17 +13,18 @@ extension Lesson {
     }
 
     func swapIssues() -> [LessonIssue] {
+        swaps.flatMap(issues(of:))
+    }
+
+    private func issues(of swap: LessonSwap) -> [LessonIssue] {
         var issues: [LessonIssue] = []
-        for swap in swaps {
-            if !uses(swap.ingredient) {
-                issues.append(.swapOfIngredientNotInLesson(swap.ingredient))
-            }
-            if uses(swap.replacement.ingredient) {
-                issues.append(.swapReplacementAlreadyInLesson(swap.replacement.ingredient))
-            }
-            issues += swap.replacement.amountIssues
+        if !uses(swap.ingredient) {
+            issues.append(.swapOfIngredientNotInLesson(swap.ingredient))
         }
-        return issues
+        if uses(swap.replacement.ingredient) {
+            issues.append(.swapReplacementAlreadyInLesson(swap.replacement.ingredient))
+        }
+        return issues + swap.replacement.amountIssues
     }
 
     /// Whether the ingredient is on the lesson's ingredient list.

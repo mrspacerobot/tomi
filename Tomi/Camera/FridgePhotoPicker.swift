@@ -29,13 +29,17 @@ struct FridgePhotoPicker: View {
         }
         Task {
             do {
-                guard let data = try await picked.loadTransferable(type: Data.self) else {
-                    return onFailure()
-                }
-                onPhoto(try JPEGConverter.jpeg(from: data))
+                onPhoto(try await Self.jpeg(of: picked))
             } catch {
                 onFailure()
             }
         }
+    }
+
+    private static func jpeg(of picked: PhotosPickerItem) async throws -> Data {
+        guard let data = try await picked.loadTransferable(type: Data.self) else {
+            throw JPEGConversionError.unreadable
+        }
+        return try JPEGConverter.jpeg(from: data)
     }
 }

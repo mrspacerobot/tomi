@@ -14,12 +14,7 @@ struct ConfirmView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.large) {
-                Text(.confirmTitle)
-                    .textStyle(.displayL)
-                    .accessibilityIdentifier("confirm-title")
-                if let problem = model.problem {
-                    ProblemView(problem: problem)
-                }
+                ScanHeader(title: .confirmTitle, identifier: "confirm-title", problem: model.problem)
                 ConfirmChips(model: model)
                 TypedItemField(typing: typing, model: model)
                 FindSpecialButton(model: model)

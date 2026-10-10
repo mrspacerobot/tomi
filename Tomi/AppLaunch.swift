@@ -16,11 +16,13 @@ struct AppLaunch {
         let reader = ProgressSummaryReader(store: store, catalog: catalog, calendar: .current)
         self.catalog = catalog
         progress = SavedProgressModel(reader: reader, now: now)
-        let services = AppServices.forLaunch(BackendLaunchOptions(arguments: arguments), store: store)
-        if let services {
-            flow = AppFlowModel(services: services)
-        } else {
-            flow = nil
+        flow = Self.flow(arguments: arguments, store: store)
+    }
+
+    private static func flow(arguments: [String], store: any ProgressStore) -> AppFlowModel? {
+        guard let services = AppServices.forLaunch(BackendLaunchOptions(arguments: arguments), store: store) else {
+            return nil
         }
+        return AppFlowModel(services: services)
     }
 }

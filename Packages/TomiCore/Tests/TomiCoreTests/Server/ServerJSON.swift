@@ -10,7 +10,8 @@ enum ServerJSON {
         #"{"lessonId": "garlic-butter", "revision": 2, "title": "Garlic butter", "minutes": 20, "#
         + #""skill": {"id": "eggs", "name": "Eggs"}, "level": {"number": 1, "name": "Soft"}, "#
         + #""ingredients": [{"id": "garlic", "name": "Garlic"}, {"id": "olive-oil", "name": "Olive oil"}], "#
-        + #""swaps": [{"removed": {"id": "butter", "name": "Butter"}, "added": {"id": "olive-oil", "name": "Olive oil"}}], "#
+        + #""swaps": [{"removed": {"id": "butter", "name": "Butter"}, "#
+        + #""added": {"id": "olive-oil", "name": "Olive oil"}}], "#
         + #""missing": [{"id": "garlic", "name": "Garlic"}], "reason": "Quick tonight.", "#
         + #""checked": {"diet": "vegan", "avoid": ["nuts"]}}"#
 

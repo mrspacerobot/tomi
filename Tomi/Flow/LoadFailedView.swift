@@ -11,13 +11,7 @@ struct LoadFailedView: View {
             if let problem = flow.problem {
                 ProblemView(problem: problem)
             }
-            Button {
-                Task { await flow.start() }
-            } label: {
-                Text(.loadFailedRetry)
-            }
-            .buttonStyle(.tomiPrimary)
-            .accessibilityIdentifier("load-failed-retry")
+            RetryButton(flow: flow)
         }
         .multilineTextAlignment(.center)
         .padding(Spacing.xLarge)

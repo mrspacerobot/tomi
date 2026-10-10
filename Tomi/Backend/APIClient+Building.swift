@@ -7,13 +7,11 @@ extension APIClient {
         var built = URLRequest(url: baseURL.appending(path: request.path))
         built.httpMethod = request.method.rawValue
         built.setValue(acceptLanguage, forHTTPHeaderField: HTTPHeader.acceptLanguage)
-        if let body = request.body {
-            built.httpBody = body
+        built.httpBody = request.body
+        if request.body != nil {
             built.setValue(request.contentType, forHTTPHeaderField: HTTPHeader.contentType)
         }
-        if let token {
-            built.setValue(HTTPHeader.bearer(token), forHTTPHeaderField: HTTPHeader.authorization)
-        }
+        built.setValue(token.map(HTTPHeader.bearer), forHTTPHeaderField: HTTPHeader.authorization)
         return built
     }
 

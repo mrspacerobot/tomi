@@ -24,13 +24,17 @@ extension CookProfile {
         profile.cuisinesToTry = ["korean"]
         profile.cuisinesNever = ["british"]
         profile.cupboardStaples = ["salt", "olive-oil"]
-        profile.equipment = ["oven"]
-        profile.experience = .comfortable
-        profile.setServings(4)
-        profile.units = .cups
-        profile.setWeeklyGoal(5)
-        profile.focusSkill = "roux"
-        profile.isOnboardingDone = true
+        profile.changeKitchenAnswers()
         return profile
+    }
+
+    private mutating func changeKitchenAnswers() {
+        equipment = ["oven"]
+        experience = .comfortable
+        setServings(4)
+        units = .cups
+        setWeeklyGoal(5)
+        focusSkill = "roux"
+        isOnboardingDone = true
     }
 }

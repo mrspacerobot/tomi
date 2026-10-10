@@ -9,9 +9,7 @@ struct HomeContent: View {
     var body: some View {
         ScrollView {
             VStack(spacing: Spacing.xLarge) {
-                TomiMascot()
-                    .frame(width: MascotSize.welcome, height: MascotSize.welcome)
-                    .accessibilityLabel(Text(.mascotLabel))
+                HomeMascot()
                 WelcomeMasthead(catalog: flow.services.library.catalog)
                 if let summary = progress.summary {
                     WelcomeProgress(summary: summary)

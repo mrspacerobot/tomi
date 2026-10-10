@@ -1,25 +1,14 @@
 import SwiftUI
 
-/// Every question about the cook, to change an answer, and signing out.
+/// Every question about the cook, to change an answer, the photo consents, and signing out.
 struct SettingsView: View {
     let flow: AppFlowModel
 
     var body: some View {
         List {
-            ForEach(ProfileQuestion.allCases, id: \.self) { question in
-                NavigationLink(value: HomeRoute.question(question)) {
-                    Text(question.title)
-                        .textStyle(.body)
-                }
-                .accessibilityIdentifier("settings-" + question.identifier)
-            }
+            QuestionLinks()
             PhotoConsentSection(flow: flow)
-            Button(role: .destructive) {
-                Task { await flow.signOut() }
-            } label: {
-                Text(.settingsSignOut)
-            }
-            .accessibilityIdentifier("settings-sign-out")
+            SignOutButton(flow: flow)
         }
         .navigationTitle(Text(.settingsTitle))
         .scrollContentBackground(.hidden)

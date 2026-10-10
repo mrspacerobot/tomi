@@ -14,10 +14,7 @@ struct SettingsQuestionForm: View {
                 if let problem = saver.problem {
                     ProblemView(problem: problem)
                 }
-                Button { save(confirmed: false) } label: { Text(.settingsSave) }
-                    .buttonStyle(.tomiPrimary)
-                    .disabled(saver.isSaving)
-                    .accessibilityIdentifier("settings-save")
+                SaveAnswersButton(saver: saver) { save(confirmed: false) }
             }
             .padding(Spacing.screenMargin)
         }

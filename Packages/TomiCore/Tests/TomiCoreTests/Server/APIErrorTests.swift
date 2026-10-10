@@ -34,7 +34,9 @@ import Testing
     }
 
     @Test func detailsThatCannotBeReadDoNotLoseTheError() {
-        let text = #"{"error": {"code": "consent_required", "message": "Agree first.", "details": {"purpose": "photo-scan"}}}"#
+        let text =
+            #"{"error": {"code": "consent_required", "message": "Agree first.", "#
+            + #""details": {"purpose": "photo-scan"}}}"#
         #expect(error(text)?.code == .consentRequired)
     }
 

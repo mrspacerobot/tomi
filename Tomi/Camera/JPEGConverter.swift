@@ -30,15 +30,20 @@ nonisolated enum JPEGConverter {
 
     private static func encoded(_ image: CGImage) throws -> Data {
         let output = NSMutableData()
-        let type = UTType.jpeg.identifier as CFString
-        guard let destination = CGImageDestinationCreateWithData(output, type, 1, nil) else {
-            throw JPEGConversionError.unreadable
-        }
+        let destination = try jpegDestination(writingInto: output)
         let options = [kCGImageDestinationLossyCompressionQuality: quality] as CFDictionary
         CGImageDestinationAddImage(destination, image, options)
         guard CGImageDestinationFinalize(destination), output.length < largestBytes else {
             throw JPEGConversionError.tooLarge
         }
         return output as Data
+    }
+
+    private static func jpegDestination(writingInto output: NSMutableData) throws -> CGImageDestination {
+        let type = UTType.jpeg.identifier as CFString
+        guard let destination = CGImageDestinationCreateWithData(output, type, 1, nil) else {
+            throw JPEGConversionError.unreadable
+        }
+        return destination
     }
 }

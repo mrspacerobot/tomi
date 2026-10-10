@@ -28,7 +28,8 @@ final class StubTransport: HTTPTransport {
             }
             return state.answers.removeFirst()
         }
-        let response = HTTPURLResponse(url: request.url!, statusCode: answer.status, httpVersion: nil, headerFields: nil)!
+        let url = request.url!
+        let response = HTTPURLResponse(url: url, statusCode: answer.status, httpVersion: nil, headerFields: nil)!
         return (Data(answer.body.utf8), response)
     }
 }

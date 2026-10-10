@@ -15,11 +15,7 @@ struct NothingTonightView: View {
                 .accessibilityIdentifier("nothing-tonight-title")
             Text(.nothingTonightMessage)
                 .textStyle(.body)
-            Button { model.stage = .confirming } label: { Text(.nothingTonightChange) }
-                .buttonStyle(.tomiPrimary)
-                .accessibilityIdentifier("nothing-tonight-change")
-            Button { path.removeAll() } label: { Text(.nothingTonightHome) }
-                .buttonStyle(.tomiSecondary)
+            NothingTonightButtons(model: model, path: $path)
         }
         .multilineTextAlignment(.center)
         .padding(Spacing.screenMargin)

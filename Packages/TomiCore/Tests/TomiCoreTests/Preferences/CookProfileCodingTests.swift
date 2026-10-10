@@ -15,13 +15,17 @@ import Testing
         try JSONDecoder().decode(CookProfile.self, from: Data(text.utf8))
     }
 
-    @Test func everyFieldIsRead() throws {
+    @Test func everyFoodAnswerIsRead() throws {
         let profile = try Self.decode(Self.full)
         #expect(profile.diet == "vegetarian")
         #expect(profile.avoid == ["nuts"])
         #expect(profile.cuisinesLoved == ["thai"])
         #expect(profile.cuisinesNever == ["british"])
         #expect(profile.cupboardStaples == ["salt"])
+    }
+
+    @Test func everyKitchenAnswerIsRead() throws {
+        let profile = try Self.decode(Self.full)
         #expect(profile.equipment == nil)
         #expect(profile.experience == .comfortable)
         #expect(profile.servings == 4)

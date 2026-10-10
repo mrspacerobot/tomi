@@ -18,7 +18,8 @@ import Testing
     }
 
     @Test func anOfferWithoutItsCheckIsRefused() {
-        let unchecked = ServerJSON.offer.replacing(#""checked": {"diet": "vegan", "avoid": ["nuts"]}"#, with: #""x": 1"#)
+        let check = #""checked": {"diet": "vegan", "avoid": ["nuts"]}"#
+        let unchecked = ServerJSON.offer.replacing(check, with: #""x": 1"#)
         #expect(throws: DecodingError.self) {
             try ServerJSON.decode(Offer.self, from: unchecked)
         }

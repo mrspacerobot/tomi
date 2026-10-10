@@ -10,14 +10,7 @@ struct OnboardingFooter: View {
             if let problem = model.saver.problem {
                 ProblemView(problem: problem)
             }
-            HStack(spacing: Spacing.small) {
-                if model.canGoBack {
-                    Button(action: model.back) { Text(.onboardingBack) }
-                        .buttonStyle(.tomiSecondary)
-                        .accessibilityIdentifier("onboarding-back")
-                }
-                OnboardingNextButton(model: model, finish: finish)
-            }
+            OnboardingButtons(model: model, finish: finish)
         }
         .padding(Spacing.screenMargin)
         .confirmRestrictionRemoval(isPresented: confirming) { finish(true) }

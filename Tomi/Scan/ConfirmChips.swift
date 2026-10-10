@@ -14,10 +14,7 @@ struct ConfirmChips: View {
                     .accessibilityIdentifier("confirm-item-" + item.label)
                 }
             }
-            ForEach(model.list.items.filter { $0.ingredient == nil }) { item in
-                Text(.confirmUnknown(item.label))
-                    .textStyle(.description)
-            }
+            UnknownItems(items: model.list.items.filter { $0.ingredient == nil })
         }
     }
 

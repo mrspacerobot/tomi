@@ -19,20 +19,7 @@ struct ProblemText {
         guard let backend = error as? BackendError else {
             return .problemGeneric
         }
-        switch backend {
-        case .notConfigured: return .problemNotConfigured
-        case .notSignedIn: return .problemSignedOut
-        case .unreachable: return .problemUnreachable
-        case .unreadableResponse: return .problemGeneric
-        case .server(_, let apiError): return resource(for: apiError)
-        }
-    }
-
-    private static func resource(for error: APIError) -> LocalizedStringResource? {
-        guard let code = error.code else {
-            return nil
-        }
-        return code.problemText
+        return backend.problemText
     }
 
     private static func serverMessage(of error: any Error) -> String {

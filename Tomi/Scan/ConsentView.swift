@@ -8,16 +8,11 @@ struct ConsentView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.large) {
-                Text(.consentScanTitle)
-                    .textStyle(.displayL)
-                    .accessibilityIdentifier("consent-title")
+                ScanHeader(title: .consentScanTitle, identifier: "consent-title", problem: model.problem)
                 Text(.consentScanBody)
                     .textStyle(.body)
                 Toggle(isOn: $model.keepsPhoto) { DatasetConsentWords() }
                     .accessibilityIdentifier("consent-dataset")
-                if let problem = model.problem {
-                    ProblemView(problem: problem)
-                }
                 ConsentButtons(model: model)
             }
             .padding(Spacing.screenMargin)

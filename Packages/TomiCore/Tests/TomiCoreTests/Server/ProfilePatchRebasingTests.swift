@@ -8,14 +8,17 @@ import Testing
         var after = CookProfile()
         after.setWeeklyGoal(6)
         let patch = ProfilePatch(version: 1, before: CookProfile(), after: after)
-        var elsewhere = CookProfile()
-        elsewhere.avoid = ["nuts"]
-        let current = ProfileEnvelope(version: 2, schemaVersion: 1, profile: elsewhere)
-        let rebased = try patch.rebased(on: current)
+        let rebased = try patch.rebased(on: Self.nutsFromElsewhere)
         #expect(rebased.version == 2)
-        #expect(rebased.before == elsewhere)
+        #expect(rebased.before == Self.nutsFromElsewhere.profile)
         #expect(rebased.after.avoid == ["nuts"])
         #expect(rebased.after.weeklyGoal == 6)
+    }
+
+    static var nutsFromElsewhere: ProfileEnvelope {
+        var elsewhere = CookProfile()
+        elsewhere.avoid = ["nuts"]
+        return ProfileEnvelope(version: 2, schemaVersion: 1, profile: elsewhere)
     }
 
     @Test func aConfirmationIsNotCarriedOver() throws {
