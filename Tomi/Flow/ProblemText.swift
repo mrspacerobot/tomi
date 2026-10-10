@@ -13,6 +13,9 @@ struct ProblemText {
     }
 
     private static func resource(for error: any Error) -> LocalizedStringResource? {
+        if let photo = error as? JPEGConversionError {
+            return photo.problemText
+        }
         guard let backend = error as? BackendError else {
             return .problemGeneric
         }
