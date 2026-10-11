@@ -6,10 +6,18 @@ struct NothingTonightButtons: View {
     @Binding var path: [HomeRoute]
 
     var body: some View {
-        Button { model.stage = .confirming } label: { Text(.nothingTonightChange) }
-            .buttonStyle(.tomiPrimary)
-            .accessibilityIdentifier("nothing-tonight-change")
-        Button { path.removeAll() } label: { Text(.nothingTonightHome) }
-            .buttonStyle(.tomiSecondary)
+        Button {
+            model.stage = .confirming
+        } label: {
+            Text(.nothingTonightChange)
+        }
+        .buttonStyle(.tomiPrimary)
+        .accessibilityIdentifier("nothing-tonight-change")
+        Button {
+            path.removeAll()
+        } label: {
+            Text(.nothingTonightHome)
+        }
+        .buttonStyle(.tomiSecondary)
     }
 }

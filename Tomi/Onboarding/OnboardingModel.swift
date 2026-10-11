@@ -1,3 +1,4 @@
+import Foundation
 import TomiCore
 
 /// The first questions, one at a time, and the answers sent to the server at the end.

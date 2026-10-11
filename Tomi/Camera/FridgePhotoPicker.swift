@@ -12,9 +12,13 @@ struct FridgePhotoPicker: View {
     var body: some View {
         switch source {
         case .fixed(let photo):
-            Button { onPhoto(photo) } label: { Text(.scanPickPhoto) }
-                .buttonStyle(.tomiPrimary)
-                .accessibilityIdentifier("scan-pick-photo")
+            Button {
+                onPhoto(photo)
+            } label: {
+                Text(.scanPickPhoto)
+            }
+            .buttonStyle(.tomiPrimary)
+            .accessibilityIdentifier("scan-pick-photo")
         case .photoLibrary:
             PhotosPicker(selection: $item, matching: .images) { Text(.scanPickPhoto) }
                 .buttonStyle(.tomiPrimary)

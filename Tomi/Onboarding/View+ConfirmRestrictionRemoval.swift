@@ -6,7 +6,10 @@ extension View {
         confirmationDialog(Text(.confirmRemovalTitle), isPresented: isPresented, titleVisibility: .visible) {
             Button(role: .destructive, action: confirm) { Text(.confirmRemovalYes) }
                 .accessibilityIdentifier("confirm-removal-yes")
-            Button(role: .cancel) {} label: { Text(.confirmRemovalNo) }
+            Button(role: .cancel) {
+            } label: {
+                Text(.confirmRemovalNo)
+            }
         } message: {
             Text(.confirmRemovalMessage)
         }

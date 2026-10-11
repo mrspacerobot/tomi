@@ -10,10 +10,12 @@ import Testing
             #"[{"purpose": "photo-scan", "currentVersion": 1, "agreed": true}, "#
             + #"{"purpose": "photo-dataset", "currentVersion": 2, "agreed": false}]"#
         let consents = try ServerJSON.decode([ConsentStatus].self, from: text)
-        #expect(consents == [
-            ConsentStatus(purpose: .photoScan, currentVersion: 1, agreed: true),
-            ConsentStatus(purpose: .photoDataset, currentVersion: 2, agreed: false),
-        ])
+        #expect(
+            consents == [
+                ConsentStatus(purpose: .photoScan, currentVersion: 1, agreed: true),
+                ConsentStatus(purpose: .photoDataset, currentVersion: 2, agreed: false),
+            ]
+        )
     }
 
     @Test func aPurposeThisBuildDoesNotKnowIsKeptButHasNoPurpose() throws {

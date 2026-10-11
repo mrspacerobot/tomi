@@ -1,4 +1,5 @@
 import Foundation
+import TomiCore
 
 extension AppServices {
     /// The services the launch arguments ask for, or nil when this build has no server configured.

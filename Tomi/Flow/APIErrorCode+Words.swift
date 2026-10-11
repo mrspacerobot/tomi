@@ -3,7 +3,7 @@ import TomiCore
 
 extension APIErrorCode {
     /// Tomi's words for each error of the server.
-    var problemText: LocalizedStringResource {
+    nonisolated var problemText: LocalizedStringResource {
         switch self {
         case .unauthenticated, .anonymousNotAllowed: .problemSignedOut
         case .accountDeleted: .problemAccountDeleted

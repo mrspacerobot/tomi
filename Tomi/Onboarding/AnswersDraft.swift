@@ -1,3 +1,4 @@
+import Foundation
 import TomiCore
 
 /// The cook's answers while a question is on screen, before they are sent to the server.

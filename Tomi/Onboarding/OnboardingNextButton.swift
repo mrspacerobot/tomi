@@ -7,10 +7,14 @@ struct OnboardingNextButton: View {
 
     var body: some View {
         if model.isLastQuestion {
-            Button { finish(false) } label: { Text(.onboardingDone) }
-                .buttonStyle(.tomiPrimary)
-                .disabled(model.saver.isSaving)
-                .accessibilityIdentifier("onboarding-done")
+            Button {
+                finish(false)
+            } label: {
+                Text(.onboardingDone)
+            }
+            .buttonStyle(.tomiPrimary)
+            .disabled(model.saver.isSaving)
+            .accessibilityIdentifier("onboarding-done")
         } else {
             Button(action: model.next) { Text(.onboardingNext) }
                 .buttonStyle(.tomiPrimary)
