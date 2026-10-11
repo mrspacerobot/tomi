@@ -29,7 +29,7 @@ import Testing
     }
 
     @Test func anAgreementNamesTheVersionShown() throws {
-        let text = String(decoding: try JSONEncoder().encode(ConsentAgreement(version: 1)), as: UTF8.self)
+        let text = String(bytes: try JSONEncoder().encode(ConsentAgreement(version: 1)), encoding: .utf8)!
         #expect(text == #"{"version":1}"#)
     }
 }

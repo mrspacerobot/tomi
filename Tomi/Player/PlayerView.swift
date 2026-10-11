@@ -6,7 +6,7 @@ struct PlayerView: View {
     let done: () -> Void
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: Spacing.none) {
             ScrollView {
                 PlayerPageView(model: model)
                     .padding(Spacing.stepMargin)

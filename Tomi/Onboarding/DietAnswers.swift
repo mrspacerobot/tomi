@@ -6,9 +6,11 @@ struct DietAnswers: View {
     let draft: AnswersDraft
 
     var body: some View {
-        ChoiceList(choices: choices, isSelected: { $0.optionID == draft.answers.diet }) { choice in
-            draft.answers.diet = choice.optionID
-        }
+        ChoiceList(
+            choices: choices,
+            isSelected: { $0.optionID == draft.answers.diet },
+            onTap: { draft.answers.diet = $0.optionID }
+        )
     }
 
     private var choices: [TickChoice] {

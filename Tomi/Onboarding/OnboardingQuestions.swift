@@ -6,7 +6,7 @@ struct OnboardingQuestions: View {
     @State var model: OnboardingModel
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: Spacing.none) {
             ScrollView {
                 QuestionView(question: model.question, draft: model.draft)
                     .padding(Spacing.screenMargin)

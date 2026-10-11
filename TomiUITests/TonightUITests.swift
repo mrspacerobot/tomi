@@ -25,8 +25,10 @@ final class TonightUITests: XCTestCase {
         let app = XCUIApplication.launched(XCUIApplication.returningCook + ["--store-in-memory"])
         changeAvoidItem(app)
         changeAvoidItem(app)
-        XCTAssertTrue(app.buttons["confirm-removal-yes"].waitForExistence(timeout: 5))
-        app.buttons["confirm-removal-yes"].tap()
+        // The dialog's button is a button wrapped in a button with the same identifier, so take the first.
+        let yes = app.buttons["confirm-removal-yes"].firstMatch
+        XCTAssertTrue(yes.waitForExistence(timeout: 5))
+        yes.tap()
         XCTAssertTrue(app.element("settings-question-avoid").waitForExistence(timeout: 5))
     }
 

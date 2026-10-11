@@ -7,7 +7,7 @@ struct ChoiceList: View {
     let onTap: (TickChoice) -> Void
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: Spacing.none) {
             ForEach(choices) { choice in
                 TickRow(name: choice.name, note: choice.note, isSelected: isSelected(choice)) {
                     onTap(choice)

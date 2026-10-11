@@ -41,6 +41,9 @@ nonisolated struct SupabaseTokenClient: Sendable {
 
     /// Supabase's own errors have another layout than Tomi's; only the status matters to the app.
     private static func error(in data: Data) -> APIError {
-        APIError(codeName: APIErrorCode.unauthenticated.rawValue, message: String(decoding: data, as: UTF8.self))
+        guard let message = String(bytes: data, encoding: .utf8) else {
+            return APIError(codeName: APIErrorCode.unauthenticated.rawValue, message: "")
+        }
+        return APIError(codeName: APIErrorCode.unauthenticated.rawValue, message: message)
     }
 }

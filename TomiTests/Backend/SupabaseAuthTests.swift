@@ -26,7 +26,7 @@ import Testing
         let request = try #require(transport.requests.first)
         #expect(request.url?.absoluteString == "https://project.supabase.test/auth/v1/token?grant_type=id_token")
         #expect(request.value(forHTTPHeaderField: "apikey") == "publishable")
-        let body = String(decoding: request.httpBody ?? Data(), as: UTF8.self)
+        let body = String(bytes: request.httpBody ?? Data(), encoding: .utf8)!
         #expect(body == #"{"id_token":"apple-token","nonce":"raw","provider":"apple"}"#)
         #expect(try store.load() == AuthSession(accessToken: "a1", refreshToken: "r1", expiresAt: start + 3600))
     }

@@ -2,6 +2,7 @@ import CoreGraphics
 
 /// The spacing scale of the design, in points. Screens space and pad with these, never with a number.
 nonisolated enum Spacing {
+    static let none: CGFloat = 0
     static let xxSmall: CGFloat = 4
     static let xSmall: CGFloat = 8
     static let small: CGFloat = 12

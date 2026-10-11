@@ -6,7 +6,7 @@ import Testing
 /// `PATCH /v1/profile` sends the version and only what the cook changed.
 @Suite struct ProfilePatchTests {
     func text(of patch: ProfilePatch) throws -> String {
-        String(decoding: try patch.body(), as: UTF8.self)
+        String(bytes: try patch.body(), encoding: .utf8)!
     }
 
     @Test func onlyTheChangedFieldsAreSentWithTheVersion() throws {

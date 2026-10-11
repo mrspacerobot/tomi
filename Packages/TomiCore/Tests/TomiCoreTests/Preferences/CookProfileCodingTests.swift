@@ -69,7 +69,7 @@ import Testing
 
     @Test func unsetAnswersAreWrittenAsNull() throws {
         let data = try JSONEncoder().encode(CookProfile())
-        let text = String(decoding: data, as: UTF8.self)
+        let text = String(bytes: data, encoding: .utf8)!
         #expect(text.contains(#""diet":null"#))
         #expect(text.contains(#""equipment":null"#))
         #expect(text.contains(#""units":null"#))

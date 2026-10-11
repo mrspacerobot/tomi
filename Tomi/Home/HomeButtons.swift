@@ -6,20 +6,8 @@ struct HomeButtons: View {
 
     var body: some View {
         VStack(spacing: Spacing.small) {
-            Button {
-                path.append(.scan)
-            } label: {
-                Text(.homeScan)
-            }
-            .buttonStyle(.tomiPrimary)
-            .accessibilityIdentifier("home-scan")
-            Button {
-                path.append(.settings)
-            } label: {
-                Text(.homeSettings)
-            }
-            .buttonStyle(.tomiSecondary)
-            .accessibilityIdentifier("home-settings")
+            HomeScanButton(path: $path)
+            HomeSettingsButton(path: $path)
         }
     }
 }

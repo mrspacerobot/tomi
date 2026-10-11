@@ -41,7 +41,7 @@ import Testing
 
     @Test func theRequestSendsSortedIngredientsAndLeavesOutAMissingScan() throws {
         let request = SpecialsRequest(ingredients: ["spinach", "egg"], scanID: nil)
-        let text = String(decoding: try JSONEncoder().encode(request), as: UTF8.self)
+        let text = String(bytes: try JSONEncoder().encode(request), encoding: .utf8)!
         #expect(text == #"{"ingredients":["egg","spinach"]}"#)
     }
 
@@ -49,7 +49,7 @@ import Testing
         let request = SpecialsRequest(ingredients: ["egg"], scanID: "scan-1")
         let encoder = JSONEncoder()
         encoder.outputFormatting = .sortedKeys
-        let text = String(decoding: try encoder.encode(request), as: UTF8.self)
+        let text = String(bytes: try encoder.encode(request), encoding: .utf8)!
         #expect(text == #"{"ingredients":["egg"],"scanId":"scan-1"}"#)
     }
 }
