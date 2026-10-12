@@ -3,7 +3,7 @@ import Testing
 
 @testable import TomiCore
 
-/// Offers as `POST /v1/specials` sends them, and the request that asks for them.
+/// Offers as `POST /v1/lessons/suggest` sends them, and the request that asks for them.
 @Suite struct SpecialsDecodingTests {
     @Test func anOfferIsReadWithItsSwapsMissingIngredientsAndCheck() throws {
         let offer = try ServerJSON.decode(Offer.self, from: ServerJSON.offer)

@@ -98,7 +98,7 @@ See [the companion handoff](design/companion.md) for the forms, motion and inspe
 1. Consent: before the first scan the cook agrees to `photo-scan` (and, separately and optionally, `photo-dataset`) for the text version the server names.
 2. Photo (or typed list). The app sends a JPEG to `POST /v1/scans`; the server's model returns items, each matched to an ingredient of its table or not.
 3. The cook confirms: sure items start ticked, unsure and unmatched ones do not count until ticked; typed words go to `POST /v1/ingredients/resolve`, and the cook picks when one is ambiguous. The server adds the cupboard staples.
-4. `POST /v1/specials`: the server filters its library by the cook's level, diet, things to avoid, cuisine "never" and kitchen, applies only listed swaps, checks the result again, ranks it and says what it checked.
+4. `POST /v1/lessons/suggest`: the server filters its library by the cook's level, diet, things to avoid, cuisine "never" and kitchen, applies only listed swaps, checks the result again, ranks it and says what it checked.
 5. The app shows the special and up to two alternatives that pass the checked-restrictions guard, with swaps, missing ingredients and the reason. No dish yet is a kind empty state, never an error.
 6. The lesson player opens the lesson file on the phone at the offered revision, with the offered swaps, and works offline.
 

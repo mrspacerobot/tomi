@@ -1,4 +1,4 @@
-/// The body of `POST /v1/specials`: the ingredients the cook confirmed, and the scan they came from.
+/// The body of `POST /v1/lessons/suggest`: the ingredients the cook confirmed, and the scan they came from.
 public struct SpecialsRequest: Hashable, Codable, Sendable {
     public let ingredients: [OptionID]
     public let scanID: ScanID?

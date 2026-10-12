@@ -68,6 +68,15 @@ import TomiCore
         #expect(request.httpBody == Data([1, 2]))
     }
 
+    @Test func tonightsLessonIsAskedFromTheSuggestRoute() async throws {
+        let answer = #"{"libraryVersion": 1, "rankedBy": "overlap", "special": null, "alternatives": []}"#
+        let harness = make([.init(status: 200, body: answer)])
+        _ = try await harness.api.specials(SpecialsRequest(ingredients: ["egg"], scanID: nil))
+        let request = try #require(harness.transport.requests.first)
+        #expect(request.httpMethod == "POST")
+        #expect(request.url?.absoluteString == "https://api.example.test/v1/lessons/suggest")
+    }
+
     @Test func aConsentIsGivenForTheVersionShown() async throws {
         let harness = make([.init(status: 204, body: "")])
         try await harness.api.agree(to: .photoDataset, version: 1)

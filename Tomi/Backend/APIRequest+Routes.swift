@@ -7,7 +7,7 @@ extension APIRequest {
     nonisolated static let profile = APIRequest(.get, "v1/profile")
     nonisolated static let consents = APIRequest(.get, "v1/consents")
     nonisolated static let resolve = APIRequest(.post, "v1/ingredients/resolve")
-    nonisolated static let specials = APIRequest(.post, "v1/specials")
+    nonisolated static let specials = APIRequest(.post, "v1/lessons/suggest")
 
     nonisolated static func saveProfile(_ patch: ProfilePatch) throws -> APIRequest {
         var request = APIRequest(.patch, "v1/profile")

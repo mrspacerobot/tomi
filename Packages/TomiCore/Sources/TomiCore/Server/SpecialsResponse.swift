@@ -1,4 +1,4 @@
-/// What `POST /v1/specials` sends back: tonight's special and up to two alternatives.
+/// What `POST /v1/lessons/suggest` sends back: tonight's special and up to two alternatives.
 public struct SpecialsResponse: Hashable, Codable, Sendable {
     public var libraryVersion = 0
     /// How the offers were ordered, or nil when a newer server names a way this build does not know.

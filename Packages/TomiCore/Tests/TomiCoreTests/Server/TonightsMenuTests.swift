@@ -2,7 +2,7 @@ import Testing
 
 @testable import TomiCore
 
-/// What the cook is shown of `POST /v1/specials`: checked offers only, a special and at most two alternatives.
+/// What the cook is shown of `POST /v1/lessons/suggest`: checked offers only, a special and at most two alternatives.
 @Suite struct TonightsMenuTests {
     let vegan = OfferCheckedTests.cook(diet: "vegan", avoid: [])
 
