@@ -16,6 +16,42 @@ import TomiCore
         return model
     }
 
+    func model(for api: FakeTomiAPI) async throws -> ScanModel {
+        let profile = ProfileModel(api: api, store: InMemoryProgressStore())
+        try await profile.load()
+        let model = ScanModel(api: api, profile: profile)
+        await model.start()
+        return model
+    }
+
+    @Test func eachConsentIsAgreedToAtItsOwnTextVersion() async throws {
+        let api = FakeTomiAPI(library: BundledLessonLibrary())
+        let model = try await model(for: api)
+        model.keepsPhoto = true
+        await model.agree()
+        #expect(await api.agreedVersions == [.photoScan: 1, .photoDataset: 2])
+    }
+
+    @Test func aCookWhoAlreadyAgreedToKeepingPhotosStartsWithKeepingOn() async throws {
+        let api = FakeTomiAPI(library: BundledLessonLibrary())
+        try await api.agree(to: .photoScan, version: ConsentText.version(for: .photoScan))
+        try await api.agree(to: .photoDataset, version: ConsentText.version(for: .photoDataset))
+        let model = try await model(for: api)
+        #expect(model.stage == .ready)
+        #expect(model.keepsPhoto)
+    }
+
+    @Test func keepingPhotosIsNotOfferedWhenTheServersTextIsNewerThanThisBuilds() async throws {
+        let api = FakeTomiAPI(library: BundledLessonLibrary())
+        await api.setTextVersion(3, for: .photoDataset)
+        let model = try await model(for: api)
+        #expect(model.stage == .consent)
+        #expect(!model.offersToKeepPhoto)
+        model.keepsPhoto = true
+        await model.agree()
+        #expect(await api.agreedVersions == [.photoScan: 1])
+    }
+
     @Test func theFirstScanAsksForConsentWithKeepingThePhotoOff() async throws {
         let model = try await scan()
         #expect(model.stage == .consent)

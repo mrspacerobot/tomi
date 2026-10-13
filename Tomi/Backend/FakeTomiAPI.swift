@@ -11,6 +11,9 @@ actor FakeTomiAPI: TomiAPI {
     private let offersNothing: Bool
     private var envelope: ProfileEnvelope
     private var agreed: Set<ConsentPurpose> = []
+    private var textVersions: [ConsentPurpose: Int] = [:]
+    /// The version each purpose was agreed at, as the cook's app sent it.
+    private(set) var agreedVersions: [ConsentPurpose: Int] = [:]
 
     /// The fake cook's profile starts as given: a new cook by default.
     init(library: any LessonLibrary, profile: CookProfile = CookProfile(), offersNothing: Bool = false) {
@@ -39,12 +42,25 @@ actor FakeTomiAPI: TomiAPI {
 
     func consents() async throws -> [ConsentStatus] {
         ConsentPurpose.allCases.map { purpose in
-            ConsentStatus(purpose: purpose, currentVersion: ConsentText.version, agreed: agreed.contains(purpose))
+            ConsentStatus(purpose: purpose, currentVersion: textVersion(for: purpose), agreed: agreed.contains(purpose))
         }
+    }
+
+    /// For tests: the server now asks for another text than this build has.
+    func setTextVersion(_ version: Int, for purpose: ConsentPurpose) {
+        textVersions[purpose] = version
+    }
+
+    private func textVersion(for purpose: ConsentPurpose) -> Int {
+        if let version = textVersions[purpose] {
+            return version
+        }
+        return ConsentText.version(for: purpose)
     }
 
     func agree(to purpose: ConsentPurpose, version: Int) async throws {
         agreed.insert(purpose)
+        agreedVersions[purpose] = version
     }
 
     func withdraw(_ purpose: ConsentPurpose) async throws {

@@ -2,22 +2,23 @@ import Foundation
 import ImageIO
 import UniformTypeIdentifiers
 
-/// Turns any photo the phone can read, HEIC included, into a JPEG the server accepts: at most `largestSide`
-/// pixels on its long side and under the server's 10 MB. The copy carries no metadata, so no place or time
-/// leaves the phone with it.
+/// Turns any photo the phone can read, HEIC included, into a small JPEG the server accepts: at most `largestSide`
+/// pixels on its long side, compressed to `quality`, and under the server's 10 MB. It carries the photo's own place,
+/// time and camera details only when the cook agreed to let Tomi keep the photo, and none otherwise.
 nonisolated enum JPEGConverter {
-    static let largestSide = 2_048
-    static let quality = 0.8
+    static let largestSide = 1_280
+    static let quality = 0.6
     static let largestBytes = 10_000_000
 
-    static func jpeg(from photo: Data) throws -> Data {
+    static func jpeg(from photo: Data, keepingMetadata: Bool) throws -> Data {
         guard let source = CGImageSourceCreateWithData(photo as CFData, nil) else {
             throw JPEGConversionError.unreadable
         }
         guard let image = CGImageSourceCreateThumbnailAtIndex(source, 0, thumbnailOptions) else {
             throw JPEGConversionError.unreadable
         }
-        return try encoded(image)
+        let metadata = properties(of: source, keeping: keepingMetadata)
+        return try encoded(image, with: metadata)
     }
 
     private static var thumbnailOptions: CFDictionary {
@@ -28,11 +29,12 @@ nonisolated enum JPEGConverter {
         ] as CFDictionary
     }
 
-    private static func encoded(_ image: CGImage) throws -> Data {
+    private static func encoded(_ image: CGImage, with metadata: [CFString: Any]) throws -> Data {
         let output = NSMutableData()
         let destination = try jpegDestination(writingInto: output)
-        let options = [kCGImageDestinationLossyCompressionQuality: quality] as CFDictionary
-        CGImageDestinationAddImage(destination, image, options)
+        var options = metadata
+        options[kCGImageDestinationLossyCompressionQuality] = quality
+        CGImageDestinationAddImage(destination, image, options as CFDictionary)
         guard CGImageDestinationFinalize(destination), output.length < largestBytes else {
             throw JPEGConversionError.tooLarge
         }

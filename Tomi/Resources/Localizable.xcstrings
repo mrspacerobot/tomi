@@ -1682,7 +1682,7 @@
       }
     },
     "consent.scan.body": {
-      "comment": "Text of the photo-scan consent, version 1. If its meaning changes, raise ConsentText.version and the server's version together.",
+      "comment": "Text of the photo-scan consent, version 1. If its meaning changes, raise ConsentText.version(for: .photoScan) and the server's photo-scan version together.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -1706,7 +1706,7 @@
       }
     },
     "consent.dataset.title": {
-      "comment": "Switch for the separate photo-dataset consent, version 1. Off unless the cook turns it on.",
+      "comment": "Switch for the separate photo-dataset consent, version 2. Off unless the cook turns it on. If its meaning changes, raise ConsentText.version(for: .photoDataset) and the server's photo-dataset version together.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -1718,13 +1718,13 @@
       }
     },
     "consent.dataset.body": {
-      "comment": "Explanation under the photo-dataset switch, version 1.",
+      "comment": "Explanation under the photo-dataset switch, version 2. Says what is kept: the photo as the phone made it, with its place and time. Version 1 said the place and time were left out.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tomi keeps a copy without its location or time, with the ingredients you confirm. You can withdraw this at any time and the photos are deleted."
+            "value": "Tomi keeps your photo exactly as your phone made it, with where and when it was taken, and the ingredients you confirm. The AI model reads this same file. You can withdraw this at any time and the photos are deleted."
           }
         }
       }

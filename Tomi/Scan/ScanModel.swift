@@ -13,6 +13,8 @@ final class ScanModel {
     var list = ConfirmList()
     /// The cook's choice on the consent screen to let Tomi keep the photo. Off until they turn it on.
     var keepsPhoto = false
+    /// Whether this build has the text the server asks for to keep photos. If not, the cook is not offered it.
+    private(set) var offersToKeepPhoto = true
     /// The server asks for a newer consent text than this build has, so it cannot ask; the cook types instead.
     private(set) var consentTextIsOutdated = false
     private(set) var scanID: ScanID?
@@ -51,6 +53,7 @@ final class ScanModel {
     }
 
     private func stageFor(_ consents: [ConsentStatus]) -> ScanStage {
+        noteKeeping(in: consents)
         guard let scan = consents.first(where: { $0.purpose == .photoScan }), ConsentText.isCurrent(scan) else {
             consentTextIsOutdated = true
             return .confirming
@@ -59,5 +62,17 @@ final class ScanModel {
             return .ready
         }
         return .consent
+    }
+
+    /// Keeping photos is offered only with the text the server names, and starts on if the cook already agreed.
+    private func noteKeeping(in consents: [ConsentStatus]) {
+        guard let dataset = consents.first(where: { $0.purpose == .photoDataset }), ConsentText.isCurrent(dataset)
+        else {
+            offersToKeepPhoto = false
+            keepsPhoto = false
+            return
+        }
+        offersToKeepPhoto = true
+        keepsPhoto = dataset.agreed
     }
 }

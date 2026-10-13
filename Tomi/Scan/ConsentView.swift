@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Asked before the first scan: the photo goes to Tomi's server to be read. Keeping it is a separate
-/// choice, off unless the cook turns it on. The words are the text of version `ConsentText.version`.
+/// choice, off unless the cook turns it on. The words are the texts of the versions `ConsentText.version(for:)` names.
 struct ConsentView: View {
     @Bindable var model: ScanModel
 
@@ -11,8 +11,7 @@ struct ConsentView: View {
                 ScanHeader(title: .consentScanTitle, identifier: "consent-title", problem: model.problem)
                 Text(.consentScanBody)
                     .textStyle(.body)
-                Toggle(isOn: $model.keepsPhoto) { DatasetConsentWords() }
-                    .accessibilityIdentifier("consent-dataset")
+                KeepPhotoSwitch(model: model)
                 ConsentButtons(model: model)
             }
             .padding(Spacing.screenMargin)
