@@ -4,20 +4,20 @@ import UniformTypeIdentifiers
 
 /// Turns any photo the phone can read, HEIC included, into a small JPEG the server accepts: at most `largestSide`
 /// pixels on its long side, compressed to `quality`, and under the server's 10 MB. It carries the photo's own place,
-/// time and camera details only when the cook agreed to let Tomi keep the photo, and none otherwise.
+/// time and camera details: proof of concept, the server keeps every photo as it arrived.
 nonisolated enum JPEGConverter {
     static let largestSide = 1_280
     static let quality = 0.6
     static let largestBytes = 10_000_000
 
-    static func jpeg(from photo: Data, keepingMetadata: Bool) throws -> Data {
+    static func jpeg(from photo: Data) throws -> Data {
         guard let source = CGImageSourceCreateWithData(photo as CFData, nil) else {
             throw JPEGConversionError.unreadable
         }
         guard let image = CGImageSourceCreateThumbnailAtIndex(source, 0, thumbnailOptions) else {
             throw JPEGConversionError.unreadable
         }
-        let metadata = properties(of: source, keeping: keepingMetadata)
+        let metadata = properties(of: source)
         return try encoded(image, with: metadata)
     }
 

@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// The fridge scan: consent, the photo, what the cook has tonight, then tonight's menu.
+/// The fridge scan: the photo, what the cook has tonight, then tonight's menu.
 struct ScanView: View {
     let flow: AppFlowModel
     @Binding var path: [HomeRoute]
@@ -16,9 +16,6 @@ struct ScanView: View {
         ScanStageView(model: model, flow: flow, path: $path)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(ColorRole.paper.color)
-            .task {
-                await model.start()
-            }
     }
 }
 

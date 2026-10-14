@@ -37,8 +37,6 @@ final class FirstEveningUITests: XCTestCase {
 
     @MainActor private func scanTheFridge(_ app: XCUIApplication) {
         app.buttons["home-scan"].tap()
-        XCTAssertTrue(app.element("consent-title").waitForExistence(timeout: 5))
-        app.buttons["consent-agree"].tap()
         XCTAssertTrue(app.buttons["scan-pick-photo"].waitForExistence(timeout: 5))
         app.buttons["scan-pick-photo"].tap()
         XCTAssertTrue(app.element("confirm-title").waitForExistence(timeout: 5))

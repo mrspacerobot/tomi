@@ -1,7 +1,7 @@
 /// What `POST /v1/scans` sends back for a fridge photo.
 public struct ScanResult: Hashable, Codable, Sendable {
     public let scanID: ScanID
-    /// Whether the server kept the photo, which it does only with the cook's `photo-dataset` consent.
+    /// Whether the server kept the photo. Proof of concept: it keeps every photo when its photo storage is set up.
     public let kept: Bool
     public let items: [ScanItem]
 

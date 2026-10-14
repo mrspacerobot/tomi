@@ -8,12 +8,7 @@ struct ScanReadyView: View {
     var body: some View {
         VStack(spacing: Spacing.large) {
             ScanHeader(title: .scanReadyTitle, identifier: "scan-ready-title", problem: model.problem)
-            FridgePhotoPicker(
-                source: photos,
-                keepsMetadata: model.keepsPhoto,
-                onPhoto: send,
-                onFailure: model.photoFailed
-            )
+            FridgePhotoPicker(source: photos, onPhoto: send, onFailure: model.photoFailed)
             Button(action: model.typeInstead) { Text(.scanTypeInstead) }
                 .buttonStyle(.tomiSecondary)
                 .accessibilityIdentifier("scan-type-instead")

@@ -14,13 +14,13 @@ nonisolated struct FakeServerData: Sendable {
     }
 
     /// The first two ingredients of the first lesson, sure; its third, unsure; and a thing the server does not know.
-    func scan(keepingPhoto: Bool) -> ScanResult {
+    func scan() -> ScanResult {
         var items: [ScanItem] = []
         for (position, ingredient) in options.ingredients.prefix(3).enumerated() {
             items.append(Self.item(ingredient, sure: position < 2))
         }
         items.append(ScanItem(label: FakeOptions.unknownThing, ingredient: nil, confidence: 0.8))
-        return ScanResult(scanID: "fake-scan", kept: keepingPhoto, items: items)
+        return ScanResult(scanID: "fake-scan", kept: true, items: items)
     }
 
     private static func item(_ ingredient: NamedOption, sure: Bool) -> ScanItem {

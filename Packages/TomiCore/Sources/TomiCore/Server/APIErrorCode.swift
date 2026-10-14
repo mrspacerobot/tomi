@@ -7,11 +7,9 @@ public enum APIErrorCode: String, CaseIterable, Hashable, Sendable {
     case notFound = "not_found"
     case versionConflict = "version_conflict"
     case weakensRestrictions = "weakens_restrictions"
-    case consentRequired = "consent_required"
     case photoTooLarge = "photo_too_large"
     case photoUnreadable = "photo_unreadable"
     case aiUnavailable = "ai_unavailable"
-    case storageUnavailable = "storage_unavailable"
     case authUnavailable = "auth_unavailable"
     case internalError = "internal"
 }

@@ -17,19 +17,6 @@ nonisolated struct URLSessionTomiAPI: TomiAPI {
         try await client.value(ProfileEnvelope.self, for: .saveProfile(patch))
     }
 
-    func consents() async throws -> [ConsentStatus] {
-        try await client.value([ConsentStatus].self, for: .consents)
-    }
-
-    func agree(to purpose: ConsentPurpose, version: Int) async throws {
-        let request = try APIRequest.consent(purpose, .put).sending(ConsentAgreement(version: version))
-        _ = try await client.data(for: request)
-    }
-
-    func withdraw(_ purpose: ConsentPurpose) async throws {
-        _ = try await client.data(for: .consent(purpose, .delete))
-    }
-
     func scan(jpeg: Data) async throws -> ScanResult {
         try await client.value(ScanResult.self, for: .scan(jpeg: jpeg))
     }

@@ -2,10 +2,9 @@ import PhotosUI
 import SwiftUI
 
 /// The button that picks the fridge photo: from the cook's photos, or in a UI test launch the fixed photo.
-/// It hands over JPEG bytes for the server, with the photo's place and time only if the cook agreed to keeping it.
+/// It hands over JPEG bytes for the server, with the photo's place and time.
 struct FridgePhotoPicker: View {
     let source: PhotoSource
-    let keepsMetadata: Bool
     let onPhoto: (Data) -> Void
     let onFailure: () -> Void
     @State private var item: PhotosPickerItem?
@@ -34,17 +33,17 @@ struct FridgePhotoPicker: View {
         }
         Task {
             do {
-                onPhoto(try await Self.jpeg(of: picked, keepingMetadata: keepsMetadata))
+                onPhoto(try await Self.jpeg(of: picked))
             } catch {
                 onFailure()
             }
         }
     }
 
-    private static func jpeg(of picked: PhotosPickerItem, keepingMetadata: Bool) async throws -> Data {
+    private static func jpeg(of picked: PhotosPickerItem) async throws -> Data {
         guard let data = try await picked.loadTransferable(type: Data.self) else {
             throw JPEGConversionError.unreadable
         }
-        return try JPEGConverter.jpeg(from: data, keepingMetadata: keepingMetadata)
+        return try JPEGConverter.jpeg(from: data)
     }
 }

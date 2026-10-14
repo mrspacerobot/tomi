@@ -2,21 +2,15 @@ import Foundation
 import OSLog
 import TomiCore
 
-/// The fridge scan from consent to tonight's menu. The photo goes to the server only after the cook's
-/// `photo-scan` consent; it is kept there only with the separate `photo-dataset` consent, off by default.
+/// The fridge scan from the photo to tonight's menu. Proof of concept: nothing asks the cook yet, and the server
+/// keeps every photo. A consent step must come before real cooks use it.
 @Observable
 final class ScanModel {
     static let logger = Logger(category: .scan)
 
-    var stage = ScanStage.checking
+    var stage = ScanStage.ready
     var problem: ProblemText?
     var list = ConfirmList()
-    /// The cook's choice on the consent screen to let Tomi keep the photo. Off until they turn it on.
-    var keepsPhoto = false
-    /// Whether this build has the text the server asks for to keep photos. If not, the cook is not offered it.
-    private(set) var offersToKeepPhoto = true
-    /// The server asks for a newer consent text than this build has, so it cannot ask; the cook types instead.
-    private(set) var consentTextIsOutdated = false
     private(set) var scanID: ScanID?
     let api: any TomiAPI
     let profile: ProfileModel
@@ -24,15 +18,6 @@ final class ScanModel {
     init(api: any TomiAPI, profile: ProfileModel) {
         self.api = api
         self.profile = profile
-    }
-
-    func start() async {
-        do {
-            let consents = try await api.consents()
-            stage = stageFor(consents)
-        } catch {
-            fail(error, then: .confirming)
-        }
     }
 
     func typeInstead() {
@@ -50,29 +35,5 @@ final class ScanModel {
         list = ConfirmList(items: result.items.map(ConfirmItem.init))
         problem = nil
         stage = .confirming
-    }
-
-    private func stageFor(_ consents: [ConsentStatus]) -> ScanStage {
-        noteKeeping(in: consents)
-        guard let scan = consents.first(where: { $0.purpose == .photoScan }), ConsentText.isCurrent(scan) else {
-            consentTextIsOutdated = true
-            return .confirming
-        }
-        if scan.agreed {
-            return .ready
-        }
-        return .consent
-    }
-
-    /// Keeping photos is offered only with the text the server names, and starts on if the cook already agreed.
-    private func noteKeeping(in consents: [ConsentStatus]) {
-        guard let dataset = consents.first(where: { $0.purpose == .photoDataset }), ConsentText.isCurrent(dataset)
-        else {
-            offersToKeepPhoto = false
-            keepsPhoto = false
-            return
-        }
-        offersToKeepPhoto = true
-        keepsPhoto = dataset.agreed
     }
 }

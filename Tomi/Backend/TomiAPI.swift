@@ -1,7 +1,7 @@
 import Foundation
 import TomiCore
 
-/// Every call the app makes to Tomi's server. The server owns the food lists, the profile, consents,
+/// Every call the app makes to Tomi's server. The server owns the food lists, the profile,
 /// fridge scans and tonight's special; the app shows what it is sent and sends back what the cook picked.
 /// `URLSessionTomiAPI` talks to the server; `FakeTomiAPI` serves previews and UI tests.
 nonisolated protocol TomiAPI: Sendable {
@@ -11,11 +11,7 @@ nonisolated protocol TomiAPI: Sendable {
     /// Sends only what changed. Throws `version_conflict` with the profile as it is now,
     /// or `weakens_restrictions` unless the cook confirmed the removal.
     func saveProfile(_ patch: ProfilePatch) async throws -> ProfileEnvelope
-    func consents() async throws -> [ConsentStatus]
-    /// Agrees to the text of this version, which the cook was shown.
-    func agree(to purpose: ConsentPurpose, version: Int) async throws
-    func withdraw(_ purpose: ConsentPurpose) async throws
-    /// Sends a JPEG of the fridge, only after the cook's `photo-scan` consent.
+    /// Sends a JPEG of the fridge. Proof of concept: the server keeps every photo and nothing asks the cook yet.
     func scan(jpeg: Data) async throws -> ScanResult
     func resolve(_ labels: [String]) async throws -> ResolveResponse
     func specials(_ request: SpecialsRequest) async throws -> SpecialsResponse

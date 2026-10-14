@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// While Tomi checks, reads the photo or looks for tonight's special.
+/// While Tomi reads the photo or looks for tonight's special.
 struct ScanWaitingView: View {
     let stage: ScanStage
 
@@ -16,9 +16,8 @@ struct ScanWaitingView: View {
 
     private var words: LocalizedStringResource {
         switch stage {
-        case .reading: .scanReading
         case .finding: .scanFinding
-        default: .scanChecking
+        default: .scanReading
         }
     }
 }

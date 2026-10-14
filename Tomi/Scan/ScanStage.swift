@@ -2,9 +2,6 @@ import TomiCore
 
 /// Where the fridge scan is.
 enum ScanStage: Equatable {
-    case checking
-    /// The cook is asked for the photo consent, with the separate dataset choice.
-    case consent
     /// The cook picks a photo, or types instead.
     case ready
     case reading

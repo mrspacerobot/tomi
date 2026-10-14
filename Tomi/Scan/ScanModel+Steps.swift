@@ -2,25 +2,10 @@ import Foundation
 import TomiCore
 
 extension ScanModel {
-    /// The cook said yes to the scan, and maybe to keeping the photo, which is its own consent.
-    func agree() async {
-        do {
-            try await api.agree(to: .photoScan, version: ConsentText.version(for: .photoScan))
-            if keepsPhoto && offersToKeepPhoto {
-                try await api.agree(to: .photoDataset, version: ConsentText.version(for: .photoDataset))
-            }
-            stage = .ready
-        } catch {
-            fail(error, then: .consent)
-        }
-    }
-
     func send(jpeg: Data) async {
         stage = .reading
         do {
             remember(try await api.scan(jpeg: jpeg))
-        } catch let error as BackendError where error.code == .consentRequired {
-            fail(error, then: .consent)
         } catch {
             fail(error, then: .confirming)
         }

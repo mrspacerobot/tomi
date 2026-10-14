@@ -19,7 +19,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Everyday AI | On Tomi's server, not the phone: reading fridge photos and ranking tonight's offers. No Foundation Models in the app. When the server's model is unavailable (`503 ai_unavailable`) the cook types and the server ranks by ingredient overlap. Ask Tomi and voice are not decided yet |
 | Food knowledge | The server owns the ingredient table, facts, diets, avoid items, cuisines, equipment and every filter. The app holds no such list or rule: it shows `GET /v1/options` and sends back ids. Its one food check is a guard: an offer is shown only if the server checked it for the cook's diet and every avoid item |
 | Sign-in | Supabase Auth with Sign in with Apple, without a third-party SDK. Tokens in the Keychain |
-| Fridge photos | Sent to the server only after the cook's `photo-scan` consent, as a small JPEG (1280 px on the long side, quality 0.6) under 10 MB. It has no place or time, unless the cook agreed to the separate `photo-dataset` consent: then it keeps both and the server keeps it as it arrived. That consent is off by default and withdrawable in settings |
+| Fridge photos | Sent to the server as a small JPEG (1280 px on the long side, quality 0.6) under 10 MB, with the photo's place and time. Proof of concept: the server keeps every photo and nothing asks the cook yet. A consent step must come before real cooks |
 | Curriculum | Classical French technique and its kitchen words (mirepoix, roux, deglaze, monter au beurre, beurre blanc), without presenting the app as "French cooking". Twelve techniques in four courses (Foundations, Heat control, Sauces, Putting it together), each with levels |
 | Lessons | Written in bulk by a top Claude model into a reviewed library. One file per lesson. Never generated live in version 1 |
 | Tomi and step scenes | Printed mascot and step scenes stay code-drawn in SwiftUI. A separate native RealityKit tomato chef, built from shared geometry with no downloaded model, supplies idle, listening, thinking, explaining and celebrating states for future conversations (#94). Callers supply the state; the companion opens no microphone or AI session |
@@ -27,7 +27,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Cuisines | Love, happy to try, or never, from day one. "Never" hides those dishes, including alternatives. Cuisines never gate skills. More arrive later as "guest menus" |
 | Pantry | Saved cupboard staples, switchable per evening, plus typing anything the photo missed |
 | Unsure ingredients | Not counted until the cook confirms them |
-| Backend | Tomi's Rust API on Cloud Run with Supabase (Auth, Postgres, storage). It keeps the cook's profile and consents; the phone keeps the cook log and a copy of the profile until the server has cook events |
+| Backend | Tomi's Rust API on Cloud Run with Supabase (Auth, Postgres, storage). It keeps the cook's profile; the phone keeps the cook log and a copy of the profile until the server has cook events |
 | Languages | English first. All text in a string catalog |
 | Plate photo | Optional, offered on the celebration card ("Show me the plate"). The streak day, XP and stamp are earned by finishing the lesson, never by the photo. Tomi makes one warm remark about what the technique should show, never a score and never a claim that the dish is cooked through or safe. The photo is kept with the dish on the menu and stays on the phone. How the remark is made, now that no AI runs on the phone, is not decided. Mockup: `round3.html`, `lp-plate` |
 | Streak and rank | The streak is the everyday hook and leads on home; rank is the slow, long goal behind it |
@@ -95,14 +95,13 @@ See [the companion handoff](design/companion.md) for the forms, motion and inspe
 
 ### From fridge photo to tonight's special
 
-1. Consent: before the first scan the cook agrees to `photo-scan` (and, separately and optionally, `photo-dataset`) for the text version the server names.
-2. Photo (or typed list). The app sends a JPEG to `POST /v1/scans`; the server's model returns items, each matched to an ingredient of its table or not.
-3. The cook confirms: sure items start ticked, unsure and unmatched ones do not count until ticked; typed words go to `POST /v1/ingredients/resolve`, and the cook picks when one is ambiguous. The server adds the cupboard staples.
-4. `POST /v1/lessons/suggest`: the server filters its library by the cook's level, diet, things to avoid, cuisine "never" and kitchen, applies only listed swaps, checks the result again, ranks it and says what it checked.
-5. The app shows the special and up to two alternatives that pass the checked-restrictions guard, with swaps, missing ingredients and the reason. No dish yet is a kind empty state, never an error.
-6. The lesson player opens the lesson file on the phone at the offered revision, with the offered swaps, and works offline.
+1. Photo (or typed list). The app sends a JPEG to `POST /v1/scans`; the server's model returns items, each matched to an ingredient of its table or not.
+2. The cook confirms: sure items start ticked, unsure and unmatched ones do not count until ticked; typed words go to `POST /v1/ingredients/resolve`, and the cook picks when one is ambiguous. The server adds the cupboard staples.
+3. `POST /v1/lessons/suggest`: the server filters its library by the cook's level, diet, things to avoid, cuisine "never" and kitchen, applies only listed swaps, checks the result again, ranks it and says what it checked.
+4. The app shows the special and up to two alternatives that pass the checked-restrictions guard, with swaps, missing ingredients and the reason. No dish yet is a kind empty state, never an error.
+5. The lesson player opens the lesson file on the phone at the offered revision, with the offered swaps, and works offline.
 
-Without the server's model (`503 ai_unavailable`) step 2 falls back to typing and the server ranks by ingredient overlap.
+Without the server's model (`503 ai_unavailable`) step 1 falls back to typing and the server ranks by ingredient overlap.
 
 ## Lesson library
 

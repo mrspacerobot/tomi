@@ -5,7 +5,6 @@ import TomiCore
 extension APIRequest {
     nonisolated static let options = publicRequest(.get, "v1/options")
     nonisolated static let profile = APIRequest(.get, "v1/profile")
-    nonisolated static let consents = APIRequest(.get, "v1/consents")
     nonisolated static let resolve = APIRequest(.post, "v1/ingredients/resolve")
     nonisolated static let specials = APIRequest(.post, "v1/lessons/suggest")
 
@@ -13,10 +12,6 @@ extension APIRequest {
         var request = APIRequest(.patch, "v1/profile")
         request.body = try patch.body()
         return request
-    }
-
-    nonisolated static func consent(_ purpose: ConsentPurpose, _ method: HTTPMethod) -> APIRequest {
-        APIRequest(method, "v1/consents/" + purpose.rawValue)
     }
 
     nonisolated static func scan(jpeg: Data) -> APIRequest {

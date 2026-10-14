@@ -7,7 +7,6 @@ struct SettingsView: View {
     var body: some View {
         List {
             QuestionLinks()
-            PhotoConsentSection(flow: flow)
             SignOutButton(flow: flow)
         }
         .navigationTitle(Text(.settingsTitle))

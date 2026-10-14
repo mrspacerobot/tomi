@@ -2,9 +2,9 @@ import Foundation
 import ImageIO
 
 nonisolated extension JPEGConverter {
-    /// The photo's own properties (place, time, camera) made to fit the shrunken picture, or none.
-    static func properties(of source: CGImageSource, keeping: Bool) -> [CFString: Any] {
-        guard keeping, var all = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [CFString: Any] else {
+    /// The photo's own properties (place, time, camera) made to fit the shrunken picture.
+    static func properties(of source: CGImageSource) -> [CFString: Any] {
+        guard var all = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [CFString: Any] else {
             return [:]
         }
         for key in staleAfterResizing {

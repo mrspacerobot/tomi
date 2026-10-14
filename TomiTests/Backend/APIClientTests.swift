@@ -36,14 +36,14 @@ import TomiCore
     }
 
     @Test func aSignedInCallCarriesTheBearerToken() async throws {
-        let harness = make([.init(status: 200, body: "[]")])
-        _ = try await harness.api.consents()
+        let harness = make([.init(status: 200, body: #"{"results": []}"#)])
+        _ = try await harness.api.resolve(["egg"])
         #expect(harness.transport.requests.first?.value(forHTTPHeaderField: "Authorization") == "Bearer old")
     }
 
     @Test func a401RenewsTheTokenOnceAndTriesAgain() async throws {
-        let harness = make([.init(status: 401, body: ""), .init(status: 200, body: "[]")])
-        _ = try await harness.api.consents()
+        let harness = make([.init(status: 401, body: ""), .init(status: 200, body: #"{"results": []}"#)])
+        _ = try await harness.api.resolve(["egg"])
         #expect(harness.auth.renewalCount == 1)
         let tokens = harness.transport.requests.map { $0.value(forHTTPHeaderField: "Authorization") }
         #expect(tokens == ["Bearer old", "Bearer new"])
@@ -77,19 +77,10 @@ import TomiCore
         #expect(request.url?.absoluteString == "https://api.example.test/v1/lessons/suggest")
     }
 
-    @Test func aConsentIsGivenForTheVersionShown() async throws {
-        let harness = make([.init(status: 204, body: "")])
-        try await harness.api.agree(to: .photoDataset, version: 1)
-        let request = try #require(harness.transport.requests.first)
-        #expect(request.httpMethod == "PUT")
-        #expect(request.url?.path() == "/v1/consents/photo-dataset")
-        #expect(request.httpBody == Data(#"{"version":1}"#.utf8))
-    }
-
     @Test func noAnswerIsUnreachable() async {
         let harness = make([])
         await #expect(throws: BackendError.unreachable) {
-            try await harness.api.consents()
+            try await harness.api.resolve(["egg"])
         }
     }
 }

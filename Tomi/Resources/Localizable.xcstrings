@@ -1081,18 +1081,6 @@
         }
       }
     },
-    "problem.consentRequired": {
-      "comment": "Shown when the server refuses a scan because the cook has not agreed to the current photo text.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tomi needs your yes before it reads a photo."
-          }
-        }
-      }
-    },
     "problem.photoTooLarge": {
       "comment": "Shown when the server refuses a fridge photo for its size.",
       "extractionState": "manual",
@@ -1609,18 +1597,6 @@
         }
       }
     },
-    "scan.checking": {
-      "comment": "Shown while the scan checks the cook's consents.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "One moment"
-          }
-        }
-      }
-    },
     "scan.reading": {
       "comment": "Shown while the server reads the fridge photo.",
       "extractionState": "manual",
@@ -1665,66 +1641,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Choose a photo of your fridge"
-          }
-        }
-      }
-    },
-    "consent.scan.title": {
-      "comment": "Title of the photo consent, version 1. Shown before the first fridge scan.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Can Tomi look at your photo?"
-          }
-        }
-      }
-    },
-    "consent.scan.body": {
-      "comment": "Text of the photo-scan consent, version 1. If its meaning changes, raise ConsentText.version(for: .photoScan) and the server's photo-scan version together.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "To read your fridge, Tomi sends the photo to its server, where an AI model lists what it sees. Then the photo is dropped. You can always type instead."
-          }
-        }
-      }
-    },
-    "consent.scan.agree": {
-      "comment": "Button that agrees to the photo-scan consent, version 1.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Yes, read my photo"
-          }
-        }
-      }
-    },
-    "consent.dataset.title": {
-      "comment": "Switch for the separate photo-dataset consent, version 1. Off unless the cook turns it on. If its meaning changes, raise ConsentText.version(for: .photoDataset) and the server's photo-dataset version together.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Also keep my photo to help Tomi learn"
-          }
-        }
-      }
-    },
-    "consent.dataset.body": {
-      "comment": "Explanation under the photo-dataset switch, version 1. Says what is kept: the photo as the phone made it, with its place and time.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tomi keeps your photo exactly as your phone made it, with where and when it was taken, and the ingredients you confirm. The AI model reads this same file. You can withdraw this at any time and the photos are deleted."
           }
         }
       }
@@ -2013,42 +1929,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "I stopped"
-          }
-        }
-      }
-    },
-    "settings.photos": {
-      "comment": "Heading of the settings section about the photo consents.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fridge photos"
-          }
-        }
-      }
-    },
-    "settings.withdrawDataset": {
-      "comment": "Button that withdraws the photo-dataset consent; the server deletes every kept photo.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stop keeping my photos and delete them"
-          }
-        }
-      }
-    },
-    "settings.withdrawScan": {
-      "comment": "Button that withdraws the photo-scan consent; Tomi will ask again before the next scan.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stop sending photos"
           }
         }
       }
