@@ -29,7 +29,7 @@ import TomiCore
         let model = try await model(for: api)
         model.keepsPhoto = true
         await model.agree()
-        #expect(await api.agreedVersions == [.photoScan: 1, .photoDataset: 2])
+        #expect(await api.agreedVersions == [.photoScan: 1, .photoDataset: 1])
     }
 
     @Test func aCookWhoAlreadyAgreedToKeepingPhotosStartsWithKeepingOn() async throws {

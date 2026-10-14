@@ -1706,7 +1706,7 @@
       }
     },
     "consent.dataset.title": {
-      "comment": "Switch for the separate photo-dataset consent, version 2. Off unless the cook turns it on. If its meaning changes, raise ConsentText.version(for: .photoDataset) and the server's photo-dataset version together.",
+      "comment": "Switch for the separate photo-dataset consent, version 1. Off unless the cook turns it on. If its meaning changes, raise ConsentText.version(for: .photoDataset) and the server's photo-dataset version together.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -1718,7 +1718,7 @@
       }
     },
     "consent.dataset.body": {
-      "comment": "Explanation under the photo-dataset switch, version 2. Says what is kept: the photo as the phone made it, with its place and time. Version 1 said the place and time were left out.",
+      "comment": "Explanation under the photo-dataset switch, version 1. Says what is kept: the photo as the phone made it, with its place and time.",
       "extractionState": "manual",
       "localizations": {
         "en": {

@@ -2,14 +2,13 @@ import TomiCore
 
 /// The consent texts the app shows live in the string catalog. These are the versions of those texts, one per
 /// purpose, which must match the server's `currentVersion` for that purpose: agreeing to an older text than the
-/// server's would not count. Raise a purpose's version when its text changes in substance, with the server's.
+/// server's would not count. Once the app is released, raise a purpose's version, with the server's, when its
+/// text changes in substance. Before release a text changes in place.
 nonisolated enum ConsentText {
-    /// The photo-scan text is unchanged since the start. The photo-dataset text is version 2: it says a kept
-    /// photo keeps its place and time, which version 1 promised it did not.
     static func version(for purpose: ConsentPurpose) -> Int {
         switch purpose {
         case .photoScan: 1
-        case .photoDataset: 2
+        case .photoDataset: 1
         }
     }
 
