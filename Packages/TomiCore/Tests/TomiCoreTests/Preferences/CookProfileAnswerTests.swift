@@ -27,14 +27,6 @@ import Testing
         #expect(profile.avoid.isEmpty)
     }
 
-    @Test func aCupboardStapleIsTickedAndUnticked() {
-        var profile = CookProfile()
-        profile.toggleCupboardStaple("salt")
-        #expect(profile.cupboardStaples == ["salt"])
-        profile.toggleCupboardStaple("salt")
-        #expect(profile.cupboardStaples.isEmpty)
-    }
-
     @Test func untilAnsweredTheKitchenIsWhatTheServerAssumes() {
         #expect(CookProfile().equipment == nil)
         #expect(CookProfile().kitchen(assumedUntilAnswered: ["oven"]) == ["oven"])

@@ -1,9 +1,11 @@
 import SwiftUI
+import TomiCore
 
 /// What became of the typed word: the candidates to pick from, or that Tomi does not know it.
 struct TypedItemOutcome: View {
     let typing: TypedItemModel
-    let model: ScanModel
+    let look: TypedItemLook
+    let onAdd: (NamedOption) -> Void
 
     var body: some View {
         if let choosing = typing.choosing {
@@ -12,10 +14,10 @@ struct TypedItemOutcome: View {
             FlowLayout {
                 ForEach(choosing.candidates) { candidate in
                     Chip(name: candidate.name, kind: .off) {
-                        model.list.add(candidate)
+                        onAdd(candidate)
                         typing.finishChoosing()
                     }
-                    .accessibilityIdentifier("confirm-candidate-" + candidate.id.rawValue)
+                    .accessibilityIdentifier(look.identifierPrefix + "-candidate-" + candidate.id.rawValue)
                 }
             }
         } else if let unknown = typing.unknownLabel {

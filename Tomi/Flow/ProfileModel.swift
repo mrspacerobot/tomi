@@ -6,7 +6,7 @@ import TomiCore
 final class ProfileModel {
     private(set) var options: LibraryOptions?
     private(set) var envelope: ProfileEnvelope?
-    private let api: any TomiAPI
+    let api: any TomiAPI
     private let cache: ProfileCache
 
     init(api: any TomiAPI, store: any ProgressStore) {

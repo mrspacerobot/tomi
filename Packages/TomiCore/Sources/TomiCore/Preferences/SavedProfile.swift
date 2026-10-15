@@ -18,6 +18,8 @@ public struct SavedProfile: Hashable, Sendable, StampedRecord {
     public var cuisinesNever: [String]?
     /// Ingredient ids.
     public var cupboardStaples: [String]?
+    /// Whether the cook has answered the cupboard question. Missing reads as not answered.
+    public var cupboardAnswered: Bool?
     /// Equipment ids, or nil while the cook has not answered. An empty list is an answer of its own.
     public var equipment: [String]?
     /// A raw value of `Experience`.

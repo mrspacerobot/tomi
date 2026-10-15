@@ -1,31 +1,41 @@
 import SwiftUI
 import TomiCore
 
-/// What the cook always has at home, as chips: on when it is a staple, off when it is not.
+/// What the cook always has at home: the everyday staples as chips, their own extras, and a field to add more.
+/// Until the cook has answered, the chips show what the server assumes, and saving records exactly what is shown.
 struct CupboardAnswers: View {
     let draft: AnswersDraft
+    @State private var typing: TypedItemModel
 
-    var body: some View {
-        FlowLayout {
-            ForEach(draft.options.ingredients) { ingredient in
-                Chip(name: ingredient.name, kind: kind(of: ingredient.id)) {
-                    draft.answers.toggleCupboardStaple(ingredient.id)
-                }
-                .accessibilityIdentifier("cupboard-" + ingredient.id.rawValue)
-            }
-        }
+    init(draft: AnswersDraft) {
+        self.draft = draft
+        _typing = State(initialValue: TypedItemModel(api: draft.api))
     }
 
-    private func kind(of ingredient: OptionID) -> ChipKind {
-        if draft.answers.cupboardStaples.contains(ingredient) {
-            return .on
+    var body: some View {
+        VStack(alignment: .leading, spacing: Spacing.large) {
+            if !draft.options.staples.isEmpty {
+                CupboardStapleChips(draft: draft)
+            }
+            if !draft.cupboardExtras.isEmpty {
+                CupboardExtraChips(draft: draft)
+            }
+            TypedItemField(typing: typing, look: .cupboard) { draft.addToCupboard($0.id) }
+            Text(.questionCupboardSaved(draft.cupboard.count))
+                .textStyle(.description)
+                .accessibilityIdentifier("cupboard-count")
         }
-        return .off
+        .onAppear {
+            draft.answers.answerCupboard(assumedUntilAnswered: draft.options.assumedStaples)
+        }
     }
 }
 
 #Preview {
-    CupboardAnswers(draft: .preview())
-        .padding()
-        .background(ColorRole.paper.color)
+    ScrollView {
+        CupboardAnswers(draft: .preview())
+            .padding()
+    }
+    .background(ColorRole.paper.color)
+    .dynamicTypeSize(.accessibility5)
 }

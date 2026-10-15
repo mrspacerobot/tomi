@@ -6,9 +6,12 @@ import TomiCore
 final class AnswersDraft {
     var answers: CookProfile
     let options: LibraryOptions
+    /// The server, for the questions where the cook types a word that it must understand.
+    let api: any TomiAPI
 
-    init(answers: CookProfile, options: LibraryOptions) {
+    init(answers: CookProfile, options: LibraryOptions, api: any TomiAPI) {
         self.answers = answers
         self.options = options
+        self.api = api
     }
 }

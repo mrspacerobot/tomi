@@ -19,6 +19,7 @@ extension SavedProfile {
         cuisinesToTry = profile.cuisinesToTry.savedIDs
         cuisinesNever = profile.cuisinesNever.savedIDs
         cupboardStaples = profile.cupboardStaples.savedIDs
+        cupboardAnswered = profile.cupboardAnswered
     }
 
     private mutating func writeKitchen(of profile: CookProfile) {

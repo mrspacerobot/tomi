@@ -23,6 +23,7 @@ extension CookProfile {
     }
 
     private mutating func changeKitchenAnswers() {
+        cupboardAnswered = true
         equipment = ["stovetop", "blender"]
         experience = .comfortable
         setServings(4)

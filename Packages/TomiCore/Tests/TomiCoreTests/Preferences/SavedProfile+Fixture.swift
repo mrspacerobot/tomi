@@ -24,6 +24,7 @@ extension CookProfile {
         profile.cuisinesToTry = ["korean"]
         profile.cuisinesNever = ["british"]
         profile.cupboardStaples = ["salt", "olive-oil"]
+        profile.cupboardAnswered = true
         profile.changeKitchenAnswers()
         return profile
     }

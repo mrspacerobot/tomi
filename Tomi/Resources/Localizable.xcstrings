@@ -1944,6 +1944,78 @@
           }
         }
       }
+    },
+    "question.cupboard.staples": {
+      "comment": "Heading above the everyday staples on the cupboard question in settings. Shown in capitals.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everyday staples"
+          }
+        }
+      }
+    },
+    "question.cupboard.extras": {
+      "comment": "Heading above the cook's own cupboard items that are not everyday staples, on the cupboard question in settings. Shown in capitals.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also in your cupboard"
+          }
+        }
+      }
+    },
+    "question.cupboard.unknown": {
+      "comment": "Name of a saved cupboard item whose name the app cannot find. It is a chip the cook can remove.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved earlier"
+          }
+        }
+      }
+    },
+    "question.cupboard.prompt": {
+      "comment": "Placeholder of the field where the cook types another cupboard item on the cupboard question in settings.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add another, for example cumin"
+          }
+        }
+      }
+    },
+    "question.cupboard.saved": {
+      "comment": "Line under the cupboard question in settings. The number is how many staples the cook has saved.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld staple saved."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld staples saved."
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "version": "1.0"

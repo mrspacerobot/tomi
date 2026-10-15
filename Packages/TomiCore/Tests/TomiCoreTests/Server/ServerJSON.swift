@@ -22,6 +22,7 @@ enum ServerJSON {
         + #"{"id": "wok", "name": "Wok", "summary": "Tosses", "assumed": false}], "#
         + #""experience": [{"id": "basics", "name": "Basics", "summary": "Some"}], "#
         + #""units": [{"id": "metric", "name": "Grams", "summary": "g"}], "#
+        + #""staples": [{"id": "salt", "name": "Salt", "assumed": true}], "#
         + #""ingredients": [{"id": "salt", "name": "Salt"}], "#
         + #""courses": [{"id": "basics", "title": "Basics", "skills": [{"id": "eggs", "name": "Eggs", "#
         + #""summary": "Crack", "prerequisites": [], "levels": [{"number": 1, "name": "Soft"}]}]}]}"#

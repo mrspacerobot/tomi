@@ -27,10 +27,6 @@ extension CookProfile {
         avoid.toggle(item)
     }
 
-    public mutating func toggleCupboardStaple(_ ingredient: OptionID) {
-        cupboardStaples.toggle(ingredient)
-    }
-
     /// The kitchen as the question shows it: the cook's answer, or what the server assumes until they give one.
     public func kitchen(assumedUntilAnswered assumed: Set<OptionID>) -> Set<OptionID> {
         guard let equipment else {

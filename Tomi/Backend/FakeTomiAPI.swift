@@ -5,7 +5,7 @@ import TomiCore
 /// It imitates the server's refusals the app must handle: a stale version, and a removed restriction without the
 /// cook's confirmation. It never touches the network.
 actor FakeTomiAPI: TomiAPI {
-    static let profileSchemaVersion = 1
+    static let profileSchemaVersion = 2
 
     private let data: FakeServerData
     private let offersNothing: Bool
@@ -27,7 +27,7 @@ actor FakeTomiAPI: TomiAPI {
     }
 
     func saveProfile(_ patch: ProfilePatch) async throws -> ProfileEnvelope {
-        try FakeProfileRules(stored: envelope).check(patch)
+        try FakeProfileRules(stored: envelope, options: data.options).check(patch)
         envelope = ProfileEnvelope(
             version: envelope.version + 1,
             schemaVersion: Self.profileSchemaVersion,
