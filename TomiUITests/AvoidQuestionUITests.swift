@@ -10,8 +10,8 @@ final class AvoidQuestionUITests: XCTestCase {
     @MainActor
     func testTheItemsAreShownInTheirTwoGroups() {
         let app = openAvoidQuestion(extra: [])
-        XCTAssertTrue(app.staticTexts["Common allergens"].exists)
-        XCTAssertTrue(app.staticTexts["Other things you skip"].exists)
+        XCTAssertTrue(app.element(labelled: "Common allergens").exists)
+        XCTAssertTrue(app.element(labelled: "Other things you skip").exists)
         XCTAssertTrue(app.element("choice-fake-nuts").exists)
         XCTAssertLessThan(app.element("choice-fake-celery").frame.minY, app.element("choice-fake-pork").frame.minY)
         XCTAssertTrue(app.element("avoid-none").exists)
