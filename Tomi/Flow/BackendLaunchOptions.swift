@@ -9,13 +9,18 @@ nonisolated struct BackendLaunchOptions: Equatable {
     /// The fake cook is already signed in.
     static let fakeSignedInArgument = "--fake-signed-in"
 
+    /// The fake cook saved an avoid item the fake lists do not name, as a newer server could have.
+    static let fakeUnlistedAvoidArgument = "--fake-unlisted-avoid"
+
     let usesFake: Bool
     let offersNothing: Bool
     let startsSignedIn: Bool
+    let savedUnlistedAvoid: Bool
 
     init(arguments: [String]) {
         usesFake = arguments.contains(Self.fakeBackendArgument)
         offersNothing = arguments.contains(Self.fakeNoSpecialsArgument)
         startsSignedIn = arguments.contains(Self.fakeSignedInArgument)
+        savedUnlistedAvoid = arguments.contains(Self.fakeUnlistedAvoidArgument)
     }
 }

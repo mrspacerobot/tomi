@@ -17,7 +17,8 @@ enum ServerJSON {
 
     static let options =
         #"{"libraryVersion": 3, "diets": [{"id": "vegan", "name": "Vegan", "summary": "No animals"}], "#
-        + #""avoidItems": [{"id": "nuts", "name": "Nuts"}], "cuisines": [{"id": "thai", "name": "Thai"}], "#
+        + #""avoidItems": [{"id": "nuts", "name": "Nuts", "kind": "allergen"}], "#
+        + #""cuisines": [{"id": "thai", "name": "Thai"}], "#
         + #""equipment": [{"id": "oven", "name": "Oven", "summary": "Bakes", "assumed": true}, "#
         + #"{"id": "wok", "name": "Wok", "summary": "Tosses", "assumed": false}], "#
         + #""experience": [{"id": "basics", "name": "Basics", "summary": "Some"}], "#

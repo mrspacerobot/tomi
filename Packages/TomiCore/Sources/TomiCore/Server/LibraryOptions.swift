@@ -4,7 +4,7 @@
 public struct LibraryOptions: Hashable, Codable, Sendable {
     public var libraryVersion = 0
     public var diets: [DescribedOption] = []
-    public var avoidItems: [NamedOption] = []
+    public var avoidItems: [AvoidOption] = []
     public var cuisines: [NamedOption] = []
     public var equipment: [EquipmentOption] = []
     public var experience: [DescribedOption] = []

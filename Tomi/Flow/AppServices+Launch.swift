@@ -36,6 +36,9 @@ extension AppServices {
             return CookProfile()
         }
         profile.isOnboardingDone = true
+        if options.savedUnlistedAvoid {
+            profile.avoid.insert(FakeOptions.unlistedSavedItem)
+        }
         return profile
     }
 

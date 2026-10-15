@@ -1944,6 +1944,66 @@
           }
         }
       }
+    },
+    "question.avoid.group.allergens": {
+      "comment": "Small heading over the first group of the avoid question: the common allergens. It only names the group and says nothing about any dish.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Common allergens"
+          }
+        }
+      }
+    },
+    "question.avoid.group.choices": {
+      "comment": "Small heading over the second group of the avoid question: things the cook skips by choice, such as for belief or taste.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other things you skip"
+          }
+        }
+      }
+    },
+    "question.avoid.unreadable": {
+      "comment": "Row of the avoid question for a saved item the app cannot name, for example one saved by a newer version. It is ticked and still avoided.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved earlier, I cannot name it"
+          }
+        }
+      }
+    },
+    "question.avoid.none": {
+      "comment": "Row of the avoid question for a cook who avoids nothing. Ticking it clears every other tick.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None of these"
+          }
+        }
+      }
+    },
+    "question.avoid.note": {
+      "comment": "Calm note under the avoid question. Tomi cannot read food packaging, so the cook should still check labels. Gives no medical advice.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I cannot read packaging, so please still check the labels."
+          }
+        }
+      }
     }
   },
   "version": "1.0"
