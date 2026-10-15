@@ -26,7 +26,7 @@ import TomiCore
     @Test func theOptionsAreAskedInTheCooksLanguageWithoutAToken() async throws {
         let options =
             #"{"libraryVersion": 1, "diets": [], "avoidItems": [], "cuisines": [], "equipment": [], "#
-            + #""experience": [], "units": [], "ingredients": [], "courses": []}"#
+            + #""experience": [], "units": [], "staples": [], "ingredients": [], "courses": []}"#
         let harness = make([.init(status: 200, body: options)])
         _ = try await harness.api.options()
         let request = try #require(harness.transport.requests.first)
