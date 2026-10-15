@@ -4,8 +4,9 @@ extension AnswersDraft {
     /// A new cook's answers over the fake server's lists.
     static func preview(saved avoid: Set<OptionID> = []) -> AnswersDraft {
         let data = FakeServerData(library: BundledLessonLibrary())
+        let api = FakeTomiAPI(library: BundledLessonLibrary())
         var answers = CookProfile()
         answers.avoid = avoid
-        return AnswersDraft(answers: answers, options: data.options)
+        return AnswersDraft(answers: answers, options: data.options, api: api)
     }
 }

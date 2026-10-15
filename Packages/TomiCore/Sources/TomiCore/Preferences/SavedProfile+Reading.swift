@@ -23,6 +23,7 @@ extension SavedProfile {
         profile.cuisinesToTry = Set(savedIDs: cuisinesToTry)
         profile.cuisinesNever = Set(savedIDs: cuisinesNever)
         profile.cupboardStaples = Set(savedIDs: cupboardStaples)
+        profile.cupboardAnswered = cupboardAnswered ?? false
     }
 
     private func readKitchen(into profile: inout CookProfile) {

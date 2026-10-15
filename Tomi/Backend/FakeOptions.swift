@@ -19,9 +19,28 @@ nonisolated struct FakeOptions {
         options.equipment = equipment
         options.experience = Experience.allCases.map { Self.described(OptionID(rawValue: $0.rawValue), $0.rawValue) }
         options.units = Units.allCases.map { Self.described(OptionID(rawValue: $0.rawValue), $0.rawValue) }
-        options.ingredients = names(of: lessons.flatMap { $0.ingredients.map(\.ingredient.rawValue) })
+        options.staples = Self.staples
+        options.ingredients =
+            names(of: lessons.flatMap { $0.ingredients.map(\.ingredient.rawValue) }) + Self.cupboardIngredients
         options.courses = FakeCourses(catalog: catalog).courses
         return options
+    }
+
+    /// A few everyday staples, some assumed. The ids are test words, so no Swift file names a shipped id.
+    static let staples = [
+        StapleOption(id: "fake-salt", name: "Salt", assumed: true),
+        StapleOption(id: "fake-oil", name: "Olive oil", assumed: true),
+        StapleOption(id: "fake-pepper", name: "Pepper", assumed: true),
+        StapleOption(id: "fake-rice", name: "Rice", assumed: false),
+        StapleOption(id: "fake-pasta", name: "Pasta", assumed: false),
+    ]
+
+    /// Ingredients a cook may add to the cupboard by typing: every staple, and two spices that are not staples.
+    static var cupboardIngredients: [NamedOption] {
+        let spices = [
+            NamedOption(id: "fake-cumin", name: "Cumin"), NamedOption(id: "fake-chilli", name: "Chilli flakes"),
+        ]
+        return staples.map { NamedOption(id: $0.id, name: $0.name) } + spices
     }
 
     private var equipment: [EquipmentOption] {

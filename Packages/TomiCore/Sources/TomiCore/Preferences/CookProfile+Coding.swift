@@ -4,7 +4,8 @@
 /// this build does not know, keeps its default.
 extension CookProfile: Codable {
     enum CodingKeys: String, CodingKey {
-        case diet, avoid, cuisinesLoved, cuisinesToTry, cuisinesNever, cupboardStaples, equipment
+        case diet, avoid, cuisinesLoved, cuisinesToTry, cuisinesNever, cupboardStaples, cupboardAnswered
+        case equipment
         case experience, servings, units, weeklyGoal, focusSkill
         case isOnboardingDone = "onboardingDone"
     }
@@ -38,6 +39,7 @@ extension CookProfile: Codable {
         cuisinesNever = container.value(Set<OptionID>.self, forKey: .cuisinesNever) ?? []
         cupboardStaples = container.value(Set<OptionID>.self, forKey: .cupboardStaples) ?? []
         equipment = container.value(Set<OptionID>.self, forKey: .equipment)
+        cupboardAnswered = container.value(Bool.self, forKey: .cupboardAnswered) ?? false
     }
 
     private mutating func readKitchen(from container: KeyedDecodingContainer<CodingKeys>) {
@@ -58,6 +60,7 @@ extension CookProfile: Codable {
         try container.encode(cuisinesToTry.sorted(), forKey: .cuisinesToTry)
         try container.encode(cuisinesNever.sorted(), forKey: .cuisinesNever)
         try container.encode(cupboardStaples.sorted(), forKey: .cupboardStaples)
+        try container.encode(cupboardAnswered, forKey: .cupboardAnswered)
         try container.encode(equipment?.sorted(), forKey: .equipment)
     }
 

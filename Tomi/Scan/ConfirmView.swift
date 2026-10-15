@@ -16,7 +16,7 @@ struct ConfirmView: View {
             VStack(alignment: .leading, spacing: Spacing.large) {
                 ScanHeader(title: .confirmTitle, identifier: "confirm-title", problem: model.problem)
                 ConfirmChips(model: model)
-                TypedItemField(typing: typing, model: model)
+                TypedItemField(typing: typing, look: .confirm) { model.list.add($0) }
                 FindSpecialButton(model: model)
             }
             .padding(Spacing.screenMargin)

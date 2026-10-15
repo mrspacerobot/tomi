@@ -15,6 +15,9 @@ public struct CookProfile: Hashable, Sendable {
     public var cuisinesNever: Set<OptionID> = []
     /// Ingredients the cook always has at home, so a scan need not find them.
     public var cupboardStaples: Set<OptionID> = []
+    /// Whether the cook has answered the cupboard question. Until then the server counts its assumed staples
+    /// as at home and ignores `cupboardStaples`.
+    public var cupboardAnswered = false
     /// The equipment the cook ticked, or nil while they have not answered the kitchen question.
     public var equipment: Set<OptionID>?
     public var experience = Experience.basics

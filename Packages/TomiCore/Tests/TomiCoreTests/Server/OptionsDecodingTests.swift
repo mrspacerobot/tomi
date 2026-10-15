@@ -12,6 +12,7 @@ import Testing
         #expect(options.cuisines.map(\.id) == ["thai"])
         #expect(options.experience.map(\.id) == ["basics"])
         #expect(options.units.map(\.id) == ["metric"])
+        #expect(options.staples == [StapleOption(id: "salt", name: "Salt", assumed: true)])
         #expect(options.ingredients.map(\.name) == ["Salt"])
         #expect(options.courses.first?.skills.first?.levels == [NamedLevel(number: 1, name: "Soft")])
     }

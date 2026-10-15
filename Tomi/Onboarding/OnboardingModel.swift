@@ -10,7 +10,7 @@ final class OnboardingModel {
     let saver: AnswersSaver
 
     init(profile: ProfileModel, options: LibraryOptions) {
-        draft = AnswersDraft(answers: profile.profile, options: options)
+        draft = AnswersDraft(answers: profile.profile, options: options, api: profile.api)
         saver = AnswersSaver(profile: profile)
     }
 

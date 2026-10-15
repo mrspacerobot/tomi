@@ -9,7 +9,7 @@ struct SettingsQuestionView: View {
         if let options = flow.profile.options {
             SettingsQuestionForm(
                 question: question,
-                draft: AnswersDraft(answers: flow.profile.profile, options: options),
+                draft: AnswersDraft(answers: flow.profile.profile, options: options, api: flow.profile.api),
                 saver: AnswersSaver(profile: flow.profile)
             )
         } else {

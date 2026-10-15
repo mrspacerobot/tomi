@@ -9,7 +9,9 @@ public struct LibraryOptions: Hashable, Codable, Sendable {
     public var equipment: [EquipmentOption] = []
     public var experience: [DescribedOption] = []
     public var units: [DescribedOption] = []
-    /// Every ingredient the server knows, for the cupboard question.
+    /// The everyday staples the cupboard question lists, in the server's order.
+    public var staples: [StapleOption] = []
+    /// Every ingredient the server knows. The cupboard question uses it only to name a saved extra.
     public var ingredients: [NamedOption] = []
     public var courses: [OptionCourse] = []
 
@@ -18,5 +20,10 @@ public struct LibraryOptions: Hashable, Codable, Sendable {
     /// The kitchen the server assumes until the cook answers: every piece marked as assumed.
     public var assumedEquipment: Set<OptionID> {
         Set(equipment.filter(\.assumed).map(\.id))
+    }
+
+    /// The cupboard the server assumes until the cook answers: every staple marked as assumed.
+    public var assumedStaples: Set<OptionID> {
+        Set(staples.filter(\.assumed).map(\.id))
     }
 }
