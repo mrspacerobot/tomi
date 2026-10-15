@@ -16,6 +16,11 @@ import Testing
         #expect(decoded?.currentProfile == nil)
     }
 
+    @Test func theGraphBeingUnavailableIsAKnownCode() {
+        let decoded = error(#"{"error": {"code": "graph_unavailable", "message": "No graph."}}"#)
+        #expect(decoded?.code == .graphUnavailable)
+    }
+
     @Test func anUnknownCodeIsKeptWithItsMessage() {
         let decoded = error(#"{"error": {"code": "teapot", "message": "Short and stout."}}"#)
         #expect(decoded?.code == nil)

@@ -10,6 +10,7 @@ extension APIErrorCode {
         case .photoTooLarge: .problemPhotoTooLarge
         case .photoUnreadable: .problemPhotoUnreadable
         case .aiUnavailable: .problemAiUnavailable
+        case .graphUnavailable: .problemGraphUnavailable
         case .versionConflict, .weakensRestrictions, .invalidRequest: .problemNotSaved
         case .notFound, .authUnavailable, .internalError: .problemGeneric
         }

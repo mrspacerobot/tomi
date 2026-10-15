@@ -1117,6 +1117,18 @@
         }
       }
     },
+    "problem.graphUnavailable": {
+      "comment": "Shown when the server has no cooking knowledge loaded, so it can neither read a fridge photo nor suggest a lesson. The cook can only wait.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi is still setting up the kitchen. Try again soon."
+          }
+        }
+      }
+    },
     "problem.notSaved": {
       "comment": "Shown when the server refused a change of the cook's answers.",
       "extractionState": "manual",

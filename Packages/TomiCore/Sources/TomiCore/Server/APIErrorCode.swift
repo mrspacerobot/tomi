@@ -10,6 +10,7 @@ public enum APIErrorCode: String, CaseIterable, Hashable, Sendable {
     case photoTooLarge = "photo_too_large"
     case photoUnreadable = "photo_unreadable"
     case aiUnavailable = "ai_unavailable"
+    case graphUnavailable = "graph_unavailable"
     case authUnavailable = "auth_unavailable"
     case internalError = "internal"
 }
