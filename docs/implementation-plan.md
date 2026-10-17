@@ -32,7 +32,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Plate photo | Optional, offered on the celebration card ("Show me the plate"). The streak day, XP and stamp are earned by finishing the lesson, never by the photo. Tomi makes one warm remark about what the technique should show, never a score and never a claim that the dish is cooked through or safe. The photo is kept with the dish on the menu and stays on the phone. How the remark is made, now that no AI runs on the phone, is not decided. Mockup: `round3.html`, `lp-plate` |
 | Streak and rank | The streak is the everyday hook and leads on home; rank is the slow, long goal behind it |
 | Weekly streak | The cook sets a goal of 1 to 7 cooking days a week (default 3). The streak counts consecutive weeks with the goal met. Days, not cooks, so two lessons in one evening count once. The week in progress never breaks the streak, and each week is judged by the goal recorded with its cooks, so raising the goal never wipes an earned streak. Weeks follow the phone's calendar. The goal is asked on the experience screen (`ob-level`) and can be changed in Settings |
-| Rank ladder | Novice, Commis, Cook, Saucier, Sous, Chef, Patron, Toque at 0, 150, 400, 900, 1,800, 3,300, 6,000 and 11,000 XP: Commis in the first week, Toque after about a year at three or four cooks a week. Then open-ended: Toque II, III and on, every 3,000 XP, about one a season. All in `GameRules` |
+| Rank ladder | Novice, Commis, Cook, Saucier, Sous, Chef, Patron, Toque at 0, 150, 400, 900, 1,800, 3,300, 6,000 and 11,000 XP: Commis in the first week, Toque after about a year at three or four cooks a week. Then open-ended: Toque II, III and on, every 3,000 XP, about one a season. Currently in `GameRules`; the Rust service takes over with versioned rules after parity is proven |
 
 ### Open decisions (default used until the owner decides)
 
@@ -43,10 +43,11 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | "I stopped early" | Does not count toward the streak |
 | Hands-free mode | Keeps a slim Next button so touch always works |
 | Onboarding extras | Weeknight time budget is not asked |
+| Photo and voice upload | Current rule keeps photos, chat and voice on the phone. Any remote vision or speech path needs an explicit owner decision, updated privacy rule and tests before implementation |
 
 ## Architecture
 
-Three layers:
+Target responsibilities:
 
 1. **Screens** (SwiftUI): onboarding, home and menu, scan, lesson player, Ask Tomi, profile and settings.
 2. **App services**: TomiAPI (Tomi's server over URLSession), AuthService (Supabase with Sign in with Apple), ProgressStore (SwiftData), LessonLibrary, Voice (speech in and out), Timers (AlarmKit). Each sits behind a protocol with a fake for previews and tests.
@@ -66,8 +67,8 @@ Tomi/                  app target
   Resources/           Assets, fonts, Localizable.xcstrings, Library/ (catalog.json, lessons/<skill>/<lesson id>.lesson.json)
 Config/                Tomi-Info.plist: the Info.plist keys that have no build setting (the bundled fonts)
 TomiTests/ TomiUITests/
-Packages/TomiCore/     rules, schema, generator, tests
-server/                Go service (later)
+Packages/TomiCore/     current rules and schema; retain local safety guard and offline decoding
+server/                Rust Tomi service (to be built)
 docs/ prototype/
 ```
 
@@ -105,6 +106,8 @@ Without the server's model (`503 ai_unavailable`) step 1 falls back to typing an
 
 ## Lesson library
 
+The files and validators below describe the current bundled library. The Rust service will publish reviewed, versioned library and safety snapshots as specified in [backend-spec.md](backend-spec.md); the app keeps compatible reviewed lessons for offline cooking.
+
 - The skill catalog is part of the library, not the app: `catalog.json` holds courses, skills, prerequisites, levels and their names, with a schema version and a library version. A new technique or level ships with the library, without an app release. The validator checks at least one course, ids that are not blank and are unique, known and non-empty courses, prerequisites that exist and come earlier on the menu, levels numbered 1 to n, and English text everywhere.
 - Each skill has levels, from the first version of the technique to the hardest (roux: white for béchamel, blond for velouté, brown). A level is complete after two finished cooks at it (`GameRules.cooksToCompleteLevel`), and the next level opens once every level before it is complete.
 - A skill is served (unlocked) when level 1 of every prerequisite is complete, and mastered when all of its own levels are complete. Asking for every level of a prerequisite would hold the next techniques back for weeks.
@@ -123,6 +126,8 @@ Without the server's model (`503 ai_unavailable`) step 1 falls back to typing an
 - The library ships in the app and can be replaced by a newer signed download, so a lesson can be fixed or withdrawn the same day.
 
 ## Saved data
+
+This section describes the current SwiftData implementation and its safe migration inputs. The Rust service's target records and ownership are in [backend-spec.md](backend-spec.md). Do not switch the authoritative store or remove local records until cook events and restrictions reconcile across devices.
 
 The store is SwiftData, behind the `ProgressStore` protocol (`Tomi/Persistence`). Screens see only the protocol; `SwiftDataProgressStore` is the store on the phone, `InMemoryProgressStore` the fake for previews and tests, and `UnavailableProgressStore` the one Tomi holds when the real store could not be opened.
 
@@ -146,7 +151,7 @@ Saved data fails closed. When the store cannot be opened or read, every call of 
 
 Conflicting copies with the same newest timestamp and stable id have no unambiguous newest record. A profile then asks for ordinary answers again while keeping every saved diet and avoid restriction; a conflicting lesson bookmark is not resumed. Identical copies still read as one record. Neither answer depends on the order the copies arrive in.
 
-iCloud sync is not switched on yet (phase 9). The store is opened with CloudKit off; the records are already laid out for it.
+iCloud sync is not switched on. The current store opens with CloudKit off and its records were laid out for iCloud. The target canonical store is the Rust service; existing records must be reconciled before that ownership changes.
 
 For UI tests, launch arguments choose the store: `--store-in-memory` starts with an empty store in memory, `--store-ui-test-file` keeps the store in a file of its own between launches, `--store-unavailable` starts as if the store could not be opened, `--store-ui-test-unwritable-file` asks SwiftData for a file it cannot create, and `--seed-known-state` empties the store and fills it with a known state built from the menu (`KnownState`). Seeding is ignored for the cook's own store. A requested file that SwiftData changes to memory is refused, even when its configuration already says memory before the container opens.
 
@@ -173,7 +178,7 @@ Each phase ends with something runnable. GitHub milestones mirror these.
 | 7 | Ask Tomi | Safety questions are always answered from the table, in any phrasing tried. Tomi remarks on a plate photo without ever judging doneness |
 | 8 | Hands-free voice | A lesson can be finished without touching the phone, with an extractor fan running |
 | B | Milestone | Everything in the README works on device |
-| 9 | Sync, backend, proof and polish | iCloud sync, hosted library and ratings service are live, a friend installs from TestFlight and cooks dinner |
+| 9 | Sync, backend, proof and polish | The Rust service owns reviewed content, canonical cook events, progress and ratings; existing local records migrate without loss, offline cooking reconciles, and a friend cooks from TestFlight |
 
 ## Verification
 
