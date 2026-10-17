@@ -10,7 +10,7 @@ final class CompanionGalleryUITests: XCTestCase {
         app.buttons["gallery-companion"].tap()
         XCTAssertTrue(app.staticTexts["companion-title"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["companion-state-idle"].isSelected)
-        XCTAssertGreaterThan(app.element("companion-stage").screenshot().tomatoCoverage, 0.015)
+        XCTAssertTrue(app.element("companion-stage").waitForTomato())
     }
 
     @MainActor func testEveryStateAndDepthControlWorks() {

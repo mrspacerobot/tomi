@@ -1,17 +1,17 @@
 # Tomi Rust backend specification
 
-Status: target architecture, 8 October 2026. This is a specification, not a claim that the service exists. The current iPhone app stores progress in SwiftData and computes most rules in TomiCore. The private cooking graph is a draft and cannot yet supply cook-facing content.
+Status: consolidated architecture, 17 October 2026. The Rust service is implemented in the separate `tomi-backend` repository. The app uses it for Supabase identity, profiles, options, fridge scans and lesson suggestions. Cook events, canonical server progress, library delivery, resume validation, ratings and leaderboards below are future contracts, not implemented endpoints. The cooking graph remains draft content for internal testing.
 
 ## Outcome and boundary
 
 Tomi is a native iPhone client of one public Tomi API. A Rust backend owns application decisions and durable multi-device state. A private, read-only graph component supplies reviewed cooking relationships to that backend from an immutable, versioned JSON release bundle. The graph authoring repository, its Python checks, and its draft channel are not runtime dependencies of the iPhone app.
 
-The phone still renders the interface, captures input, runs timers and voice playback, keeps a reviewed lesson available while cooking, queues offline cook events, and independently rejects food that conflicts with the cook's restrictions. This local check is deliberately small: it validates the final ingredient IDs and a compatible reviewed safety snapshot. It does not rank recipes or maintain a second graph matcher.
+The phone renders the interface, captures input, decodes bundled lessons for offline cooking and keeps the cook log in SwiftData. Food knowledge and filtering live only on the server. The phone refuses an offer unless its `checked` diet matches and its `checked` avoid list covers the cook's latest restrictions; it applies only swaps already listed by the lesson. No ingredient table, safety snapshot or second food matcher lives on the phone. Cook-event upload and server progress reconciliation are follow-up work.
 
-| Current Tomi owner | Rust backend replacement | What remains on the phone |
+| Migration source | Rust backend replacement | What remains on the phone |
 |---|---|---|
-| `LessonLibrary` and bundled catalog, ingredients, equipment and lessons | Publish signed, versioned reviewed library and safety snapshots; withdraw revisions | Decode and cache compatible reviewed snapshots; bundle a small offline set |
-| TomiCore lesson matching, unlock filtering, ranking and adaptation | Choose eligible lessons from confirmed IDs, preferences, skill progress and equipment; apply only reviewed swaps and serving changes | Present candidates after a final independent restriction check |
+| `LessonLibrary` and bundled catalog, ingredients, equipment and lessons | Publish signed, versioned reviewed library and safety snapshots; withdraw revisions | Decode and cache reviewed lessons; bundle a small offline set; food knowledge stays on the server |
+| TomiCore lesson matching, unlock filtering, ranking and adaptation | Choose eligible lessons from confirmed IDs, preferences, skill progress and equipment; apply only reviewed swaps and serving changes | Present candidates only after checking the server's `checked` restrictions cover the cook |
 | On-device ingredient interpretation and ranking | Resolve confirmed labels to candidate graph/library IDs; rank eligible results | Capture observed labels, let the cook correct them and confirm exact items |
 | `ProgressStore` profile and `SavedProfile` merge | Canonical user profile and preferences, with strict handling of conflicting restrictions | Cached profile and an edit outbox; never replace unreadable restrictions with permissive defaults |
 | `CookLogRecord`, `GameStateRules` and `ProgressRules` | Canonical immutable cook events; compute XP, rank, streak and mastery from deduplicated events | Queue events offline with stable IDs; display versioned server summaries when available |
@@ -39,7 +39,7 @@ The service stores user data in a transactional database. Its data model needs:
 | Leaderboard enrollment | User ID, opt-in state and public alias; private restrictions are never projected |
 | Leaderboard projection | Period, derived score, rank and calculation version; rebuildable from accepted cook events |
 
-XP is never accepted from the client and never the source of truth. The backend computes it from cook events and versioned game rules. A repeated event ID has one effect. An event for an unknown skill or level is retained without awarding mastery until a compatible catalog can judge it. Offline events reconcile without depending on arrival order. Authentication and account recovery need a separate design before this database becomes canonical.
+XP is never accepted from the client and never the source of truth. The backend computes it from cook events and versioned game rules. A repeated event ID has one effect. An event for an unknown skill or level is retained without awarding mastery until a compatible catalog can judge it. Offline events reconcile without depending on arrival order. Identity uses Supabase Auth with native Sign in with Apple, requesting email only. Supabase stores Apple's shared or relay address; sending mail and owning a domain are not required. Account recovery and deletion still need follow-up design.
 
 ## Public API contract
 
@@ -47,10 +47,12 @@ All endpoints are versioned and use typed IDs, explicit schema versions and stru
 
 | Route group | Request and response responsibility |
 |---|---|
+| `GET /v1/options` | The server-owned lists and localized words used by onboarding and settings |
+| `POST /v1/scans` | Fridge photo to candidate ingredients for the cook to confirm |
 | `GET /v1/bootstrap` | Supported API/schema versions, current reviewed library and safety versions, minimum app version |
 | `POST /v1/ingredients/resolve` | Confirmed text labels to exact, alias, ambiguous or unknown ID candidates with evidence; never silently choose an ambiguous ID |
-| `POST /v1/specials` | Confirmed ingredient IDs, restrictions, skill context and equipment to bounded reviewed lesson candidates, final ingredients, missing parts and explanations |
-| `GET /v1/library/{version}` | Signed reviewed library and safety snapshot or a compatible delta; withdrawal list and content hashes |
+| `POST /v1/lessons/suggest` | Confirmed ingredient IDs, restrictions, skill context and equipment to bounded reviewed lesson candidates, final ingredients, missing parts and explanations |
+| `GET /v1/library/{version}` | Reviewed lesson files or a compatible delta; withdrawal list and content hashes; safety facts remain on the server |
 | `GET/PATCH /v1/profile` | Read and update versioned preferences; reject a write that would silently weaken a restriction |
 | `POST /v1/cook-events` | Idempotent batch acceptance by stable event ID and per-event result; return a versioned progress summary |
 | `GET /v1/progress` | XP, rank, streak, mastery and unlocks computed from accepted events and the applicable catalog |
@@ -66,20 +68,20 @@ Request IDs support retries; authentication identifies the user; authorization s
 
 The backend filters every candidate against the cook's restrictions before ranking and again after a swap or serving adaptation changes ingredients. Ingredient facts come only from a reviewed safety snapshot. A model cannot add facts, ingredients, diets, avoid items, skills or equipment. A missing or unreadable fact fails closed. A recipe with an open safety point, unverified safety record or insufficient review tier cannot be published.
 
-The phone independently checks the returned final ingredient IDs against the compatible reviewed safety snapshot and its latest known restrictions before display and again before resuming a cached lesson. If the snapshot is absent or incompatible, it does not show a diet or allergen suitability claim or a candidate special. A previously downloaded reviewed lesson may still be cooked offline if its revision and safety snapshot remain compatible with the current restrictions; otherwise the app asks to reconnect or choose a different reviewed lesson. Photo recognition never judges doneness or food safety.
+The phone verifies `checked` restrictions before presenting an offer, and refuses unreadable restrictions. A profile change that alters diet or avoid items clears the saved lesson bookmark. A future resume flow must ask the server to check the lesson again; there is no resume-check endpoint yet. A compatible bundled lesson can be cooked offline after selection. Photo recognition never judges doneness or food safety.
 
 ## Offline and media behavior
 
 Offline means the cook can open a compatible downloaded lesson, follow steps, use timers and record completion. The app queues a cook event and uploads it with the same ID when connected. It need not generate a new personalized special offline. The UI makes pending progress distinct from server-confirmed progress and reconciles without double credit.
 
-Under the current project rule, photos, chat and voice stay on the phone. Observed photo labels may be produced locally, but the cook confirms items and exact IDs before matching. A separate remote vision or speech service is a possible future product decision, not part of this specification's authorized implementation. It would require an explicit change to `AGENTS.md`, the user flow and privacy review before any upload. The graph component never receives media.
+Fridge photos are sent to the backend as JPEGs up to 1280 pixels on the long side at quality 0.6, including their original place and time. The proof of concept keeps every scan when storage is configured, for the owner's own test photos only. Before real cooks use it, add an explicit consent flow, withdrawal and deletion, and a privacy review. Chat and voice stay on the phone; remote speech is undecided. The graph component never receives media.
 
 ## Migration and acceptance
 
 1. Specify request/response fixtures and local acceptance tests. Cover unknown restrictions, ambiguous resolution, unsafe swaps, stale or draft content, changed preferences, duplicate events and offline replay.
 2. Build the graph production gate and JSON artifact with conformance vectors. Today production must fail because graph review and safety verification are incomplete. Use synthetic fixtures and Tomi's reviewed lessons for development.
 3. Build Rust bootstrap, library and typed-list-to-special APIs. Add a fake gateway client in Tomi and prove the UI flow end to end before switching its data source.
-4. Deliver a signed reviewed library and safety snapshot. Prove online, cache, withdrawal and offline behavior. Keep the existing bundle until the new path is proven.
+4. Deliver reviewed lesson files and withdrawal metadata. Keep food facts and safety checks on the server; retain the checked-offer guard on the phone. Prove online, cache, withdrawal and offline behavior before replacing the bundled lessons.
 5. Add identity, profile and cook-event persistence. Import existing SwiftData records without deleting them; compare backend and TomiCore progress for the same log, then make the backend canonical after reconciliation passes.
 6. Add active-lesson sync, ratings and opt-in leaderboards. Add a remote media path only after its separate decision and tests.
 
@@ -87,8 +89,8 @@ Each slice is one issue and one pull request. Required checks include Rust unit 
 
 ## Decisions still open
 
-- Whether fridge photos or voice may ever leave the phone, and the exact consent and provider contract if so.
-- User sign-in and account recovery method, and whether iCloud remains a backup during migration.
+- Consent, deletion and the provider contract before real cooks upload photos; whether voice may leave the phone.
+- Account recovery and deletion, and whether iCloud remains a backup during migration. Sign-in is Supabase with Apple.
 - Leaderboard product rules: opt-in, public alias, ranking period, eligibility and abuse handling.
 - Offline retention period and how a withdrawn lesson is handled on a device that has not reconnected.
 

@@ -7,6 +7,7 @@ struct TomiApp: App {
     var body: some Scene {
         WindowGroup {
             AppRoot(progress: launch.progress, flow: launch.flow)
+                .preferredColorScheme(AppearanceLaunchOption.colorScheme(in: ProcessInfo.processInfo.arguments))
         }
     }
 }

@@ -43,11 +43,11 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | "I stopped early" | Does not count toward the streak |
 | Hands-free mode | Keeps a slim Next button so touch always works |
 | Onboarding extras | Weeknight time budget is not asked |
-| Photo and voice upload | Current rule keeps photos, chat and voice on the phone. Any remote vision or speech path needs an explicit owner decision, updated privacy rule and tests before implementation |
+| Voice upload | Chat and voice stay on the phone. Fridge photos already go to the server under the proof-of-concept decision above |
 
 ## Architecture
 
-Target responsibilities:
+Current app responsibilities (backend target and remaining contracts: [backend-spec.md](backend-spec.md)):
 
 1. **Screens** (SwiftUI): onboarding, home and menu, scan, lesson player, Ask Tomi, profile and settings.
 2. **App services**: TomiAPI (Tomi's server over URLSession), AuthService (Supabase with Sign in with Apple), ProgressStore (SwiftData), LessonLibrary, Voice (speech in and out), Timers (AlarmKit). Each sits behind a protocol with a fake for previews and tests.
@@ -68,7 +68,7 @@ Tomi/                  app target
 Config/                Tomi-Info.plist: the Info.plist keys that have no build setting (the bundled fonts)
 TomiTests/ TomiUITests/
 Packages/TomiCore/     current rules and schema; retain local safety guard and offline decoding
-server/                Rust Tomi service (to be built)
+../tomi-backend/        Separate Rust Tomi API repository
 docs/ prototype/
 ```
 
@@ -196,3 +196,7 @@ Each phase ends with something runnable. GitHub milestones mirror these.
 - **A live iCloud layout can only grow.** The saved-data design is a review point before TestFlight.
 - **The server may be unreachable.** Cooking a lesson already on the phone works offline; scanning and tonight's special need the server, and the typed path must always work when only the model is down.
 - **Motion carries the reward.** The stamp press and the menu line inking in cannot be judged from stills and need an early prototype.
+
+## Consolidated onboarding (#124)
+
+After sign-in, a new cook sees the welcome and native 3D companion, then the server-backed questions. A persistent companion host keeps the RealityKit character alive across welcome and questions; the diet greeting uses its explaining state. The server remains the source of all food options and saved profile answers. The former local-food onboarding is superseded.

@@ -10,11 +10,16 @@ nonisolated extension IconGlyph {
         case .lock: Self.lockPath
         case .camera: Self.cameraPath
         case .question: Self.questionPath
+        case .back: Self.backPath
         }
     }
 
     private static let checkPath = Path { path in
         path.addLines([CGPoint(x: 5, y: 12.5), CGPoint(x: 9.5, y: 17), CGPoint(x: 19, y: 7.5)])
+    }
+
+    private static let backPath = Path { path in
+        path.addLines([CGPoint(x: 15, y: 5), CGPoint(x: 8, y: 12), CGPoint(x: 15, y: 19)])
     }
 
     private static let plusPath = Path { path in

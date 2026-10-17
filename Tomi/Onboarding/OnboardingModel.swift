@@ -6,6 +6,7 @@ import TomiCore
 final class OnboardingModel {
     let questions = ProfileQuestion.onboarding
     private(set) var position = 0
+    private(set) var showsWelcome = true
     let draft: AnswersDraft
     let saver: AnswersSaver
 
@@ -26,12 +27,20 @@ final class OnboardingModel {
         position > 0
     }
 
+    func start() {
+        showsWelcome = false
+    }
+
     func next() {
         position = min(position + 1, questions.count - 1)
     }
 
     func back() {
-        position = max(position - 1, 0)
+        if position == 0 {
+            showsWelcome = true
+        } else {
+            position -= 1
+        }
     }
 
     /// Sends every answer, marked as done. True when the server has them.

@@ -12,6 +12,8 @@ nonisolated struct StoreLaunchOptions: Equatable {
     static let unwritableFileArgument = "--store-ui-test-unwritable-file"
     /// Empty the store and fill it with `KnownState`. Ignored for the cook's own store.
     static let seedKnownStateArgument = "--seed-known-state"
+    /// Empty the store before the first screen, so a test starts as a new cook. Ignored for the cook's own store.
+    static let startEmptyArgument = "--store-start-empty"
 
     private static let testLocations: [(argument: String, location: StoreLocation)] = [
         (unavailableArgument, .unavailable),
@@ -22,15 +24,20 @@ nonisolated struct StoreLaunchOptions: Equatable {
 
     let location: StoreLocation
     let seedsKnownState: Bool
+    let startsEmpty: Bool
 
-    init(location: StoreLocation, seedsKnownState: Bool) {
+    init(location: StoreLocation, seedsKnownState: Bool, startsEmpty: Bool = false) {
         self.location = location
         self.seedsKnownState = seedsKnownState && !location.isTheCooksOwn
+        self.startsEmpty = startsEmpty && !location.isTheCooksOwn
     }
 
     init(arguments: [String]) {
-        let seeds = arguments.contains(Self.seedKnownStateArgument)
-        self.init(location: Self.location(in: arguments), seedsKnownState: seeds)
+        self.init(
+            location: Self.location(in: arguments),
+            seedsKnownState: arguments.contains(Self.seedKnownStateArgument),
+            startsEmpty: arguments.contains(Self.startEmptyArgument)
+        )
     }
 
     /// When several are given, the one that keeps the least wins.

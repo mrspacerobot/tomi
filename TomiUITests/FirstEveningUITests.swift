@@ -21,6 +21,8 @@ final class FirstEveningUITests: XCTestCase {
     @MainActor private func signIn(_ app: XCUIApplication) {
         XCTAssertTrue(app.buttons["sign-in-fake"].waitForExistence(timeout: 5))
         app.buttons["sign-in-fake"].tap()
+        XCTAssertTrue(app.buttons["onboarding-start"].waitForExistence(timeout: 5))
+        app.buttons["onboarding-start"].tap()
     }
 
     @MainActor private func answerTheFirstQuestions(_ app: XCUIApplication) {

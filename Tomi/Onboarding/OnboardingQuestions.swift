@@ -6,9 +6,22 @@ struct OnboardingQuestions: View {
     @State var model: OnboardingModel
 
     var body: some View {
+        content.companionHost(identifier: "onboarding-companion")
+    }
+
+    @ViewBuilder private var content: some View {
+        if model.showsWelcome {
+            OnboardingWelcomeView(start: model.start)
+        } else {
+            questions
+        }
+    }
+
+    private var questions: some View {
         VStack(spacing: Spacing.none) {
+            OnboardingHeader(completed: model.position, total: model.questions.count, back: model.back)
             ScrollView {
-                QuestionView(question: model.question, draft: model.draft)
+                OnboardingQuestionContent(model: model)
                     .padding(Spacing.screenMargin)
             }
             OnboardingFooter(model: model) { confirmed in
