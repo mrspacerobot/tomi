@@ -31,15 +31,15 @@ The service stores user data in a transactional database. Its data model needs:
 
 | Entity | Required identity and behavior |
 |---|---|
-| User | Stable opaque user ID, authentication binding, creation/deletion state and recorded version of the consent to send confirmed ingredients and restrictions; no public profile by default |
+| User | Stable opaque user ID, authentication binding, creation/deletion state and future production consent version covering uploaded photos and metadata, raw confirmed or typed labels, ingredient IDs and restrictions; no public profile by default |
 | Profile | Versioned preferences, diet and avoid IDs, cuisine choices, pantry, equipment, experience, units, servings, weekly goal and focus skill; conflicting restrictions merge toward the stricter result |
-| Cook event | Client-generated stable event ID, user ID, lesson ID and revision, skill and level, completion outcome, quiz result, event time, goal at the time and server receipt time; unique per user and event ID |
+| Cook event | Client-generated stable event ID, user ID, lesson ID and revision, skill and level, completion outcome, quiz result, event time, goal at the time, calendar context (calendar identifier, IANA time zone, first weekday and minimum days in the first week), and server receipt time; identity is user ID plus event ID |
 | Active lesson | User ID, lesson/revision, reviewed swaps, final ingredient IDs, current step and update version; reject stale or withdrawn lessons and changed restrictions |
 | Rating | User ID, lesson/revision, rating and time; never modify the cook event or XP |
 | Leaderboard enrollment | User ID, opt-in state and public alias; private restrictions are never projected |
 | Leaderboard projection | Period, derived score, rank and calculation version; rebuildable from accepted cook events |
 
-XP is never accepted from the client and never the source of truth. The backend computes it from cook events and versioned game rules. A repeated event ID has one effect. An event for an unknown skill or level is retained without awarding mastery until a compatible catalog can judge it. Offline events reconcile without depending on arrival order. Identity uses Supabase Auth with native Sign in with Apple, requesting email only. Supabase stores Apple's shared or relay address; sending mail and owning a domain are not required. Account recovery and deletion still need follow-up design.
+XP is never accepted from the client and never the source of truth. The backend computes it from cook events and versioned game rules. Identical payloads for one event ID count once. Conflicting payloads with the same user and event ID are retained for reconciliation and invalidate that logical event until resolved; no variant earns progress, and any previously derived credit is recomputed. Arrival order never chooses a winner. Test finished versus stopped-early variants in both upload orders. Progress queries supply explicit current calendar context with those same four fields, and the backend uses calendar arithmetic rather than its system time zone or fixed day lengths. An event for an unknown skill or level is retained without awarding mastery until a compatible catalog can judge it. Offline events reconcile without depending on arrival order. Identity uses Supabase Auth with native Sign in with Apple, requesting email only. Supabase stores Apple's shared or relay address; sending mail and owning a domain are not required. Account recovery and deletion still need follow-up design.
 
 ## Public API contract
 
@@ -55,14 +55,15 @@ All endpoints are versioned and use typed IDs, explicit schema versions and stru
 | `GET /v1/library/{version}` | Reviewed lesson files or a compatible delta; withdrawal list and content hashes; safety facts remain on the server |
 | `GET/PATCH /v1/profile` | Read and update versioned preferences; reject a write that would silently weaken a restriction |
 | `POST /v1/cook-events` | Idempotent batch acceptance by stable event ID and per-event result; return a versioned progress summary |
-| `GET /v1/progress` | XP, rank, streak, mastery and unlocks computed from accepted events and the applicable catalog |
+| `GET /v1/progress` | Explicit calendar context in; XP, rank, streak, mastery and unlocks computed from accepted events and the applicable catalog out |
 | `GET/PUT /v1/active-lesson` | Resume bookmark with revision and conflict handling; validate against current restrictions before returning it |
 | `POST /v1/ratings` | Record a rating for a reviewed lesson revision |
+| `PUT /v1/leaderboard/enrollment` | Authenticated, versioned opt-in/opt-out and public-alias mutation for the current user |
 | `GET /v1/leaderboard` | Only enrolled public aliases and derived scores; no private profile fields |
 
 The gateway may call the graph's recipe, stand-in and kitchen queries internally. The Python query results generate conformance vectors that Rust must reproduce for directionality, exclusions, context, ties and unknown safety. A graph match alone is not a Tomi lesson and cannot be shown until it maps to reviewed Tomi content and passes final checks.
 
-Request IDs support retries; authentication identifies the user; authorization scopes every profile, event and bookmark to that user. The app explains that a match sends confirmed ingredient IDs and restrictions and records the cook's choice before sending them; a client-supplied opt-in header alone is not proof of consent. Rate limits and bounded responses protect the service. Logs contain status, latency, versions and aggregate counters, never photos, voice, chat, ingredients, restrictions or raw request bodies.
+Request IDs support retries; authentication identifies the user; authorization scopes every profile, event and bookmark to that user. The current proof of concept has no consent step and is limited to the owner's own testing. Before real cooks use it, the disclosure and recorded consent must cover photos and metadata, raw typed or confirmed labels sent for resolution, ingredient IDs and restrictions before upload; a client-supplied opt-in header alone is not proof of consent. Rate limits and bounded responses protect the service. Logs contain status, latency, versions and aggregate counters, never photos, voice, chat, ingredients, restrictions or raw request bodies.
 
 ## Food safety and content release
 
@@ -83,7 +84,7 @@ Fridge photos are sent to the backend as JPEGs up to 1280 pixels on the long sid
 3. Build Rust bootstrap, library and typed-list-to-special APIs. Add a fake gateway client in Tomi and prove the UI flow end to end before switching its data source.
 4. Deliver reviewed lesson files and withdrawal metadata. Keep food facts and safety checks on the server; retain the checked-offer guard on the phone. Prove online, cache, withdrawal and offline behavior before replacing the bundled lessons.
 5. Add identity, profile and cook-event persistence. Import existing SwiftData records without deleting them; compare backend and TomiCore progress for the same log, then make the backend canonical after reconciliation passes.
-6. Add active-lesson sync, ratings and opt-in leaderboards. Add a remote media path only after its separate decision and tests.
+6. Add active-lesson sync, ratings and opt-in leaderboards. Remote fridge scanning already exists for the proof of concept; require the production consent and deletion contract before real cooks use it. Remote chat and speech remain undecided.
 
 Each slice is one issue and one pull request. Required checks include Rust unit and integration tests, Python-to-Rust conformance vectors, database migration and idempotency tests, TomiCore safety tests, and a fake-backed iOS UI test for each changed flow. Run `./scripts/check.sh` for Tomi changes. Measure startup index time, peak memory and p95/p99 latency on current and larger graph fixtures before capacity claims. The graph is not allowed into production until its review and safety gates pass.
 

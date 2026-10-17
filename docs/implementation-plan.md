@@ -4,7 +4,7 @@ Status on 10 October 2026: design approved (direction "Tasting menu"), project s
 
 ## Goal
 
-A native iPhone app where a cook answers a short onboarding, shows Tomi their fridge, corrects the ingredient list, and cooks a lesson from a reviewed library, hands-free, with timers and Ask Tomi. Progress (XP, streak, mastered techniques) survives a relaunch and syncs through iCloud.
+A native iPhone app where a cook answers a short onboarding, shows Tomi their fridge, corrects the ingredient list, and cooks a lesson from a reviewed library, hands-free, with timers and Ask Tomi. Progress (XP, streak, mastered techniques) survives a relaunch locally. Multi-device progress will use the Rust service after cook-event reconciliation is implemented; iCloud backup remains undecided and CloudKit sync is off.
 
 ## Decisions
 
@@ -155,7 +155,7 @@ iCloud sync is not switched on. The current store opens with CloudKit off and it
 
 For UI tests, launch arguments choose the store: `--store-in-memory` starts with an empty store in memory, `--store-ui-test-file` keeps the store in a file of its own between launches, `--store-unavailable` starts as if the store could not be opened, `--store-ui-test-unwritable-file` asks SwiftData for a file it cannot create, and `--seed-known-state` empties the store and fills it with a known state built from the menu (`KnownState`). Seeding is ignored for the cook's own store. A requested file that SwiftData changes to memory is refused, even when its configuration already says memory before the container opens.
 
-Plate photos are files in the app's own storage on the phone. Only the file name is in the cook log, so the log syncs through iCloud and the photos do not; on a second device the dish simply shows without a photo.
+Plate photos are files in the app's own storage on the phone. Only the file name is in the cook log. Neither the log nor the photos currently sync through iCloud. Future server cook-event sync must not imply photo upload; another device can show the dish without its local plate photo.
 
 The cook log is the source of truth. XP, rank, streak and mastery are computed from it. Screens ask one place for the game: `GameStateRules` in TomiCore gives total XP, rank and streak for a log at a moment. An entry stopped early earns no XP, and an entry for a skill or level the menu no longer knows still earns XP and still counts for the streak. Every record has a stable id and a time, and the same id on two devices is the same cook, counted once. All fields are optional and changes are additive, so the layout is safe for iCloud.
 
