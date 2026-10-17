@@ -28,15 +28,24 @@ final class OnboardingCompanionUITests: XCTestCase {
     }
 
     @MainActor func testTheWelcomeScrollsAtLargestTextSizeAndBackKeepsAnswers() {
-        let app = signedIn(arguments: GalleryLayoutUITests.largestTextSize)
+        let app = signedIn(arguments: GalleryLayoutUITests.largestTextSize + ["--appearance-dark"])
         XCTAssertTrue(app.scrollViews["onboarding-welcome-reading"].exists)
+        capture(app, name: "welcome-largest-dark")
         app.buttons["onboarding-start"].tap()
         app.element("choice-fake-veg").tap()
         app.buttons["onboarding-back"].tap()
         XCTAssertTrue(app.buttons["onboarding-start"].exists)
         app.buttons["onboarding-start"].tap()
         XCTAssertTrue(app.element("choice-fake-veg").isSelected)
-        capture(app, name: "diet-largest")
+        capture(app, name: "diet-largest-dark")
+    }
+
+    @MainActor func testTheGreetingUsesTheScreenWidthAtLargestTextSize() {
+        let app = signedIn(arguments: GalleryLayoutUITests.largestTextSize + ["--appearance-light"])
+        capture(app, name: "welcome-largest-light")
+        app.buttons["onboarding-start"].tap()
+        XCTAssertGreaterThan(app.element("onboarding-greeting").frame.width, app.frame.width * 0.8)
+        capture(app, name: "diet-largest-light")
     }
 
     @MainActor private func signedIn(arguments: [String]) -> XCUIApplication {
