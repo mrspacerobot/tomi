@@ -1,4 +1,4 @@
-/// One line of a lesson's ingredient list: an ingredient of the table and how much of it.
+/// One line of a lesson's ingredient list: an ingredient and how much of it.
 /// The amount is written twice, once for each unit system, because a good cups amount is a reviewed
 /// kitchen measure ("2 tablespoons"), not a conversion of the grams.
 public struct LessonIngredient: Hashable, Codable, Sendable {

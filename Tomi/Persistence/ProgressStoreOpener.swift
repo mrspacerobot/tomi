@@ -11,13 +11,24 @@ enum ProgressStoreOpener {
     static func store(for options: StoreLaunchOptions, catalog: SkillCatalog?) -> any ProgressStore {
         do {
             let store = SwiftDataProgressStore(container: try .tomi(at: options.location))
-            if options.seedsKnownState {
-                try seed(store, catalog: catalog)
-            }
+            try prepare(store, for: options, catalog: catalog)
             return store
         } catch {
             logger.error("Saved data could not be opened: \(String(describing: error), privacy: .public)")
             return UnavailableProgressStore()
+        }
+    }
+
+    private static func prepare(
+        _ store: SwiftDataProgressStore,
+        for options: StoreLaunchOptions,
+        catalog: SkillCatalog?
+    ) throws {
+        if options.startsEmpty {
+            try store.erase()
+        }
+        if options.seedsKnownState {
+            try seed(store, catalog: catalog)
         }
     }
 

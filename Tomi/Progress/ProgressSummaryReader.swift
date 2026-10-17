@@ -14,9 +14,9 @@ struct ProgressSummaryReader {
     func summary(at now: Date) throws -> ProgressSummary {
         let profile = try store.profile()
         let log = try store.cookLog()
-        let goal = profile.preferences.weeklyGoal
+        let goal = profile.weeklyGoal
         let game = GameStateRules(calendar: calendar).gameState(for: log, goal: goal, now: now)
-        let mastered = masteredCount(in: log, experience: profile.preferences.experience)
+        let mastered = masteredCount(in: log, experience: profile.experience)
         return ProgressSummary(game: game, masteredCount: mastered)
     }
 

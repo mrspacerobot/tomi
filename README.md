@@ -44,7 +44,8 @@ prototype/index.html   Original single-file web prototype
 | Name | **Tomi**, after the mascot. "Anyone Can Cook" was rejected: it's already under US trademark application for a cooking app and is Pixar's *Ratatouille* motto. |
 | Platform | Native iPhone app (Swift / SwiftUI, iOS 27) |
 | Design | "Tasting menu": the skill path is a menu of four courses and twelve dishes |
-| Everyday AI | Apple Foundation Models (on-device, free): ingredient scan, recipe adapting, Ask Tomi chat, voice commands |
+| Everyday AI | On Tomi's server (the Rust backend): fridge scan and tonight's ranking. Proof of concept: every photo is kept, with no consent step yet. The app is a thin client of the server for food knowledge |
+| Sign-in | Supabase Auth with Sign in with Apple |
 | Voice | Apple SpeechAnalyzer (listening) + AVSpeechSynthesizer (speaking), both on-device and free |
 | Recipes | Written in bulk by a top Claude model into a reviewed lesson library, not generated live for every user |
 | Rules and game logic | Plain Swift code, no AI |

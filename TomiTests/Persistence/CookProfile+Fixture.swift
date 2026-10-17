@@ -4,37 +4,30 @@ extension CookProfile {
     /// A profile with every answer different from its default, so a lost field shows in a test.
     static func fixtureWithEveryAnswerChanged() -> CookProfile {
         var profile = CookProfile()
-        profile.preferences = .fixtureWithEveryAnswerChanged()
+        profile.diet = "pescatarian"
+        profile.avoid = ["nuts", "pork"]
+        profile.cuisinesLoved = ["italian"]
+        profile.cuisinesNever = ["thai"]
+        profile.cupboardStaples = ["olive-oil", "salt"]
+        profile.changeKitchenAnswers()
         profile.focusSkill = "roux"
         profile.isOnboardingDone = true
         return profile
     }
 
-    static func fixture(diet: DietID?, avoid: Set<AvoidItemID> = []) -> CookProfile {
+    static func fixture(diet: OptionID?, avoid: Set<OptionID> = []) -> CookProfile {
         var profile = CookProfile()
-        profile.preferences.diet = diet
-        profile.preferences.avoid = avoid
+        profile.diet = diet
+        profile.avoid = avoid
         return profile
-    }
-}
-
-extension CookPreferences {
-    static func fixtureWithEveryAnswerChanged() -> CookPreferences {
-        var preferences = CookPreferences()
-        preferences.diet = "pescatarian"
-        preferences.avoid = ["nuts", "pork"]
-        preferences.cuisines.set(.love, for: "italian")
-        preferences.cuisines.set(.never, for: "thai")
-        preferences.cupboardStaples = ["olive-oil", "salt"]
-        preferences.changeKitchenAnswers()
-        return preferences
     }
 
     private mutating func changeKitchenAnswers() {
-        chosenEquipment = ["stovetop", "blender"]
+        cupboardAnswered = true
+        equipment = ["stovetop", "blender"]
         experience = .comfortable
         setServings(4)
-        chosenUnits = .cups
+        units = .cups
         setWeeklyGoal(5)
     }
 }

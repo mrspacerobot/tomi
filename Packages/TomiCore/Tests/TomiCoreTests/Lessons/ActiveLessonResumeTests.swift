@@ -2,16 +2,15 @@ import Testing
 
 @testable import TomiCore
 
-/// A lesson in progress is built again from the library and checked again before it is shown.
+/// A lesson in progress is built again from the library before it is shown.
+/// Whether the cook may still eat it is kept safe elsewhere: the app forgets the bookmark whenever the cook's
+/// diet or avoid list changes (see `CookProfileRestrictionTests`).
 @Suite struct ActiveLessonResumeTests {
-    let table = IngredientTable.fixture(ingredients: [
-        .fixture("garlic"), .fixture("butter", contains: ["dairy"]), .fixture("olive-oil"),
-    ])
     let lessons = [Lesson.fixtureWithOliveOilSwap()]
     let active = ActiveLesson.fixtureOnTheSecondStepWithOliveOil()
 
     @Test func theLessonComesBackWithItsSwapsAndItsStep() throws {
-        let resumed = try active.resumed(from: lessons, for: .fixture(diet: "vegan"), in: table)
+        let resumed = try active.resumed(from: lessons)
         #expect(resumed.lesson.ingredients.map(\.ingredient) == ["garlic", "olive-oil"])
         #expect(resumed.currentStep == 1)
         #expect(resumed.ingredients == ["garlic", "olive-oil"])
@@ -20,12 +19,12 @@ import Testing
     @Test func aLessonWithoutSwapsComesBackAsWritten() throws {
         var plain = active
         plain.swaps = []
-        #expect(try plain.resumed(from: lessons, for: CookPreferences(), in: table).lesson == lessons[0])
+        #expect(try plain.resumed(from: lessons).lesson == lessons[0])
     }
 
     @Test func aLessonTheLibraryNoLongerHasIsNotResumed() {
         #expect(throws: ResumeError.lessonNotInLibrary("garlic-butter")) {
-            try active.resumed(from: [], for: CookPreferences(), in: table)
+            try active.resumed(from: [])
         }
     }
 
@@ -33,7 +32,7 @@ import Testing
         var corrected = Lesson.fixtureWithOliveOilSwap()
         corrected.revision = 2
         #expect(throws: ResumeError.lessonNotInLibrary("garlic-butter")) {
-            try active.resumed(from: [corrected], for: CookPreferences(), in: table)
+            try active.resumed(from: [corrected])
         }
     }
 
@@ -41,7 +40,7 @@ import Testing
         var invented = active
         invented.swaps = [AppliedSwap(removed: "butter", added: "garlic")]
         #expect(throws: ResumeError.swapNotInLesson(invented.swaps[0])) {
-            try invented.resumed(from: lessons, for: CookPreferences(), in: table)
+            try invented.resumed(from: lessons)
         }
     }
 
@@ -50,22 +49,7 @@ import Testing
         var lost = active
         lost.currentStep = step
         #expect(throws: ResumeError.stepNotInLesson(step)) {
-            try lost.resumed(from: lessons, for: CookPreferences(), in: table)
-        }
-    }
-
-    /// The cook started the buttery dish, then said they avoid dairy. The dish must not come back.
-    @Test func aDishTheCookMayNoLongerEatIsNotResumed() {
-        var buttery = active
-        buttery.swaps = []
-        #expect(throws: ResumeError.notAllowedForTheCook) {
-            try buttery.resumed(from: lessons, for: .fixture(diet: nil, avoid: ["dairy"]), in: table)
-        }
-    }
-
-    @Test func aRestrictionTheTableDoesNotListRefusesTheLesson() {
-        #expect(throws: ResumeError.notAllowedForTheCook) {
-            try active.resumed(from: lessons, for: .fixture(diet: DietID.unreadable), in: table)
+            try lost.resumed(from: lessons)
         }
     }
 }

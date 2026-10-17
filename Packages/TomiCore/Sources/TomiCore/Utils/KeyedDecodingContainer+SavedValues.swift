@@ -14,20 +14,4 @@ extension KeyedDecodingContainer {
         }
         return Value(rawValue: savedValue)
     }
-
-    /// A saved list of answers, without the values a newer app wrote that are unknown here.
-    /// Nil when the field is missing, so an empty list stays an answer of its own.
-    func knownValues<Value: RawRepresentable & Hashable>(_ type: Value.Type, forKey key: Key) -> Set<Value>?
-    where Value.RawValue == String {
-        guard let savedValues = value([String].self, forKey: key) else {
-            return nil
-        }
-        var known: Set<Value> = []
-        for savedValue in savedValues {
-            if let value = Value(rawValue: savedValue) {
-                known.insert(value)
-            }
-        }
-        return known
-    }
 }

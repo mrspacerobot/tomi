@@ -15,7 +15,10 @@ echo "== Rules package tests"
 swift test --package-path Packages/TomiCore
 
 echo "== App build, unit tests and UI tests"
+# Without "never", every failing UI test makes the simulator collect a sysdiagnose, which can sit for ten
+# minutes before the failure is reported. The test output already names what failed.
+# UI tests share simulator appearance and their persistent test store. Run them sequentially.
 xcodebuild -project Tomi.xcodeproj -scheme Tomi -destination "$DESTINATION" \
-    -derivedDataPath build/DerivedData -quiet test
+    -derivedDataPath build/DerivedData -parallel-testing-enabled NO -collect-test-diagnostics never -quiet test
 
 echo "All checks passed."

@@ -34,10 +34,10 @@ import TomiCore
     /// An empty kitchen is an answer, and no answer is not: the store must keep the two apart.
     @Test func anEmptyListAndAMissingListStayDifferentOnDisk() throws {
         var emptyKitchen = CookProfile()
-        emptyKitchen.preferences.chosenEquipment = []
+        emptyKitchen.equipment = []
         try StoreFixture(at: file).store.saveProfile(emptyKitchen, at: .october(5))
-        #expect(try StoreFixture(at: file).store.profile().preferences.chosenEquipment == [])
+        #expect(try StoreFixture(at: file).store.profile().equipment == [])
         try StoreFixture(at: file).store.saveProfile(CookProfile(), at: .october(6))
-        #expect(try StoreFixture(at: file).store.profile().preferences.chosenEquipment == nil)
+        #expect(try StoreFixture(at: file).store.profile().equipment == nil)
     }
 }

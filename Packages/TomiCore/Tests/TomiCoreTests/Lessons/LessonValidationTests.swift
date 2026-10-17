@@ -62,11 +62,11 @@ import Testing
     @Test func everyProblemIsReportedAtOnce() {
         var lesson = Lesson.fixture()
         lesson.skill = "juggling"
-        lesson.ingredients.append(.fixture("dragon-fruit"))
+        lesson.ingredients.append(.fixture("garlic"))
         lesson.steps[0].sceneName = "juggle"
         lesson.quiz.correctAnswer = nil
         let expected: [LessonIssue] = [
-            .unknownSkill("juggling"), .unknownIngredient("dragon-fruit"), .unknownScene(step: 0, "juggle"),
+            .unknownSkill("juggling"), .duplicateIngredient("garlic"), .unknownScene(step: 0, "juggle"),
             .noCorrectAnswer,
         ]
         #expect(lesson.issuesInTheFixtureLibrary() == expected)

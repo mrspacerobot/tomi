@@ -14,7 +14,7 @@ struct KnownState {
 
     var profile: CookProfile {
         var profile = CookProfile()
-        profile.preferences.experience = .comfortable
+        profile.experience = .comfortable
         profile.isOnboardingDone = true
         return profile
     }
@@ -50,7 +50,7 @@ struct KnownState {
     }
 
     private func entry(of lesson: CookedLesson, on date: Date) -> CookEntry {
-        let goal = profile.preferences.weeklyGoal
+        let goal = profile.weeklyGoal
         let session = CookSession(date: date, result: .finished(quizCorrect: true), weeklyGoal: goal)
         return CookEntry(id: UUID(), lesson: lesson, session: session)
     }

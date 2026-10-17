@@ -13,6 +13,11 @@ enum ImportRule {
         "CloudKit": ["Tomi/Persistence/"],
         "AlarmKit": ["Tomi/Timers/"],
         "UIKit": ["Tomi/Camera/"],
+        "PhotosUI": ["Tomi/Camera/"],
+        "ImageIO": ["Tomi/Camera/"],
+        "AuthenticationServices": ["Tomi/Auth/"],
+        "Security": ["Tomi/Auth/"],
+        "CryptoKit": ["Tomi/Auth/"],
     ]
 
     /// One line for every import the rules package is not allowed.

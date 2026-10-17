@@ -43,7 +43,7 @@ import Testing
         lesson.steps[0].tip = LocalizedText(["en": "A tip"])
         lesson.steps[0].timerSeconds = 30
         lesson.swaps = [.fixture(replacing: "butter", with: "bacon")]
-        let decoded = try Lesson.decode(from: JSONEncoder().encode(lesson), lists: .fixture())
+        let decoded = try Lesson.decode(from: JSONEncoder().encode(lesson), catalog: .fixture())
         #expect(decoded == lesson)
     }
 

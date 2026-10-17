@@ -56,9 +56,6 @@ final class SavedDataUITests: XCTestCase {
 
     @MainActor
     private func launch(_ arguments: [String]) -> XCUIApplication {
-        let app = XCUIApplication()
-        app.launchArguments = arguments
-        app.launch()
-        return app
+        XCUIApplication.launched(XCUIApplication.returningCook + arguments)
     }
 }

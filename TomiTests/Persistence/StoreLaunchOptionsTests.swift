@@ -22,6 +22,16 @@ import Testing
         #expect(StoreLaunchOptions(arguments: ["--store-ui-test-file", "--seed-known-state"]).seedsKnownState)
     }
 
+    @Test func aTestStoreCanStartEmpty() {
+        #expect(StoreLaunchOptions(arguments: ["--store-ui-test-file", "--store-start-empty"]).startsEmpty)
+        #expect(!StoreLaunchOptions(arguments: ["--store-ui-test-file"]).startsEmpty)
+    }
+
+    /// Starting empty erases the store first, so it must never reach the cook's own.
+    @Test func theCooksOwnStoreNeverStartsEmpty() {
+        #expect(!StoreLaunchOptions(arguments: ["Tomi", "--store-start-empty"]).startsEmpty)
+    }
+
     @Test func theUnwritableTestFileNeverUsesTheCooksOwnStore() {
         let options = StoreLaunchOptions(arguments: ["--store-ui-test-unwritable-file"])
         #expect(options.location == .file(URL(filePath: "/dev/null/TomiUITests.store")))

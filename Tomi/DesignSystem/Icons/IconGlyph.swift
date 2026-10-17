@@ -8,6 +8,7 @@ nonisolated enum IconGlyph: CaseIterable, Sendable {
     case lock
     case camera
     case question
+    case back
 
     /// The side of the square grid the kit draws every glyph on, in points.
     static let gridSize: CGFloat = 24
@@ -16,6 +17,7 @@ nonisolated enum IconGlyph: CaseIterable, Sendable {
     var strokeWeight: CGFloat {
         switch self {
         case .check, .question: 2.6
+        case .back: 2
         case .plus, .close, .lock: 2.2
         case .camera: 1.8
         }

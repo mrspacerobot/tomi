@@ -17,7 +17,7 @@ import TomiCore
 
     @Test func theCookMasteredTheFirstCourseByExperienceAndOneMoreTechniqueByCooking() throws {
         let firstCourse = try #require(catalog.courses.first)
-        let rules = ProgressRules(catalog: catalog, experience: known.profile.preferences.experience)
+        let rules = ProgressRules(catalog: catalog, experience: known.profile.experience)
         let mastered = rules.progress(for: known.cookLog).masteredCount
         #expect(mastered == catalog.skills(in: firstCourse.id).count + 1)
         #expect(ProgressRules(catalog: catalog, experience: .basics).progress(for: known.cookLog).masteredCount == 1)

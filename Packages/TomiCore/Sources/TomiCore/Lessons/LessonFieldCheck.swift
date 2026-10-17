@@ -1,6 +1,6 @@
 /// Reads only the names of the fields of a lesson file and rejects the file if it has one a lesson does not have.
 /// A field such as `diets` or `allergens` would otherwise be ignored without a word, and someone would
-/// believe a tag they typed is used. Tags are computed, never written.
+/// believe a tag they typed is used. Tags are computed by the server, never written.
 struct LessonFieldCheck: Decodable {
     init(from decoder: any Decoder) throws {
         let fields = try decoder.container(keyedBy: FieldName.self)

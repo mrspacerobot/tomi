@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Shown instead of everything else when saved data cannot be opened or read.
-/// Tomi then does not know the cook's diet or what they avoid, so no dish may be shown.
+/// Tomi then cannot keep the cook log, so nothing is shown that would lose a cook.
 struct SavedDataUnavailableView: View {
     var body: some View {
         VStack(spacing: Spacing.small) {
