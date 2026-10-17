@@ -5,11 +5,14 @@ import SwiftUI
 /// to show a companion that appears just as the last one goes away.
 struct CompanionHost: View {
     let placement: CompanionPlacement?
+    let identifier: String
 
     var body: some View {
         GeometryReader { proxy in
-            TomiCompanion(state: state)
+            ZStack { TomiCompanion(state: state) }
                 .frame(width: rect(in: proxy).width, height: rect(in: proxy).height)
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier(identifier)
                 .offset(x: rect(in: proxy).minX, y: rect(in: proxy).minY)
                 .opacity(opacity)
         }
@@ -34,17 +37,15 @@ struct CompanionHost: View {
 }
 
 #Preview {
-    CompanionHost(placement: nil)
+    CompanionHost(placement: nil, identifier: "preview-companion")
 }
 
 extension View {
     /// Draws the companion where a `CompanionSlot` inside this view asks, clipped to this view.
     func companionHost(identifier: String) -> some View {
         overlayPreferenceValue(CompanionPlacementKey.self) { placement in
-            CompanionHost(placement: placement)
+            CompanionHost(placement: placement, identifier: identifier)
                 .clipped()
-                .accessibilityElement(children: .contain)
-                .accessibilityIdentifier(identifier)
         }
     }
 }
