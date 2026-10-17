@@ -18,7 +18,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Test phone | Any iPhone that runs iOS 27. No on-device AI is needed |
 | Everyday AI | On Tomi's server, not the phone: reading fridge photos and ranking tonight's offers. No Foundation Models in the app. When the server's model is unavailable (`503 ai_unavailable`) the cook types and the server ranks by ingredient overlap. Ask Tomi and voice are not decided yet |
 | Food knowledge | The server owns the ingredient table, facts, diets, avoid items, cuisines, equipment and every filter. The app holds no such list or rule: it shows `GET /v1/options` and sends back ids. Its one food check is a guard: an offer is shown only if the server checked it for the cook's diet and every avoid item |
-| Sign-in | Supabase Auth with Sign in with Apple, without a third-party SDK. Tokens in the Keychain |
+| Sign-in | Supabase Auth with Sign in with Apple, without a third-party SDK. Request email so Supabase Auth can store the contact address, including Apple's private relay address. Tokens in the Keychain |
 | Fridge photos | Sent to the server as a small JPEG (1280 px on the long side, quality 0.6) under 10 MB, with the photo's place and time. Proof of concept: the server keeps every photo and nothing asks the cook yet. A consent step must come before real cooks |
 | Curriculum | Classical French technique and its kitchen words (mirepoix, roux, deglaze, monter au beurre, beurre blanc), without presenting the app as "French cooking". Twelve techniques in four courses (Foundations, Heat control, Sauces, Putting it together), each with levels |
 | Lessons | Written in bulk by a top Claude model into a reviewed library. One file per lesson. Never generated live in version 1 |

@@ -2,7 +2,7 @@ import AuthenticationServices
 import SwiftUI
 
 /// Apple's own sign-in button. It asks Apple for an identity token bound to a fresh nonce and hands over
-/// the token with the raw nonce, for Supabase. No name or email is asked for: Tomi does not need them.
+/// the token with the raw nonce, for Supabase. Requests email so Supabase Auth can store the contact address.
 struct AppleSignInButton: View {
     let onIdentity: (AppleIdentity) -> Void
     let onFailure: () -> Void
@@ -26,7 +26,7 @@ struct AppleSignInButton: View {
 
     private func prepare(_ request: ASAuthorizationAppleIDRequest) {
         nonce = AppleNonce.random()
-        request.requestedScopes = []
+        request.requestedScopes = [.email]
         request.nonce = nonce.sha256
     }
 
