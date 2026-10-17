@@ -18,7 +18,6 @@ struct OnboardingQuestionContent: View {
 
 #Preview {
     let flow = AppFlowModel.preview()
-    if let options = flow.profile.options {
-        OnboardingQuestionContent(model: OnboardingModel(profile: flow.profile, options: options))
-    }
+    let options = FakeServerData(library: BundledLessonLibrary()).options
+    OnboardingQuestionContent(model: OnboardingModel(profile: flow.profile, options: options))
 }

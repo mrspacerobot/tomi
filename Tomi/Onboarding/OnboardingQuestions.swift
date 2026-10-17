@@ -37,3 +37,9 @@ struct OnboardingQuestions: View {
         }
     }
 }
+
+#Preview {
+    let flow = AppFlowModel.preview()
+    let options = FakeServerData(library: BundledLessonLibrary()).options
+    OnboardingQuestions(flow: flow, model: OnboardingModel(profile: flow.profile, options: options))
+}
