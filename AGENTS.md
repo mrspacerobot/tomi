@@ -21,6 +21,21 @@ For every UI task, embed screenshots of the working screen in the pull request d
 
 **Every pull request to `main` runs the same check automatically** (`.github/workflows/check.yml`), on the owner's Mac. It shows on the pull request as "Check". If the Mac is busy, asleep or off, the check waits and runs when the Mac is free. GitHub cannot require a green check on this repository, so the rule is written here instead: the owner merges only when the check is green. Running it yourself first is still required; the automatic run is the proof, not the first try.
 
+## Running the app
+
+One build runs against three backends, chosen when it launches:
+
+| Mode | Sign-in | Server | Xcode scheme | Script |
+|---|---|---|---|---|
+| cloud (default) | the real Supabase project | the deployed Cloud Run server | Tomi | `scripts/run.sh cloud` |
+| local | the real Supabase project | `tomi-backend` on this Mac, `localhost:8080` | Tomi Local | `scripts/run.sh local` |
+| fake | fake, a plain button | in memory, with an in-memory store | Tomi Fake | `scripts/run.sh fake` |
+
+- `scripts/run.sh` builds, installs and launches on the simulator named by `TOMI_SIMULATOR` (default "iPhone 17"). Extra arguments are passed to the app, for example `scripts/run.sh fake --fake-signed-in --appearance-dark`.
+- Use **fake** to look at screens: it needs no account and no network. Use **cloud** to try a real sign-in. Use **local** to try a server change before it is deployed; start `tomi-backend` with `SUPABASE_URL` set to the Supabase project, so it accepts the app's real tokens.
+- Sign in with email and password in cloud and local. Sign in with Apple needs the paid developer account.
+- UI tests always launch with `--fake-backend` and never reach the network.
+
 ## How we work: tests first
 
 1. **Write the failing test first.** For a rule, a unit test in `Packages/TomiCore`. For a screen or flow, a UI test that drives the app the way a cook would. Watch it fail for the right reason, then write the code.
@@ -78,7 +93,7 @@ For every UI task, embed screenshots of the working screen in the pull request d
 - **The server, sign-in, voice, camera, clock and storage sit behind protocols.** Each has a real implementation and a fake: `TomiAPI` (`URLSessionTomiAPI`, `FakeTomiAPI`), `AuthService` (`SupabaseAuthService`, `FakeAuthService`). Screens never import Speech, AVFoundation, SwiftData or AuthenticationServices directly. UI tests launch with `--fake-backend` (and `--fake-signed-in`, `--fake-no-specials`) and never reach the network.
 - **No AI runs on the phone.** No Foundation Models: the server reads fridge photos and ranks dishes. When it cannot (`503 ai_unavailable`), the cook types what they have.
 - **Sign-in is Supabase Auth with Sign in with Apple,** without a third-party SDK: Apple's identity token and the raw nonce go to `{SUPABASE_URL}/auth/v1/token?grant_type=id_token`, tokens are kept in the Keychain and renewed before expiry or after a 401. Request the email scope so Supabase Auth can store the contact address, including Apple's private relay address. Every call to the server carries `Authorization: Bearer <access token>`.
-- **Addresses and keys come from build settings** (`TOMI_API_BASE_URL`, `TOMI_SUPABASE_URL`, `TOMI_SUPABASE_PUBLISHABLE_KEY`, read through the Info.plist by `BackendConfiguration`). Never type one into a Swift file. The app never holds a Supabase secret key.
+- **Addresses and keys come from build settings** (`TOMI_API_BASE_URL`, `TOMI_SUPABASE_URL`, `TOMI_SUPABASE_PUBLISHABLE_KEY` and, in Debug only, `TOMI_LOCAL_API_BASE_URL`, read through the Info.plist by `BackendConfiguration`). The committed values are the deployed Cloud Run server and the Supabase project; the URL and the publishable key are meant to ship in the app. Never type one into a Swift file. The app never holds a Supabase secret key, a service-role key or the database password.
 - **The cook log is the source of truth.** XP, streak and mastery are computed from it, not stored as running totals.
 - **Saved data must stay iCloud-safe:** every stored property optional or defaulted, no unique constraints, changes additive only. Never rename or remove a stored field after release. The stored fields are listed in `docs/implementation-plan.md` (Saved data): a new field is added there in the same pull request.
 - **Stored records hold no rules.** A SwiftData record in `Tomi/Persistence` only copies its fields to and from its plain twin in TomiCore (`SavedProfile`, `SavedCookEntry`, `SavedActiveLesson`), which has the same field names. How a record is read, how two records from two devices become one answer, and when a record is refused are decided in TomiCore and tested there without a store. Nothing is unique in the store, so every read must give the same answer for the same records in any order, with a cook entry counted once.

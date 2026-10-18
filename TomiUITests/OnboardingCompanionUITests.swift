@@ -6,46 +6,46 @@ final class OnboardingCompanionUITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    @MainActor func testTheWelcomeAndDietQuestionShowTheCompanion() {
+    @MainActor func testTheWelcomeAndDietQuestionShowTheCompanion() async {
         let app = XCUIApplication.launched(XCUIApplication.newCook)
         app.buttons["sign-in-fake"].tap()
         XCTAssertTrue(app.buttons["onboarding-start"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.element("onboarding-companion").waitForTomato())
+        await app.element("onboarding-companion").assertTomatoRendered()
         app.buttons["onboarding-start"].tap()
         XCTAssertTrue(app.element("question-diet").waitForExistence(timeout: 5))
-        XCTAssertTrue(app.element("onboarding-companion").waitForTomato())
+        await app.element("onboarding-companion").assertTomatoRendered()
         app.element("choice-fake-veg").tap()
         app.buttons["onboarding-next"].tap()
         XCTAssertTrue(app.element("question-avoid").waitForExistence(timeout: 5))
     }
 
-    @MainActor func testTheCompanionScreensInLight() {
-        captureOnboarding(arguments: ["--appearance-light"], appearance: "light")
+    @MainActor func testTheCompanionScreensInLight() async {
+        await captureOnboarding(arguments: ["--appearance-light"], appearance: "light")
     }
 
-    @MainActor func testTheCompanionScreensInDark() {
-        captureOnboarding(arguments: ["--appearance-dark"], appearance: "dark")
+    @MainActor func testTheCompanionScreensInDark() async {
+        await captureOnboarding(arguments: ["--appearance-dark"], appearance: "dark")
     }
 
-    @MainActor func testTheWelcomeScrollsAtLargestTextSizeAndBackKeepsAnswers() {
+    @MainActor func testTheWelcomeScrollsAtLargestTextSizeAndBackKeepsAnswers() async {
         let app = signedIn(arguments: GalleryLayoutUITests.largestTextSize + ["--appearance-dark"])
         XCTAssertTrue(app.scrollViews["onboarding-welcome-reading"].exists)
-        capture(app, name: "welcome-largest-dark")
+        await capture(app, name: "welcome-largest-dark")
         app.buttons["onboarding-start"].tap()
         app.element("choice-fake-veg").tap()
         app.buttons["onboarding-back"].tap()
         XCTAssertTrue(app.buttons["onboarding-start"].exists)
         app.buttons["onboarding-start"].tap()
         XCTAssertTrue(app.element("choice-fake-veg").isSelected)
-        capture(app, name: "diet-largest-dark")
+        await capture(app, name: "diet-largest-dark")
     }
 
-    @MainActor func testTheGreetingUsesTheScreenWidthAtLargestTextSize() {
+    @MainActor func testTheGreetingUsesTheScreenWidthAtLargestTextSize() async {
         let app = signedIn(arguments: GalleryLayoutUITests.largestTextSize + ["--appearance-light"])
-        capture(app, name: "welcome-largest-light")
+        await capture(app, name: "welcome-largest-light")
         app.buttons["onboarding-start"].tap()
         XCTAssertGreaterThan(app.element("onboarding-greeting").frame.width, app.frame.width * 0.8)
-        capture(app, name: "diet-largest-light")
+        await capture(app, name: "diet-largest-light")
     }
 
     @MainActor private func signedIn(arguments: [String]) -> XCUIApplication {
@@ -55,22 +55,23 @@ final class OnboardingCompanionUITests: XCTestCase {
         return app
     }
 
-    @MainActor private func captureOnboarding(arguments: [String], appearance: String) {
+    @MainActor private func captureOnboarding(arguments: [String], appearance: String) async {
         let app = signedIn(arguments: arguments)
-        capture(app, name: "welcome-\(appearance)")
+        await capture(app, name: "welcome-\(appearance)")
         app.buttons["onboarding-start"].tap()
         XCTAssertTrue(app.element("question-diet").waitForExistence(timeout: 5))
-        capture(app, name: "diet-\(appearance)")
+        await capture(app, name: "diet-\(appearance)")
         app.buttons["onboarding-next"].tap()
         XCTAssertTrue(app.element("question-avoid").waitForExistence(timeout: 5))
-        capture(app, name: "avoid-\(appearance)")
+        await capture(app, name: "avoid-\(appearance)")
     }
 
-    @MainActor private func capture(_ app: XCUIApplication, name: String) {
-        XCTAssertTrue(app.element("onboarding-companion").waitForTomato())
+    @MainActor private func capture(_ app: XCUIApplication, name: String) async {
+        await app.element("onboarding-companion").assertTomatoRendered()
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = "onboarding-\(name)"
         attachment.lifetime = .keepAlways
         add(attachment)
     }
+
 }

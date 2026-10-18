@@ -17,8 +17,10 @@ swift test --package-path Packages/TomiCore
 echo "== App build, unit tests and UI tests"
 # Without "never", every failing UI test makes the simulator collect a sysdiagnose, which can sit for ten
 # minutes before the failure is reported. The test output already names what failed.
-# UI tests share simulator appearance and their persistent test store. Run them sequentially.
+# Xcode gives each parallel worker its own simulator clone, isolating appearance and test stores.
 xcodebuild -project Tomi.xcodeproj -scheme Tomi -destination "$DESTINATION" \
-    -derivedDataPath build/DerivedData -parallel-testing-enabled NO -collect-test-diagnostics never -quiet test
+    -derivedDataPath build/DerivedData -parallel-testing-enabled YES \
+    -maximum-parallel-testing-workers 2 -maximum-concurrent-test-simulator-destinations 2 \
+    -collect-test-diagnostics never -quiet test
 
 echo "All checks passed."

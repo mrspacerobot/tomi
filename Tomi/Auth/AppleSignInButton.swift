@@ -12,7 +12,7 @@ struct AppleSignInButton: View {
     var body: some View {
         SignInWithAppleButton(.signIn, onRequest: prepare, onCompletion: finish)
             .signInWithAppleButtonStyle(style)
-            .frame(minHeight: TouchTarget.button)
+            .frame(height: TouchTarget.button)
             .accessibilityIdentifier("sign-in-apple")
     }
 
