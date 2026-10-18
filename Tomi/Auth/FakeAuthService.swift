@@ -18,6 +18,16 @@ nonisolated final class FakeAuthService: AuthService {
         signedIn.withLock { $0 = true }
     }
 
+    func signIn(email: String, password: String) async throws {
+        signedIn.withLock { $0 = true }
+    }
+
+    func createAccount(email: String, password: String) async throws -> SignUpResult {
+        .emailConfirmationRequired
+    }
+
+    func sendPasswordReset(to email: String) async throws {}
+
     func accessToken() async throws -> String {
         guard await isSignedIn() else {
             throw BackendError.notSignedIn

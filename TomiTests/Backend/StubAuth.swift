@@ -12,6 +12,9 @@ final class StubAuth: AuthService {
 
     func isSignedIn() async -> Bool { true }
     func signIn(with identity: AppleIdentity) async throws {}
+    func signIn(email: String, password: String) async throws {}
+    func createAccount(email: String, password: String) async throws -> SignUpResult { .emailConfirmationRequired }
+    func sendPasswordReset(to email: String) async throws {}
     func signOut() async throws {}
 
     func accessToken() async throws -> String {
