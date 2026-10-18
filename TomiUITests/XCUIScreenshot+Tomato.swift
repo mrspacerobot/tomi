@@ -2,7 +2,7 @@ import CoreGraphics
 import XCTest
 
 extension XCUIScreenshot {
-    /// A small colour sample of the visible character stage catches a blank RealityKit surface.
+    /// A small colour sample of the visible character stage catches a companion that was not drawn.
     var tomatoCoverage: Double {
         var pixels = [UInt8](repeating: 0, count: 32 * 32 * 4)
         let context = CGContext(

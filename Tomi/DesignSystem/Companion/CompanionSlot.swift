@@ -1,18 +1,20 @@
 import SwiftUI
 
-/// Empty room on a screen where the companion stands. The companion itself is drawn by one
-/// `CompanionHost` above the screens, so it is not created and destroyed on every page.
+/// The animated companion standing in a square of `side` points on a screen.
 struct CompanionSlot: View {
+    /// Lets UI tests find the companion, whose drawing itself is hidden from VoiceOver.
+    static let identifier = "tomi-companion"
+
     let state: CompanionState
     let side: CGFloat
 
     var body: some View {
-        Color.clear
-            .frame(width: side, height: side)
-            .anchorPreference(key: CompanionPlacementKey.self, value: .bounds) { bounds in
-                CompanionPlacement(bounds: bounds, state: state)
-            }
-            .accessibilityHidden(true)
+        ZStack {
+            TomiCompanion(state: state)
+        }
+        .frame(width: side, height: side)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(Self.identifier)
     }
 }
 

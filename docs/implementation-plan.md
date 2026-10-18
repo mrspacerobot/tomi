@@ -22,7 +22,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Fridge photos | Sent to the server as a small JPEG (1280 px on the long side, quality 0.6) under 10 MB, with the photo's place and time. Proof of concept: the server keeps every photo and nothing asks the cook yet. A consent step must come before real cooks |
 | Curriculum | Classical French technique and its kitchen words (mirepoix, roux, deglaze, monter au beurre, beurre blanc), without presenting the app as "French cooking". Twelve techniques in four courses (Foundations, Heat control, Sauces, Putting it together), each with levels |
 | Lessons | Written in bulk by a top Claude model into a reviewed library. One file per lesson. Never generated live in version 1 |
-| Tomi and step scenes | Printed mascot and step scenes stay code-drawn in SwiftUI. A separate native RealityKit tomato chef, built from shared geometry with no downloaded model, supplies idle, listening, thinking, explaining and celebrating states for future conversations (#94). Callers supply the state; the companion opens no microphone or AI session |
+| Tomi and step scenes | Code-drawn in SwiftUI. Tomi is a flat broadcast cartoon (direction A of `docs/design/companion-directions.html`, #137): thick ink line, a face that fills the body, rubber-hose limbs with white gloves, squash and stretch. One drawing serves the animated companion (idle, listening, thinking, explaining and celebrating) and the printed mascot, which holds a still pose. It replaces the RealityKit companion of #94. Callers supply the state; the companion opens no microphone or AI session |
 | Onboarding | Nine screens: welcome, diet, things to avoid, cuisines, kitchen, experience and weekly goal, table and units, camera primer, done. Notifications are asked at the first timer. The cupboard is in settings for now; asking it at the first scan is still to be built |
 | Cuisines | Love, happy to try, or never, from day one. "Never" hides those dishes, including alternatives. Cuisines never gate skills. More arrive later as "guest menus" |
 | Pantry | Saved cupboard staples, switchable per evening, plus typing anything the photo missed |
@@ -88,11 +88,12 @@ A debug build launched with `--component-gallery` opens a small interactive gall
 and visual comparison. `--gallery-section` opens at a named section for screenshots. Release builds contain
 no gallery screen or launch-argument handling. The full gallery remains #12.
 
-The debug gallery also opens the animated 3D companion (#94). `TomiCompanion` accepts a
-`CompanionState`, a side-view choice and an optional Reduce Motion override. Its RealityKit rig
-uses elapsed render time, pauses when hidden or inactive, and shows distinct still poses when
-Reduce Motion is enabled. The printed mascot and its remaining mood work (#11) stay separate.
-See [the companion handoff](design/companion.md) for the forms, motion and inspection steps.
+The debug gallery also opens the animated cartoon companion (#137). `TomiCompanion` accepts a
+`CompanionState` and an optional Reduce Motion override. It is drawn in a SwiftUI `Canvas` from shared
+parts, samples its pose from the animation timeline's elapsed time, pauses when hidden or inactive, and
+shows a distinct, complete still pose for each state when Reduce Motion is on. `TomiMascot` draws the same
+character holding a still pose. See [the companion handoff](design/companion.md) for the character, its
+states, its motion and inspection steps.
 
 ### From fridge photo to tonight's special
 
@@ -199,4 +200,4 @@ Each phase ends with something runnable. GitHub milestones mirror these.
 
 ## Consolidated onboarding (#124)
 
-After sign-in, a new cook sees the welcome and native 3D companion, then the server-backed questions. A persistent companion host keeps the RealityKit character alive across welcome and questions; the diet greeting uses its explaining state. The server remains the source of all food options and saved profile answers. The former local-food onboarding is superseded.
+After sign-in, a new cook sees the welcome and the animated companion, then the server-backed questions. Each screen places the companion with a `CompanionSlot`; the diet greeting uses its explaining state. The server remains the source of all food options and saved profile answers. The former local-food onboarding is superseded.

@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// A shared companion stays with the cook while the answers come from the server.
+/// The companion stays with the cook while the answers come from the server.
 struct OnboardingQuestionContent: View {
     let model: OnboardingModel
 

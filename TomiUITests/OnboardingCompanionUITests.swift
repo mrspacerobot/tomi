@@ -1,6 +1,6 @@
 import XCTest
 
-/// The backend-backed onboarding retains the welcome and a rendered 3D companion.
+/// The backend-backed onboarding retains the welcome and the drawn cartoon companion.
 final class OnboardingCompanionUITests: XCTestCase {
     override func setUp() {
         continueAfterFailure = false
@@ -10,10 +10,10 @@ final class OnboardingCompanionUITests: XCTestCase {
         let app = XCUIApplication.launched(XCUIApplication.newCook)
         app.buttons["sign-in-fake"].tap()
         XCTAssertTrue(app.buttons["onboarding-start"].waitForExistence(timeout: 5))
-        await app.element("onboarding-companion").assertTomatoRendered()
+        await app.element("tomi-companion").assertTomatoRendered()
         app.buttons["onboarding-start"].tap()
         XCTAssertTrue(app.element("question-diet").waitForExistence(timeout: 5))
-        await app.element("onboarding-companion").assertTomatoRendered()
+        await app.element("tomi-companion").assertTomatoRendered()
         app.element("choice-fake-veg").tap()
         app.buttons["onboarding-next"].tap()
         XCTAssertTrue(app.element("question-avoid").waitForExistence(timeout: 5))
@@ -67,7 +67,7 @@ final class OnboardingCompanionUITests: XCTestCase {
     }
 
     @MainActor private func capture(_ app: XCUIApplication, name: String) async {
-        await app.element("onboarding-companion").assertTomatoRendered()
+        await app.element("tomi-companion").assertTomatoRendered()
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = "onboarding-\(name)"
         attachment.lifetime = .keepAlways
