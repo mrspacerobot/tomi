@@ -65,7 +65,7 @@ Tomi/                  app target
   Progress/            the saved progress the screens read (ProgressSummaryReader, SavedProgressModel)
   Library/             LessonLibrary (protocol), BundledLessonLibrary over the file reader BundledLibrary, FakeLessonLibrary
   Resources/           Assets, fonts, Localizable.xcstrings, Library/ (catalog.json, lessons/<skill>/<lesson id>.lesson.json)
-Config/                Tomi-Info.plist: the Info.plist keys that have no build setting (the bundled fonts)
+Config/                Tomi-Info.plist: the bundled fonts and the backend addresses taken from build settings
 TomiTests/ TomiUITests/
 Packages/TomiCore/     current rules and schema; retain local safety guard and offline decoding
 ../tomi-backend/        Separate Rust Tomi API repository

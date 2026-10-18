@@ -1,12 +1,14 @@
 import Foundation
 
 /// Where the app finds Tomi's server and Supabase sign-in. Read from the Info.plist, which takes the values from
-/// the build settings `TOMI_API_BASE_URL`, `TOMI_SUPABASE_URL` and `TOMI_SUPABASE_PUBLISHABLE_KEY`.
+/// the build settings `TOMI_API_BASE_URL`, `TOMI_SUPABASE_URL`, `TOMI_SUPABASE_PUBLISHABLE_KEY` and
+/// `TOMI_LOCAL_API_BASE_URL`. The committed values point at the deployed server (see AGENTS.md, Running the app).
 /// Nothing secret is here: the publishable key is meant to ship in apps. It is still never typed into a Swift file.
 nonisolated struct BackendConfiguration: Equatable, Sendable {
     static let apiBaseURLKey = "TomiAPIBaseURL"
     static let supabaseURLKey = "TomiSupabaseURL"
     static let publishableKeyKey = "TomiSupabasePublishableKey"
+    static let localAPIBaseURLKey = "TomiLocalAPIBaseURL"
 
     let apiBaseURL: URL
     let supabaseURL: URL
@@ -24,7 +26,7 @@ nonisolated struct BackendConfiguration: Equatable, Sendable {
         return BackendConfiguration(apiBaseURL: api, supabaseURL: supabase, publishableKey: key)
     }
 
-    private static func url(forKey key: String, in bundle: Bundle) -> URL? {
+    static func url(forKey key: String, in bundle: Bundle) -> URL? {
         guard let text = text(forKey: key, in: bundle) else {
             return nil
         }
