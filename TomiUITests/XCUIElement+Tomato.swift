@@ -6,10 +6,12 @@ extension XCUIElement {
     @MainActor func waitForTomato(timeout: TimeInterval = 15) async -> Bool {
         let deadline = Date().addingTimeInterval(timeout)
         while Date() < deadline {
+            // Let the compositor present a new frame before capturing, including after a screen change.
+            try? await Task.sleep(for: .seconds(min(1, deadline.timeIntervalSinceNow)))
+            guard Date() < deadline else { return false }
             if screenshot().tomatoCoverage > 0.015 {
                 return true
             }
-            try? await Task.sleep(for: .milliseconds(200))
         }
         return false
     }
