@@ -890,7 +890,7 @@
       }
     },
     "onboarding.back": {
-      "comment": "VoiceOver name of the Back button at the top left of every onboarding question.",
+      "comment": "Button that goes back to the previous onboarding question.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -1430,13 +1430,13 @@
       }
     },
     "signIn.message": {
-      "comment": "Line under the title on the sign-in screen, above Apple's sign-in button.",
+      "comment": "Line under the title on the sign-in screen, above the email and Apple sign-in options.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sign in so your answers and your kitchen follow you. Tomi asks Apple for nothing but a sign-in."
+            "value": "Sign in to keep your answers and your kitchen with you."
           }
         }
       }
@@ -1461,6 +1461,186 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sign-in did not finish. Try again."
+          }
+        }
+      }
+    },
+    "auth.emailPrompt": {
+      "comment": "Placeholder and VoiceOver label for the email address field on sign-in and account screens.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Email address"
+          }
+        }
+      }
+    },
+    "auth.passwordPrompt": {
+      "comment": "Placeholder and VoiceOver label for the password field on sign-in and account creation.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Password"
+          }
+        }
+      }
+    },
+    "auth.signIn": {
+      "comment": "Button that signs into an existing email account.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in with email"
+          }
+        }
+      }
+    },
+    "auth.createAccount": {
+      "comment": "Button that switches the email form to account creation.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create an account"
+          }
+        }
+      }
+    },
+    "auth.createSubmit": {
+      "comment": "Button that submits a new email account.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create account"
+          }
+        }
+      }
+    },
+    "auth.forgotPassword": {
+      "comment": "Button that switches to password recovery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Forgot password?"
+          }
+        }
+      }
+    },
+    "auth.resetSubmit": {
+      "comment": "Button that asks Supabase to send a password recovery email.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send reset email"
+          }
+        }
+      }
+    },
+    "auth.backToSignIn": {
+      "comment": "Button that returns from account creation or password recovery to sign-in.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to sign in"
+          }
+        }
+      }
+    },
+    "auth.orApple": {
+      "comment": "Separator before the Sign in with Apple option.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Or continue with Apple"
+          }
+        }
+      }
+    },
+    "auth.confirmationRequired": {
+      "comment": "Message after account creation when Supabase requires email confirmation before sign-in.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check your inbox to confirm your email, then sign in."
+          }
+        }
+      }
+    },
+    "auth.recoverySent": {
+      "comment": "Privacy-preserving message after a password reset email is requested.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If an account matches, a password reset email is on its way."
+          }
+        }
+      }
+    },
+    "auth.signInFailed": {
+      "comment": "Shown when email and password sign-in fails.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We could not sign you in. Check your details and try again."
+          }
+        }
+      }
+    },
+    "auth.createFailed": {
+      "comment": "Shown when email account creation fails.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We could not create your account. Check your details and try again."
+          }
+        }
+      }
+    },
+    "auth.recoveryFailed": {
+      "comment": "Shown when Supabase cannot send a password reset email.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We could not send a reset email. Try again."
+          }
+        }
+      }
+    },
+    "auth.accountCreated": {
+      "comment": "Message after account creation when Supabase does not require email confirmation.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your account is ready."
           }
         }
       }
@@ -1713,18 +1893,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cooking for %lld"
-          }
-        }
-      }
-    },
-    "onboarding.back": {
-      "comment": "Button that goes back to the previous onboarding question.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Back"
           }
         }
       }
@@ -2325,6 +2493,30 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "auth.invalidEmail": {
+      "comment": "Shown under the email field on the first screen when the address is not an email address.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That does not look like an email address. Check it and try again."
+          }
+        }
+      }
+    },
+    "auth.passwordTooShort": {
+      "comment": "Shown on the first screen when a new password is too short. The number is the fewest characters allowed.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a password with at least %lld characters."
           }
         }
       }

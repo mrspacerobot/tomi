@@ -26,6 +26,24 @@ actor SupabaseAuthService: AuthService {
         try store.save(try await client.session(for: grant, at: now()))
     }
 
+    func signIn(email: String, password: String) async throws {
+        let grant = SupabaseGrant.emailPassword(email: email, password: password)
+        try store.save(try await client.session(for: grant, at: now()))
+    }
+
+    func createAccount(email: String, password: String) async throws -> SignUpResult {
+        let result = try await client.createAccount(email: email, password: password, at: now())
+        if case .authenticated(let session) = result {
+            try store.save(session)
+            return .authenticated
+        }
+        return .emailConfirmationRequired
+    }
+
+    func sendPasswordReset(to email: String) async throws {
+        try await client.sendPasswordReset(to: email)
+    }
+
     func accessToken() async throws -> String {
         let session = try currentSession()
         if session.needsRefresh(at: now()) {

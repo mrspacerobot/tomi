@@ -35,6 +35,23 @@ final class AppFlowModel {
         }
     }
 
+    func signIn(email: String, password: String) async throws {
+        try await services.auth.signIn(email: email, password: password)
+        await loadProfile()
+    }
+
+    func createAccount(email: String, password: String) async throws -> SignUpResult {
+        let result = try await services.auth.createAccount(email: email, password: password)
+        if result == .authenticated {
+            await loadProfile()
+        }
+        return result
+    }
+
+    func sendPasswordReset(to email: String) async throws {
+        try await services.auth.sendPasswordReset(to: email)
+    }
+
     func finishOnboarding() {
         stage = .home
     }
