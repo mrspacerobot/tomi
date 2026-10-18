@@ -27,9 +27,16 @@ final class AppearanceUITests: XCTestCase {
         prepareAppearance()
         let app = XCUIApplication.launched(XCUIApplication.returningCook + ["--store-in-memory"])
 
+        dismissAppleAccountVerificationIfNeeded()
         XCTAssertTrue(app.staticTexts["welcome-title"].waitForExistence(timeout: 5))
         showAppearance(appearance, in: app)
         return app.screenshot().groundBrightness
+    }
+
+    @MainActor private func dismissAppleAccountVerificationIfNeeded() {
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let notNow = springboard.buttons["Not Now"]
+        if notNow.waitForExistence(timeout: 1) { notNow.tap() }
     }
     @MainActor private func prepareAppearance() {
         let original = XCUIDevice.shared.appearance
