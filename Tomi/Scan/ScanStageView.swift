@@ -11,7 +11,7 @@ struct ScanStageView: View {
         case .reading, .finding: ScanWaitingView(stage: model.stage)
         case .ready: ScanReadyView(model: model, photos: flow.services.photos)
         case .confirming: ConfirmView(model: model)
-        case .menu(let menu): SpecialsView(menu: menu, path: $path)
+        case .menu(let menu): SpecialsView(menu: menu, options: flow.profile.listedOptions, path: $path)
         case .nothingTonight: NothingTonightView(model: model, path: $path)
         }
     }

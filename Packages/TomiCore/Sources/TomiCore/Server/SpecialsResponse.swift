@@ -1,6 +1,8 @@
-/// What `POST /v1/lessons/suggest` sends back: tonight's special and up to two alternatives.
-public struct SpecialsResponse: Hashable, Codable, Sendable {
-    public var libraryVersion = 0
+/// What `POST /v1/lessons/suggest` sends back: tonight's special and up to two alternatives, from the graph.
+/// An offer that cannot be read is left out, so it is unavailable and never shown on trust.
+public struct SpecialsResponse: Hashable, Decodable, Sendable {
+    public var graphVersion = ""
+    public var graphChannel = ""
     /// How the offers were ordered, or nil when a newer server names a way this build does not know.
     public var rankedBy: RankedBy?
     public var special: Offer?
@@ -10,13 +12,15 @@ public struct SpecialsResponse: Hashable, Codable, Sendable {
 
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        libraryVersion = try container.decode(Int.self, forKey: .libraryVersion)
+        graphVersion = try container.decode(String.self, forKey: .graphVersion)
+        graphChannel = try container.decode(String.self, forKey: .graphChannel)
         rankedBy = container.knownValue(RankedBy.self, forKey: .rankedBy)
-        special = try container.decodeIfPresent(Offer.self, forKey: .special)
-        alternatives = try container.decode([Offer].self, forKey: .alternatives)
+        let offers = try Self.readOffers(container)
+        special = offers.special
+        alternatives = offers.alternatives
     }
 
     enum CodingKeys: String, CodingKey {
-        case libraryVersion, rankedBy, special, alternatives
+        case graphVersion, graphChannel, rankedBy, special, alternatives
     }
 }

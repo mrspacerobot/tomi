@@ -6,10 +6,8 @@ import Testing
 @Suite struct TonightsMenuTests {
     let vegan = OfferCheckedTests.cook(diet: "vegan", avoid: [])
 
-    func offer(_ id: LessonID, diet: OptionID?) -> Offer {
-        var offer = Offer(lessonID: id, revision: 1, title: id.rawValue)
-        offer.checked = CheckedRestrictions(diet: diet, avoid: [])
-        return offer
+    func offer(_ id: RecipeID, diet: OptionID?) -> Offer {
+        Offer.sample(id: id, checked: CheckedRestrictions(diet: diet, avoid: []))
     }
 
     func response(special: Offer?, alternatives: [Offer]) -> SpecialsResponse {
@@ -22,21 +20,21 @@ import Testing
     @Test func checkedOffersAreShownInTheServersOrder() {
         let all = response(special: offer("a", diet: "vegan"), alternatives: [offer("b", diet: "vegan")])
         let menu = TonightsMenu(all, for: vegan)
-        #expect(menu.special?.lessonID == "a")
-        #expect(menu.alternatives.map(\.lessonID) == ["b"])
+        #expect(menu.special?.recipeID == "a")
+        #expect(menu.alternatives.map(\.recipeID) == ["b"])
     }
 
     @Test func anUncheckedSpecialGivesWayToTheFirstCheckedAlternative() {
         let all = response(special: offer("a", diet: nil), alternatives: [offer("b", diet: "vegan")])
         let menu = TonightsMenu(all, for: vegan)
-        #expect(menu.special?.lessonID == "b")
+        #expect(menu.special?.recipeID == "b")
         #expect(menu.alternatives.isEmpty)
     }
 
     @Test func noMoreThanTwoAlternativesAreShown() {
-        let alternatives = ["b", "c", "d"].map { offer(LessonID(rawValue: $0), diet: "vegan") }
+        let alternatives = ["b", "c", "d"].map { offer(RecipeID(rawValue: $0), diet: "vegan") }
         let menu = TonightsMenu(response(special: offer("a", diet: "vegan"), alternatives: alternatives), for: vegan)
-        #expect(menu.alternatives.map(\.lessonID) == ["b", "c"])
+        #expect(menu.alternatives.map(\.recipeID) == ["b", "c"])
     }
 
     @Test func nothingCheckedIsAnEmptyMenu() {

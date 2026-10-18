@@ -188,7 +188,7 @@ For any agent or person reviewing a pull request here. Formatting, size limits a
 
 - The app shows an offer only when its `checked` diet equals the cook's diet and its `checked` avoid list holds every item the cook avoids. A profile, check or offer that cannot be read is refused, never read as "eats everything".
 - The app holds no food rule of its own: no diet, avoid, fact, ingredient, equipment or cuisine list, and no filter. Food rules are reviewed in the server's repository.
-- A swap is applied on the phone only when the offer names it and the lesson lists it (`Lesson.applying(listed:)`).
+- The phone applies no swap of its own. A graph offer carries the server's safe plan beside the graph's unchanged source recipe: the app shows both and never describes the source recipe as adapted. An offer that cannot be read in full is left out, never read as allowed or empty. Cooking a graph recipe is undecided (#135); the lesson player opens library lessons by id and nothing opens it from an offer yet.
 - A temperature, a cooking time claimed as safe, or a "safe to eat" statement comes only from the safety table. Tomi never judges from a photo whether food is cooked through.
 
 **The cook log and what follows from it**

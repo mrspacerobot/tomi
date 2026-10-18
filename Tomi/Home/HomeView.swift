@@ -10,7 +10,7 @@ struct HomeView: View {
         NavigationStack(path: $path) {
             HomeContent(flow: flow, progress: progress, path: $path)
                 .navigationDestination(for: HomeRoute.self) { route in
-                    HomeDestination(route: route, flow: flow, progress: progress, path: $path)
+                    HomeDestination(route: route, flow: flow, path: $path)
                 }
         }
         .onAppear {

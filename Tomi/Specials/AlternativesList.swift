@@ -4,6 +4,7 @@ import TomiCore
 /// The other dishes the cook could make tonight, under their heading.
 struct AlternativesList: View {
     let offers: [Offer]
+    let options: LibraryOptions
     @Binding var path: [HomeRoute]
 
     var body: some View {
@@ -12,7 +13,7 @@ struct AlternativesList: View {
                 .textStyle(.label)
                 .textCase(.uppercase)
             ForEach(offers) { offer in
-                OfferCard(offer: offer, flag: nil) { path.append(.cook(offer)) }
+                OfferCard(offer: offer, options: options, flag: nil) { path.append(.offer(offer)) }
             }
         }
     }

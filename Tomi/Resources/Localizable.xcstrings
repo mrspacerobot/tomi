@@ -2246,25 +2246,13 @@
       }
     },
     "offer.line": {
-      "comment": "Line under a dish's name. First the minutes it takes, then the technique's name, then the level's name, both from the server.",
+      "comment": "Line under a dish's name on the menu and its detail. First the technique's name, then the level's name, both from the server.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld min · %2$@, %3$@"
-          }
-        }
-      }
-    },
-    "offer.cook": {
-      "comment": "Button that opens the lesson of a dish on offer.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cook this"
+            "value": "%1$@, %2$@"
           }
         }
       }
@@ -2517,6 +2505,210 @@
           "stringUnit": {
             "state": "translated",
             "value": "Choose a password with at least %lld characters."
+          }
+        }
+      }
+    },
+    "offer.open": {
+      "comment": "Button on a dish on offer that opens its plan and the original recipe.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "See the plan"
+          }
+        }
+      }
+    },
+    "offer.omitted": {
+      "comment": "What the safe plan leaves out of the dish for this cook. The placeholder is a list of ingredient names joined by the app.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left out: %@"
+          }
+        }
+      }
+    },
+    "offer.checked": {
+      "comment": "Under a dish on offer: the diet and avoid items the server checked it against. The placeholder is a list of their names joined by the app.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checked for: %@"
+          }
+        }
+      }
+    },
+    "offer.checked.nothing": {
+      "comment": "Under a dish on offer, for a cook with no diet and nothing to avoid: what the server checked it against.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checked for: no diet, nothing to avoid"
+          }
+        }
+      }
+    },
+    "offer.equipment": {
+      "comment": "What the cook needs in the kitchen for a dish on offer. The placeholder is a list of equipment names joined by the app.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You will need: %@"
+          }
+        }
+      }
+    },
+    "offer.plan.title": {
+      "comment": "Heading of the block that shows the safe plan for this cook on a dish on offer. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your safe plan"
+          }
+        }
+      }
+    },
+    "offer.source.title": {
+      "comment": "Heading of the block that shows the original recipe on a dish on offer. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The original recipe"
+          }
+        }
+      }
+    },
+    "offer.source.note": {
+      "comment": "Short note under the heading of the original recipe. The recipe is shown as written, not changed for the cook.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is the recipe as it was written. Where it differs from your safe plan, follow the plan."
+          }
+        }
+      }
+    },
+    "offer.source.swapped": {
+      "comment": "Under an ingredient of the original recipe that the safe plan swaps. The placeholder is the ingredient the plan uses instead.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your plan uses %@ instead."
+          }
+        }
+      }
+    },
+    "offer.source.omitted": {
+      "comment": "Under an ingredient of the original recipe that the safe plan leaves out.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left out of your plan."
+          }
+        }
+      }
+    },
+    "offer.step.time.range": {
+      "comment": "How long a step of the original recipe takes, as a range. The placeholders are the shortest and longest length, each already written with its unit, such as 4 min.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ to %2$@"
+          }
+        }
+      }
+    },
+    "offer.ratio.weight": {
+      "comment": "How much of a stand-in to use, counted by weight. The placeholders are how much of the stand-in and how much of the original, as numbers.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use %1$@ of it for every %2$@ of the original, by weight."
+          }
+        }
+      }
+    },
+    "offer.ratio.volume": {
+      "comment": "How much of a stand-in to use, counted by volume. The placeholders are how much of the stand-in and how much of the original, as numbers.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use %1$@ of it for every %2$@ of the original, by volume."
+          }
+        }
+      }
+    },
+    "offer.ratio.count": {
+      "comment": "How much of a stand-in to use, counted by number. The placeholders are how much of the stand-in and how much of the original, as numbers.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use %1$@ of it for every %2$@ of the original, by number."
+          }
+        }
+      }
+    },
+    "offer.ratio.plain": {
+      "comment": "How much of a stand-in to use. The placeholders are how much of the stand-in and how much of the original, as numbers.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use %1$@ of it for every %2$@ of the original."
+          }
+        }
+      }
+    },
+    "offer.amount.clove": {
+      "comment": "An amount of garlic-style cloves in the original recipe. The placeholder is the count.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld clove"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld cloves"
+                }
+              }
+            }
           }
         }
       }

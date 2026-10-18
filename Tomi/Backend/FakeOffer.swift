@@ -1,44 +1,35 @@
+import Foundation
 import TomiCore
 
-/// One lesson as the fake server offers it: named in the cook's language, checked for the cook's own answers,
-/// with every ingredient missing but the first, and the lesson's first listed swap applied.
+/// One lesson as the fake server offers it, written as the real server writes a graph offer and then read the
+/// way the app reads the real one. The recipe is the lesson's own text. The first swap the lesson lists is applied;
+/// a lesson with no swap has its last ingredient left out. Every ingredient but the first is missing.
 nonisolated struct FakeOffer {
+    typealias Wire = [String: Any]
+
     let lesson: Lesson
-    let options: LibraryOptions
 
-    func offer(checkedFor profile: CookProfile) -> Offer {
-        var offer = Offer(lessonID: lesson.id, revision: lesson.revision, title: LessonText.resolved(lesson.title))
-        offer.minutes = lesson.minutes
-        offer.skill = OfferSkill(id: lesson.skill, name: lesson.skill.rawValue)
-        offer.level = NamedLevel(number: lesson.level, name: String(lesson.level))
-        offer.swaps = swaps
-        offer.ingredients = ingredients(of: dish(with: offer.swaps))
-        offer.missing = Array(offer.ingredients.dropFirst())
-        offer.reason = offer.title
-        offer.checked = CheckedRestrictions(diet: profile.diet, avoid: profile.avoid)
-        return offer
+    func offer(checkedFor profile: CookProfile) throws -> Offer {
+        let data = try JSONSerialization.data(withJSONObject: wire(checkedFor: profile))
+        return try JSONDecoder().decode(Offer.self, from: data)
     }
 
-    private var swaps: [OfferSwap] {
-        guard let first = lesson.swaps.first else {
-            return []
-        }
-        return [OfferSwap(removed: named(first.ingredient), added: named(first.replacement.ingredient))]
+    private func wire(checkedFor profile: CookProfile) -> Wire {
+        [
+            "recipeId": FakeGraphID.recipe(lesson.id.rawValue),
+            "title": LessonText.resolved(lesson.title),
+            "sourceRecipe": FakeSourceRecipe(lesson: lesson).wire,
+            "skill": ["id": lesson.skill.rawValue, "name": lesson.skill.rawValue],
+            "level": ["number": lesson.level, "name": String(lesson.level)],
+            "safePlan": FakeSafePlan(lesson: lesson).wire,
+            "reason": LessonText.resolved(lesson.whyThis),
+            "checked": checked(for: profile),
+        ]
     }
 
-    private func dish(with swaps: [OfferSwap]) -> Lesson {
-        do {
-            return try lesson.applying(listed: swaps.map(\.applied))
-        } catch {
-            return lesson
-        }
-    }
-
-    private func ingredients(of dish: Lesson) -> [NamedOption] {
-        dish.ingredients.map { named($0.ingredient) }
-    }
-
-    private func named(_ id: IngredientID) -> NamedOption {
-        NamedOption(id: OptionID(rawValue: id.rawValue), name: FakeOptions.name(of: id.rawValue))
+    private func checked(for profile: CookProfile) -> Wire {
+        var checked: Wire = ["avoid": profile.avoid.map(\.rawValue).sorted()]
+        checked["diet"] = profile.diet?.rawValue ?? NSNull()
+        return checked
     }
 }

@@ -51,7 +51,7 @@ All endpoints are versioned and use typed IDs, explicit schema versions and stru
 | `POST /v1/scans` | Fridge photo to candidate ingredients for the cook to confirm |
 | `GET /v1/bootstrap` | Supported API/schema versions, current reviewed library and safety versions, minimum app version |
 | `POST /v1/ingredients/resolve` | Confirmed text labels to exact, alias, ambiguous or unknown ID candidates with evidence; never silently choose an ambiguous ID |
-| `POST /v1/lessons/suggest` | Confirmed ingredient IDs, restrictions, skill context and equipment to bounded reviewed lesson candidates, final ingredients, missing parts and explanations |
+| `POST /v1/lessons/suggest` | Confirmed ingredient IDs to a special and up to two alternatives, each a graph recipe: `recipeId`, the graph's unchanged `sourceRecipe`, a `safePlan` (ingredients, substitutions with ratio and caveat, omitted parts, missing ingredients, equipment), `skill`, `level`, `reason` and `checked`. The answer names `graphVersion` and `graphChannel`; it has no lesson id, revision or minutes (tomi-backend #17) |
 | `GET /v1/library/{version}` | Reviewed lesson files or a compatible delta; withdrawal list and content hashes; safety facts remain on the server |
 | `GET/PATCH /v1/profile` | Read and update versioned preferences; reject a write that would silently weaken a restriction |
 | `POST /v1/cook-events` | Idempotent batch acceptance by stable event ID and per-event result; return a versioned progress summary |
@@ -69,7 +69,7 @@ Request IDs support retries; authentication identifies the user; authorization s
 
 The backend filters every candidate against the cook's restrictions before ranking and again after a swap or serving adaptation changes ingredients. Ingredient facts come only from a reviewed safety snapshot. A model cannot add facts, ingredients, diets, avoid items, skills or equipment. A missing or unreadable fact fails closed. A recipe with an open safety point, unverified safety record or insufficient review tier cannot be published.
 
-The phone verifies `checked` restrictions before presenting an offer, and refuses unreadable restrictions. A profile change that alters diet or avoid items clears the saved lesson bookmark. A future resume flow must ask the server to check the lesson again; there is no resume-check endpoint yet. A compatible bundled lesson can be cooked offline after selection. Photo recognition never judges doneness or food safety.
+The phone verifies `checked` restrictions before presenting an offer, and refuses unreadable restrictions. A profile change that alters diet or avoid items clears the saved lesson bookmark. A future resume flow must ask the server to check the lesson again; there is no resume-check endpoint yet. The phone shows a graph offer's safe plan beside its source recipe and never calls the source recipe adapted; an offer it cannot read in full is left out. Cooking a graph recipe is not designed yet (#135), so no lesson is cooked from an offer for now. Photo recognition never judges doneness or food safety.
 
 ## Offline and media behavior
 

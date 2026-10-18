@@ -3,53 +3,64 @@ import Testing
 
 @testable import TomiCore
 
-/// Offers as `POST /v1/lessons/suggest` sends them, and the request that asks for them.
+/// Offers as `POST /v1/lessons/suggest` sends them (graph recipes).
 @Suite struct SpecialsDecodingTests {
-    @Test func anOfferIsReadWithItsSwapsMissingIngredientsAndCheck() throws {
-        let offer = try ServerJSON.decode(Offer.self, from: ServerJSON.offer)
-        #expect(offer.lessonID == "garlic-butter")
-        #expect(offer.revision == 2)
+    @Test func anOfferIsReadWithItsSafePlanAndCheck() throws {
+        let offer = try ServerJSON.decode(Offer.self, from: GraphJSON.offer())
+        #expect(offer.recipeID == "recipe/soft-scrambled-eggs")
+        #expect(offer.title == "Soft scrambled eggs")
         #expect(offer.skill == OfferSkill(id: "eggs", name: "Eggs"))
         #expect(offer.level == NamedLevel(number: 1, name: "Soft"))
-        #expect(offer.swaps.map(\.applied) == [AppliedSwap(removed: "butter", added: "olive-oil")])
-        #expect(offer.missing.map(\.id) == ["garlic"])
         #expect(offer.reason == "Quick tonight.")
         #expect(offer.checked == CheckedRestrictions(diet: "vegan", avoid: ["nuts"]))
     }
 
-    @Test func anOfferWithoutItsCheckIsRefused() {
-        let check = #""checked": {"diet": "vegan", "avoid": ["nuts"]}"#
-        let unchecked = ServerJSON.offer.replacing(check, with: #""x": 1"#)
-        #expect(throws: DecodingError.self) {
-            try ServerJSON.decode(Offer.self, from: unchecked)
-        }
+    @Test func aSafePlanIsReadWithAllFiveLists() throws {
+        let plan = try ServerJSON.decode(Offer.self, from: GraphJSON.offer()).safePlan
+        #expect(plan.ingredients.map(\.id) == ["ingredient/egg", "ingredient/oil"])
+        #expect(plan.omittedParts == ["enrichment"])
+        #expect(plan.missing.map(\.name) == ["Oil"])
+        #expect(plan.equipment.map(\.name) == ["Whisk"])
+        #expect(plan.substitutions.count == 1)
     }
 
-    @Test func aCheckWithoutADietIsRefusedNotReadAsEatingEverything() {
-        #expect(throws: DecodingError.self) {
-            try ServerJSON.decode(CheckedRestrictions.self, from: #"{"avoid": []}"#)
-        }
+    @Test func aSubstitutionKeepsItsRatioAndCaveat() throws {
+        let offer = try ServerJSON.decode(Offer.self, from: GraphJSON.offer())
+        let swap = try #require(offer.safePlan.substitutions.first)
+        #expect(swap.removed.name == "Butter")
+        #expect(swap.added.name == "Oil")
+        #expect(swap.ratio == SwapRatio(standIn: 1, original: 1, by: "volume"))
+        #expect(swap.caveat == "No butter aroma.")
     }
 
-    @Test func aResponseWithNoSpecialAndAnUnknownRankingIsRead() throws {
-        let text = #"{"libraryVersion": 4, "rankedBy": "oracle", "special": null, "alternatives": []}"#
-        let response = try ServerJSON.decode(SpecialsResponse.self, from: text)
-        #expect(response.special == nil)
-        #expect(response.rankedBy == nil)
-        #expect(response.libraryVersion == 4)
+    @Test func aSubstitutionMayHaveNoRatioAndNoCaveat() throws {
+        let plain = GraphJSON.plan.replacing(GraphJSON.ratio, with: #""ratio": null"#)
+            .replacing(GraphJSON.caveat, with: #""caveat": null"#)
+        let offer = try ServerJSON.decode(Offer.self, from: GraphJSON.offer(plan: plain))
+        #expect(offer.safePlan.substitutions.first?.ratio == nil)
+        #expect(offer.safePlan.substitutions.first?.caveat == nil)
     }
 
-    @Test func theRequestSendsSortedIngredientsAndLeavesOutAMissingScan() throws {
-        let request = SpecialsRequest(ingredients: ["spinach", "egg"], scanID: nil)
-        let text = String(bytes: try JSONEncoder().encode(request), encoding: .utf8)!
-        #expect(text == #"{"ingredients":["egg","spinach"]}"#)
+    @Test func theSourceRecipeKeepsItsOwnInstructionsUnchanged() throws {
+        let source = try ServerJSON.decode(Offer.self, from: GraphJSON.offer()).sourceRecipe
+        #expect(source.steps.map(\.text) == ["Whisk the eggs.", "Stir over low heat.", "Take it off the heat."])
+        #expect(source.ingredients.map(\.thing.rawValue).first == "ingredient/egg")
+        #expect(source.ingredients.first?.amount == SourceAmount(value: 5, unit: "piece"))
+        #expect(source.equipment == ["equipment/saucepan", "equipment/whisk"])
+        #expect(source.yields == SourceAmount(value: 2, unit: "serving"))
     }
 
-    @Test func theRequestNamesTheScan() throws {
-        let request = SpecialsRequest(ingredients: ["egg"], scanID: "scan-1")
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .sortedKeys
-        let text = String(bytes: try encoder.encode(request), encoding: .utf8)!
-        #expect(text == #"{"ingredients":["egg"],"scanId":"scan-1"}"#)
+    @Test func stepTimesReadAsOneValueOrARange() throws {
+        let steps = try ServerJSON.decode(Offer.self, from: GraphJSON.offer()).sourceRecipe.steps
+        #expect(steps[0].time == nil)
+        #expect(steps[1].time == SourceTime(shortest: 4, longest: 6, unit: "minute"))
+        #expect(steps[2].time == SourceTime(shortest: 30, longest: 30, unit: "second"))
+    }
+
+    /// A newer server may add fields anywhere; the app reads what it knows.
+    @Test func unknownFieldsAreIgnored() throws {
+        let plan = GraphJSON.plan.replacing(#""omittedParts""#, with: #""futureNote": 1, "omittedParts""#)
+        let offer = try ServerJSON.decode(Offer.self, from: GraphJSON.offer(plan: plan, extra: #", "newer": [1]"#))
+        #expect(offer.safePlan.omittedParts == ["enrichment"])
     }
 }

@@ -1,34 +1,23 @@
-/// One dish the server offers for tonight: a lesson of the library, adapted with the swaps it lists.
-/// Everything about who may eat it was decided by the server; `checked` says for which diet and avoid list.
-public struct Offer: Identifiable, Hashable, Codable, Sendable {
-    public let lessonID: LessonID
-    /// The revision of the lesson the server offered. The player opens only this revision.
-    public let revision: Int
+/// One dish the server offers for tonight: a recipe of the cooking graph, with the safe plan for this cook.
+/// The source recipe is the graph's own text, never rewritten. The safe plan says what changes for this cook,
+/// and `checked` says for which diet and avoid list the server decided it.
+public struct Offer: Identifiable, Hashable, Decodable, Sendable {
+    public let recipeID: RecipeID
     public let title: String
-    public var minutes = 0
-    public var skill = OfferSkill(id: SkillID(rawValue: ""), name: "")
-    public var level = NamedLevel(number: SkillLevel.firstNumber, name: "")
-    /// The dish's ingredients after the swaps, with their names.
-    public var ingredients: [NamedOption] = []
-    public var swaps: [OfferSwap] = []
-    /// Ingredients of the dish the cook did not say they have.
-    public var missing: [NamedOption] = []
+    public let sourceRecipe: SourceRecipe
+    public let skill: OfferSkill
+    public let level: NamedLevel
+    public let safePlan: SafePlan
     /// One line from the server's model about why this dish, or nil when it ranked without one.
-    public var reason: String?
-    public var checked = CheckedRestrictions(diet: nil, avoid: [])
+    public let reason: String?
+    public let checked: CheckedRestrictions
 
-    public init(lessonID: LessonID, revision: Int, title: String) {
-        self.lessonID = lessonID
-        self.revision = revision
-        self.title = title
-    }
-
-    public var id: LessonID {
-        lessonID
+    public var id: RecipeID {
+        recipeID
     }
 
     enum CodingKeys: String, CodingKey {
-        case lessonID = "lessonId"
-        case revision, title, minutes, skill, level, ingredients, swaps, missing, reason, checked
+        case recipeID = "recipeId"
+        case title, sourceRecipe, skill, level, safePlan, reason, checked
     }
 }

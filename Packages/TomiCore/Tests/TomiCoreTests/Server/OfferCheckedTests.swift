@@ -5,9 +5,8 @@ import Testing
 /// The thin guard: an offer is shown only when the server checked it for the cook's diet and every avoid item.
 @Suite struct OfferCheckedTests {
     static func offer(diet: OptionID?, avoid: Set<OptionID>) -> Offer {
-        var offer = Offer(lessonID: "garlic-butter", revision: 1, title: "Garlic butter")
-        offer.checked = CheckedRestrictions(diet: diet, avoid: avoid)
-        return offer
+        let restrictions = CheckedRestrictions(diet: diet, avoid: avoid)
+        return Offer.sample(checked: restrictions)
     }
 
     static func cook(diet: OptionID?, avoid: Set<OptionID>) -> CookProfile {

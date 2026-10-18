@@ -48,6 +48,6 @@ actor FakeTomiAPI: TomiAPI {
         if offersNothing {
             return SpecialsResponse()
         }
-        return data.specials(for: envelope.profile)
+        return try data.specials(for: envelope.profile)
     }
 }

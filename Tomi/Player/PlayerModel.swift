@@ -9,15 +9,15 @@ final class PlayerModel {
     static let logger = Logger(category: .progress)
 
     let dish: Lesson
-    let offer: Offer
+    let brief: PlayerBrief
     let profile: CookProfile
     private(set) var page = PlayerPage.ingredients
     private(set) var chosenAnswer: Int?
     let store: any ProgressStore
 
-    init(dish: Lesson, offer: Offer, flow: AppFlowModel) {
+    init(dish: Lesson, brief: PlayerBrief, flow: AppFlowModel) {
         self.dish = dish
-        self.offer = offer
+        self.brief = brief
         profile = flow.profile.profile
         store = flow.services.store
     }
