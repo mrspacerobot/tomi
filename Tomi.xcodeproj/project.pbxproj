@@ -314,9 +314,10 @@
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TOMI_API_BASE_URL = "";
-				TOMI_SUPABASE_PUBLISHABLE_KEY = "";
-				TOMI_SUPABASE_URL = "";
+				TOMI_API_BASE_URL = "https://tomi-api-130793692388.europe-west3.run.app";
+				TOMI_LOCAL_API_BASE_URL = "";
+				TOMI_SUPABASE_PUBLISHABLE_KEY = sb_publishable_1QJLF5Ppax8XIEMO-xSMlg_Wmmix9i5;
+				TOMI_SUPABASE_URL = "https://cdpuwvugzwmvrgvanbud.supabase.co";
 			};
 			name = Release;
 		};
@@ -427,9 +428,10 @@
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TOMI_API_BASE_URL = "";
-				TOMI_SUPABASE_PUBLISHABLE_KEY = "";
-				TOMI_SUPABASE_URL = "";
+				TOMI_API_BASE_URL = "https://tomi-api-130793692388.europe-west3.run.app";
+				TOMI_LOCAL_API_BASE_URL = "http://localhost:8080";
+				TOMI_SUPABASE_PUBLISHABLE_KEY = sb_publishable_1QJLF5Ppax8XIEMO-xSMlg_Wmmix9i5;
+				TOMI_SUPABASE_URL = "https://cdpuwvugzwmvrgvanbud.supabase.co";
 			};
 			name = Debug;
 		};

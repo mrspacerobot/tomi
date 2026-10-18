@@ -8,6 +8,13 @@
 	<string>$(TOMI_SUPABASE_URL)</string>
 	<key>TomiSupabasePublishableKey</key>
 	<string>$(TOMI_SUPABASE_PUBLISHABLE_KEY)</string>
+	<key>TomiLocalAPIBaseURL</key>
+	<string>$(TOMI_LOCAL_API_BASE_URL)</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Gloock-Regular.ttf</string>

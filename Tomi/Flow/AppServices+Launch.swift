@@ -8,7 +8,7 @@ extension AppServices {
         if options.usesFake {
             return fakeForUITests(options, library: library, store: store)
         }
-        guard let configuration = BackendConfiguration.read() else {
+        guard let configuration = BackendConfiguration.read(for: options) else {
             return nil
         }
         return live(configuration, library: library, store: store)
