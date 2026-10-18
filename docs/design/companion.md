@@ -9,20 +9,26 @@ RealityKit companion of #94 and the old printed mascot. Tomi is drawn in one sty
 Tomi stays a tomato chef in the Tasting menu palette: tomato body, cream toque, periwinkle leaf, cobalt
 shoes. What changed is the drawing: a thick ink line, a face that fills the body (tall eyes with big pupils,
 thick brows, a filled grin with a tongue), rubber-hose arms and legs with no elbows or knees, puffy white
-gloves with a cuff and a thumb, and a soft warm glow around the figure. The body is flat with one cel-shaded
-crescent and a shine, and rosy cheeks. The look takes the qualities of the reference the owner gave (a lively
+gloves with a cuff and a thumb, and the tomato's crown peeking out under the toque: pointed sepals on both
+sides and a curved stem with a leaf on the right. The body is flat with one cel-shaded crescent and a shine,
+and rosy cheeks. On night ink a soft warm glow lifts him off the ground; on paper there is no glow, so his
+outline stays crisp. The look takes the qualities of the reference the owner gave (a lively
 cartoon host), not the look of any existing character.
 
 Proportions, line weights and timing come from the `poseA` sketch and the `a-*` keyframes of the concept page.
 All units are those of the sketch (200 by 240), placed on a 240 by 270 grid (`CompanionGrid`) that leaves room
-above for the celebration jump, the thought dots and the sparkles.
+above for the celebration jump, the thought dots and the sparkles. A screen gives Tomi a frame and Tomi at rest
+fills it, toque to shoes (`CompanionGrid.figureBox`); the rest of the grid spills past the frame's edges
+(`CompanionOverflowLayout`), so a jump or a sparkle never makes him small. Frame sizes follow the mockups
+(`MascotSize`): 174 points on the welcome, sign-in, home and starting screens, 89 beside the diet greeting,
+106 beside the "nothing tonight" notice. On the welcome he stands on a 232-point wash disc, as in `ob-welcome`.
 
 ## The five states
 
 | State | Still pose | Motion |
 |---|---|---|
 | idle | Right glove raised in a hello, friendly smile | Squash, stretch into a hop, land and settle (1.6 s, overshooting ease); the hand waves (1.1 s); blinks (3.4 s) |
-| listening | Leaning in, a glove cupped by the side of the face, eyes wide, brows up, small smile | Leans further in and back like nodding along (2.4 s); the cupped hand moves with it; slower blinks |
+| listening | Leaning in, a glove cupped by the side of the face (an open "C" of curled fingers towards the face), eyes wide, brows up, small smile | Leans further in and back like nodding along (2.4 s); the cupped hand moves with it; slower blinks |
 | thinking | Glove at the chin, eyes glancing up, one brow raised, a "hmm" mouth, three thought dots | The hand taps the chin (0.9 s); the glance drifts; the dots pulse in turn (1.2 s, a fifth of a second apart) |
 | explaining | Both gloves open to the sides, brows lifted, mouth mid-word | A small bob on each beat (0.8 s); the hands gesture in turn (1.6 s); brows lift on the stressed word; the mouth cycles through grin and round shapes every 0.13 s |
 | celebrating | Both arms thrown up, happy closed eyes, wide open laugh, yolk sparkles | A deep squash, a big jump with a twist, a landing squash (1.2 s, overshooting ease); arms cheer; sparkles twinkle |
@@ -43,7 +49,7 @@ Everything is SwiftUI in `Tomi/DesignSystem/Companion`, with no image, model or 
   timeline's first frame and notices a change of state. All of it is unit tested without a screen.
 - `Drawing`: one part per piece of the character (`CompanionBodyPart`, `CompanionLeafPart`,
   `CompanionToquePart`, `CompanionEyesPart`, `CompanionBrowsPart`, `CompanionMouthPart`, `CompanionArmPart`,
-  `CompanionGlovePart`, `CompanionLegPart`, `CompanionExtrasPart`), painted back to front by
+  `CompanionGlovePart`, `CompanionCupPart`, `CompanionLegPart`, `CompanionExtrasPart`), painted back to front by
   `CompanionDrawing` into a `Canvas`. Legs and brows are drawn once and mirrored. The left arm sits behind the
   body and the right in front, so a hand at the chin reads clearly.
 - Colours are design tokens (`ColorRole.companion*`, `printRed` and `yolk`), with light and dark values in

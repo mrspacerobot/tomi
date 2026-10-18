@@ -13,6 +13,7 @@ struct CompanionExpressionTests {
         let pose = CompanionState.listening.stillPose
         #expect(pose.body.tilt < 0)
         #expect(pose.leftArm.hand.y < pose.leftArm.shoulder.y)
+        #expect(pose.leftArm.cupped)
         #expect(pose.face.eyes.openness > 1)
         #expect(pose.face.leftBrow.lift < 0)
         #expect(pose.face.rightBrow.lift < 0)
@@ -49,6 +50,12 @@ struct CompanionExpressionTests {
         #expect(pose.face.eyes.happy)
         #expect(pose.face.mouth.open > CompanionState.explaining.stillPose.face.mouth.open)
         #expect(pose.extras.sparkle > 0)
+    }
+
+    @Test(arguments: [CompanionState.idle, .thinking, .explaining, .celebrating])
+    func onlyListeningCupsAHand(state: CompanionState) {
+        #expect(!state.stillPose.leftArm.cupped)
+        #expect(!state.stillPose.rightArm.cupped)
     }
 
     @Test(arguments: [CompanionState.idle, .listening, .explaining, .celebrating])

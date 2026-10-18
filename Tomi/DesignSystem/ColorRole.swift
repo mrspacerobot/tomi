@@ -45,7 +45,7 @@ nonisolated enum ColorRole: CaseIterable, Sendable {
     case companionShade
     /// Tomi's cheeks and tongue.
     case companionBlush
-    /// The soft warm glow around the animated Tomi.
+    /// The soft warm glow around Tomi on night ink. Clear on paper, where a glow would blur his outline.
     case companionGlow
 
     /// On the main actor, because the symbols Xcode makes for the asset catalog are.

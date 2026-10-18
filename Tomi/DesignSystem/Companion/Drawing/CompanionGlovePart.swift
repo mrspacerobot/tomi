@@ -3,6 +3,18 @@ import SwiftUI
 /// A puffy white cartoon glove with a rolled cuff and a thumb, drawn pointing along its own x axis.
 enum CompanionGlovePart {
     static func draw(_ glove: CompanionGlovePlacement, in context: GraphicsContext, palette: CompanionPalette) {
+        if glove.cupped {
+            CompanionCupPart.draw(glove, in: context, palette: palette)
+        } else {
+            drawMitt(glove, in: context, palette: palette)
+        }
+    }
+
+    private static func drawMitt(
+        _ glove: CompanionGlovePlacement,
+        in context: GraphicsContext,
+        palette: CompanionPalette
+    ) {
         var hand = context
         hand.translateBy(x: glove.center.x, y: glove.center.y)
         hand.rotate(by: .radians(glove.angle))

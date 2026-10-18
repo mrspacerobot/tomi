@@ -6,10 +6,12 @@ nonisolated struct CompanionGlovePlacement: Equatable {
     /// Radians; 0 points the fingers to the right of the screen.
     let angle: Double
     let thumb: Double
+    let cupped: Bool
 
     init(arm: CompanionArmPose) {
         center = arm.hand
         angle = atan2(Double(arm.hand.y - arm.bend.y), Double(arm.hand.x - arm.bend.x))
         thumb = arm.thumb
+        cupped = arm.cupped
     }
 }

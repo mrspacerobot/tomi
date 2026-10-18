@@ -1,13 +1,16 @@
 import SwiftUI
 
-/// One still frame of Tomi in a given pose, scaled to fit. Decorative: callers give any words around it.
+/// One still frame of Tomi in a given pose. Tomi at rest fills the frame; a jump, thought dots or sparkles
+/// spill past it. Decorative: callers give any words around it.
 struct CompanionFigure: View {
     let pose: CompanionPose
 
     var body: some View {
         let drawing = CompanionDrawing(pose: pose, palette: .tokens)
-        Canvas { context, size in
-            drawing.draw(in: context, size: size)
+        CompanionOverflowLayout {
+            Canvas { context, size in
+                drawing.draw(in: context, size: size)
+            }
         }
     }
 }

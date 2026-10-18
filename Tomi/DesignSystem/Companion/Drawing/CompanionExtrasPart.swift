@@ -3,13 +3,13 @@ import SwiftUI
 /// Thought dots rising to the upper right, and yolk sparkles around a celebration.
 enum CompanionExtrasPart {
     private static let dots = [
-        CGRect(x: 156, y: 54, width: 10, height: 10),
-        CGRect(x: 169, y: 36, width: 14, height: 14),
-        CGRect(x: 186, y: 13, width: 19, height: 19),
+        CGRect(x: 172, y: 44, width: 10, height: 10),
+        CGRect(x: 184, y: 25, width: 14, height: 14),
+        CGRect(x: 197, y: 1, width: 19, height: 19),
     ]
     private static let sparkles = [
         CompanionSparkle(center: CGPoint(x: 30, y: 58), radius: 10),
-        CompanionSparkle(center: CGPoint(x: 172, y: 36), radius: 9),
+        CompanionSparkle(center: CGPoint(x: 178, y: 28), radius: 9),
         CompanionSparkle(center: CGPoint(x: 190, y: 66), radius: 5.5),
     ]
 

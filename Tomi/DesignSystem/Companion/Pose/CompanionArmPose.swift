@@ -10,6 +10,8 @@ nonisolated struct CompanionArmPose: CompanionBlendable {
     /// Which side of the glove the thumb sits on, 1 or -1. With 1 it is on the left of the line from the bend
     /// to the hand, seen on screen, so a hanging left hand shows its thumb towards the body.
     var thumb: Double = 1
+    /// A hand cupped by the face to listen, open towards the screen's right, instead of a resting mitt.
+    var cupped = false
 
     static let restingLeft = CompanionArmPose(
         shoulder: CGPoint(x: 40, y: 142),
@@ -35,7 +37,8 @@ nonisolated struct CompanionArmPose: CompanionBlendable {
             bend: bend.blended(toward: target.bend, by: fraction),
             hand: hand.blended(toward: target.hand, by: fraction),
             swing: swing.blended(toward: target.swing, by: fraction),
-            thumb: CompanionSnap.value(from: thumb, to: target.thumb, by: fraction)
+            thumb: CompanionSnap.value(from: thumb, to: target.thumb, by: fraction),
+            cupped: CompanionSnap.value(from: cupped, to: target.cupped, by: fraction)
         )
     }
 }

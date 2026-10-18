@@ -17,7 +17,8 @@ extension CompanionPose {
         leftArm: CompanionArmPose(
             shoulder: CGPoint(x: 41, y: 140),
             bend: CGPoint(x: 12, y: 146),
-            hand: CGPoint(x: 27, y: 114)
+            hand: CGPoint(x: 22, y: 124),
+            cupped: true
         ),
         face: CompanionFacePose(
             eyes: CompanionEyes(look: CGPoint(x: -3, y: -2), openness: 1.08, pupil: 7.6),
