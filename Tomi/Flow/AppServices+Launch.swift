@@ -25,7 +25,8 @@ extension AppServices {
             auth: FakeAuthService(signedIn: options.startsSignedIn),
             library: library,
             store: store,
-            photos: .fixed(PhotoSource.fakePhoto)
+            photos: .fixed(PhotoSource.fakePhoto),
+            usesFakeSignInButton: !options.showsAppleSignInButton
         )
     }
 
@@ -47,6 +48,20 @@ extension AppServices {
         library: any LessonLibrary,
         store: any ProgressStore
     ) -> AppServices {
+        let backend = liveBackend(configuration)
+        return AppServices(
+            api: backend.api,
+            auth: backend.auth,
+            library: library,
+            store: store,
+            photos: .photoLibrary,
+            usesFakeSignInButton: false
+        )
+    }
+
+    private static func liveBackend(
+        _ configuration: BackendConfiguration
+    ) -> (api: any TomiAPI, auth: any AuthService) {
         let transport = URLSessionTransport()
         let tokens = SupabaseTokenClient(
             supabaseURL: configuration.supabaseURL,
@@ -55,7 +70,6 @@ extension AppServices {
         )
         let auth = SupabaseAuthService(client: tokens, store: KeychainTokenStore(), now: { Date.now })
         let client = APIClient(baseURL: configuration.apiBaseURL, auth: auth, transport: transport)
-        let api = URLSessionTomiAPI(client: client)
-        return AppServices(api: api, auth: auth, library: library, store: store, photos: .photoLibrary)
+        return (URLSessionTomiAPI(client: client), auth)
     }
 }

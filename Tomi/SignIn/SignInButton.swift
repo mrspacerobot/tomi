@@ -6,7 +6,7 @@ struct SignInButton: View {
     @State private var appleFailed = false
 
     var body: some View {
-        if flow.services.signsInWithFake {
+        if flow.services.usesFakeSignInButton {
             Button {
                 signIn(with: AppleIdentity(idToken: "", rawNonce: ""))
             } label: {
