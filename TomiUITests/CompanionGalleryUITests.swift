@@ -5,12 +5,12 @@ final class CompanionGalleryUITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    @MainActor func testTheGalleryOpensTheAnimatedCompanion() {
+    @MainActor func testTheGalleryOpensTheAnimatedCompanion() async {
         let app = XCUIApplication.launchingGallery()
         app.buttons["gallery-companion"].tap()
         XCTAssertTrue(app.staticTexts["companion-title"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["companion-state-idle"].isSelected)
-        XCTAssertTrue(app.element("companion-stage").waitForTomato())
+        await app.element("companion-stage").assertTomatoRendered()
     }
 
     @MainActor func testEveryStateAndDepthControlWorks() {
