@@ -8,14 +8,14 @@ actor FakeTomiAPI: TomiAPI {
     static let profileSchemaVersion = 2
 
     private let data: FakeServerData
-    private let offersNothing: Bool
+    private let suggestionsNothing: Bool
     private var envelope: ProfileEnvelope
 
     /// The fake cook's profile starts as given: a new cook by default.
-    init(library: any LessonLibrary, profile: CookProfile = CookProfile(), offersNothing: Bool = false) {
+    init(library: any LessonLibrary, profile: CookProfile = CookProfile(), suggestionsNothing: Bool = false) {
         data = FakeServerData(library: library)
         envelope = ProfileEnvelope(version: 0, schemaVersion: Self.profileSchemaVersion, profile: profile)
-        self.offersNothing = offersNothing
+        self.suggestionsNothing = suggestionsNothing
     }
 
     func options() async throws -> LibraryOptions {
@@ -45,7 +45,7 @@ actor FakeTomiAPI: TomiAPI {
     }
 
     func specials(_ request: SpecialsRequest) async throws -> SpecialsResponse {
-        if offersNothing {
+        if suggestionsNothing {
             return SpecialsResponse()
         }
         return try data.specials(for: envelope.profile)

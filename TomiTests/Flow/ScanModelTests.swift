@@ -7,8 +7,8 @@ import TomiCore
 /// The scan against the fake server: the photo, the cook's list and tonight's menu. There is no consent step yet.
 @MainActor
 @Suite struct ScanModelTests {
-    func scan(offersNothing: Bool = false) async throws -> ScanModel {
-        let api = FakeTomiAPI(library: BundledLessonLibrary(), offersNothing: offersNothing)
+    func scan(suggestionsNothing: Bool = false) async throws -> ScanModel {
+        let api = FakeTomiAPI(library: BundledLessonLibrary(), suggestionsNothing: suggestionsNothing)
         let profile = ProfileModel(api: api, store: InMemoryProgressStore())
         try await profile.load()
         return ScanModel(api: api, profile: profile)
@@ -34,7 +34,7 @@ import TomiCore
         #expect(ticked.count < model.list.items.count)
     }
 
-    @Test func tonightsMenuShowsOffersCheckedForTheCook() async throws {
+    @Test func tonightsMenuShowsSuggestionsCheckedForTheCook() async throws {
         let model = try await scan()
         model.typeInstead()
         await model.findSpecial()
@@ -46,7 +46,7 @@ import TomiCore
     }
 
     @Test func noDishTonightIsAKindEmptyStateNotAnError() async throws {
-        let model = try await scan(offersNothing: true)
+        let model = try await scan(suggestionsNothing: true)
         model.typeInstead()
         await model.findSpecial()
         #expect(model.stage == .nothingTonight)

@@ -5,5 +5,5 @@ enum HomeRoute: Hashable {
     case scan
     case settings
     case question(ProfileQuestion)
-    case offer(Offer)
+    case suggestion(Suggestion)
 }

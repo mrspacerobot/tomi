@@ -15,7 +15,7 @@ extension ScanModel {
         fail(JPEGConversionError.unreadable, then: .ready)
     }
 
-    /// Asks the server for tonight's special and shows only the offers it checked for this cook.
+    /// Asks the server for tonight's special and shows only the suggestions it checked for this cook.
     func findSpecial() async {
         stage = .finding
         do {

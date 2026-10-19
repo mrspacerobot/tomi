@@ -1,4 +1,4 @@
-/// The diet and avoid list the server checked an offer against, after its swaps.
+/// The diet and avoid list the server checked a suggestion against, after its swaps.
 public struct CheckedRestrictions: Hashable, Codable, Sendable {
     public let diet: OptionID?
     public let avoid: Set<OptionID>

@@ -3,13 +3,13 @@ import TomiCore
 
 /// One swap: the ingredient put in for the one taken out, how much of it, and what it changes.
 struct SafePlanSwapRow: View {
-    let swap: OfferSwap
+    let swap: SuggestionSwap
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xxSmall) {
-            Text(.offerSwap(swap.added.name, swap.removed.name))
+            Text(.suggestionSwap(swap.added.name, swap.removed.name))
                 .textStyle(.body)
-                .accessibilityIdentifier("offer-swap")
+                .accessibilityIdentifier("suggestion-swap")
             SwapNotes(swap: swap)
         }
         .frame(maxWidth: .infinity, alignment: .leading)

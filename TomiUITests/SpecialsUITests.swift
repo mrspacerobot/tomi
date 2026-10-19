@@ -10,23 +10,23 @@ final class SpecialsUITests: XCTestCase {
     @MainActor
     func testTheMenuShowsTheSpecialAndItsAlternatives() {
         let app = findTonightsMenu()
-        let titles = app.staticTexts.matching(NSPredicate(format: "identifier BEGINSWITH 'offer-title-'"))
+        let titles = app.staticTexts.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-title-'"))
         XCTAssertTrue(titles.firstMatch.waitForExistence(timeout: 5))
         XCTAssertGreaterThan(titles.count, 1)
-        XCTAssertTrue(app.element("offer-checked").exists)
-        XCTAssertTrue(app.element("offer-missing").exists)
+        XCTAssertTrue(app.element("suggestion-checked").exists)
+        XCTAssertTrue(app.element("suggestion-missing").exists)
     }
 
     @MainActor
     func testTheDetailShowsTheSafePlanBesideTheOriginalRecipe() {
         let app = findTonightsMenu()
-        let open = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'offer-open-'")).firstMatch
+        let open = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-open-'")).firstMatch
         XCTAssertTrue(open.waitForExistence(timeout: 5))
         open.tap()
-        XCTAssertTrue(app.element("offer-plan").waitForExistence(timeout: 5))
+        XCTAssertTrue(app.element("suggestion-plan").waitForExistence(timeout: 5))
         app.swipeUp()
-        XCTAssertTrue(app.element("offer-source").waitForExistence(timeout: 5))
-        XCTAssertTrue(app.element("offer-source-yield").waitForExistence(timeout: 5))
+        XCTAssertTrue(app.element("suggestion-original").waitForExistence(timeout: 5))
+        XCTAssertTrue(app.element("suggestion-original-yield").waitForExistence(timeout: 5))
         scrollToFirstStep(app)
     }
 
@@ -41,8 +41,8 @@ final class SpecialsUITests: XCTestCase {
     @MainActor
     func testTheOriginalRecipeIsNeverCalledAdapted() {
         let app = findTonightsMenu()
-        app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'offer-open-'")).firstMatch.tap()
-        XCTAssertTrue(app.element("offer-source").waitForExistence(timeout: 5))
+        app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-open-'")).firstMatch.tap()
+        XCTAssertTrue(app.element("suggestion-original").waitForExistence(timeout: 5))
         let adapted = NSPredicate(format: "label CONTAINS[c] 'adapted'")
         XCTAssertFalse(app.staticTexts.containing(adapted).firstMatch.exists)
     }

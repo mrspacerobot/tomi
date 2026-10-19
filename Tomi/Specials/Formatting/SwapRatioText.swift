@@ -7,10 +7,10 @@ struct SwapRatioText: View {
 
     var body: some View {
         switch ratio.basis {
-        case .weight: Text(.offerRatioWeight(standIn, original))
-        case .volume: Text(.offerRatioVolume(standIn, original))
-        case .count: Text(.offerRatioCount(standIn, original))
-        case nil: Text(.offerRatioPlain(standIn, original))
+        case .weight: Text(.suggestionRatioWeight(standIn, original))
+        case .volume: Text(.suggestionRatioVolume(standIn, original))
+        case .count: Text(.suggestionRatioCount(standIn, original))
+        case nil: Text(.suggestionRatioPlain(standIn, original))
         }
     }
 

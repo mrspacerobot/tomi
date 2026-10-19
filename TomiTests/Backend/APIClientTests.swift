@@ -70,7 +70,7 @@ import TomiCore
 
     @Test func tonightsLessonIsAskedFromTheSuggestRoute() async throws {
         let answer =
-            #"{"graphVersion": "1", "graphChannel": "draft", "rankedBy": "overlap", "special": null, "#
+            #"{"rankedBy": "overlap", "special": null, "#
             + #""alternatives": []}"#
         let harness = make([.init(status: 200, body: answer)])
         _ = try await harness.api.specials(SpecialsRequest(ingredients: ["egg"], scanID: nil))

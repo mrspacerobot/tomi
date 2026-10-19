@@ -3,7 +3,7 @@ import TomiCore
 
 /// The ratio and the caveat the server gives with a swap, when it gives them.
 struct SwapNotes: View {
-    let swap: OfferSwap
+    let swap: SuggestionSwap
 
     var body: some View {
         if let ratio = swap.ratio {

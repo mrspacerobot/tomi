@@ -1,5 +1,5 @@
 extension LibraryOptions {
-    /// The names of the diet and avoid items an offer was checked against, diet first, avoid items in id order.
+    /// The names of the diet and avoid items a suggestion was checked against, diet first, avoid items in id order.
     /// An id this list does not name is shown as its id made readable: the cook still sees what was checked.
     public func names(checkedFor checked: CheckedRestrictions) -> [String] {
         var names: [String] = []

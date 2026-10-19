@@ -1,19 +1,19 @@
-/// The offers the cook is shown: tonight's special and at most two alternatives, all checked for this cook.
+/// The suggestions the cook is shown: tonight's special and at most two alternatives, all checked for this cook.
 public struct TonightsMenu: Hashable, Sendable {
     public static let mostAlternatives = 2
 
-    public let special: Offer?
-    public let alternatives: [Offer]
+    public let special: Suggestion?
+    public let alternatives: [Suggestion]
 
-    /// Every offer whose check does not cover the cook is left out (`Offer.isChecked(for:)`).
+    /// Every suggestion whose check does not cover the cook is left out (`Suggestion.isChecked(for:)`).
     /// When the special is left out, the first alternative that passes takes its place.
     public init(_ response: SpecialsResponse, for profile: CookProfile) {
-        var offers: [Offer] = []
+        var suggestions: [Suggestion] = []
         if let special = response.special {
-            offers.append(special)
+            suggestions.append(special)
         }
-        offers += response.alternatives
-        let checked = offers.filter { $0.isChecked(for: profile) }
+        suggestions += response.alternatives
+        let checked = suggestions.filter { $0.isChecked(for: profile) }
         special = checked.first
         alternatives = Array(checked.dropFirst().prefix(Self.mostAlternatives))
     }

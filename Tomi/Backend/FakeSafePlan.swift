@@ -6,7 +6,7 @@ import TomiCore
 nonisolated struct FakeSafePlan {
     let lesson: Lesson
 
-    var wire: FakeOffer.Wire {
+    var wire: FakeSuggestion.Wire {
         [
             "ingredients": planned.map(named),
             "substitutions": swaps,
@@ -38,7 +38,7 @@ nonisolated struct FakeSafePlan {
         return [last.ingredient.rawValue]
     }
 
-    private var swaps: [FakeOffer.Wire] {
+    private var swaps: [FakeSuggestion.Wire] {
         guard let swap else {
             return []
         }
@@ -52,11 +52,11 @@ nonisolated struct FakeSafePlan {
         ]
     }
 
-    private func named(_ id: String) -> FakeOffer.Wire {
+    private func named(_ id: String) -> FakeSuggestion.Wire {
         ["id": FakeGraphID.ingredient(id), "name": FakeOptions.name(of: id)]
     }
 
-    private func namedEquipment(_ id: String) -> FakeOffer.Wire {
+    private func namedEquipment(_ id: String) -> FakeSuggestion.Wire {
         ["id": FakeGraphID.equipment(id), "name": FakeOptions.name(of: id)]
     }
 }

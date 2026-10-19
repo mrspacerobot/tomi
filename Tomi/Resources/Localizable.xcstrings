@@ -2245,7 +2245,7 @@
         }
       }
     },
-    "offer.line": {
+    "suggestion.line": {
       "comment": "Line under a dish's name on the menu and its detail. First the technique's name, then the level's name, both from the server.",
       "extractionState": "manual",
       "localizations": {
@@ -2257,7 +2257,7 @@
         }
       }
     },
-    "offer.swap": {
+    "suggestion.swap": {
       "comment": "A swap Tomi made to the dish. First the ingredient put in, then the one taken out, both named by the server.",
       "extractionState": "manual",
       "localizations": {
@@ -2269,7 +2269,7 @@
         }
       }
     },
-    "offer.missing": {
+    "suggestion.missing": {
       "comment": "What the cook still needs for the dish. The placeholder is a list of ingredient names joined by the app.",
       "extractionState": "manual",
       "localizations": {
@@ -2509,8 +2509,8 @@
         }
       }
     },
-    "offer.open": {
-      "comment": "Button on a dish on offer that opens its plan and the original recipe.",
+    "suggestion.open": {
+      "comment": "Button on a dish on suggestion that opens its plan and the original recipe.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -2521,7 +2521,7 @@
         }
       }
     },
-    "offer.omitted": {
+    "suggestion.omitted": {
       "comment": "What the safe plan leaves out of the dish for this cook. The placeholder is a list of ingredient names joined by the app.",
       "extractionState": "manual",
       "localizations": {
@@ -2533,8 +2533,8 @@
         }
       }
     },
-    "offer.checked": {
-      "comment": "Under a dish on offer: the diet and avoid items the server checked it against. The placeholder is a list of their names joined by the app.",
+    "suggestion.checked": {
+      "comment": "Under a dish on suggestion: the diet and avoid items the server checked it against. The placeholder is a list of their names joined by the app.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -2545,8 +2545,8 @@
         }
       }
     },
-    "offer.checked.nothing": {
-      "comment": "Under a dish on offer, for a cook with no diet and nothing to avoid: what the server checked it against.",
+    "suggestion.checked.nothing": {
+      "comment": "Under a dish on suggestion, for a cook with no diet and nothing to avoid: what the server checked it against.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -2557,8 +2557,8 @@
         }
       }
     },
-    "offer.equipment": {
-      "comment": "What the cook needs in the kitchen for a dish on offer. The placeholder is a list of equipment names joined by the app.",
+    "suggestion.equipment": {
+      "comment": "What the cook needs in the kitchen for a dish on suggestion. The placeholder is a list of equipment names joined by the app.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -2569,8 +2569,8 @@
         }
       }
     },
-    "offer.plan.title": {
-      "comment": "Heading of the block that shows the safe plan for this cook on a dish on offer. Shown in capitals by the design.",
+    "suggestion.plan.title": {
+      "comment": "Heading of the block that shows the safe plan for this cook on a dish on suggestion. Shown in capitals by the design.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -2581,8 +2581,8 @@
         }
       }
     },
-    "offer.source.title": {
-      "comment": "Heading of the block that shows the original recipe on a dish on offer. Shown in capitals by the design.",
+    "suggestion.original.title": {
+      "comment": "Heading of the block that shows the original recipe on a dish on suggestion. Shown in capitals by the design.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -2593,7 +2593,7 @@
         }
       }
     },
-    "offer.source.note": {
+    "suggestion.original.note": {
       "comment": "Short note under the heading of the original recipe. The recipe is shown as written, not changed for the cook.",
       "extractionState": "manual",
       "localizations": {
@@ -2605,7 +2605,7 @@
         }
       }
     },
-    "offer.source.swapped": {
+    "suggestion.original.swapped": {
       "comment": "Under an ingredient of the original recipe that the safe plan swaps. The placeholder is the ingredient the plan uses instead.",
       "extractionState": "manual",
       "localizations": {
@@ -2617,7 +2617,7 @@
         }
       }
     },
-    "offer.source.omitted": {
+    "suggestion.original.omitted": {
       "comment": "Under an ingredient of the original recipe that the safe plan leaves out.",
       "extractionState": "manual",
       "localizations": {
@@ -2629,7 +2629,7 @@
         }
       }
     },
-    "offer.step.time.range": {
+    "suggestion.step.time.range": {
       "comment": "How long a step of the original recipe takes, as a range. The placeholders are the shortest and longest length, each already written with its unit, such as 4 min.",
       "extractionState": "manual",
       "localizations": {
@@ -2641,7 +2641,7 @@
         }
       }
     },
-    "offer.ratio.weight": {
+    "suggestion.ratio.weight": {
       "comment": "How much of a stand-in to use, counted by weight. The placeholders are how much of the stand-in and how much of the original, as numbers.",
       "extractionState": "manual",
       "localizations": {
@@ -2653,7 +2653,7 @@
         }
       }
     },
-    "offer.ratio.volume": {
+    "suggestion.ratio.volume": {
       "comment": "How much of a stand-in to use, counted by volume. The placeholders are how much of the stand-in and how much of the original, as numbers.",
       "extractionState": "manual",
       "localizations": {
@@ -2665,7 +2665,7 @@
         }
       }
     },
-    "offer.ratio.count": {
+    "suggestion.ratio.count": {
       "comment": "How much of a stand-in to use, counted by number. The placeholders are how much of the stand-in and how much of the original, as numbers.",
       "extractionState": "manual",
       "localizations": {
@@ -2677,7 +2677,7 @@
         }
       }
     },
-    "offer.ratio.plain": {
+    "suggestion.ratio.plain": {
       "comment": "How much of a stand-in to use. The placeholders are how much of the stand-in and how much of the original, as numbers.",
       "extractionState": "manual",
       "localizations": {
@@ -2689,7 +2689,7 @@
         }
       }
     },
-    "offer.amount.clove": {
+    "suggestion.amount.clove": {
       "comment": "An amount of garlic-style cloves in the original recipe. The placeholder is the count.",
       "extractionState": "manual",
       "localizations": {
@@ -2713,7 +2713,7 @@
         }
       }
     },
-    "offer.source.yield.servings": {
+    "suggestion.original.yield.servings": {
       "comment": "Under the note of the original recipe: how many servings its amounts make. The placeholder is the count.",
       "extractionState": "manual",
       "localizations": {
@@ -2737,7 +2737,7 @@
         }
       }
     },
-    "offer.source.yield.amount": {
+    "suggestion.original.yield.amount": {
       "comment": "Under the note of the original recipe: how much it makes when that is not servings. The placeholder is the amount with its unit, such as 500 g.",
       "extractionState": "manual",
       "localizations": {

@@ -44,9 +44,9 @@ final class FirstEveningUITests: XCTestCase {
     }
 
     @MainActor private func openTheSpecial(_ app: XCUIApplication) {
-        let open = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'offer-open-'")).firstMatch
+        let open = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-open-'")).firstMatch
         XCTAssertTrue(open.waitForExistence(timeout: 5))
         open.tap()
-        XCTAssertTrue(app.element("offer-plan").waitForExistence(timeout: 5))
+        XCTAssertTrue(app.element("suggestion-plan").waitForExistence(timeout: 5))
     }
 }

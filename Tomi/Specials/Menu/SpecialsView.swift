@@ -11,11 +11,11 @@ struct SpecialsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.xLarge) {
                 if let special = menu.special {
-                    OfferCard(offer: special, options: options, flag: .specialsKicker) {
-                        path.append(.offer(special))
+                    SuggestionCard(suggestion: special, options: options, flag: .specialsKicker) {
+                        path.append(.suggestion(special))
                     }
                 }
-                AlternativesList(offers: menu.alternatives, options: options, path: $path)
+                AlternativesList(suggestions: menu.alternatives, options: options, path: $path)
             }
             .padding(Spacing.screenMargin)
         }

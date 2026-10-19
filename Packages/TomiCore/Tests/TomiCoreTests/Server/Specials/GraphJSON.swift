@@ -1,4 +1,4 @@
-/// Graph offers as `POST /v1/lessons/suggest` writes them. The recipe is soft scrambled eggs from the
+/// Graph suggestions as `POST /v1/lessons/suggest` writes them. The recipe is soft scrambled eggs from the
 /// cooking graph, kept as the graph writes it (snake_case step fields included), with a pan-sauce style swap.
 enum GraphJSON {
     static let recipe =
@@ -35,14 +35,14 @@ enum GraphJSON {
 
     static let checked = #"{"diet": "vegan", "avoid": ["nuts"]}"#
 
-    static func offer(plan: String = plan, checked: String = checked, extra: String = "") -> String {
+    static func suggestion(plan: String = plan, checked: String = checked, extra: String = "") -> String {
         #"{"recipeId": "recipe/soft-scrambled-eggs", "title": "Soft scrambled eggs", "sourceRecipe": "#
             + recipe + #", "skill": {"id": "eggs", "name": "Eggs"}, "level": {"number": 1, "name": "Soft"}, "#
             + #""safePlan": "# + plan + #", "reason": "Quick tonight.", "checked": "# + checked + extra + "}"
     }
 
     static func response(special: String, alternatives: [String]) -> String {
-        #"{"graphVersion": "2026.10.1", "graphChannel": "draft", "rankedBy": "model", "special": "#
+        #"{"rankedBy": "model", "special": "#
             + special + #", "alternatives": ["# + alternatives.joined(separator: ", ") + "]}"
     }
 }

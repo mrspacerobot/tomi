@@ -3,7 +3,7 @@
 /// Every list is required. A list that is missing must never read as an empty one.
 public struct SafePlan: Hashable, Decodable, Sendable {
     public let ingredients: [NamedOption]
-    public let substitutions: [OfferSwap]
+    public let substitutions: [SuggestionSwap]
     /// Parts of the recipe left out for this cook, by the graph's part id, such as `enrichment`.
     public let omittedParts: [String]
     /// Ingredients of the plan the cook did not say they have.
@@ -12,7 +12,7 @@ public struct SafePlan: Hashable, Decodable, Sendable {
 
     public init(
         ingredients: [NamedOption],
-        substitutions: [OfferSwap],
+        substitutions: [SuggestionSwap],
         omittedParts: [String],
         missing: [NamedOption],
         equipment: [NamedOption]
