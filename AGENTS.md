@@ -33,7 +33,9 @@ One build runs against three backends, chosen when it launches:
 
 - `scripts/run.sh` builds, installs and launches on the simulator named by `TOMI_SIMULATOR` (default "iPhone 17"). Extra arguments are passed to the app, for example `scripts/run.sh fake --fake-signed-in --appearance-dark`.
 - Use **fake** to look at screens: it needs no account and no network. Use **cloud** to try a real sign-in. Use **local** to try a server change before it is deployed; start `tomi-backend` with `SUPABASE_URL` set to the Supabase project, so it accepts the app's real tokens.
-- Sign in with email and password in cloud and local. Sign in with Apple needs the paid developer account.
+- Sign in with email and password, or with Apple, in cloud and local. Sign in with Apple also needs the Apple provider enabled in Supabase with the bundle id `com.mrspacerobot.tomi` as a client id.
+- **On a phone:** every target signs automatically with the owner's team (`DEVELOPMENT_TEAM` in the project). Sign in to Xcode with the owner's Apple account, turn on Developer Mode on the phone, pick it as the destination and run the Tomi scheme.
+- **To friends:** `scripts/testflight.sh` archives a Release build with a build number from the clock and uploads it to App Store Connect (`Config/TestFlightExportOptions.plist`). Testers are added in App Store Connect under TestFlight. The app is iPhone only, and `ITSAppUsesNonExemptEncryption` answers export compliance: it uses only standard HTTPS.
 - UI tests always launch with `--fake-backend` and never reach the network.
 
 ## How we work: tests first
@@ -102,7 +104,7 @@ One build runs against three backends, chosen when it launches:
 - **Conflicting copies never depend on arrival order.** When different records share the newest id and timestamp, ordinary profile answers must be given again, with every saved food restriction kept; a conflicting lesson bookmark is not resumed. Identical copies still read once.
 - **UI tests never touch the cook's own store.** They launch with `--store-in-memory`, or `--store-ui-test-file` when a test relaunches the app, and `--seed-known-state` for a known starting state (`StoreLaunchOptions`, `KnownState`). They start as a new cook with `--store-start-empty`, and see light or dark with `--appearance-light` or `--appearance-dark` (`AppearanceLaunchOption`), because `XCUIDevice.appearance` has no effect on the simulator.
 - **No third-party dependencies in the app** without the owner's approval.
-- **Proof of concept: there is no consent step, and every fridge photo is kept.** The owner's decision, for testing with their own photos only. A fridge photo is sent to the server as a small JPEG (long side at most `JPEGConverter.largestSide`, compressed to `JPEGConverter.quality`) with its own place, time and camera details, and the server keeps it as it arrived. **Before any real cook uses the app, a consent step must come first**: what is kept named in a text the cook agrees to, a way to withdraw that deletes it, and a privacy review. Chat and voice never leave the phone.
+- **Proof of concept: there is no consent step, and every fridge photo is kept.** The owner's decision, for testing by the owner and friends invited through TestFlight (decided 19 October 2026). A fridge photo is sent to the server as a small JPEG (long side at most `JPEGConverter.largestSide`, compressed to `JPEGConverter.quality`) with its own place, time and camera details, and the server keeps it as it arrived. **Before the app is offered to anyone outside TestFlight, a consent step must come first**: what is kept named in a text the cook agrees to, a way to withdraw that deletes it, and a privacy review. Chat and voice never leave the phone.
 
 ## Code style: small enough to read at a glance
 
