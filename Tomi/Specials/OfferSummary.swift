@@ -8,7 +8,7 @@ struct OfferSummary: View {
     let options: LibraryOptions
 
     var body: some View {
-        ForEach(offer.safePlan.substitutions, id: \.added.id) { swap in
+        ForEach(offer.safePlan.substitutions, id: \.id) { swap in
             Text(.offerSwap(swap.added.name, swap.removed.name))
                 .textStyle(.description)
         }

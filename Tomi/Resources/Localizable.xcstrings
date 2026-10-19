@@ -2712,6 +2712,42 @@
           }
         }
       }
+    },
+    "offer.source.yield.servings": {
+      "comment": "Under the note of the original recipe: how many servings its amounts make. The placeholder is the count.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Makes %lld serving"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Makes %lld servings"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "offer.source.yield.amount": {
+      "comment": "Under the note of the original recipe: how much it makes when that is not servings. The placeholder is the amount with its unit, such as 500 g.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Makes %@"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

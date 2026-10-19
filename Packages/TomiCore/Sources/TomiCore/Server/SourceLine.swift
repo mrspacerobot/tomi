@@ -9,7 +9,7 @@ public struct SourceLine: Hashable, Decodable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         thing = try container.decode(OptionID.self, forKey: .thing)
         part = try container.decode(String.self, forKey: .part)
-        amount = try? container.decodeIfPresent(SourceAmount.self, forKey: .amount)
+        amount = try container.decodeIfPresent(SourceAmount.self, forKey: .amount)
     }
 
     enum CodingKeys: String, CodingKey {

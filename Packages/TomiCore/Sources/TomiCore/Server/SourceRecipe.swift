@@ -13,7 +13,7 @@ public struct SourceRecipe: Hashable, Decodable, Sendable {
         ingredients = try container.decode([SourceLine].self, forKey: .ingredients)
         steps = try container.decode([SourceStep].self, forKey: .steps)
         equipment = try container.decode([OptionID].self, forKey: .equipment)
-        yields = try? container.decodeIfPresent(SourceAmount.self, forKey: .yields)
+        yields = try container.decodeIfPresent(SourceAmount.self, forKey: .yields)
     }
 
     enum CodingKeys: String, CodingKey {

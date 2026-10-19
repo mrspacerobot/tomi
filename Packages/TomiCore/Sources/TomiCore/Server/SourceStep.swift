@@ -7,7 +7,7 @@ public struct SourceStep: Hashable, Decodable, Sendable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         text = try container.decode(String.self, forKey: .text)
-        time = try? container.decodeIfPresent(SourceTime.self, forKey: .time)
+        time = try container.decodeIfPresent(SourceTime.self, forKey: .time)
     }
 
     enum CodingKeys: String, CodingKey {

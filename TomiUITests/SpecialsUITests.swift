@@ -26,6 +26,7 @@ final class SpecialsUITests: XCTestCase {
         XCTAssertTrue(app.element("offer-plan").waitForExistence(timeout: 5))
         app.swipeUp()
         XCTAssertTrue(app.element("offer-source").waitForExistence(timeout: 5))
+        XCTAssertTrue(app.element("offer-source-yield").waitForExistence(timeout: 5))
         scrollToFirstStep(app)
     }
 

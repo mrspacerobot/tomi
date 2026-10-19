@@ -7,9 +7,7 @@ struct SourceRecipeSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.small) {
-            SectionHeading(words: .offerSourceTitle)
-            Text(.offerSourceNote)
-                .textStyle(.description)
+            SourceRecipeHeader(recipe: offer.sourceRecipe)
             ForEach(Array(offer.sourceRecipe.ingredients.enumerated()), id: \.offset) { _, line in
                 SourceLineRow(offer: offer, line: line)
             }
