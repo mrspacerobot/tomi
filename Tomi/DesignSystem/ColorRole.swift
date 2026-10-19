@@ -37,8 +37,6 @@ nonisolated enum ColorRole: CaseIterable, Sendable {
     case companionToque
     /// Tomi's gloves, eye whites and shine.
     case companionWhite
-    /// The leaf by Tomi's toque.
-    case companionLeaf
     /// Tomi's shoes.
     case companionShoe
     /// The shaded side of Tomi's tomato body.
@@ -68,7 +66,6 @@ nonisolated enum ColorRole: CaseIterable, Sendable {
         case .companionFeature: Color(.companionFeature)
         case .companionToque: Color(.companionToque)
         case .companionWhite: Color(.companionWhite)
-        case .companionLeaf: Color(.companionLeaf)
         case .companionShoe: Color(.companionShoe)
         case .companionShade: Color(.companionShade)
         case .companionBlush: Color(.companionBlush)

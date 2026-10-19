@@ -8,7 +8,6 @@ struct CompanionPalette {
     let feature: Color
     let toque: Color
     let white: Color
-    let leaf: Color
     let shoe: Color
     let blush: Color
     let glow: Color
@@ -22,7 +21,6 @@ struct CompanionPalette {
             feature: ColorRole.companionFeature.color,
             toque: ColorRole.companionToque.color,
             white: ColorRole.companionWhite.color,
-            leaf: ColorRole.companionLeaf.color,
             shoe: ColorRole.companionShoe.color,
             blush: ColorRole.companionBlush.color,
             glow: ColorRole.companionGlow.color,

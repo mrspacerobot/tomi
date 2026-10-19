@@ -6,11 +6,11 @@ RealityKit companion of #94 and the old printed mascot. Tomi is drawn in one sty
 
 ## The character
 
-Tomi stays a tomato chef in the Tasting menu palette: tomato body, cream toque, periwinkle leaf, cobalt
-shoes. What changed is the drawing: a thick ink line, a face that fills the body (tall eyes with big pupils,
+Tomi stays a tomato chef in the Tasting menu palette: tomato body, cream toque, cobalt shoes. The owner
+had the leaf removed on 19 October: it was too small to read, and the toque and tomato body carry him.
+What changed is the drawing: a thick ink line, a face that fills the body (tall eyes with big pupils,
 thick brows, a filled grin with a tongue), rubber-hose arms and legs with no elbows or knees, puffy white
-gloves with a cuff and a thumb, and the tomato's crown peeking out under the toque: pointed sepals on both
-sides and a curved stem with a leaf on the right. The body is flat with one cel-shaded crescent and a shine,
+gloves with a cuff and a thumb. The body is flat with one cel-shaded crescent and a shine,
 and rosy cheeks. On night ink a soft warm glow lifts him off the ground; on paper there is no glow, so his
 outline stays crisp. The look takes the qualities of the reference the owner gave (a lively
 cartoon host), not the look of any existing character.
@@ -47,7 +47,7 @@ Everything is SwiftUI in `Tomi/DesignSystem/Companion`, with no image, model or 
   samples a pose from elapsed seconds and gives the still pose when not moving. `CompanionTransition` eases
   from the pose on screen into a new state in 0.22 seconds. `CompanionClock` counts elapsed time from the
   timeline's first frame and notices a change of state. All of it is unit tested without a screen.
-- `Drawing`: one part per piece of the character (`CompanionBodyPart`, `CompanionLeafPart`,
+- `Drawing`: one part per piece of the character (`CompanionBodyPart`,
   `CompanionToquePart`, `CompanionEyesPart`, `CompanionBrowsPart`, `CompanionMouthPart`, `CompanionArmPart`,
   `CompanionGlovePart`, `CompanionCupPart`, `CompanionLegPart`, `CompanionExtrasPart`), painted back to front by
   `CompanionDrawing` into a `Canvas`. Legs and brows are drawn once and mirrored. The left arm sits behind the

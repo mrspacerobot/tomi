@@ -24,7 +24,6 @@ struct CompanionDrawing {
         CompanionLegPart.draw(in: body, palette: palette)
         CompanionArmPart.draw(pose.leftArm, in: body, palette: palette)
         CompanionBodyPart.draw(in: body, palette: palette)
-        CompanionLeafPart.draw(in: body, palette: palette)
         CompanionToquePart.draw(in: body, palette: palette)
         CompanionFacePart.draw(pose.face, in: body, palette: palette)
         CompanionArmPart.draw(pose.rightArm, in: body, palette: palette)

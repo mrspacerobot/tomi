@@ -8,9 +8,6 @@ enum CompanionInk {
     static let brow = style(5)
     static let detail = style(2.5)
     static let fine = style(1.8)
-    /// The stem is an inked tube: a wide line in the outline colour with a narrower one in the leaf colour.
-    static let stemOutline = style(9)
-    static let stemFill = style(4)
     /// The glow's blur, in grid units.
     static let glowRadius: CGFloat = 5
     /// How strong the glow is.
