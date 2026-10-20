@@ -24,18 +24,15 @@ final class SpecialsUITests: XCTestCase {
         XCTAssertTrue(open.waitForExistence(timeout: 5))
         open.tap()
         XCTAssertTrue(app.element("suggestion-plan").waitForExistence(timeout: 5))
-        app.swipeUp()
-        XCTAssertTrue(app.element("suggestion-original").waitForExistence(timeout: 5))
-        XCTAssertTrue(app.element("suggestion-original-yield").waitForExistence(timeout: 5))
-        scrollToFirstStep(app)
+        scroll(app, to: app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] 'Makes'")).firstMatch)
+        scroll(app, to: app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] 'Step 1'")).firstMatch)
     }
 
-    @MainActor private func scrollToFirstStep(_ app: XCUIApplication) {
-        let step = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] 'Step 1'")).firstMatch
-        for _ in 0..<4 where !step.exists {
+    @MainActor private func scroll(_ app: XCUIApplication, to element: XCUIElement) {
+        for _ in 0..<4 where !element.exists {
             app.swipeUp()
         }
-        XCTAssertTrue(step.waitForExistence(timeout: 5))
+        XCTAssertTrue(element.waitForExistence(timeout: 5))
     }
 
     @MainActor
