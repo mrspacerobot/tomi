@@ -31,19 +31,14 @@ struct IconPixels {
         return bytes[start..<start + 3].map { Int($0) }
     }
 
-    /// The share of pixels where some channel differs by more than `tolerance`.
-    func differingShare(from other: IconPixels, tolerance: Int) -> Double {
+    /// How many pixels differ in any channel, by even one level.
+    func differingPixels(from other: IconPixels) -> Int {
         var differing = 0
-        for pixel in stride(from: 0, to: bytes.count, by: 4) where differs(other, at: pixel, by: tolerance) {
+        for pixel in stride(from: 0, to: bytes.count, by: 4)
+        where bytes[pixel..<pixel + 3] != other.bytes[pixel..<pixel + 3] {
             differing += 1
         }
-        return Double(differing) / Double(width * height)
-    }
-
-    private func differs(_ other: IconPixels, at pixel: Int, by tolerance: Int) -> Bool {
-        (0..<3).contains { channel in
-            abs(Int(bytes[pixel + channel]) - Int(other.bytes[pixel + channel])) > tolerance
-        }
+        return differing
     }
 
     private static func context(_ data: UnsafeMutableRawPointer, width: Int, height: Int) -> CGContext {

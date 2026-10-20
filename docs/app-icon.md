@@ -17,7 +17,7 @@ After a change to Tomi's drawing, his colours or the icon's framing:
 
 It runs `AppIconExportTests` in the simulator with `TOMI_RENDER_APP_ICON=1`, which writes the three files into the icon set. Set `TOMI_DESTINATION` to pick a simulator, as for `./scripts/check.sh`. Then look at the files at full size and shrunk to 60 points, install the app and look at the home screen in light, dark and tinted, and commit the files with the change that caused them.
 
-`AppIconRenderingTests` runs in every check. It fails when the drawing cannot be rendered, when an appearance is not an opaque 1024 by 1024 square, and when a shipped file no longer matches the drawing, so a change to Tomi that forgets the icon does not pass.
+`AppIconRenderingTests` runs in every check. It fails when the drawing cannot be rendered, when an appearance is not an opaque 1024 by 1024 square, and when a shipped file no longer matches the drawing pixel for pixel, so a change to Tomi, a colour token or the framing that forgets the icon does not pass, even if it moves one colour by one level. The comparison has no tolerance: the test draws the icon with Core Graphics on the CPU, which gives the same bytes on every run. After an Xcode or iOS update changes how Core Graphics smooths edges, the test fails once, and rendering the icon again fixes it.
 
 ## Why an asset catalog and not Icon Composer
 

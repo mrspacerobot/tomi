@@ -4,7 +4,9 @@ import Testing
 @testable import Tomi
 
 /// The app icon is Tomi as the app draws him, at the one size iOS asks for, and the shipped files are that
-/// drawing: when Tomi changes, this fails until the icon is rendered again (`scripts/render-app-icon.sh`).
+/// drawing pixel for pixel: when Tomi, a colour token or the framing changes, even by one level in one pixel, this
+/// fails until the icon is rendered again (`scripts/render-app-icon.sh`). The icon is drawn by Core Graphics on
+/// the CPU, which gives the same pixels on every run, so no tolerance is needed.
 @MainActor struct AppIconRenderingTests {
     /// A plain stretch of tomato, left of the mouth and below the cheek, in grid units.
     private let tomato = AppIconFraming.pixel(of: CGPoint(x: 80, y: 200))
@@ -46,6 +48,7 @@ import Testing
         let shipped = try #require(IconPixels(contentsOf: appearance.shippedFile))
         #expect(shipped.width == 1024)
         #expect(shipped.height == 1024)
-        #expect(rendered.differingShare(from: shipped, tolerance: 8) < 0.001)
+        let differing = rendered.differingPixels(from: shipped)
+        #expect(differing == 0, "\(differing) pixels changed: run scripts/render-app-icon.sh and look at the icon")
     }
 }
