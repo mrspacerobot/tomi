@@ -45,8 +45,10 @@ Everything is SwiftUI in `Tomi/DesignSystem/Companion`, with no image, model or 
 - `Motion`: `CompanionKeyframes` is a repeating keyframe track like a CSS animation, with `CompanionEasing`
   cubic Bezier curves; the tracks hold the concept page's timings. `CompanionMotion.pose(state:elapsed:moving:)`
   samples a pose from elapsed seconds and gives the still pose when not moving. `CompanionTransition` eases
-  from the pose on screen into a new state in 0.22 seconds. `CompanionClock` counts elapsed time from the
-  timeline's first frame and notices a change of state. All of it is unit tested without a screen.
+  from the pose on screen into a new state in 0.22 seconds. `CompanionClock` turns the timeline's frames into
+  seconds of motion (`CompanionElapsed`), counted only between moving frames: time while stopped (inactive,
+  hidden, Reduce Motion) does not count, so Tomi resumes where he stopped. A change of state starts its ease on
+  the frame that sees it. All of it is unit tested without a screen.
 - `Drawing`: one part per piece of the character (`CompanionBodyPart`,
   `CompanionToquePart`, `CompanionEyesPart`, `CompanionBrowsPart`, `CompanionMouthPart`, `CompanionArmPart`,
   `CompanionGlovePart`, `CompanionCupPart`, `CompanionLegPart`, `CompanionExtrasPart`), painted back to front by
