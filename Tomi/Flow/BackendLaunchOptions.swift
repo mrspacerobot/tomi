@@ -10,7 +10,7 @@ nonisolated struct BackendLaunchOptions: Equatable {
     /// Talk to the server running on this Mac instead of the deployed one, with the real sign-in.
     static let localBackendArgument = "--local-backend"
     /// The fake server suggests nothing tonight, as the real one does before the cook has reached a lesson's level.
-    static let fakeNoSpecialsArgument = "--fake-no-specials"
+    static let fakeNoSuggestionsArgument = "--fake-no-suggestions"
     /// The fake cook is already signed in.
     static let fakeSignedInArgument = "--fake-signed-in"
 
@@ -28,7 +28,7 @@ nonisolated struct BackendLaunchOptions: Equatable {
         usesFake = arguments.contains(Self.fakeBackendArgument)
         showsAppleSignInButton = arguments.contains(Self.appleSignInButtonArgument)
         usesLocalAPI = arguments.contains(Self.localBackendArgument)
-        suggestionsNothing = arguments.contains(Self.fakeNoSpecialsArgument)
+        suggestionsNothing = arguments.contains(Self.fakeNoSuggestionsArgument)
         startsSignedIn = arguments.contains(Self.fakeSignedInArgument)
         savedUnlistedAvoid = arguments.contains(Self.fakeUnlistedAvoidArgument)
     }

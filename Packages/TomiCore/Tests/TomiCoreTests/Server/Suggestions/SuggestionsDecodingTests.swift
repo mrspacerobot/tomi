@@ -4,7 +4,7 @@ import Testing
 @testable import TomiCore
 
 /// Suggestions as `POST /v1/lessons/suggest` sends them (graph recipes).
-@Suite struct SpecialsDecodingTests {
+@Suite struct SuggestionsDecodingTests {
     @Test func anSuggestionIsReadWithItsSafePlanAndCheck() throws {
         let suggestion = try ServerJSON.decode(Suggestion.self, from: GraphJSON.suggestion())
         #expect(suggestion.recipeID == "recipe/soft-scrambled-eggs")

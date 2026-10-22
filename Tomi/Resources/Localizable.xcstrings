@@ -2221,7 +2221,7 @@
         }
       }
     },
-    "specials.kicker": {
+    "suggestions.kicker": {
       "comment": "Label set into the top edge of the box holding tonight's special. Shown in capitals by the design.",
       "extractionState": "manual",
       "localizations": {
@@ -2233,7 +2233,7 @@
         }
       }
     },
-    "specials.alternatives": {
+    "suggestions.alternatives": {
       "comment": "Heading above the alternatives to tonight's special. Shown in capitals by the design.",
       "extractionState": "manual",
       "localizations": {

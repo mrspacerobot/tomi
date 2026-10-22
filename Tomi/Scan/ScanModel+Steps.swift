@@ -16,11 +16,11 @@ extension ScanModel {
     }
 
     /// Asks the server for tonight's special and shows only the suggestions it checked for this cook.
-    func findSpecial() async {
+    func findSuggestions() async {
         stage = .finding
         do {
-            let request = SpecialsRequest(ingredients: list.confirmedIngredients, scanID: scanID)
-            let menu = TonightsMenu(try await api.specials(request), for: profile.profile)
+            let request = SuggestionsRequest(ingredients: list.confirmedIngredients, scanID: scanID)
+            let menu = TonightsMenu(try await api.suggestions(request), for: profile.profile)
             problem = nil
             stage = stageShowing(menu)
         } catch {

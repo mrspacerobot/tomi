@@ -2,7 +2,7 @@ import XCTest
 
 /// Tonight's special and its alternatives from the graph, against the fake server: what the menu shows,
 /// and the detail with the safe plan beside the graph's own recipe.
-final class SpecialsUITests: XCTestCase {
+final class SuggestionsUITests: XCTestCase {
     override func setUp() {
         continueAfterFailure = false
     }

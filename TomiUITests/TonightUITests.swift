@@ -9,7 +9,7 @@ final class TonightUITests: XCTestCase {
 
     @MainActor
     func testNoDishTonightIsAKindEmptyState() {
-        let app = XCUIApplication.launched(XCUIApplication.returningCook + ["--store-in-memory", "--fake-no-specials"])
+        let app = XCUIApplication.launched(XCUIApplication.noSuggestionsCook)
         XCTAssertTrue(app.buttons["home-scan"].waitForExistence(timeout: 5))
         app.buttons["home-scan"].tap()
         XCTAssertTrue(app.buttons["scan-type-instead"].waitForExistence(timeout: 5))

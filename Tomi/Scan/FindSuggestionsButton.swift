@@ -1,12 +1,12 @@
 import SwiftUI
 
 /// Asks for tonight's special with what the cook confirmed. The cupboard staples are added by the server.
-struct FindSpecialButton: View {
+struct FindSuggestionsButton: View {
     let model: ScanModel
 
     var body: some View {
         Button {
-            Task { await model.findSpecial() }
+            Task { await model.findSuggestions() }
         } label: {
             Text(.confirmFind)
         }

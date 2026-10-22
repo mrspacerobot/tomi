@@ -26,7 +26,7 @@ nonisolated struct URLSessionTomiAPI: TomiAPI {
         return try await client.value(ResolveResponse.self, for: request)
     }
 
-    func specials(_ request: SpecialsRequest) async throws -> SpecialsResponse {
-        try await client.value(SpecialsResponse.self, for: try APIRequest.specials.sending(request))
+    func suggestions(_ request: SuggestionsRequest) async throws -> SuggestionsResponse {
+        try await client.value(SuggestionsResponse.self, for: try APIRequest.suggestions.sending(request))
     }
 }

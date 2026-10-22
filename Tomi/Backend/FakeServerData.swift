@@ -46,8 +46,8 @@ nonisolated struct FakeServerData: Sendable {
     }
 
     /// Every lesson as a graph suggestion, the first as the special, each checked for the cook's own answers.
-    func specials(for profile: CookProfile) throws -> SpecialsResponse {
-        var response = SpecialsResponse()
+    func suggestions(for profile: CookProfile) throws -> SuggestionsResponse {
+        var response = SuggestionsResponse()
         let suggestions = try lessons.map { try FakeSuggestion(lesson: $0).suggestion(checkedFor: profile) }
         response.special = suggestions.first
         response.alternatives = Array(suggestions.dropFirst())

@@ -10,8 +10,8 @@ import Testing
         Suggestion.sample(id: id, checked: CheckedRestrictions(diet: diet, avoid: []))
     }
 
-    func response(special: Suggestion?, alternatives: [Suggestion]) -> SpecialsResponse {
-        var response = SpecialsResponse()
+    func response(special: Suggestion?, alternatives: [Suggestion]) -> SuggestionsResponse {
+        var response = SuggestionsResponse()
         response.special = special
         response.alternatives = alternatives
         return response
@@ -43,6 +43,6 @@ import Testing
     @Test func nothingCheckedIsAnEmptyMenu() {
         let menu = TonightsMenu(response(special: suggestion("a", diet: nil), alternatives: []), for: vegan)
         #expect(menu.isEmpty)
-        #expect(TonightsMenu(SpecialsResponse(), for: vegan).isEmpty)
+        #expect(TonightsMenu(SuggestionsResponse(), for: vegan).isEmpty)
     }
 }

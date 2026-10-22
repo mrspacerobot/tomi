@@ -1,4 +1,4 @@
-extension SpecialsResponse {
+extension SuggestionsResponse {
     /// The special and the alternatives that could be read. When the server sent suggestions and none could be read,
     /// that is an error: it must not look like a night with nothing to cook.
     static func readSuggestions(

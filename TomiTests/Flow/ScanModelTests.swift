@@ -37,7 +37,7 @@ import TomiCore
     @Test func tonightsMenuShowsSuggestionsCheckedForTheCook() async throws {
         let model = try await scan()
         model.typeInstead()
-        await model.findSpecial()
+        await model.findSuggestions()
         guard case .menu(let menu) = model.stage else {
             Issue.record("No menu")
             return
@@ -48,7 +48,7 @@ import TomiCore
     @Test func noDishTonightIsAKindEmptyStateNotAnError() async throws {
         let model = try await scan(suggestionsNothing: true)
         model.typeInstead()
-        await model.findSpecial()
+        await model.findSuggestions()
         #expect(model.stage == .nothingTonight)
         #expect(model.problem == nil)
     }

@@ -7,7 +7,7 @@ public struct TonightsMenu: Hashable, Sendable {
 
     /// Every suggestion whose check does not cover the cook is left out (`Suggestion.isChecked(for:)`).
     /// When the special is left out, the first alternative that passes takes its place.
-    public init(_ response: SpecialsResponse, for profile: CookProfile) {
+    public init(_ response: SuggestionsResponse, for profile: CookProfile) {
         var suggestions: [Suggestion] = []
         if let special = response.special {
             suggestions.append(special)

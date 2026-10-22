@@ -73,7 +73,7 @@ import TomiCore
             #"{"rankedBy": "overlap", "special": null, "#
             + #""alternatives": []}"#
         let harness = make([.init(status: 200, body: answer)])
-        _ = try await harness.api.specials(SpecialsRequest(ingredients: ["egg"], scanID: nil))
+        _ = try await harness.api.suggestions(SuggestionsRequest(ingredients: ["egg"], scanID: nil))
         let request = try #require(harness.transport.requests.first)
         #expect(request.httpMethod == "POST")
         #expect(request.url?.absoluteString == "https://api.example.test/v1/lessons/suggest")

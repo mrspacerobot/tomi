@@ -44,10 +44,10 @@ actor FakeTomiAPI: TomiAPI {
         ResolveResponse(results: labels.map(data.resolved))
     }
 
-    func specials(_ request: SpecialsRequest) async throws -> SpecialsResponse {
+    func suggestions(_ request: SuggestionsRequest) async throws -> SuggestionsResponse {
         if suggestionsNothing {
-            return SpecialsResponse()
+            return SuggestionsResponse()
         }
-        return try data.specials(for: envelope.profile)
+        return try data.suggestions(for: envelope.profile)
     }
 }

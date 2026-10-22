@@ -2,7 +2,7 @@ import SwiftUI
 import TomiCore
 
 /// Tonight's special and up to two alternatives, each only shown when the server checked it for this cook.
-struct SpecialsView: View {
+struct SuggestionsView: View {
     let menu: TonightsMenu
     let options: LibraryOptions
     @Binding var path: [HomeRoute]
@@ -11,7 +11,7 @@ struct SpecialsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.xLarge) {
                 if let special = menu.special {
-                    SuggestionCard(suggestion: special, options: options, flag: .specialsKicker) {
+                    SuggestionCard(suggestion: special, options: options, flag: .suggestionsKicker) {
                         path.append(.suggestion(special))
                     }
                 }

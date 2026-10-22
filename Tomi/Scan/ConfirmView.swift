@@ -17,7 +17,7 @@ struct ConfirmView: View {
                 ScanHeader(title: .confirmTitle, identifier: "confirm-title", problem: model.problem)
                 ConfirmChips(model: model)
                 TypedItemField(typing: typing, look: .confirm) { model.list.add($0) }
-                FindSpecialButton(model: model)
+                FindSuggestionsButton(model: model)
             }
             .padding(Spacing.screenMargin)
         }
