@@ -1,8 +1,8 @@
 import XCTest
 
 extension XCUIElement {
-    /// Waits until the rendered tomato shows in this element. RealityKit draws its first frame a little
-    /// after the view appears, so a single screenshot straight after a tap proves nothing.
+    /// Waits until the drawn tomato shows in this element. A screen change animates in, so a single
+    /// screenshot straight after a tap proves nothing.
     @MainActor func waitForTomato(timeout: TimeInterval = 15) async -> Bool {
         let deadline = Date().addingTimeInterval(timeout)
         while Date() < deadline {

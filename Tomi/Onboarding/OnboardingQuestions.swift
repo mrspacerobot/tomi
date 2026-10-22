@@ -6,7 +6,7 @@ struct OnboardingQuestions: View {
     @State var model: OnboardingModel
 
     var body: some View {
-        content.companionHost(identifier: "onboarding-companion")
+        content
     }
 
     @ViewBuilder private var content: some View {

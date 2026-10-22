@@ -4,14 +4,14 @@
     struct CompanionGallery: View {
         @Environment(\.dismiss) private var dismiss
         @State private var state = CompanionGalleryLaunch.state
-        @State private var turned = CompanionGalleryLaunch.turned
+        @State private var still = CompanionGalleryLaunch.still
 
         var body: some View {
             ScrollView {
                 VStack(spacing: Spacing.large) {
                     CompanionGalleryHeader(close: { dismiss() })
-                    CompanionGalleryStage(state: state, turned: turned)
-                    CompanionGalleryControls(state: $state, turned: $turned)
+                    CompanionGalleryStage(state: state, still: still)
+                    CompanionGalleryControls(state: $state, still: $still)
                     Text(.companionDemoNote).textStyle(.caption).foregroundStyle(ColorRole.inkFaded.color)
                 }
                 .padding(Spacing.screenMargin)

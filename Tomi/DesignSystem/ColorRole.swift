@@ -29,6 +29,22 @@ nonisolated enum ColorRole: CaseIterable, Sendable {
     case onPrimary
     /// The fill of the primary button.
     case primaryFill
+    /// Tomi's thick outline and rubber-hose limbs: deep ink on paper, periwinkle on night ink.
+    case companionLine
+    /// Tomi's pupils, brows and mouth, always ink because they sit on his white eyes and tomato skin.
+    case companionFeature
+    /// Tomi's toque.
+    case companionToque
+    /// Tomi's gloves, eye whites and shine.
+    case companionWhite
+    /// Tomi's shoes.
+    case companionShoe
+    /// The shaded side of Tomi's tomato body.
+    case companionShade
+    /// Tomi's cheeks and tongue.
+    case companionBlush
+    /// The soft warm glow around Tomi on night ink. Clear on paper, where a glow would blur his outline.
+    case companionGlow
 
     /// On the main actor, because the symbols Xcode makes for the asset catalog are.
     @MainActor var color: Color {
@@ -46,6 +62,14 @@ nonisolated enum ColorRole: CaseIterable, Sendable {
         case .yolk: Color(.yolk)
         case .onPrimary: Color(.onPrimary)
         case .primaryFill: Color(.primaryFill)
+        case .companionLine: Color(.companionLine)
+        case .companionFeature: Color(.companionFeature)
+        case .companionToque: Color(.companionToque)
+        case .companionWhite: Color(.companionWhite)
+        case .companionShoe: Color(.companionShoe)
+        case .companionShade: Color(.companionShade)
+        case .companionBlush: Color(.companionBlush)
+        case .companionGlow: Color(.companionGlow)
         }
     }
 }

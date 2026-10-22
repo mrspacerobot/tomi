@@ -4,7 +4,7 @@ import SwiftUI
 struct OnboardingWelcomeText: View {
     var body: some View {
         VStack(spacing: Spacing.large) {
-            CompanionSlot(state: .idle, side: MascotSize.companionWelcome)
+            OnboardingWelcomeTomi()
             Text(.welcomeKicker)
                 .textStyle(.label)
             Text(.onboardingWelcomeTitle)

@@ -1070,7 +1070,7 @@
       }
     },
     "companion.open": {
-      "comment": "Debug gallery button opening the animated 3D character.",
+      "comment": "Debug gallery button opening the animated cartoon character.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -1112,19 +1112,19 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The same tomato chef. A little depth, a lot of expression."
+            "value": "The same tomato chef, drawn as a cartoon. Big faces, bouncy timing."
           }
         }
       }
     },
-    "companion.turn": {
-      "comment": "Gallery control switching between front and three-quarter inspection views.",
+    "companion.still": {
+      "comment": "Gallery control that holds the animated character in the still pose of the chosen mood.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Turn Tomi"
+            "value": "Hold still"
           }
         }
       }
@@ -1136,19 +1136,19 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pick a mood, then turn Tomi to see him from the side."
+            "value": "Pick a mood. Hold him still to see the pose that stands for it."
           }
         }
       }
     },
     "companion.motion.still": {
-      "comment": "Shows that the gallery respects reduced motion, while expressions remain visible.",
+      "comment": "Shown under the character when it holds still, because of Reduce Motion or the Hold still control.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reduced motion: still poses"
+            "value": "Holding still: one complete pose per mood"
           }
         }
       }

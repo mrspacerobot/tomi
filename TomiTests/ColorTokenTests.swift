@@ -37,7 +37,10 @@ import TomiCore
         #expect(ColorRole.paper.rgb(in: .dark).contrastRatio(with: nightInk) < 1.01)
     }
 
-    @Test(arguments: [ColorRole.paper, .wash, .ink, .cobalt, .inkFaded, .rule, .leader, .stampRed, .onPrimary])
+    @Test(arguments: [
+        ColorRole.paper, .wash, .ink, .cobalt, .inkFaded, .rule, .leader, .stampRed, .onPrimary, .companionLine,
+        .companionGlow,
+    ])
     @MainActor func aRoleThatChangesWithTheAppearanceHasADarkValue(role: ColorRole) {
         #expect(role.rgb(in: .light) != role.rgb(in: .dark))
     }

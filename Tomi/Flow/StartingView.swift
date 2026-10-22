@@ -4,7 +4,7 @@ import SwiftUI
 struct StartingView: View {
     var body: some View {
         VStack(spacing: Spacing.medium) {
-            TomiMascot()
+            TomiMascot(mood: .thinking)
                 .frame(width: MascotSize.welcome, height: MascotSize.welcome)
                 .accessibilityHidden(true)
             ProgressView()
