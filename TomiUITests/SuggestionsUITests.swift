@@ -1,8 +1,10 @@
 import XCTest
 
 /// Tonight's special and its alternatives from the graph, against the fake server: what the menu shows,
-/// and the detail with the safe plan beside the graph's own recipe.
+/// and the detail with the recipe already adapted for the cook and what changed.
 final class SuggestionsUITests: XCTestCase {
+    private static let insteadOf = " instead of "
+
     override func setUp() {
         continueAfterFailure = false
     }
@@ -18,30 +20,57 @@ final class SuggestionsUITests: XCTestCase {
     }
 
     @MainActor
-    func testTheDetailShowsTheSafePlanBesideTheOriginalRecipe() {
+    func testTheDetailShowsTheAdaptedRecipeAndNoOriginal() {
         let app = findTonightsMenu()
-        let open = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-open-'")).firstMatch
-        XCTAssertTrue(open.waitForExistence(timeout: 5))
-        open.tap()
-        XCTAssertTrue(app.element("suggestion-plan").waitForExistence(timeout: 5))
-        scroll(app, to: app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] 'Makes'")).firstMatch)
-        scroll(app, to: app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] 'Step 1'")).firstMatch)
-    }
-
-    @MainActor private func scroll(_ app: XCUIApplication, to element: XCUIElement) {
-        for _ in 0..<4 where !element.exists {
-            app.swipeUp()
-        }
-        XCTAssertTrue(element.waitForExistence(timeout: 5))
+        openSuggestion(app, at: 0)
+        XCTAssertTrue(app.element("suggestion-yield").waitForExistence(timeout: 5))
+        scroll(app, to: app.element("suggestion-step-1"))
+        scroll(app, to: app.element("suggestion-swap"))
+        XCTAssertFalse(app.element("suggestion-original").exists)
     }
 
     @MainActor
-    func testTheOriginalRecipeIsNeverCalledAdapted() {
+    func testASwapShowsTheStandInInTheStepsAndInWhatChanged() {
         let app = findTonightsMenu()
-        app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-open-'")).firstMatch.tap()
-        XCTAssertTrue(app.element("suggestion-original").waitForExistence(timeout: 5))
-        let adapted = NSPredicate(format: "label CONTAINS[c] 'adapted'")
-        XCTAssertFalse(app.staticTexts.containing(adapted).firstMatch.exists)
+        openSuggestion(app, at: 0)
+        scroll(app, to: app.element("suggestion-swap"))
+        let words = app.element("suggestion-swap").label.components(separatedBy: Self.insteadOf)
+        XCTAssertEqual(words.count, 2)
+        XCTAssertTrue(stepLabels(app).contains { $0.localizedCaseInsensitiveContains(words[0]) })
+        XCTAssertFalse(stepLabels(app).contains { $0.localizedCaseInsensitiveContains(words[1]) })
+    }
+
+    @MainActor
+    func testALeftOutPartShowsInWhatChangedAndItsStepIsAbsent() {
+        let app = findTonightsMenu()
+        openSuggestion(app, at: 1)
+        scroll(app, to: app.element("suggestion-left-out"))
+        let name = app.element("suggestion-left-out").label.components(separatedBy: ": ").last ?? ""
+        XCTAssertFalse(name.isEmpty)
+        XCTAssertFalse(stepLabels(app).isEmpty)
+        XCTAssertFalse(stepLabels(app).contains { $0.localizedCaseInsensitiveContains(name) })
+    }
+
+    /// The labels of the numbered steps of the recipe on the detail screen.
+    @MainActor private func stepLabels(_ app: XCUIApplication) -> [String] {
+        let steps = app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier BEGINSWITH 'suggestion-step-'")
+        )
+        return steps.allElementsBoundByIndex.map(\.label)
+    }
+
+    @MainActor private func openSuggestion(_ app: XCUIApplication, at position: Int) {
+        let buttons = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-open-'"))
+        XCTAssertTrue(buttons.firstMatch.waitForExistence(timeout: 5))
+        scroll(app, to: buttons.element(boundBy: position))
+        buttons.element(boundBy: position).tap()
+    }
+
+    @MainActor private func scroll(_ app: XCUIApplication, to element: XCUIElement) {
+        for _ in 0..<8 where !element.exists || !element.isHittable {
+            app.swipeUp()
+        }
+        XCTAssertTrue(element.waitForExistence(timeout: 5))
     }
 
     /// Opens the fridge scan, types instead of taking a photo, and asks for tonight's special.

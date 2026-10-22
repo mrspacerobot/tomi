@@ -41,22 +41,6 @@ import Testing
         #expect(suggestion.safePlan.substitutions.first?.caveat == nil)
     }
 
-    @Test func theOriginalRecipeKeepsItsOwnInstructionsUnchanged() throws {
-        let source = try ServerJSON.decode(Suggestion.self, from: GraphJSON.suggestion()).originalRecipe
-        #expect(source.steps.map(\.text) == ["Whisk the eggs.", "Stir over low heat.", "Take it off the heat."])
-        #expect(source.ingredients.map(\.thing.rawValue).first == "ingredient/egg")
-        #expect(source.ingredients.first?.amount == RecipeAmount(value: 5, unit: "piece"))
-        #expect(source.equipment == ["equipment/saucepan", "equipment/whisk"])
-        #expect(source.yields == RecipeAmount(value: 2, unit: "serving"))
-    }
-
-    @Test func stepTimesReadAsOneValueOrARange() throws {
-        let steps = try ServerJSON.decode(Suggestion.self, from: GraphJSON.suggestion()).originalRecipe.steps
-        #expect(steps[0].time == nil)
-        #expect(steps[1].time == StepTime(shortest: 4, longest: 6, unit: "minute"))
-        #expect(steps[2].time == StepTime(shortest: 30, longest: 30, unit: "second"))
-    }
-
     /// A newer server may add fields anywhere; the app reads what it knows.
     @Test func unknownFieldsAreIgnored() throws {
         let plan = GraphJSON.plan.replacing(#""omittedParts""#, with: #""futureNote": 1, "omittedParts""#)

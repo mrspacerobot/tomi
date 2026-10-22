@@ -1,8 +1,8 @@
 import SwiftUI
 import TomiCore
 
-/// One dish on suggestion: its name, technique and level, the server's reason, what the safe plan changes and what
-/// was checked. The button opens the plan beside the graph's own recipe.
+/// One dish on suggestion: its name, technique and level, the server's reason, what changed in the recipe and what
+/// was checked. The button opens the recipe.
 struct SuggestionCard: View {
     let suggestion: Suggestion
     let options: LibraryOptions

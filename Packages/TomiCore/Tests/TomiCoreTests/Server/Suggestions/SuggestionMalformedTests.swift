@@ -3,40 +3,8 @@ import Testing
 
 @testable import TomiCore
 
-/// Only an absent field or an explicit null may be nil. A value that is there but wrong drops the suggestion.
+/// Swaps and amounts the app reads from a suggestion.
 @Suite struct SuggestionMalformedTests {
-    func suggestion(replacing old: String, with new: String) -> String {
-        GraphJSON.suggestion().replacing(old, with: new)
-    }
-
-    @Test(arguments: [
-        (#""amount": {"unit": "piece", "value": 5}"#, #""amount": {"unit": "piece", "value": "five"}"#),
-        (#""amount": {"unit": "piece", "value": 5}"#, #""amount": 5"#),
-        (#"{"from": 4, "to": 6, "unit": "minute"}"#, #"{"from": "four", "to": 6, "unit": "minute"}"#),
-        (#"{"from": 4, "to": 6, "unit": "minute"}"#, #""soon""#),
-        (#""yields": {"unit": "serving", "value": 2}"#, #""yields": "two""#),
-        (#""yields": {"unit": "serving", "value": 2}"#, #""yields": {"unit": "serving"}"#),
-    ])
-    func aPresentButMalformedFieldDropsTheSuggestion(_ pair: (String, String)) {
-        let broken = suggestion(replacing: pair.0, with: pair.1)
-        #expect(throws: DecodingError.self) {
-            try ServerJSON.decode(Suggestion.self, from: broken)
-        }
-    }
-
-    @Test func anExplicitNullIsRead() throws {
-        var text = suggestion(replacing: #""amount": {"unit": "piece", "value": 5}"#, with: #""amount": null"#)
-        text = text.replacing(#""yields": {"unit": "serving", "value": 2}"#, with: #""yields": null"#)
-        let source = try ServerJSON.decode(Suggestion.self, from: text).originalRecipe
-        #expect(source.ingredients.first?.amount == nil)
-        #expect(source.yields == nil)
-    }
-
-    @Test func anAbsentFieldIsRead() throws {
-        let text = suggestion(replacing: #""yields": {"unit": "serving", "value": 2}, "#, with: "")
-        #expect(try ServerJSON.decode(Suggestion.self, from: text).originalRecipe.yields == nil)
-    }
-
     /// Two ingredients swapped for the same stand-in are two substitutions, each with its own identity.
     @Test func twoSwapsForTheSameStandInStayTwoSubstitutions() {
         let oil = NamedOption(id: "ingredient/oil", name: "Oil")

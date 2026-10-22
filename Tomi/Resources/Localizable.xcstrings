@@ -2510,19 +2510,19 @@
       }
     },
     "suggestion.open": {
-      "comment": "Button on a dish on suggestion that opens its plan and the original recipe.",
+      "comment": "Button on a dish on suggestion that opens its recipe and what changed for the cook.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "See the plan"
+            "value": "See the recipe"
           }
         }
       }
     },
     "suggestion.omitted": {
-      "comment": "What the safe plan leaves out of the dish for this cook. The placeholder is a list of ingredient names joined by the app.",
+      "comment": "What the recipe leaves out for this cook. The placeholder is a list of names joined by the app, or one name.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -2569,68 +2569,8 @@
         }
       }
     },
-    "suggestion.plan.title": {
-      "comment": "Heading of the block that shows the safe plan for this cook on a dish on suggestion. Shown in capitals by the design.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your safe plan"
-          }
-        }
-      }
-    },
-    "suggestion.original.title": {
-      "comment": "Heading of the block that shows the original recipe on a dish on suggestion. Shown in capitals by the design.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The original recipe"
-          }
-        }
-      }
-    },
-    "suggestion.original.note": {
-      "comment": "Short note under the heading of the original recipe. The recipe is shown as written, not changed for the cook.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This is the recipe as it was written. Where it differs from your safe plan, follow the plan."
-          }
-        }
-      }
-    },
-    "suggestion.original.swapped": {
-      "comment": "Under an ingredient of the original recipe that the safe plan swaps. The placeholder is the ingredient the plan uses instead.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your plan uses %@ instead."
-          }
-        }
-      }
-    },
-    "suggestion.original.omitted": {
-      "comment": "Under an ingredient of the original recipe that the safe plan leaves out.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Left out of your plan."
-          }
-        }
-      }
-    },
     "suggestion.step.time.range": {
-      "comment": "How long a step of the original recipe takes, as a range. The placeholders are the shortest and longest length, each already written with its unit, such as 4 min.",
+      "comment": "How long a step of the recipe takes, as a range. The placeholders are the shortest and longest length, each already written with its unit, such as 4 min.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -2641,56 +2581,8 @@
         }
       }
     },
-    "suggestion.ratio.weight": {
-      "comment": "How much of a stand-in to use, counted by weight. The placeholders are how much of the stand-in and how much of the original, as numbers.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use %1$@ of it for every %2$@ of the original, by weight."
-          }
-        }
-      }
-    },
-    "suggestion.ratio.volume": {
-      "comment": "How much of a stand-in to use, counted by volume. The placeholders are how much of the stand-in and how much of the original, as numbers.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use %1$@ of it for every %2$@ of the original, by volume."
-          }
-        }
-      }
-    },
-    "suggestion.ratio.count": {
-      "comment": "How much of a stand-in to use, counted by number. The placeholders are how much of the stand-in and how much of the original, as numbers.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use %1$@ of it for every %2$@ of the original, by number."
-          }
-        }
-      }
-    },
-    "suggestion.ratio.plain": {
-      "comment": "How much of a stand-in to use. The placeholders are how much of the stand-in and how much of the original, as numbers.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use %1$@ of it for every %2$@ of the original."
-          }
-        }
-      }
-    },
     "suggestion.amount.clove": {
-      "comment": "An amount of garlic-style cloves in the original recipe. The placeholder is the count.",
+      "comment": "An amount of garlic-style cloves in the recipe. The placeholder is the count.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -2713,8 +2605,20 @@
         }
       }
     },
-    "suggestion.original.yield.servings": {
-      "comment": "Under the note of the original recipe: how many servings its amounts make. The placeholder is the count.",
+    "suggestion.recipe.title": {
+      "comment": "Heading of the recipe on a dish on suggestion: the recipe already adapted for this cook. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your recipe"
+          }
+        }
+      }
+    },
+    "suggestion.recipe.yield.servings": {
+      "comment": "Under the heading of the recipe: how many servings its amounts make. The placeholder is the count.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -2737,14 +2641,170 @@
         }
       }
     },
-    "suggestion.original.yield.amount": {
-      "comment": "Under the note of the original recipe: how much it makes when that is not servings. The placeholder is the amount with its unit, such as 500 g.",
+    "suggestion.recipe.yield.amount": {
+      "comment": "Under the heading of the recipe: how much it makes when that is not servings. The placeholder is the amount with its unit, such as 500 g.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Makes %@"
+          }
+        }
+      }
+    },
+    "suggestion.changes.title": {
+      "comment": "Heading of the short list of what Tomi changed in the recipe for this cook. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What changed for you"
+          }
+        }
+      }
+    },
+    "suggestion.changes.none": {
+      "comment": "Under the changes heading when the recipe needed no swap and no part left out for this cook.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing had to change for you."
+          }
+        }
+      }
+    },
+    "suggestion.step.safety": {
+      "comment": "Under a step of the recipe: the safety points the server attaches to it. The placeholder is a list of the server's words joined by the app.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Safety: %@"
+          }
+        }
+      }
+    },
+    "suggestion.amount.pinch": {
+      "comment": "An amount counted in pinches in the recipe. The placeholder is the count.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pinch"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pinches"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "suggestion.amount.sprig": {
+      "comment": "An amount counted in sprigs in the recipe. The placeholder is the count.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld sprig"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld sprigs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "suggestion.amount.slice": {
+      "comment": "An amount counted in slices in the recipe. The placeholder is the count.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld slice"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld slices"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "suggestion.amount.leaf": {
+      "comment": "An amount counted in leaves in the recipe. The placeholder is the count.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld leaf"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld leaves"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "suggestion.amount.serving": {
+      "comment": "An amount counted in servings in the recipe. The placeholder is the count.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld serving"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld servings"
+                }
+              }
+            }
           }
         }
       }

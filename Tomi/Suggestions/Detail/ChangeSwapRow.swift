@@ -1,8 +1,8 @@
 import SwiftUI
 import TomiCore
 
-/// One swap: the ingredient put in for the one taken out, how much of it, and what it changes.
-struct SafePlanSwapRow: View {
+/// One swap: the food put in for the one taken out, and what that changes about the dish, when the server says.
+struct ChangeSwapRow: View {
     let swap: SuggestionSwap
 
     var body: some View {
@@ -10,7 +10,10 @@ struct SafePlanSwapRow: View {
             Text(.suggestionSwap(swap.added.name, swap.removed.name))
                 .textStyle(.body)
                 .accessibilityIdentifier("suggestion-swap")
-            SwapNotes(swap: swap)
+            if let caveat = swap.caveat {
+                Text(verbatim: caveat)
+                    .textStyle(.description)
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

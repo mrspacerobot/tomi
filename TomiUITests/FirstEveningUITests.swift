@@ -47,6 +47,6 @@ final class FirstEveningUITests: XCTestCase {
         let open = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-open-'")).firstMatch
         XCTAssertTrue(open.waitForExistence(timeout: 5))
         open.tap()
-        XCTAssertTrue(app.element("suggestion-plan").waitForExistence(timeout: 5))
+        XCTAssertTrue(app.element("suggestion-yield").waitForExistence(timeout: 5))
     }
 }
