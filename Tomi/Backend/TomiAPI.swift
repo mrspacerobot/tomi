@@ -14,5 +14,5 @@ nonisolated protocol TomiAPI: Sendable {
     /// Sends a JPEG of the fridge. Proof of concept: the server keeps every photo and nothing asks the cook yet.
     func scan(jpeg: Data) async throws -> ScanResult
     func resolve(_ labels: [String]) async throws -> ResolveResponse
-    func specials(_ request: SpecialsRequest) async throws -> SpecialsResponse
+    func suggestions(_ request: SuggestionsRequest) async throws -> SuggestionsResponse
 }

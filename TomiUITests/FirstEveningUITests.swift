@@ -1,21 +1,19 @@
 import XCTest
 
 /// A new cook, end to end against the fake server: sign in, answer the first questions, scan the fridge,
-/// confirm what is there, pick tonight's special and cook it to the end.
+/// confirm what is there and open tonight's special from the graph. Cooking a graph recipe is not built yet.
 final class FirstEveningUITests: XCTestCase {
     override func setUp() {
         continueAfterFailure = false
     }
 
     @MainActor
-    func testANewCookSignsInAnswersScansAndCooksTonightsSpecial() {
+    func testANewCookSignsInAnswersScansAndOpensTonightsSpecial() {
         let app = XCUIApplication.launched(XCUIApplication.newCook)
         signIn(app)
         answerTheFirstQuestions(app)
         scanTheFridge(app)
-        cookTheSpecial(app)
-        XCTAssertTrue(app.staticTexts["welcome-xp"].waitForExistence(timeout: 5))
-        XCTAssertNotEqual(app.staticTexts["welcome-xp"].label, "0 XP")
+        openTheSpecial(app)
     }
 
     @MainActor private func signIn(_ app: XCUIApplication) {
@@ -45,15 +43,10 @@ final class FirstEveningUITests: XCTestCase {
         app.buttons["confirm-find"].tap()
     }
 
-    @MainActor private func cookTheSpecial(_ app: XCUIApplication) {
-        let cook = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'offer-cook-'")).firstMatch
-        XCTAssertTrue(cook.waitForExistence(timeout: 5))
-        cook.tap()
-        XCTAssertTrue(app.element("player-title").waitForExistence(timeout: 5))
-        while !app.element("player-answer-0").exists {
-            app.buttons["player-next"].tap()
-        }
-        app.element("player-answer-0").tap()
-        app.buttons["player-finish"].tap()
+    @MainActor private func openTheSpecial(_ app: XCUIApplication) {
+        let open = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-open-'")).firstMatch
+        XCTAssertTrue(open.waitForExistence(timeout: 5))
+        open.tap()
+        XCTAssertTrue(app.element("suggestion-plan").waitForExistence(timeout: 5))
     }
 }

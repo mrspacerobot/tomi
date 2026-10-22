@@ -45,12 +45,12 @@ nonisolated struct FakeServerData: Sendable {
         return ResolvedLabel(label: label, basis: .noMatch, candidates: [])
     }
 
-    /// Every lesson, the first as the special, each checked for the cook's own answers.
-    func specials(for profile: CookProfile) -> SpecialsResponse {
-        var response = SpecialsResponse()
-        let offers = lessons.map { FakeOffer(lesson: $0, options: options).offer(checkedFor: profile) }
-        response.special = offers.first
-        response.alternatives = Array(offers.dropFirst())
+    /// Every lesson as a graph suggestion, the first as the special, each checked for the cook's own answers.
+    func suggestions(for profile: CookProfile) throws -> SuggestionsResponse {
+        var response = SuggestionsResponse()
+        let suggestions = try lessons.map { try FakeSuggestion(lesson: $0).suggestion(checkedFor: profile) }
+        response.special = suggestions.first
+        response.alternatives = Array(suggestions.dropFirst())
         response.rankedBy = .overlap
         return response
     }

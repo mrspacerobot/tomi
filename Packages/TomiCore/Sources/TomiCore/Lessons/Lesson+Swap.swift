@@ -1,5 +1,5 @@
 /// Applying the swaps a lesson lists. Who may eat the swapped dish is decided by Tomi's server, which checks
-/// every offer after its swaps; the app never works it out.
+/// every suggestion after its swaps; the app never works it out.
 extension Lesson {
     /// The lesson with one ingredient replaced. The words of the steps are not changed here.
     public func applying(_ swap: LessonSwap) throws -> Lesson {
@@ -12,7 +12,7 @@ extension Lesson {
     }
 
     /// The lesson with these swaps applied in order, each one a swap this lesson lists with its own amounts.
-    /// A swap the lesson does not list throws: an offer or a bookmark cannot bring an ingredient of its own.
+    /// A swap the lesson does not list throws: a suggestion or a bookmark cannot bring an ingredient of its own.
     public func applying(listed swaps: [AppliedSwap]) throws -> Lesson {
         var adapted = self
         for applied in swaps {

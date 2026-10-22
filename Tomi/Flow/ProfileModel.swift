@@ -14,6 +14,15 @@ final class ProfileModel {
         cache = ProfileCache(store: store)
     }
 
+    /// The server's lists, or empty ones before they have arrived. Names come from them, so a missing list
+    /// only means ids are shown in plain words.
+    var listedOptions: LibraryOptions {
+        guard let options else {
+            return LibraryOptions()
+        }
+        return options
+    }
+
     /// The profile as the server last sent it, or the defaults before it has.
     var profile: CookProfile {
         guard let envelope else {

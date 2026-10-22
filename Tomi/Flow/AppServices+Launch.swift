@@ -21,7 +21,7 @@ extension AppServices {
     ) -> AppServices {
         let profile = fakeProfile(options, store: store)
         return AppServices(
-            api: FakeTomiAPI(library: library, profile: profile, offersNothing: options.offersNothing),
+            api: FakeTomiAPI(library: library, profile: profile, suggestionsNothing: options.suggestionsNothing),
             auth: FakeAuthService(signedIn: options.startsSignedIn),
             library: library,
             store: store,

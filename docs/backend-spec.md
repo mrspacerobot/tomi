@@ -6,7 +6,7 @@ Status: consolidated architecture, 17 October 2026. The Rust service is implemen
 
 Tomi is a native iPhone client of one public Tomi API. A Rust backend owns application decisions and durable multi-device state. A private, read-only graph component supplies reviewed cooking relationships to that backend from an immutable, versioned JSON release bundle. The graph authoring repository, its Python checks, and its draft channel are not runtime dependencies of the iPhone app.
 
-The phone renders the interface, captures input, decodes bundled lessons for offline cooking and keeps the cook log in SwiftData. Food knowledge and filtering live only on the server. The phone refuses an offer unless its `checked` diet matches and its `checked` avoid list covers the cook's latest restrictions; it applies only swaps already listed by the lesson. No ingredient table, safety snapshot or second food matcher lives on the phone. Cook-event upload and server progress reconciliation are follow-up work.
+The phone renders the interface, captures input, decodes bundled lessons for offline cooking and keeps the cook log in SwiftData. Food knowledge and filtering live only on the server. The phone refuses a suggestion unless its `checked` diet matches and its `checked` avoid list covers the cook's latest restrictions; it applies only swaps already listed by the lesson. No ingredient table, safety snapshot or second food matcher lives on the phone. Cook-event upload and server progress reconciliation are follow-up work.
 
 | Migration source | Rust backend replacement | What remains on the phone |
 |---|---|---|
@@ -51,7 +51,7 @@ All endpoints are versioned and use typed IDs, explicit schema versions and stru
 | `POST /v1/scans` | Fridge photo to candidate ingredients for the cook to confirm |
 | `GET /v1/bootstrap` | Supported API/schema versions, current reviewed library and safety versions, minimum app version |
 | `POST /v1/ingredients/resolve` | Confirmed text labels to exact, alias, ambiguous or unknown ID candidates with evidence; never silently choose an ambiguous ID |
-| `POST /v1/lessons/suggest` | Confirmed ingredient IDs, restrictions, skill context and equipment to bounded reviewed lesson candidates, final ingredients, missing parts and explanations |
+| `POST /v1/lessons/suggest` | Confirmed ingredient IDs to a special and up to two alternatives, each a graph recipe: `recipeId`, the graph's unchanged `sourceRecipe`, a `safePlan` (ingredients, substitutions with ratio and caveat, omitted parts, missing ingredients, equipment), `skill`, `level`, `reason` and `checked`. The answer names `graphVersion` and `graphChannel`; it has no lesson id, revision or minutes (tomi-backend #17) |
 | `GET /v1/library/{version}` | Reviewed lesson files or a compatible delta; withdrawal list and content hashes; safety facts remain on the server |
 | `GET/PATCH /v1/profile` | Read and update versioned preferences; reject a write that would silently weaken a restriction |
 | `POST /v1/cook-events` | Idempotent batch acceptance by stable event ID and per-event result; return a versioned progress summary |
@@ -69,7 +69,7 @@ Request IDs support retries; authentication identifies the user; authorization s
 
 The backend filters every candidate against the cook's restrictions before ranking and again after a swap or serving adaptation changes ingredients. Ingredient facts come only from a reviewed safety snapshot. A model cannot add facts, ingredients, diets, avoid items, skills or equipment. A missing or unreadable fact fails closed. A recipe with an open safety point, unverified safety record or insufficient review tier cannot be published.
 
-The phone verifies `checked` restrictions before presenting an offer, and refuses unreadable restrictions. A profile change that alters diet or avoid items clears the saved lesson bookmark. A future resume flow must ask the server to check the lesson again; there is no resume-check endpoint yet. A compatible bundled lesson can be cooked offline after selection. Photo recognition never judges doneness or food safety.
+The phone verifies `checked` restrictions before presenting a suggestion, and refuses unreadable restrictions. A profile change that alters diet or avoid items clears the saved lesson bookmark. A future resume flow must ask the server to check the lesson again; there is no resume-check endpoint yet. The phone shows a graph suggestion's safe plan beside its original recipe and never calls the original recipe adapted; a suggestion it cannot read in full is left out. Cooking a graph recipe is not designed yet (#135), so no lesson is cooked from a suggestion for now. Photo recognition never judges doneness or food safety.
 
 ## Offline and media behavior
 
@@ -82,7 +82,7 @@ Fridge photos are sent to the backend as JPEGs up to 1280 pixels on the long sid
 1. Specify request/response fixtures and local acceptance tests. Cover unknown restrictions, ambiguous resolution, unsafe swaps, stale or draft content, changed preferences, duplicate events and offline replay.
 2. Build the graph production gate and JSON artifact with conformance vectors. Today production must fail because graph review and safety verification are incomplete. Use synthetic fixtures and Tomi's reviewed lessons for development.
 3. Build Rust bootstrap, library and typed-list-to-special APIs. Add a fake gateway client in Tomi and prove the UI flow end to end before switching its data source.
-4. Deliver reviewed lesson files and withdrawal metadata. Keep food facts and safety checks on the server; retain the checked-offer guard on the phone. Prove online, cache, withdrawal and offline behavior before replacing the bundled lessons.
+4. Deliver reviewed lesson files and withdrawal metadata. Keep food facts and safety checks on the server; retain the checked-suggestion guard on the phone. Prove online, cache, withdrawal and offline behavior before replacing the bundled lessons.
 5. Add identity, profile and cook-event persistence. Import existing SwiftData records without deleting them; compare backend and TomiCore progress for the same log, then make the backend canonical after reconciliation passes.
 6. Add active-lesson sync, ratings and opt-in leaderboards. Remote fridge scanning already exists for the proof of concept; require the production consent and deletion contract before real cooks use it. Remote chat and speech remain undecided.
 

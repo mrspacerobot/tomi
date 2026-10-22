@@ -13,9 +13,9 @@ extension PlayerModel {
     }
 
     func bookmark(_ step: Int) {
-        var active = ActiveLesson(lesson: dish.id, revision: offer.revision)
-        active.swaps = offer.swaps.map(\.applied)
-        active.ingredients = Set(offer.ingredients.map { IngredientID(rawValue: $0.id.rawValue) })
+        var active = ActiveLesson(lesson: dish.id, revision: brief.revision)
+        active.swaps = brief.swaps
+        active.ingredients = Set(brief.ingredients.map { IngredientID(rawValue: $0.id.rawValue) })
         active.currentStep = step
         attempt { try store.saveActiveLesson(active, at: .now) }
     }

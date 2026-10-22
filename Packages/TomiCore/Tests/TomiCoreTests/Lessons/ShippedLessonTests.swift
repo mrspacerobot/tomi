@@ -35,7 +35,7 @@ import Testing
         #expect(Set(ids).count == ids.count)
     }
 
-    /// The player applies the swaps an offer names to the lesson file, so every listed swap must apply.
+    /// The player applies the swaps a suggestion names to the lesson file, so every listed swap must apply.
     @Test func everySwapOfEveryShippedLessonApplies() throws {
         for file in try ShippedLessons.files() {
             let lesson = try ShippedLessons.lesson(at: file)

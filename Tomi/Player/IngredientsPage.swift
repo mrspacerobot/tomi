@@ -7,7 +7,7 @@ struct IngredientsPage: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.medium) {
-            Text(verbatim: model.offer.title)
+            Text(verbatim: model.brief.title)
                 .textStyle(.displayM)
                 .accessibilityIdentifier("player-title")
             Text(verbatim: LessonText.resolved(model.dish.concept))
@@ -19,7 +19,7 @@ struct IngredientsPage: View {
     }
 
     private func name(of ingredient: IngredientID) -> String {
-        let named = model.offer.ingredients.first { $0.id.rawValue == ingredient.rawValue }
+        let named = model.brief.ingredients.first { $0.id.rawValue == ingredient.rawValue }
         guard let named else {
             return ingredient.rawValue
         }

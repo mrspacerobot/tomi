@@ -16,8 +16,8 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Project | A standard Xcode project committed to git, with synchronized folders |
 | Pull request evidence | Every PR uses `.github/pull_request_template.md`. UI tasks embed current screenshots of the running app in light and dark; capture or posting blockers keep the PR in draft. Capture and posting instructions are in `agent-on-pull-requests.md` |
 | Test phone | Any iPhone that runs iOS 27. No on-device AI is needed |
-| Everyday AI | On Tomi's server, not the phone: reading fridge photos and ranking tonight's offers. No Foundation Models in the app. When the server's model is unavailable (`503 ai_unavailable`) the cook types and the server ranks by ingredient overlap. Ask Tomi and voice are not decided yet |
-| Food knowledge | The server owns the ingredient table, facts, diets, avoid items, cuisines, equipment and every filter. The app holds no such list or rule: it shows `GET /v1/options` and sends back ids. Its one food check is a guard: an offer is shown only if the server checked it for the cook's diet and every avoid item |
+| Everyday AI | On Tomi's server, not the phone: reading fridge photos and ranking tonight's suggestions. No Foundation Models in the app. When the server's model is unavailable (`503 ai_unavailable`) the cook types and the server ranks by ingredient overlap. Ask Tomi and voice are not decided yet |
+| Food knowledge | The server owns the ingredient table, facts, diets, avoid items, cuisines, equipment and every filter. The app holds no such list or rule: it shows `GET /v1/options` and sends back ids. Its one food check is a guard: a suggestion is shown only if the server checked it for the cook's diet and every avoid item |
 | Sign-in | Supabase Auth with Sign in with Apple, without a third-party SDK. Request email so Supabase Auth can store the contact address, including Apple's private relay address. Tokens in the Keychain |
 | Fridge photos | Sent to the server as a small JPEG (1280 px on the long side, quality 0.6) under 10 MB, with the photo's place and time. Proof of concept: the server keeps every photo and nothing asks the cook yet. Friends test it through TestFlight without one; a consent step must come before the app is offered outside TestFlight |
 | Curriculum | Classical French technique and its kitchen words (mirepoix, roux, deglaze, monter au beurre, beurre blanc), without presenting the app as "French cooking". Twelve techniques in four courses (Foundations, Heat control, Sauces, Putting it together), each with levels |
@@ -51,7 +51,7 @@ Current app responsibilities (backend target and remaining contracts: [backend-s
 
 1. **Screens** (SwiftUI): onboarding, home and menu, scan, lesson player, Ask Tomi, profile and settings.
 2. **App services**: TomiAPI (Tomi's server over URLSession), AuthService (Supabase with Sign in with Apple), ProgressStore (SwiftData), LessonLibrary, Voice (speech in and out), Timers (AlarmKit). Each sits behind a protocol with a fake for previews and tests.
-3. **TomiCore** (plain Swift package): skill catalog schema and validator, progress rules, lesson schema, the server's answers and requests, and the checked-offer guard. No food rules.
+3. **TomiCore** (plain Swift package): skill catalog schema and validator, progress rules, lesson schema, the server's answers and requests, and the checked-suggestion guard. No food rules.
 
 ```
 Tomi.xcodeproj
@@ -99,9 +99,9 @@ states, its motion and inspection steps.
 
 1. Photo (or typed list). The app sends a JPEG to `POST /v1/scans`; the server's model returns items, each matched to an ingredient of its table or not.
 2. The cook confirms: sure items start ticked, unsure and unmatched ones do not count until ticked; typed words go to `POST /v1/ingredients/resolve`, and the cook picks when one is ambiguous. The server adds the cupboard staples.
-3. `POST /v1/lessons/suggest`: the server filters its library by the cook's level, diet, things to avoid, cuisine "never" and kitchen, applies only listed swaps, checks the result again, ranks it and says what it checked.
+3. `POST /v1/lessons/suggest`: the server filters the cooking graph's recipes by the cook's level, diet, things to avoid, cuisine "never" and kitchen, plans the safe swaps and omissions, ranks them and says what it checked. Since tomi-backend #17 a suggestion is a graph recipe with its safe plan, not a lesson file.
 4. The app shows the special and up to two alternatives that pass the checked-restrictions guard, with swaps, missing ingredients and the reason. No dish yet is a kind empty state, never an error.
-5. The lesson player opens the lesson file on the phone at the offered revision, with the offered swaps, and works offline.
+5. The lesson player opens the lesson file on the phone at the offered revision, with the offered swaps, and works offline. Graph suggestions have no lesson file; how to cook one is decided in #135 before it is built.
 
 Without the server's model (`503 ai_unavailable`) step 1 falls back to typing and the server ranks by ingredient overlap.
 
@@ -122,7 +122,7 @@ The files and validators below describe the current bundled library. The Rust se
 - The app's validator (`Lesson.issues(in:)`, against the catalog) lists every problem the player would trip on: a blank id or cuisine, an unknown skill or level, a revision or time below 1, no ingredients, a duplicate ingredient, an amount that is not positive or uses a unit of the other system, no steps, an unknown scene or main, a timer that is not positive or runs over four hours, fewer than two answers, a missing or out-of-range correct answer, a swap of an ingredient the lesson lacks, a swap replacement already in the lesson, and missing English text. Whether every ingredient and piece of equipment exists is checked by the server against its own tables. A file from another schema version, or with a field the schema does not have, is rejected before that.
 - Every step names a scene from the closed scene list, and the lesson names its main food (`DishMain`: chicken, tofu, omelette), which the scenes that show the food draw. A scene must show what the step does, with the right vessel and tool. When none fits, the scene is drawn in the kit first: there is no blank or fallback drawing. A lesson that names a scene or main an older app does not know is not shown there until the app is updated, so new scenes ship in the app before a library uses them.
 - A model never adds to the lists. Skills and levels are added only by a person in `catalog.json`; facts, avoid items, diets, ingredients and equipment only by a person on the server. Diet and allergen tags and coverage per diet are the server's.
-- A swap is a reviewed substitution of one ingredient of the lesson for another, with its own amounts (butter to olive oil). The server picks swaps and checks the swapped dish; the player applies only swaps the offer names and the lesson lists (`Lesson.applying(listed:)`).
+- A swap is a reviewed substitution of one ingredient of the lesson for another, with its own amounts (butter to olive oil). The server picks swaps and checks the swapped dish; the player applies only swaps the suggestion names and the lesson lists (`Lesson.applying(listed:)`).
 - The app reads the library through the `LessonLibrary` protocol (catalog, lessons). `BundledLessonLibrary` reads the app bundle; a lesson file that fails validation is skipped and logged, never shown, and without a catalog no lesson is served. `FakeLessonLibrary` serves previews and tests.
 - The library ships in the app and can be replaced by a newer signed download, so a lesson can be fixed or withdrawn the same day.
 
