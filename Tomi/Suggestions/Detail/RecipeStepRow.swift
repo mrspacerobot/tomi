@@ -1,26 +1,22 @@
 import SwiftUI
 import TomiCore
 
-/// One step of the graph's recipe: its number, its text as written and how long it takes.
+/// One step of the recipe: its number, its text as the server wrote it, and its time, heat and safety points.
 struct RecipeStepRow: View {
-    let number: Int
-    let step: RecipeStep
+    let step: AdaptedStep
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xxSmall) {
-            Text(.playerStep(number))
+            Text(.playerStep(step.number))
                 .textStyle(.label)
                 .textCase(.uppercase)
             Text(verbatim: step.text)
                 .textStyle(.step)
-            if let time = step.time, let words = StepTimeFormat.text(for: time) {
-                Text(verbatim: words)
-                    .textStyle(.description)
-            }
+            RecipeStepNotes(step: step)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.top, Spacing.xSmall)
         .accessibilityElement(children: .combine)
-        .accessibilityIdentifier("suggestion-original-step-\(number)")
+        .accessibilityIdentifier("suggestion-step-\(step.number)")
     }
 }

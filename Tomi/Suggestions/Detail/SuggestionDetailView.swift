@@ -1,8 +1,8 @@
 import SwiftUI
 import TomiCore
 
-/// A dish on suggestion in full: the safe plan for this cook, then the graph's own recipe beside it, unchanged.
-/// Cooking a graph recipe step by step is not built yet; the owner decides how it should look first (#135).
+/// A dish on suggestion in full: the recipe already adapted for this cook, what changed for them, what they still
+/// have to buy and what it was checked against. Cooking a graph recipe step by step is not built yet (#135).
 struct SuggestionDetailView: View {
     let suggestion: Suggestion
     let options: LibraryOptions
@@ -13,8 +13,9 @@ struct SuggestionDetailView: View {
                 VStack(alignment: .leading, spacing: Spacing.small) {
                     SuggestionHeading(suggestion: suggestion, isSpecial: true)
                 }
-                SafePlanSection(suggestion: suggestion, options: options)
-                OriginalRecipeSection(suggestion: suggestion)
+                RecipeSection(recipe: suggestion.recipe)
+                ChangesSection(changes: suggestion.changes)
+                NeedsSection(suggestion: suggestion, options: options)
             }
             .padding(Spacing.screenMargin)
         }

@@ -1,10 +1,12 @@
-/// One dish the server suggests for tonight: a recipe of the cooking graph, with the safe plan for this cook.
-/// The original recipe is the graph's own text, never rewritten. The safe plan says what changes for this cook,
-/// and `checked` says for which diet and avoid list the server decided it.
+/// One dish the server suggests for tonight: a recipe of the cooking graph, already adapted for this cook.
+/// `recipe` is the one the cook follows and `changes` says what differs from the graph's own. The safe plan still
+/// carries what to buy and the equipment, and `checked` says for which diet and avoid list the server decided it.
+/// The graph's original recipe (`sourceRecipe`) is sent too and is not read: a suggestion shows one recipe.
 public struct Suggestion: Identifiable, Hashable, Decodable, Sendable {
     public let recipeID: RecipeID
     public let title: String
-    public let originalRecipe: OriginalRecipe
+    public let recipe: AdaptedRecipe
+    public let changes: RecipeChanges
     public let skill: SuggestionSkill
     public let level: NamedLevel
     public let safePlan: SafePlan
@@ -18,7 +20,6 @@ public struct Suggestion: Identifiable, Hashable, Decodable, Sendable {
 
     enum CodingKeys: String, CodingKey {
         case recipeID = "recipeId"
-        case originalRecipe = "sourceRecipe"
-        case title, skill, level, safePlan, reason, checked
+        case title, recipe, changes, skill, level, safePlan, reason, checked
     }
 }

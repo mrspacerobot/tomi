@@ -33,11 +33,4 @@ import Testing
             try ServerJSON.decode(Suggestion.self, from: GraphJSON.suggestion(plan: broken))
         }
     }
-
-    @Test func aOriginalRecipeWithoutStepsRefusesTheSuggestion() {
-        let broken = GraphJSON.suggestion().replacing(#""steps": ["#, with: #""xsteps": ["#)
-        #expect(throws: DecodingError.self) {
-            try ServerJSON.decode(Suggestion.self, from: broken)
-        }
-    }
 }
