@@ -13,13 +13,41 @@ public struct Suggestion: Identifiable, Hashable, Decodable, Sendable {
     /// One line from the server's model about why this dish, or nil when it ranked without one.
     public let reason: String?
     public let checked: CheckedRestrictions
+    public let teaching: Teaching?
 
     public var id: RecipeID {
         recipeID
     }
 
+    /// Teaching applies only to the exact recipe the graph authored; changed recipes remain browseable.
+    public var canOfferTeaching: Bool {
+        teaching != nil && changes.swaps.isEmpty && changes.leftOut.isEmpty
+            && safePlan.substitutions.isEmpty && safePlan.omittedParts.isEmpty
+    }
+
     enum CodingKeys: String, CodingKey {
         case recipeID = "recipeId"
-        case title, recipe, changes, skill, level, safePlan, reason, checked
+        case title, recipe, changes, skill, level, safePlan, reason, checked, teaching
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        recipeID = try values.decode(RecipeID.self, forKey: .recipeID)
+        title = try values.decode(String.self, forKey: .title)
+        recipe = try values.decode(AdaptedRecipe.self, forKey: .recipe)
+        changes = try values.decode(RecipeChanges.self, forKey: .changes)
+        skill = try values.decode(SuggestionSkill.self, forKey: .skill)
+        level = try values.decode(NamedLevel.self, forKey: .level)
+        safePlan = try values.decode(SafePlan.self, forKey: .safePlan)
+        (reason, checked) = try Self.reasonAndCheck(values)
+        teaching = try? values.decodeIfPresent(Teaching.self, forKey: .teaching)
+    }
+
+    private static func reasonAndCheck(
+        _ values: KeyedDecodingContainer<CodingKeys>
+    ) throws -> (String?, CheckedRestrictions) {
+        let reason = try? values.decodeIfPresent(String.self, forKey: .reason)
+        let checked = try values.decode(CheckedRestrictions.self, forKey: .checked)
+        return (reason ?? nil, checked)
     }
 }

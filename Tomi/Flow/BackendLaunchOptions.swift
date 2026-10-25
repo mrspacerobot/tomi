@@ -11,6 +11,10 @@ nonisolated struct BackendLaunchOptions: Equatable {
     static let localBackendArgument = "--local-backend"
     /// The fake server suggests nothing tonight, as the real one does before the cook has reached a lesson's level.
     static let fakeNoSuggestionsArgument = "--fake-no-suggestions"
+    static let fakeGuidedArgument = "--fake-guided-cooking"
+    static let fakeProfileRefreshFailsArgument = "--fake-profile-refresh-fails"
+    static let fakeProfileRefreshChangesArgument = "--fake-profile-refresh-changes"
+    static let fakeProfileRefreshWaitsArgument = "--fake-profile-refresh-waits"
     /// The fake cook is already signed in.
     static let fakeSignedInArgument = "--fake-signed-in"
 
@@ -21,6 +25,10 @@ nonisolated struct BackendLaunchOptions: Equatable {
     let showsAppleSignInButton: Bool
     let usesLocalAPI: Bool
     let suggestionsNothing: Bool
+    let guidedCooking: Bool
+    let profileRefreshFails: Bool
+    let profileRefreshChanges: Bool
+    let profileRefreshWaits: Bool
     let startsSignedIn: Bool
     let savedUnlistedAvoid: Bool
 
@@ -29,6 +37,10 @@ nonisolated struct BackendLaunchOptions: Equatable {
         showsAppleSignInButton = arguments.contains(Self.appleSignInButtonArgument)
         usesLocalAPI = arguments.contains(Self.localBackendArgument)
         suggestionsNothing = arguments.contains(Self.fakeNoSuggestionsArgument)
+        guidedCooking = arguments.contains(Self.fakeGuidedArgument)
+        profileRefreshFails = arguments.contains(Self.fakeProfileRefreshFailsArgument)
+        profileRefreshChanges = arguments.contains(Self.fakeProfileRefreshChangesArgument)
+        profileRefreshWaits = arguments.contains(Self.fakeProfileRefreshWaitsArgument)
         startsSignedIn = arguments.contains(Self.fakeSignedInArgument)
         savedUnlistedAvoid = arguments.contains(Self.fakeUnlistedAvoidArgument)
     }

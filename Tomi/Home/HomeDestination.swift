@@ -13,7 +13,11 @@ struct HomeDestination: View {
         case .settings: SettingsView(flow: flow)
         case .question(let question): SettingsQuestionView(question: question, flow: flow)
         case .suggestion(let suggestion):
-            SuggestionDetailView(suggestion: suggestion, options: flow.profile.listedOptions)
+            SuggestionDetailView(suggestion: suggestion, options: flow.profile.listedOptions, path: $path)
+        case .introduction(let suggestion):
+            CookingIntroductionView(suggestion: suggestion, flow: flow, path: $path)
+        case .preparation(let suggestion):
+            CookingPreparationView(suggestion: suggestion, path: $path)
         }
     }
 }

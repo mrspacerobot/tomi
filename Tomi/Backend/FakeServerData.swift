@@ -57,4 +57,11 @@ nonisolated struct FakeServerData: Sendable {
         response.rankedBy = .overlap
         return response
     }
+
+    func guidedSuggestion(for profile: CookProfile) throws -> SuggestionsResponse {
+        var response = SuggestionsResponse()
+        response.rankedBy = .overlap
+        response.special = try FakeGuidedSuggestion.read(profile: profile)
+        return response
+    }
 }
