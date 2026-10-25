@@ -84,6 +84,9 @@ extension CookingIntroductionUITests {
         XCTAssertTrue(app.alerts.staticTexts["Please check tonight's dishes again"].waitForExistence(timeout: 5))
         capture(app, named: screenshot)
         XCTAssertFalse(app.element("cooking-steps-unavailable").exists)
+        app.alerts.buttons["OK"].tap()
+        XCTAssertTrue(app.buttons["home-scan"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["cooking-start"].exists)
     }
 
     @MainActor private func showPreparation(_ app: XCUIApplication, screenshot: String) {

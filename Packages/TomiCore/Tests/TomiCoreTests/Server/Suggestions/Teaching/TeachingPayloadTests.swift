@@ -34,4 +34,19 @@ import Testing
         #expect(suggestion.teaching == nil)
         #expect(suggestion.title == "Soft scrambled eggs")
     }
+
+    @Test func aFullyReviewedProductionPayloadIsTaught() throws {
+        let payload = ProductionTeachingJSON.reviewed(except: .technique, tier: "reviewed")
+        let suggestion = try ServerJSON.decode(Suggestion.self, from: payload)
+        #expect(suggestion.teaching?.graphChannel == .production)
+        #expect(suggestion.canOfferTeaching)
+    }
+
+    @Test(arguments: TeachingPart.allCases, ["drafted", "sourced"])
+    func anUnreviewedProductionPartDropsTeachingButKeepsTheRecipe(_ part: TeachingPart, _ tier: String) throws {
+        let payload = ProductionTeachingJSON.reviewed(except: part, tier: tier)
+        let suggestion = try ServerJSON.decode(Suggestion.self, from: payload)
+        #expect(suggestion.teaching == nil)
+        #expect(suggestion.title == "Soft scrambled eggs")
+    }
 }

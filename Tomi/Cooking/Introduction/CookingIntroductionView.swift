@@ -24,7 +24,7 @@ struct CookingIntroductionView: View {
                 Alert(
                     title: Text(.cookingRefreshRefusedTitle),
                     message: Text(.cookingRefreshRefusedMessage),
-                    dismissButton: .default(Text(.commonOkay))
+                    dismissButton: .default(Text(.commonOkay), action: startOver)
                 )
             }
             .onAppear { model.activate() }
@@ -58,6 +58,11 @@ struct CookingIntroductionView: View {
         startTask = nil
         guard !Task.isCancelled, path.last == .introduction(suggestion) else { return }
         show(result)
+    }
+
+    /// The checked menu may no longer fit the cook, so nothing of this scan stays reachable.
+    private func startOver() {
+        path.removeAll()
     }
 
     private func show(_ result: CookingIntroductionStartResult) {
