@@ -6,4 +6,6 @@ enum HomeRoute: Hashable {
     case settings
     case question(ProfileQuestion)
     case suggestion(Suggestion)
+    case introduction(Suggestion)
+    case preparation(Suggestion)
 }

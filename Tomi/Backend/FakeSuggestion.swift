@@ -16,14 +16,17 @@ nonisolated struct FakeSuggestion {
     }
 
     private func wire(checkedFor profile: CookProfile) -> Wire {
-        var wire = identity
-        let adaptation = FakeAdaptation(lesson: lesson, wantsSwap: wantsSwap)
+        var answer = identity
         let recipe = FakeRecipe(adaptation: adaptation)
-        wire["recipe"] = recipe.recipeWire
-        wire["changes"] = recipe.changesWire
-        wire["safePlan"] = FakeSafePlan(adaptation: adaptation).wire
-        wire["checked"] = checked(for: profile)
-        return wire
+        answer["recipe"] = recipe.recipeWire
+        answer["changes"] = recipe.changesWire
+        answer["safePlan"] = FakeSafePlan(adaptation: recipe.adaptation).wire
+        answer["checked"] = checked(for: profile)
+        return answer
+    }
+
+    private var adaptation: FakeAdaptation {
+        FakeAdaptation(lesson: lesson, wantsSwap: wantsSwap)
     }
 
     /// The fields that do not depend on the cook or on the adaptation.
