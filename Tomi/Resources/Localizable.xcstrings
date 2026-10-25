@@ -2521,6 +2521,105 @@
         }
       }
     },
+    "cooking.introduction.open": {
+      "comment": "Button on a recipe detail screen to open the graph-authored cooking introduction.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Learn the technique" } } }
+    },
+    "cooking.introduction.title": {
+      "comment": "Navigation title for the cooking introduction screen.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Introduction" } } }
+    },
+    "cooking.introduction.meta": {
+      "comment": "Metadata below the recipe title. The placeholders are the technique name, step count, and the server supplied yield. No total time is shown.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": { "stringUnit": { "state": "translated", "value": "Practises %1$@ · %2$lld step · %3$@" } },
+              "other": { "stringUnit": { "state": "translated", "value": "Practises %1$@ · %2$lld steps · %3$@" } }
+            }
+          }
+        }
+      }
+    },
+    "cooking.theTechnique": {
+      "comment": "Label interrupting the double rule around graph-authored teaching prose.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "The technique" } } }
+    },
+    "cooking.whyTonight": {
+      "comment": "Section heading for the server's optional reason for ranking this suggestion.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Why tonight" } } }
+    },
+    "cooking.youWillUse": {
+      "comment": "Section heading above the adapted recipe ingredient list.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "You will use" } } }
+    },
+    "cooking.getOut": {
+      "comment": "Section heading above the equipment checklist and preparation items.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Get out" } } }
+    },
+    "cooking.start": {
+      "comment": "Button that checks the latest profile and opens recipe preparation.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Start cooking" } } }
+    },
+    "cooking.notTonight": {
+      "comment": "Button to leave the introduction or preparation and return to the same suggestion.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Not tonight" } } }
+    },
+    "cooking.draft.label": {
+      "comment": "Explicit label shown when graph teaching is draft testing content.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Draft testing content" } } }
+    },
+    "cooking.unavailable.adaptation": {
+      "comment": "Explains that teaching is unavailable when the recipe has an ingredient change.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "A guided introduction is unavailable for this adapted recipe." } } }
+    },
+    "cooking.refresh.refused.title": {
+      "comment": "Alert title when a fresh profile check fails or restrictions changed.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Please check tonight's dishes again" } } }
+    },
+    "cooking.refresh.refused.message": {
+      "comment": "Alert message explaining why starting was refused after the latest profile check.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Your answers could not be confirmed. Get new suggestions before starting." } } }
+    },
+    "cooking.preparation.title": {
+      "comment": "Navigation title for the preparation checklist.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Preparation" } } }
+    },
+    "cooking.ingredients": {
+      "comment": "Section heading above the adapted ingredient checklist.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Ingredients" } } }
+    },
+    "cooking.equipment": {
+      "comment": "Section heading above the equipment preparation checklist.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Equipment" } } }
+    },
+    "cooking.steps.unavailable": {
+      "comment": "Terminal preparation message until the guided session screens are implemented.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Guided cooking steps are not available yet." } } }
+    },
+    "common.okay": {
+      "comment": "Button that dismisses an alert.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "OK" } } }
+    },
     "suggestion.omitted": {
       "comment": "What the recipe leaves out for this cook. The placeholder is a list of names joined by the app, or one name.",
       "extractionState": "manual",
@@ -2532,6 +2631,11 @@
           }
         }
       }
+    },
+    "cooking.checkingProfile": {
+      "comment": "Button label while checking the latest profile before preparation.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Checking your answers..." } } }
     },
     "suggestion.checked": {
       "comment": "Under a dish on suggestion: the diet and avoid items the server checked it against. The placeholder is a list of their names joined by the app.",

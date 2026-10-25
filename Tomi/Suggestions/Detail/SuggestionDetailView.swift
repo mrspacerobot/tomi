@@ -6,6 +6,7 @@ import TomiCore
 struct SuggestionDetailView: View {
     let suggestion: Suggestion
     let options: LibraryOptions
+    @Binding var path: [HomeRoute]
 
     var body: some View {
         ScrollView {
@@ -16,6 +17,7 @@ struct SuggestionDetailView: View {
                 RecipeSection(recipe: suggestion.recipe)
                 ChangesSection(changes: suggestion.changes)
                 NeedsSection(suggestion: suggestion, options: options)
+                SuggestionTeachingAction(suggestion: suggestion, path: $path)
             }
             .padding(Spacing.screenMargin)
         }

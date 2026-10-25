@@ -21,12 +21,34 @@ extension AppServices {
     ) -> AppServices {
         let profile = fakeProfile(options, store: store)
         return AppServices(
-            api: FakeTomiAPI(library: library, profile: profile, suggestionsNothing: options.suggestionsNothing),
+            api: fakeAPI(options, profile: profile, library: library),
             auth: FakeAuthService(signedIn: options.startsSignedIn),
             library: library,
             store: store,
             photos: .fixed(PhotoSource.fakePhoto),
             usesFakeSignInButton: !options.showsAppleSignInButton
+        )
+    }
+
+    private static func fakeAPI(
+        _ options: BackendLaunchOptions,
+        profile: CookProfile,
+        library: any LessonLibrary
+    ) -> any TomiAPI {
+        FakeTomiAPI(
+            library: library,
+            profile: profile,
+            configuration: fakeAPIConfiguration(options)
+        )
+    }
+
+    private static func fakeAPIConfiguration(_ options: BackendLaunchOptions) -> FakeTomiAPIConfiguration {
+        FakeTomiAPIConfiguration(
+            suggestionsNothing: options.suggestionsNothing,
+            guidedCooking: options.guidedCooking,
+            profileRefreshFails: options.profileRefreshFails,
+            profileRefreshChanges: options.profileRefreshChanges,
+            profileRefreshWaits: options.profileRefreshWaits
         )
     }
 

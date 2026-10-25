@@ -36,6 +36,13 @@ final class ProfileModel {
         try accept(try await api.profile())
     }
 
+    /// Reads the server's current answers and keeps the local cache consistent before a new cook starts.
+    func refreshProfile() async throws -> CookProfile {
+        let fresh = try await api.profile()
+        try accept(fresh)
+        return fresh.profile
+    }
+
     /// Sends the cook's answers. A stale version is answered by making the change again on the newer profile;
     /// a removed restriction is sent only once the cook has confirmed it on screen.
     func save(_ answers: CookProfile, confirmedWeaker: Bool) async throws -> ProfileSaveResult {
