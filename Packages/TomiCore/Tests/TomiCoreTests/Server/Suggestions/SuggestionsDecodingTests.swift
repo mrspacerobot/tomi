@@ -50,4 +50,41 @@ import Testing
         )
         #expect(suggestion.safePlan.omittedParts == ["enrichment"])
     }
+
+    @Test func teachingIsOptionalAndMalformedTeachingDoesNotHideTheRecipe() throws {
+        let decoded = try suggestion(with: TeachingJSON.valid)
+        #expect(decoded.teaching?.technique.name == "Scramble")
+        #expect(decoded.teaching?.introduction.concept == "Gentle curds")
+        #expect(!decoded.canOfferTeaching)
+        let bad = TeachingJSON.valid.replacing("\"schemaVersion\":1", with: "\"schemaVersion\":2")
+        let fallback = try suggestion(with: bad)
+        #expect(fallback.teaching == nil)
+        #expect(fallback.title == "Soft scrambled eggs")
+    }
+
+    @Test func malformedQuizDoesNotHideItsValidIntroduction() throws {
+        let decoded = try suggestion(with: TeachingJSON.invalidQuiz)
+        #expect(decoded.teaching?.introduction.concept == "Gentle curds")
+        #expect(decoded.teaching?.quiz == nil)
+    }
+
+    @Test func backendTeachingSuggestionFixtureDecodesWithUnchangedGraphText() throws {
+        let suggestion = try ServerJSON.decode(Suggestion.self, from: TeachingJSON.liveSuggestion)
+        #expect(suggestion.canOfferTeaching)
+        #expect(suggestion.teaching?.graphVersion == "2026.10.22-8aa9532")
+        #expect(suggestion.teaching?.technique.name == "Scramble")
+        #expect(suggestion.teaching?.introduction.concept == "Gentle curds")
+        #expect(suggestion.teaching?.quiz?.count == 4)
+    }
+
+    @Test func aProductionQuestionBelowReviewTierIsDroppedWithoutLosingIntroduction() throws {
+        let suggestion = try ServerJSON.decode(Suggestion.self, from: TeachingJSON.productionWithDraftQuestion)
+        #expect(suggestion.teaching?.introduction.concept == "Gentle curds")
+        #expect(suggestion.teaching?.quiz == nil)
+    }
+
+    private func suggestion(with teaching: String) throws -> Suggestion {
+        let wire = GraphJSON.suggestion().replacing(#""checked": "#, with: teaching + #", "checked": "#)
+        return try ServerJSON.decode(Suggestion.self, from: wire)
+    }
 }

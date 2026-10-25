@@ -16,7 +16,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Project | A standard Xcode project committed to git, with synchronized folders |
 | Pull request evidence | Every PR uses `.github/pull_request_template.md`. UI tasks embed current screenshots of the running app in light and dark; capture or posting blockers keep the PR in draft. Capture and posting instructions are in `agent-on-pull-requests.md` |
 | Test phone | Any iPhone that runs iOS 27. No on-device AI is needed |
-| Everyday AI | On Tomi's server, not the phone: reading fridge photos and ranking tonight's suggestions. No Foundation Models in the app. When the server's model is unavailable (`503 ai_unavailable`) the cook types and the server ranks by ingredient overlap. Ask Tomi and voice are not decided yet |
+| Everyday AI | On Tomi's server, not the phone: reading fridge photos. Deterministic server code ranks tonight's suggestions. No Foundation Models in the app. When the server's model is unavailable (`503 ai_unavailable`) the cook types and the server ranks by ingredient overlap. Ask Tomi and voice are not decided yet |
 | Food knowledge | The server owns the ingredient table, facts, diets, avoid items, cuisines, equipment and every filter. The app holds no such list or rule: it shows `GET /v1/options` and sends back ids. Its one food check is a guard: a suggestion is shown only if the server checked it for the cook's diet and every avoid item |
 | Sign-in | Supabase Auth with Sign in with Apple, without a third-party SDK. Request email so Supabase Auth can store the contact address, including Apple's private relay address. Tokens in the Keychain |
 | Fridge photos | Sent to the server as a small JPEG (1280 px on the long side, quality 0.6) under 10 MB, with the photo's place and time. Proof of concept: the server keeps every photo and nothing asks the cook yet. Friends test it through TestFlight without one; a consent step must come before the app is offered outside TestFlight |
@@ -103,7 +103,7 @@ states, its motion and inspection steps.
 4. The app shows the special and up to two alternatives that pass the checked-restrictions guard, with swaps, missing ingredients and the reason. No dish yet is a kind empty state, never an error.
 5. The lesson player opens the lesson file on the phone at the offered revision, with the offered swaps, and works offline. Graph suggestions have no lesson file; how to cook one is decided in #135 before it is built.
 
-Without the server's model (`503 ai_unavailable`) step 1 falls back to typing and the server ranks by ingredient overlap.
+Without the server's model (`503 ai_unavailable`) step 1 falls back to typing; deterministic server code ranks by ingredient overlap.
 
 ## Lesson library
 
@@ -201,3 +201,6 @@ Each phase ends with something runnable. GitHub milestones mirror these.
 ## Consolidated onboarding (#124)
 
 After sign-in, a new cook sees the welcome and the animated companion, then the server-backed questions. Each screen places the companion with a `CompanionSlot`; the diet greeting uses its explaining state. The server remains the source of all food options and saved profile answers. The former local-food onboarding is superseded.
+# Guided cooking introduction and preparation
+
+The first graph-native cooking slice decodes optional teaching and provides introduction plus preparation screens. It does not reuse bundled `LessonID` records or add saved fields. Teaching must be compatible with an unchanged server-adapted recipe; draft content is labelled. A fresh profile fetch and restriction check are required to begin preparation. Guided steps, quiz, session persistence and rewards belong to later slices.

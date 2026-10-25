@@ -21,14 +21,14 @@ nonisolated struct FakeAdaptation {
     let swap: LessonSwap?
     let leftOut: LessonIngredient?
 
-    init(lesson: Lesson, wantsSwap: Bool) {
+    init(lesson: Lesson, wantsSwap: Bool, leaveOut: Bool = true) {
         self.lesson = lesson
         var chosen: LessonSwap?
         if wantsSwap {
             chosen = lesson.swaps.first
         }
         swap = chosen
-        leftOut = Self.leftOutIngredient(of: lesson, swapped: chosen != nil)
+        leftOut = leaveOut ? Self.leftOutIngredient(of: lesson, swapped: chosen != nil) : nil
     }
 
     var lines: [Line] {

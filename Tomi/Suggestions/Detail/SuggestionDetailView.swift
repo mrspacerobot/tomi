@@ -6,6 +6,7 @@ import TomiCore
 struct SuggestionDetailView: View {
     let suggestion: Suggestion
     let options: LibraryOptions
+    @Binding var path: [HomeRoute]
 
     var body: some View {
         ScrollView {
@@ -16,11 +17,29 @@ struct SuggestionDetailView: View {
                 RecipeSection(recipe: suggestion.recipe)
                 ChangesSection(changes: suggestion.changes)
                 NeedsSection(suggestion: suggestion, options: options)
+                SuggestionTeachingAction(suggestion: suggestion, path: $path)
             }
             .padding(Spacing.screenMargin)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorRole.paper.color)
         .accessibilityIdentifier("suggestion-detail")
+    }
+}
+
+private struct SuggestionTeachingAction: View {
+    let suggestion: Suggestion
+    @Binding var path: [HomeRoute]
+
+    var body: some View {
+        if suggestion.canOfferTeaching {
+            Button {
+                path.append(.introduction(suggestion))
+            } label: {
+                Text(.cookingIntroductionOpen).frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.tomiPrimary)
+            .accessibilityIdentifier("cooking-introduction-open")
+        }
     }
 }

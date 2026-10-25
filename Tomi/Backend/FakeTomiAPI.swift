@@ -9,13 +9,27 @@ actor FakeTomiAPI: TomiAPI {
 
     private let data: FakeServerData
     private let suggestionsNothing: Bool
+    private let guidedCooking: Bool
+    private let profileRefreshFails: Bool
+    private let profileRefreshChanges: Bool
+    private var profileReadCount = 0
     private var envelope: ProfileEnvelope
 
     /// The fake cook's profile starts as given: a new cook by default.
-    init(library: any LessonLibrary, profile: CookProfile = CookProfile(), suggestionsNothing: Bool = false) {
+    init(
+        library: any LessonLibrary,
+        profile: CookProfile = CookProfile(),
+        suggestionsNothing: Bool = false,
+        guidedCooking: Bool = false,
+        profileRefreshFails: Bool = false,
+        profileRefreshChanges: Bool = false
+    ) {
         data = FakeServerData(library: library)
         envelope = ProfileEnvelope(version: 0, schemaVersion: Self.profileSchemaVersion, profile: profile)
         self.suggestionsNothing = suggestionsNothing
+        self.guidedCooking = guidedCooking
+        self.profileRefreshFails = profileRefreshFails
+        self.profileRefreshChanges = profileRefreshChanges
     }
 
     func options() async throws -> LibraryOptions {
@@ -23,7 +37,16 @@ actor FakeTomiAPI: TomiAPI {
     }
 
     func profile() async throws -> ProfileEnvelope {
-        envelope
+        profileReadCount += 1
+        if profileReadCount > 1 && profileRefreshFails { throw BackendError.notSignedIn }
+        if profileReadCount > 1 && profileRefreshChanges { return changedProfile }
+        return envelope
+    }
+
+    private var changedProfile: ProfileEnvelope {
+        var changed = envelope.profile
+        changed.avoid.insert("fake-refresh-change")
+        return ProfileEnvelope(version: envelope.version, schemaVersion: Self.profileSchemaVersion, profile: changed)
     }
 
     func saveProfile(_ patch: ProfilePatch) async throws -> ProfileEnvelope {
@@ -48,6 +71,6 @@ actor FakeTomiAPI: TomiAPI {
         if suggestionsNothing {
             return SuggestionsResponse()
         }
-        return try data.suggestions(for: envelope.profile)
+        return try data.suggestions(for: envelope.profile, guidedCooking: guidedCooking)
     }
 }

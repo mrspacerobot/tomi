@@ -10,7 +10,11 @@ let package = Package(
     ],
     targets: [
         .target(name: "TomiCore"),
-        .testTarget(name: "TomiCoreTests", dependencies: ["TomiCore"]),
+        .testTarget(
+            name: "TomiCoreTests",
+            dependencies: ["TomiCore"],
+            resources: [.copy("Fixtures/teaching-suggestion.json")]
+        ),
     ],
     swiftLanguageModes: [.v6]
 )
