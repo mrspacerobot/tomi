@@ -21,6 +21,34 @@ final class TonightUITests: XCTestCase {
     }
 
     @MainActor
+    func testHomeOpensTypingCupboardAndSettingsDirectly() {
+        verifyDirectTyping()
+        verifyCupboardEditing()
+        verifySettingsEntry()
+    }
+
+    @MainActor private func verifyDirectTyping() {
+        let app = XCUIApplication.launched(XCUIApplication.returningCook + ["--store-in-memory"])
+        XCTAssertTrue(app.buttons["home-type"].waitForExistence(timeout: 5))
+        app.buttons["home-type"].tap()
+        XCTAssertTrue(app.buttons["confirm-find"].waitForExistence(timeout: 5))
+    }
+
+    @MainActor private func verifyCupboardEditing() {
+        let app = XCUIApplication.launched(XCUIApplication.returningCook + ["--store-in-memory"])
+        XCTAssertTrue(app.buttons["home-cupboard-edit"].waitForExistence(timeout: 5))
+        app.buttons["home-cupboard-edit"].tap()
+        XCTAssertTrue(app.element("question-cupboard").waitForExistence(timeout: 5))
+    }
+
+    @MainActor private func verifySettingsEntry() {
+        let app = XCUIApplication.launched(XCUIApplication.returningCook + ["--store-in-memory"])
+        XCTAssertTrue(app.buttons["home-settings"].waitForExistence(timeout: 5))
+        app.buttons["home-settings"].tap()
+        XCTAssertTrue(app.buttons["settings-question-cupboard"].waitForExistence(timeout: 5))
+    }
+
+    @MainActor
     func testRemovingAnAvoidItemAsksTheCookFirst() {
         let app = XCUIApplication.launched(XCUIApplication.returningCook + ["--store-in-memory"])
         changeAvoidItem(app)

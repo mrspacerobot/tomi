@@ -201,3 +201,11 @@ Each phase ends with something runnable. GitHub milestones mirror these.
 ## Consolidated onboarding (#124)
 
 After sign-in, a new cook sees the welcome and the animated companion, then the server-backed questions. Each screen places the companion with a `CompanionSlot`; the diet greeting uses its explaining state. The server remains the source of all food options and saved profile answers. The former local-food onboarding is superseded.
+
+## Home overview foundation (#150)
+
+Home follows the approved round2 `home-empty` hierarchy: compact masthead and date, streak/rank/next-rank columns, an empty double-ruled special with scan/direct typing/cupboard edit, and the server-ordered course menu. Displayed progress comes from the existing local cook log and rules. It does not imply server-synced progress or eligibility for a recipe.
+
+The rules package joins server course/skill names to local progress only when IDs, levels and prerequisite dependencies agree. Unknown or incompatible progress stays unknown. A saved-data read failure keeps the existing unavailable notice rather than showing an empty log. Home refreshes its date and progress when it appears or the app becomes active.
+
+The special remains empty in this slice. Scan results and their alternatives remain in the existing scan route; returning them to the same Home card is a separate follow-up. Skill details, prior-dish shortcuts, guided cooking, recipe time totals, prospective XP and remote progress are not added by this change.

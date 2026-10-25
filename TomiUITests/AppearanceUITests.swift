@@ -1,26 +1,26 @@
 import XCTest
 
-/// Tomi follows the phone's appearance: paper in light, night ink in dark, and the welcome title in both.
+/// Tomi follows the phone's appearance: paper in light, night ink in dark, and the home title in both.
 final class AppearanceUITests: XCTestCase {
     override func setUp() {
         continueAfterFailure = false
     }
 
     @MainActor
-    func testWelcomeShowsItsTitleOnPaperInLight() {
+    func testHomeShowsItsTitleOnPaperInLight() {
         let ground = groundBrightnessOfWelcome(in: .light)
 
         XCTAssertGreaterThan(ground, 0.8)
     }
 
     @MainActor
-    func testWelcomeShowsItsTitleOnNightInkInDark() {
+    func testHomeShowsItsTitleOnNightInkInDark() {
         let ground = groundBrightnessOfWelcome(in: .dark)
 
         XCTAssertLessThan(ground, 0.25)
     }
 
-    /// Changes the phone appearance with the welcome visible, checks the title is on screen and
+    /// Changes the phone appearance with home visible, checks the title is on screen and
     /// returns how bright the ground behind it is.
     @MainActor
     private func groundBrightnessOfWelcome(in appearance: XCUIDevice.Appearance) -> Double {
@@ -28,7 +28,7 @@ final class AppearanceUITests: XCTestCase {
         let app = XCUIApplication.launched(XCUIApplication.returningCook + ["--store-in-memory"])
 
         dismissAppleAccountVerificationIfNeeded()
-        XCTAssertTrue(app.staticTexts["welcome-title"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["home-title"].waitForExistence(timeout: 5))
         showAppearance(appearance, in: app)
         return app.screenshot().groundBrightness
     }
