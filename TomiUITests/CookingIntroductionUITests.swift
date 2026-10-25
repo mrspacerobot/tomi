@@ -37,21 +37,52 @@ final class CookingIntroductionUITests: XCTestCase {
     @MainActor
     func testStartRefusesWhenFreshProfileReadFails() {
         let (app, _) = introductionApp(extra: ["--fake-profile-refresh-fails"])
-        refuseStart(app)
+        refuseStart(app, screenshot: "refusal-refresh-failed-light")
+    }
+
+    @MainActor
+    func testStartRefusesWhenFreshProfileReadFailsInDarkAppearance() {
+        let (app, _) = introductionApp(extra: ["--fake-profile-refresh-fails", "--appearance-dark"])
+        refuseStart(app, screenshot: "refusal-refresh-failed-dark")
     }
 
     @MainActor
     func testStartRefusesWhenRestrictionsChanged() {
         let (app, _) = introductionApp(extra: ["--fake-profile-refresh-changes"])
-        refuseStart(app)
+        refuseStart(app, screenshot: "refusal-restrictions-changed-light")
     }
 
+    @MainActor
+    func testStartRefusesWhenRestrictionsChangedInDarkAppearance() {
+        let (app, _) = introductionApp(extra: ["--fake-profile-refresh-changes", "--appearance-dark"])
+        refuseStart(app, screenshot: "refusal-restrictions-changed-dark")
+    }
+
+    @MainActor
+    func testRecipeDetailOffersNoIntroductionWhenTeachingIsUnavailable() {
+        showUnavailableTeaching(extra: [], screenshot: "teaching-unavailable-light")
+    }
+
+    @MainActor
+    func testRecipeDetailOffersNoIntroductionWhenTeachingIsUnavailableInDarkAppearance() {
+        showUnavailableTeaching(extra: ["--appearance-dark"], screenshot: "teaching-unavailable-dark")
+    }
 }
 
 extension CookingIntroductionUITests {
-    @MainActor private func refuseStart(_ app: XCUIApplication) {
+    @MainActor private func showUnavailableTeaching(extra: [String], screenshot: String) {
+        let app = XCUIApplication.launched(XCUIApplication.returningCook + ["--store-in-memory"] + extra)
+        enterMenu(app)
+        app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-open-'")).firstMatch.tap()
+        XCTAssertTrue(app.element("suggestion-detail").waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["cooking-introduction-open"].exists)
+        capture(app, named: screenshot)
+    }
+
+    @MainActor private func refuseStart(_ app: XCUIApplication, screenshot: String) {
         app.buttons["cooking-start"].tap()
         XCTAssertTrue(app.alerts.staticTexts["Please check tonight's dishes again"].waitForExistence(timeout: 5))
+        capture(app, named: screenshot)
         XCTAssertFalse(app.element("cooking-steps-unavailable").exists)
     }
 
