@@ -2989,6 +2989,18 @@
         }
       }
     },
+    "home.rank.tiered": {
+      "comment": "Second progress column value once the cook is past the first tier of the top rank. %1$@ is the rank name, for example Toque. %2$lld is the tier number, 2 or more.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ %2$lld"
+          }
+        }
+      }
+    },
     "home.nextRank.label": {
       "comment": "Third progress column label.",
       "extractionState": "manual",

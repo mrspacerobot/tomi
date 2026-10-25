@@ -28,7 +28,7 @@ struct HomeProgressStrip: View {
     private var rankStat: Stat {
         Stat(
             label: String(localized: .homeRankLabel),
-            value: String(localized: summary.game.rank.title.localizationKey),
+            value: summary.game.rank.words,
             detail: String(localized: .homeRankTotalXp(summary.game.xp))
         )
     }
