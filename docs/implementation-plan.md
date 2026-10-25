@@ -162,6 +162,10 @@ The cook log is the source of truth. XP, rank, streak and mastery are computed f
 
 The cook's answers are one value, `CookProfile` in TomiCore, with the server's JSON names (the same as the stored fields). Experience and units are closed lists in code, because code decides what they do; diets, avoid items, cuisines, equipment and cupboard staples are `OptionID`s from the server's lists, which the app neither names nor interprets. Reading the server's profile refuses it when the diet or avoid list cannot be read, so the app never assumes "eats everything"; any other field that is missing or unknown keeps its default. The cupboard question works like the kitchen: the options list about 22 everyday `staples` (not every ingredient), each marked `assumed` or not; until `cupboardAnswered` is true the server counts the assumed ones as at home and ignores `cupboardStaples`, so the screen starts from them and the first save sets `cupboardAnswered` (`CookProfile.cupboard(assumedUntilAnswered:)`). Saved staples that are not in the list show as removable extras, and typed words go through `POST /v1/ingredients/resolve`. A change is sent as `PATCH /v1/profile` with only the changed fields and the version read (`ProfilePatch`); `409 version_conflict` makes the cook's change again on the newer profile (`ProfilePatch.rebased(on:)`); removing a diet or avoid item is refused with `409 weakens_restrictions` until the cook confirms on screen and the app sends `allowWeakerRestrictions`.
 
+## Guided cooking introduction and preparation (#152)
+
+The first graph-native cooking slice decodes optional teaching and provides introduction plus preparation screens. It does not reuse bundled `LessonID` records or add saved fields. Teaching must be compatible with an unchanged server-adapted recipe; draft content is labelled. A fresh profile fetch, checked-suggestion validation and exact avoid-list match are required to begin preparation, so changes in either direction require new suggestions. Guided steps, quiz, session persistence and rewards belong to later slices.
+
 ## Phases
 
 Each phase ends with something runnable. GitHub milestones mirror these.
@@ -201,6 +205,3 @@ Each phase ends with something runnable. GitHub milestones mirror these.
 ## Consolidated onboarding (#124)
 
 After sign-in, a new cook sees the welcome and the animated companion, then the server-backed questions. Each screen places the companion with a `CompanionSlot`; the diet greeting uses its explaining state. The server remains the source of all food options and saved profile answers. The former local-food onboarding is superseded.
-# Guided cooking introduction and preparation
-
-The first graph-native cooking slice decodes optional teaching and provides introduction plus preparation screens. It does not reuse bundled `LessonID` records or add saved fields. Teaching must be compatible with an unchanged server-adapted recipe; draft content is labelled. A fresh profile fetch and restriction check are required to begin preparation. Guided steps, quiz, session persistence and rewards belong to later slices.

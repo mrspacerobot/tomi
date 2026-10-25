@@ -9,7 +9,6 @@ nonisolated struct FakeSuggestion {
 
     let lesson: Lesson
     let wantsSwap: Bool
-    let guidedCooking: Bool
 
     func suggestion(checkedFor profile: CookProfile) throws -> Suggestion {
         let data = try JSONSerialization.data(withJSONObject: wire(checkedFor: profile))
@@ -23,16 +22,11 @@ nonisolated struct FakeSuggestion {
         answer["changes"] = recipe.changesWire
         answer["safePlan"] = FakeSafePlan(adaptation: recipe.adaptation).wire
         answer["checked"] = checked(for: profile)
-        if guidedCooking { answer["teaching"] = teaching }
         return answer
     }
 
     private var adaptation: FakeAdaptation {
-        FakeAdaptation(
-            lesson: lesson,
-            wantsSwap: wantsSwap && !guidedCooking,
-            leaveOut: !guidedCooking
-        )
+        FakeAdaptation(lesson: lesson, wantsSwap: wantsSwap)
     }
 
     /// The fields that do not depend on the cook or on the adaptation.
@@ -43,23 +37,6 @@ nonisolated struct FakeSuggestion {
             "skill": ["id": lesson.skill.rawValue, "name": lesson.skill.rawValue],
             "level": ["number": lesson.level, "name": String(lesson.level)],
             "reason": LessonText.resolved(lesson.whyThis),
-        ]
-    }
-
-    private var teaching: Wire {
-        [
-            "schemaVersion": 1,
-            "graphVersion": "fixture",
-            "graphChannel": "draft",
-            "language": "en",
-            "technique": ["id": "technique/fake", "name": "Technique", "tier": "drafted"],
-            "introduction": [
-                "concept": "A clear cue",
-                "what": "Use the technique described in this introduction.",
-                "why": "Notice the change as you cook.",
-                "tier": "drafted",
-            ],
-            "quiz": NSNull(),
         ]
     }
 

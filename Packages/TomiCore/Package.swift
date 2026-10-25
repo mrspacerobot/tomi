@@ -13,7 +13,7 @@ let package = Package(
         .testTarget(
             name: "TomiCoreTests",
             dependencies: ["TomiCore"],
-            resources: [.copy("Fixtures/teaching-suggestion.json")]
+            resources: [.copy("Server/Suggestions/Teaching/teaching-suggestion.json")]
         ),
     ],
     swiftLanguageModes: [.v6]

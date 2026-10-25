@@ -24,7 +24,5 @@ public struct TeachingTechnique: Hashable, Decodable, Sendable {
 private func isValidTechniqueID(_ id: String) -> Bool {
     let pieces = id.split(separator: "/", omittingEmptySubsequences: false)
     guard pieces.count == 2, pieces[0] == "technique", let slug = pieces.last else { return false }
-    return slug.unicodeScalars.allSatisfy {
-        $0.isASCII && (CharacterSet.alphanumerics.contains($0) || "-_".unicodeScalars.contains($0))
-    }
+    return isValidTeachingSlug(slug)
 }

@@ -8,28 +8,20 @@ actor FakeTomiAPI: TomiAPI {
     static let profileSchemaVersion = 2
 
     private let data: FakeServerData
-    private let suggestionsNothing: Bool
-    private let guidedCooking: Bool
-    private let profileRefreshFails: Bool
-    private let profileRefreshChanges: Bool
+    private let configuration: FakeTomiAPIConfiguration
     private var profileReadCount = 0
+    private var pendingProfile: CheckedContinuation<ProfileEnvelope, Never>?
     private var envelope: ProfileEnvelope
 
     /// The fake cook's profile starts as given: a new cook by default.
     init(
         library: any LessonLibrary,
         profile: CookProfile = CookProfile(),
-        suggestionsNothing: Bool = false,
-        guidedCooking: Bool = false,
-        profileRefreshFails: Bool = false,
-        profileRefreshChanges: Bool = false
+        configuration: FakeTomiAPIConfiguration = FakeTomiAPIConfiguration()
     ) {
         data = FakeServerData(library: library)
         envelope = ProfileEnvelope(version: 0, schemaVersion: Self.profileSchemaVersion, profile: profile)
-        self.suggestionsNothing = suggestionsNothing
-        self.guidedCooking = guidedCooking
-        self.profileRefreshFails = profileRefreshFails
-        self.profileRefreshChanges = profileRefreshChanges
+        self.configuration = configuration
     }
 
     func options() async throws -> LibraryOptions {
@@ -38,8 +30,9 @@ actor FakeTomiAPI: TomiAPI {
 
     func profile() async throws -> ProfileEnvelope {
         profileReadCount += 1
-        if profileReadCount > 1 && profileRefreshFails { throw BackendError.notSignedIn }
-        if profileReadCount > 1 && profileRefreshChanges { return changedProfile }
+        if profileReadCount > 1 && configuration.profileRefreshWaits { return await waitForProfile() }
+        if profileReadCount > 1 && configuration.profileRefreshFails { throw BackendError.notSignedIn }
+        if profileReadCount > 1 && configuration.profileRefreshChanges { return changedProfile }
         return envelope
     }
 
@@ -60,7 +53,18 @@ actor FakeTomiAPI: TomiAPI {
     }
 
     func scan(jpeg: Data) async throws -> ScanResult {
-        data.scan()
+        releasePendingProfile()
+        return data.scan()
+    }
+
+    private func waitForProfile() async -> ProfileEnvelope {
+        await withCheckedContinuation { pendingProfile = $0 }
+    }
+
+    private func releasePendingProfile() {
+        guard let pendingProfile else { return }
+        self.pendingProfile = nil
+        pendingProfile.resume(returning: envelope)
     }
 
     func resolve(_ labels: [String]) async throws -> ResolveResponse {
@@ -68,9 +72,10 @@ actor FakeTomiAPI: TomiAPI {
     }
 
     func suggestions(_ request: SuggestionsRequest) async throws -> SuggestionsResponse {
-        if suggestionsNothing {
+        if configuration.suggestionsNothing {
             return SuggestionsResponse()
         }
-        return try data.suggestions(for: envelope.profile, guidedCooking: guidedCooking)
+        if configuration.guidedCooking { return try data.guidedSuggestion(for: envelope.profile) }
+        return try data.suggestions(for: envelope.profile)
     }
 }

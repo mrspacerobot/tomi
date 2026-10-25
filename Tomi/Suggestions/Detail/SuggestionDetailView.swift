@@ -26,20 +26,3 @@ struct SuggestionDetailView: View {
         .accessibilityIdentifier("suggestion-detail")
     }
 }
-
-private struct SuggestionTeachingAction: View {
-    let suggestion: Suggestion
-    @Binding var path: [HomeRoute]
-
-    var body: some View {
-        if suggestion.canOfferTeaching {
-            Button {
-                path.append(.introduction(suggestion))
-            } label: {
-                Text(.cookingIntroductionOpen).frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.tomiPrimary)
-            .accessibilityIdentifier("cooking-introduction-open")
-        }
-    }
-}

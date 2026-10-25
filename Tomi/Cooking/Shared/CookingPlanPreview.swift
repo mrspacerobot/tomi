@@ -1,7 +1,7 @@
 import SwiftUI
 import TomiCore
 
-/// Fake graph suggestion for design previews, drawn from the bundled lesson fixture.
+/// Fake graph suggestion for design previews, drawn from the bundled graph suggestion fixture.
 struct CookingPlanPreview: View {
     enum Screen { case detail, introduction, preparation }
 
@@ -29,14 +29,6 @@ struct CookingPlanPreview: View {
         case .preparation:
             CookingPreparationView(suggestion: suggestion, path: $path)
         }
-    }
-}
-
-private enum PreviewSuggestion {
-    static func make() -> Suggestion? {
-        guard let lesson = BundledLessonLibrary().lessons.first else { return nil }
-        return try? FakeSuggestion(lesson: lesson, wantsSwap: false, guidedCooking: true)
-            .suggestion(checkedFor: CookProfile())
     }
 }
 

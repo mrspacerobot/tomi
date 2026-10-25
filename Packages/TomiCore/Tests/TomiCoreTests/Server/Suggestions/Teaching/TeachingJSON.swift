@@ -23,6 +23,39 @@ enum TeachingJSON {
         return payload
     }
 
+    static var duplicateChoices: String {
+        liveSuggestion.replacingOccurrences(
+            of: #""Large, dry, rubbery curds.""#,
+            with: #""Small, soft, creamy curds.""#
+        )
+    }
+
+    static var emptyQuestionID: String {
+        liveSuggestion.replacingOccurrences(
+            of: #"technique/scramble/quiz/purpose"#,
+            with: #"technique/scramble/quiz/"#
+        )
+    }
+
+    static var blankQuestion: String {
+        liveSuggestion.replacingOccurrences(
+            of: #"Which texture is the aim of this scramble method?"#,
+            with: #"   "#
+        )
+    }
+
+    static var unsupportedPayloads: [String] {
+        [
+            liveSuggestion.replacingOccurrences(
+                of: #""graphVersion": "2026.10.22-8aa9532""#,
+                with: #""graphVersion": " ""#
+            ),
+            liveSuggestion.replacingOccurrences(of: #""graphChannel": "draft""#, with: #""graphChannel": "unknown""#),
+            liveSuggestion.replacingOccurrences(of: #""language": "en""#, with: #""language": "fr""#),
+            liveSuggestion.replacingOccurrences(of: #""tier": "drafted""#, with: #""tier": "future""#),
+        ]
+    }
+
     static let valid =
         #""teaching":{"schemaVersion":1,"graphVersion":"fixture","graphChannel":"draft","language":"en","#
         + #""technique":{"id":"technique/scramble","name":"Scramble","tier":"drafted"},"#

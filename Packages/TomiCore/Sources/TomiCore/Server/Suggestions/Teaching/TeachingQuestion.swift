@@ -21,8 +21,12 @@ public struct TeachingQuestion: Hashable, Decodable, Sendable {
     }
 
     private func validate(in values: KeyedDecodingContainer<CodingKeys>) throws {
-        guard id.contains("/quiz/"), !question.isEmpty, choices.count >= 2,
-            choices.allSatisfy({ !$0.isEmpty }), choices.indices.contains(answerIndex), !explanation.isEmpty
+        let distinctChoices = Set(choices)
+        guard isValidTeachingQuestionID(id), !question.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+            choices.count >= 2, distinctChoices.count == choices.count,
+            choices.allSatisfy({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }),
+            choices.indices.contains(answerIndex),
+            !explanation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         else {
             throw DecodingError.dataCorruptedError(forKey: .id, in: values, debugDescription: "Invalid question.")
         }

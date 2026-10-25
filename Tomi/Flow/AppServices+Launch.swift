@@ -38,10 +38,17 @@ extension AppServices {
         FakeTomiAPI(
             library: library,
             profile: profile,
+            configuration: fakeAPIConfiguration(options)
+        )
+    }
+
+    private static func fakeAPIConfiguration(_ options: BackendLaunchOptions) -> FakeTomiAPIConfiguration {
+        FakeTomiAPIConfiguration(
             suggestionsNothing: options.suggestionsNothing,
             guidedCooking: options.guidedCooking,
             profileRefreshFails: options.profileRefreshFails,
-            profileRefreshChanges: options.profileRefreshChanges
+            profileRefreshChanges: options.profileRefreshChanges,
+            profileRefreshWaits: options.profileRefreshWaits
         )
     }
 

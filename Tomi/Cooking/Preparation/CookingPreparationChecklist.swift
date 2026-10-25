@@ -1,28 +1,8 @@
 import SwiftUI
 import TomiCore
 
-/// The adapted recipe's preparation checklist before guided steps are available.
-struct CookingPreparationView: View {
-    let suggestion: Suggestion
-    @Binding var path: [HomeRoute]
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Spacing.xLarge) {
-                Text(suggestion.title).textStyle(.displayM)
-                CookingPreparationChecklist(suggestion: suggestion)
-                Text(.cookingStepsUnavailable).textStyle(.body).accessibilityIdentifier("cooking-steps-unavailable")
-                CookingReturnButton(path: $path)
-            }
-            .padding(Spacing.screenMargin)
-        }
-        .background(ColorRole.paper.color)
-        .navigationTitle(Text(.cookingPreparationTitle))
-        .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-private struct CookingPreparationChecklist: View {
+/// Adapted ingredient and equipment checklist with local, unpersisted checked state.
+struct CookingPreparationChecklist: View {
     let suggestion: Suggestion
     @State private var checkedItems: Set<String> = []
 
@@ -70,21 +50,5 @@ private struct CookingPreparationChecklist: View {
         } else {
             checkedItems.insert(identifier)
         }
-    }
-}
-
-private struct CookingReturnButton: View {
-    @Binding var path: [HomeRoute]
-
-    var body: some View {
-        Button(action: returnToSuggestion) {
-            Text(.cookingNotTonight).frame(maxWidth: .infinity)
-        }
-        .buttonStyle(.tomiSecondary)
-        .accessibilityIdentifier("cooking-return-to-suggestion")
-    }
-
-    private func returnToSuggestion() {
-        if path.count >= 2 { path.removeLast(2) } else { path.removeLast() }
     }
 }

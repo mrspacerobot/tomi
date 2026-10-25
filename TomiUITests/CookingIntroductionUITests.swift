@@ -5,35 +5,50 @@ final class CookingIntroductionUITests: XCTestCase {
 
     @MainActor
     func testIntroductionPreparationAndReturnToTheSameSuggestion() {
-        let app = introductionApp()
-        XCTAssertTrue(app.staticTexts["A clear cue"].waitForExistence(timeout: 5))
-        let original = suggestionTitle(app).identifier
+        let (app, identifier) = introductionApp()
+        XCTAssertTrue(app.staticTexts["Gentle curds"].waitForExistence(timeout: 5))
         capture(app, named: "introduction-light")
+        captureFooter(app, named: "introduction-light-footer")
         showPreparation(app, screenshot: "preparation-light")
-        returnToSuggestion(app, identifier: original)
+        returnToSuggestion(app, identifier: identifier)
     }
 
     @MainActor
     func testIntroductionAndPreparationAtLargestTextInDarkAppearance() {
         let arguments = GalleryLayoutUITests.largestTextSize + ["--appearance-dark"]
-        let app = introductionApp(extra: arguments)
-        XCTAssertTrue(app.staticTexts["A clear cue"].waitForExistence(timeout: 5))
+        let (app, _) = introductionApp(extra: arguments)
+        XCTAssertTrue(app.staticTexts["Gentle curds"].waitForExistence(timeout: 5))
         capture(app, named: "introduction-dark-largest-text")
         showPreparation(app, screenshot: "preparation-dark-largest-text")
     }
 
     @MainActor
+    func testIntroductionAndPreparationInDarkAppearance() {
+        let (app, _) = introductionApp(extra: ["--appearance-dark"])
+        XCTAssertTrue(app.staticTexts["Gentle curds"].waitForExistence(timeout: 5))
+        capture(app, named: "introduction-dark")
+        captureFooter(app, named: "introduction-dark-footer")
+        app.buttons["cooking-start"].tap()
+        XCTAssertTrue(app.element("cooking-steps-unavailable").waitForExistence(timeout: 5))
+        capture(app, named: "preparation-dark")
+        captureFooter(app, named: "preparation-dark-footer")
+    }
+
+    @MainActor
     func testStartRefusesWhenFreshProfileReadFails() {
-        let app = introductionApp(extra: ["--fake-profile-refresh-fails"])
+        let (app, _) = introductionApp(extra: ["--fake-profile-refresh-fails"])
         refuseStart(app)
     }
 
     @MainActor
     func testStartRefusesWhenRestrictionsChanged() {
-        let app = introductionApp(extra: ["--fake-profile-refresh-changes"])
+        let (app, _) = introductionApp(extra: ["--fake-profile-refresh-changes"])
         refuseStart(app)
     }
 
+}
+
+extension CookingIntroductionUITests {
     @MainActor private func refuseStart(_ app: XCUIApplication) {
         app.buttons["cooking-start"].tap()
         XCTAssertTrue(app.alerts.staticTexts["Please check tonight's dishes again"].waitForExistence(timeout: 5))
@@ -45,6 +60,7 @@ final class CookingIntroductionUITests: XCTestCase {
         XCTAssertTrue(app.element("cooking-steps-unavailable").waitForExistence(timeout: 5))
         if screenshot == "preparation-light" { checkIngredientToggle(app) }
         capture(app, named: screenshot)
+        if screenshot == "preparation-light" { captureFooter(app, named: "preparation-light-footer") }
     }
 
     @MainActor private func checkIngredientToggle(_ app: XCUIApplication) {
@@ -59,12 +75,8 @@ final class CookingIntroductionUITests: XCTestCase {
     @MainActor private func returnToSuggestion(_ app: XCUIApplication, identifier: String) {
         app.buttons["cooking-return-to-suggestion"].tap()
         XCTAssertTrue(app.element("suggestion-detail").waitForExistence(timeout: 5))
-        XCTAssertEqual(suggestionTitle(app).identifier, identifier)
-    }
-
-    @MainActor private func suggestionTitle(_ app: XCUIApplication) -> XCUIElement {
-        app.staticTexts.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-title-'"))
-            .firstMatch
+        let recipeID = identifier.replacingOccurrences(of: "suggestion-open-", with: "")
+        XCTAssertTrue(app.element("suggestion-title-" + recipeID).exists)
     }
 
     @MainActor private func capture(_ app: XCUIApplication, named name: String) {
@@ -74,16 +86,32 @@ final class CookingIntroductionUITests: XCTestCase {
         add(attachment)
     }
 
-    @MainActor private func introductionApp(extra: [String] = []) -> XCUIApplication {
+    @MainActor private func captureFooter(_ app: XCUIApplication, named name: String) {
+        app.swipeUp()
+        app.swipeUp()
+        capture(app, named: name)
+    }
+
+    @MainActor private func introductionApp(extra: [String] = []) -> (XCUIApplication, String) {
         let app = XCUIApplication.launched(
             XCUIApplication.returningCook + ["--store-in-memory", "--fake-guided-cooking"] + extra
         )
+        enterMenu(app)
+        return openIntroduction(app)
+    }
+
+    @MainActor private func enterMenu(_ app: XCUIApplication) {
         app.buttons["home-scan"].tap()
         app.buttons["scan-type-instead"].tap()
         app.buttons["confirm-find"].tap()
-        app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-open-'"))
-            .firstMatch.tap()
+    }
+
+    @MainActor private func openIntroduction(_ app: XCUIApplication) -> (XCUIApplication, String) {
+        let suggestion = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-open-'"))
+            .firstMatch
+        let identifier = suggestion.identifier
+        suggestion.tap()
         app.buttons["cooking-introduction-open"].tap()
-        return app
+        return (app, identifier)
     }
 }
