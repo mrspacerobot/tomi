@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tomi companion directions</title>
+<style>
+@font-face { font-family: Gloock; src: url("../../Tomi/Resources/Fonts/Gloock-Regular.ttf"); }
+@font-face { font-family: Newsreader; src: url("../../Tomi/Resources/Fonts/Newsreader.ttf"); }
+@font-face { font-family: Newsreader; font-style: italic; src: url("../../Tomi/Resources/Fonts/Newsreader-Italic.ttf"); }
+@font-face { font-family: Figtree; src: url("../../Tomi/Resources/Fonts/Figtree.ttf"); }
+:root {
+  --paper: #fbf8f2; --card: #ffffff; --ink: #1c2c6b; --cobalt: #1f3790; --muted: #5d6690;
+  --rule: #d9dbe8; --tomato: #e2482f; --tomato-dark: #b8321e; --leaf: #8fa2e0; --mustard: #f2c230;
+  --cream: #fffaf0; --wash: #eef0f8;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.5 Newsreader, Georgia, serif; }
+main { max-width: 1180px; margin: 0 auto; padding: 48px 20px 80px; }
+.kicker { font: 600 12px/1 Figtree, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 52px/1.05 Gloock, Georgia, serif; margin: 10px 0 12px; }
+h2 { font: 32px/1.1 Gloock, Georgia, serif; margin: 0 0 6px; }
+h3 { font: 600 15px/1.2 Figtree, sans-serif; margin: 0 0 6px; }
+p.lede { font-style: italic; font-size: 20px; max-width: 760px; color: var(--muted); margin: 0; }
+section { margin-top: 56px; }
+.rule { border: 0; border-top: 1px solid var(--rule); margin: 48px 0 0; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 900px) { .grid3 { grid-template-columns: minmax(0, 1fr); } h1 { font-size: 40px; } }
+.shot { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 12px; min-width: 0; }
+.shot img { width: 100%; border-radius: 6px; display: block; aspect-ratio: 1206/2622; object-fit: cover; object-position: center 22%; height: 360px; }
+.shot figcaption { font: 13px/1.4 Figtree, sans-serif; color: var(--muted); margin-top: 8px; }
+.gap { background: var(--wash); border-radius: 10px; padding: 18px 20px; margin-top: 18px; font-size: 16px; }
+.gap b { font-family: Figtree, sans-serif; font-size: 14px; }
+.direction { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 26px; margin-top: 22px; }
+.dir-head { display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+.letter { font: 44px/1 Gloock, serif; color: var(--tomato); }
+.badge { font: 600 11px/1 Figtree, sans-serif; letter-spacing: .12em; text-transform: uppercase; border: 1px solid var(--cobalt); color: var(--cobalt); padding: 6px 8px; border-radius: 4px; }
+.badge.rec { background: var(--cobalt); color: #fff; }
+.stage { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 20px 0; }
+@media (max-width: 700px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+.pose { border-radius: 10px; padding: 10px 10px 12px; text-align: center; min-width: 0; }
+.pose svg { width: 100%; max-width: 230px; height: auto; display: block; margin: 0 auto; overflow: visible; }
+.pose span { font: 600 12px/1 Figtree, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.style-a .pose { background: radial-gradient(circle at 50% 45%, #fff3e4 0%, #f6e7d4 70%); }
+.style-b .pose { background: linear-gradient(180deg, #f7f3ec, #efe8dc); }
+.style-c .pose { background: var(--paper); border: 1px solid var(--rule); }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; font-size: 15.5px; }
+@media (max-width: 800px) { .facts { grid-template-columns: minmax(0, 1fr); } }
+.facts div { min-width: 0; }
+.facts ul { margin: 0; padding-left: 18px; }
+.cost { color: var(--tomato-dark); }
+table { width: 100%; border-collapse: collapse; font: 14.5px/1.4 Figtree, sans-serif; margin-top: 16px; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.table-wrap { overflow-x: auto; }
+form { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 24px; margin-top: 18px; }
+fieldset { border: 0; padding: 0; margin: 0 0 18px; }
+legend { font: 600 15px Figtree, sans-serif; margin-bottom: 8px; }
+label { display: block; padding: 8px 0; font-size: 16.5px; }
+textarea { width: 100%; min-height: 80px; font: 16px Newsreader, serif; padding: 10px; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); color: var(--ink); }
+button { font: 600 15px Figtree, sans-serif; background: var(--cobalt); color: #fff; border: 0; border-radius: 6px; padding: 14px 22px; min-height: 44px; cursor: pointer; }
+.status { font: 13px Figtree, sans-serif; color: var(--muted); margin-left: 12px; }
+.motion-toggle { font: 14px Figtree, sans-serif; margin-top: 14px; }
+.still * { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .anim * { animation: none !important; } }
+
+/* A: broadcast cartoon - snappy, squash and stretch */
+@keyframes a-bounce { 0%,100% { transform: translateY(0) scale(1,1); } 12% { transform: translateY(2px) scale(1.07,.92); } 30% { transform: translateY(-16px) scale(.94,1.08); } 46% { transform: translateY(0) scale(1.05,.95); } 56% { transform: scale(1,1); } }
+@keyframes a-blink { 0%,92%,100% { transform: scaleY(1); } 95% { transform: scaleY(.08); } }
+@keyframes a-wave { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-28deg); } 50% { transform: rotate(8deg); } 75% { transform: rotate(-22deg); } }
+@keyframes a-tap { 0%,100% { transform: rotate(0); } 50% { transform: rotate(-8deg); } }
+@keyframes a-dots { 0%,100% { opacity: .15; } 50% { opacity: 1; } }
+@keyframes a-pop { 0%,100% { transform: translateY(0) scale(1); } 20% { transform: translateY(4px) scale(1.12,.86); } 45% { transform: translateY(-30px) scale(.9,1.12) rotate(-4deg); } 70% { transform: translateY(0) scale(1.08,.93); } }
+.a-body { transform-box: fill-box; transform-origin: 50% 100%; animation: a-bounce 1.6s cubic-bezier(.3,1.6,.5,1) infinite; }
+.a-eye { transform-box: fill-box; transform-origin: center; animation: a-blink 3.4s infinite; }
+.a-wave { transform-box: fill-box; transform-origin: 10% 90%; animation: a-wave 1.1s ease-in-out infinite; }
+.a-tap { transform-box: fill-box; transform-origin: 50% 0%; animation: a-tap .9s ease-in-out infinite; }
+.a-pop { transform-box: fill-box; transform-origin: 50% 100%; animation: a-pop 1.2s cubic-bezier(.3,1.5,.5,1) infinite; }
+.dot1 { animation: a-dots 1.2s infinite; } .dot2 { animation: a-dots 1.2s .2s infinite; } .dot3 { animation: a-dots 1.2s .4s infinite; }
+
+/* B: soft toy - slow, weighty */
+@keyframes b-breathe { 0%,100% { transform: scale(1,1); } 50% { transform: scale(1.025,.975); } }
+@keyframes b-tilt { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes b-hop { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-14px); } }
+.b-body { transform-box: fill-box; transform-origin: 50% 100%; animation: b-breathe 3.2s ease-in-out infinite; }
+.b-tilt { transform-box: fill-box; transform-origin: 50% 100%; animation: b-tilt 4s ease-in-out infinite; }
+.b-hop { transform-box: fill-box; transform-origin: 50% 100%; animation: b-hop 1.4s ease-in-out infinite; }
+.b-eye { transform-box: fill-box; transform-origin: center; animation: a-blink 4.2s infinite; }
+
+/* C: printed, animated on twos */
+@keyframes c-hop { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes c-jig { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+.c-body { transform-box: fill-box; transform-origin: 50% 100%; animation: c-hop 1s steps(2) infinite; }
+.c-jig { transform-box: fill-box; transform-origin: 50% 100%; animation: c-jig .5s steps(2) infinite; }
+.c-eye { transform-box: fill-box; transform-origin: center; animation: a-blink 3.8s steps(1) infinite; }
+</style>
+</head>
+<body>
+<main>
+  <div class="kicker">Tomi · companion · design round</div>
+  <h1>Who is Tomi when he moves?</h1>
+  <p class="lede">Your words on 5 October: “make him 3D animated, kind of like a game character… kinda like Miss Minutes from Loki.” It went straight to code with no design round. Here is what shipped, three directions, and a place to choose.</p>
+
+  <section>
+    <h2>What shipped (#94)</h2>
+    <p>A RealityKit figure built in code from rounded shapes, with five states. Captured from the running app, Reduce Motion on.</p>
+    <div class="grid3">
+      <figure class="shot"><img src="../pr-screenshots/137/before-companion-idle.png" alt="Current 3D Tomi, idle"><figcaption>Idle</figcaption></figure>
+      <figure class="shot"><img src="../pr-screenshots/137/before-companion-thinking.png" alt="Current 3D Tomi, thinking"><figcaption>Thinking</figcaption></figure>
+      <figure class="shot"><img src="../pr-screenshots/137/before-companion-celebrating.png" alt="Current 3D Tomi, celebrating"><figcaption>Celebrating</figcaption></figure>
+    </div>
+    <div class="gap"><b>The gap.</b> The character you pointed at is a hand-drawn cartoon: a face that takes over the body, rubber limbs, squash and stretch, snappy timing, a bit of a performer. What shipped is a toy made of spheres: small face, stiff limbs, smooth but even motion. Simple shapes make it hard to get big expressions; that limit comes from how it was built, not from the tuning.</div>
+  </section>
+
+  <hr class="rule">
+  <section>
+    <h2>Three directions</h2>
+    <p>Each one drawn the same way: idle, thinking, celebrating. The figures move; untick below to compare still poses.</p>
+    <label class="motion-toggle"><input type="checkbox" id="motion" checked> Animate the figures</label>
+
+    <article class="direction style-a" id="dir-a">
+      <div class="dir-head"><span class="letter">A</span><h2>Broadcast cartoon</h2><span class="badge rec">Closest to what you asked for</span></div>
+      <p>Flat 2D, thick ink line, a face that fills the body, rubber-hose arms with gloves, squash and stretch. A host on a screen, not a toy. It takes the <i>qualities</i> of that reference, not its look: Tomi stays a tomato chef.</p>
+      <div class="stage anim" data-style="a"></div>
+      <div class="facts">
+        <div><h3>Feels</h3><ul><li>Big, readable emotion even small on screen</li><li>Funny, alive, has timing</li><li>Fits a talking companion</li></ul></div>
+        <div><h3>How it is built</h3><ul><li>Rive: a vector rig with a state machine, designed in the Rive editor, played by its iOS runtime</li><li>States map one to one to idle, listening, thinking, explaining, celebrating</li></ul></div>
+        <div><h3 class="cost">Costs</h3><ul><li>Rive is a third-party package: needs your approval, like FluidAudio</li><li>Someone has to draw and rig it in Rive (an illustrator, or us with time)</li><li>Replaces the RealityKit code from #94</li></ul></div>
+      </div>
+    </article>
+
+    <article class="direction style-b" id="dir-b">
+      <div class="dir-head"><span class="letter">B</span><h2>Soft toy 3D</h2><span class="badge">Keeps 3D</span></div>
+      <p>A sculpted, shaded vinyl toy: big glossy eyes, soft light, weighty, slower motion. What #94 was aiming for, but modelled by hand instead of built from spheres.</p>
+      <div class="stage anim" data-style="b"></div>
+      <div class="facts">
+        <div><h3>Feels</h3><ul><li>Premium, tactile, "game character"</li><li>Calm, cosy; fewer laughs</li><li>Expressions subtler</li></ul></div>
+        <div><h3 class="">How it is built</h3><ul><li>Modelled and rigged in Blender, exported as USDZ with animation clips</li><li>Played by RealityKit, behind the same <code>TomiCompanion</code> interface</li></ul></div>
+        <div><h3 class="cost">Costs</h3><ul><li>Needs a 3D artist; the hardest of the three to get right</li><li>A model file in the app (AGENTS.md says Tomi is drawn in code: a rule change)</li><li>Most GPU and battery</li></ul></div>
+      </div>
+    </article>
+
+    <article class="direction style-c" id="dir-c">
+      <div class="dir-head"><span class="letter">C</span><h2>Printed mascot, alive</h2><span class="badge">Most on-brand</span></div>
+      <p>The approved round 3 mascot itself, animated like a printed stamp: same cobalt line and flat colour, small hops "on twos", eyes and brows doing the acting. Belongs to the Tasting menu page instead of floating above it.</p>
+      <div class="stage anim" data-style="c"></div>
+      <div class="facts">
+        <div><h3>Feels</h3><ul><li>Charming, restrained, part of the menu</li><li>Least like a game character</li></ul></div>
+        <div><h3>How it is built</h3><ul><li>SwiftUI shapes, extending the mascot the app already draws</li><li>No dependency, no rule change</li></ul></div>
+        <div><h3 class="cost">Costs</h3><ul><li>Less range: it will not do big performance</li><li>Further from your original ask</li></ul></div>
+      </div>
+    </article>
+  </section>
+
+  <section>
+    <h2>Side by side</h2>
+    <div class="table-wrap"><table>
+      <tr><th></th><th>A Broadcast cartoon</th><th>B Soft toy 3D</th><th>C Printed, alive</th><th>Shipped (#94)</th></tr>
+      <tr><td>Expression range</td><td>Largest</td><td>Medium</td><td>Small to medium</td><td>Small</td></tr>
+      <tr><td>Matches "Miss Minutes"</td><td>Yes, in spirit</td><td>Partly (character, not style)</td><td>No</td><td>No</td></tr>
+      <tr><td>Fits Tasting menu look</td><td>With care (ink and palette from tokens)</td><td>Least</td><td>Exactly</td><td>Partly</td></tr>
+      <tr><td>New dependency or rule change</td><td>Rive (approval)</td><td>Model files in app (rule change)</td><td>None</td><td>None</td></tr>
+      <tr><td>Who makes it</td><td>Illustrator or animator in Rive</td><td>3D artist in Blender</td><td>Us, in code</td><td>Done</td></tr>
+      <tr><td>Phone cost while visible</td><td>Low</td><td>Highest</td><td>Lowest</td><td>High</td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Decision</h2>
+    <div class="gap"><b>18 October 2026: direction A, Broadcast cartoon (#137).</b> The owner chose A and asked for it everywhere Tomi is drawn: the animated companion and the printed mascot. It is built in SwiftUI code from shared parts (body, face, eyes, brows, mouth, toque, leaf, arms, gloves, legs) instead of Rive, so it needs no new dependency and no image or model files. The RealityKit companion of #94 is removed. Listening (leaning in, a glove cupped by the face) and explaining (open hands, mouth shapes cycling) are drawn in the same style. The handoff is <code>docs/design/companion.md</code>.</div>
+  </section>
+</main>
+
+<script>
+const C = { tomato: "#e2482f", tomatoDark: "#b8321e", cobalt: "#1f3790", ink: "#1a1630", leaf: "#8fa2e0", mustard: "#f2c230", cream: "#fffaf0", glove: "#ffffff" };
+
+function toque(stroke, w, fill) {
+  return `<g><path d="M64 78 Q52 50 74 44 Q80 22 100 26 Q120 22 126 44 Q148 50 136 78 Z" fill="${fill}" stroke="${stroke}" stroke-width="${w}" stroke-linejoin="round"/>
+  <rect x="66" y="72" width="68" height="16" rx="5" fill="${fill}" stroke="${stroke}" stroke-width="${w}"/></g>`;
+}
+
+// A: broadcast cartoon
+function poseA(pose) {
+  const s = C.ink, w = 5;
+  const eyesNormal = `<g class="a-eye"><ellipse cx="84" cy="126" rx="15" ry="19" fill="#fff" stroke="${s}" stroke-width="4"/><ellipse cx="116" cy="126" rx="15" ry="19" fill="#fff" stroke="${s}" stroke-width="4"/>
+    <circle cx="87" cy="130" r="7" fill="${s}"/><circle cx="113" cy="130" r="7" fill="${s}"/><circle cx="89" cy="127" r="2.2" fill="#fff"/><circle cx="115" cy="127" r="2.2" fill="#fff"/></g>`;
+  const eyesUp = `<g class="a-eye"><ellipse cx="84" cy="126" rx="15" ry="19" fill="#fff" stroke="${s}" stroke-width="4"/><ellipse cx="116" cy="126" rx="15" ry="19" fill="#fff" stroke="${s}" stroke-width="4"/>
+    <circle cx="80" cy="117" r="7" fill="${s}"/><circle cx="110" cy="117" r="7" fill="${s}"/></g>`;
+  const eyesHappy = `<path d="M70 128 Q84 110 98 128" fill="none" stroke="${s}" stroke-width="5" stroke-linecap="round"/><path d="M102 128 Q116 110 130 128" fill="none" stroke="${s}" stroke-width="5" stroke-linecap="round"/>`;
+  const browsNormal = `<path d="M70 100 Q84 92 96 99" fill="none" stroke="${s}" stroke-width="5" stroke-linecap="round"/><path d="M104 99 Q116 92 130 100" fill="none" stroke="${s}" stroke-width="5" stroke-linecap="round"/>`;
+  const browsThink = `<path d="M70 96 Q84 86 96 94" fill="none" stroke="${s}" stroke-width="5" stroke-linecap="round"/><path d="M104 101 Q116 99 130 103" fill="none" stroke="${s}" stroke-width="5" stroke-linecap="round"/>`;
+  const mouthSmile = `<path d="M78 152 Q100 178 122 152 Q100 160 78 152 Z" fill="${s}" stroke="${s}" stroke-width="4" stroke-linejoin="round"/><path d="M90 162 Q100 170 110 162" fill="#f08a7a"/>`;
+  const mouthHmm = `<path d="M92 160 Q102 155 112 161" fill="none" stroke="${s}" stroke-width="5" stroke-linecap="round"/>`;
+  const mouthOpen = `<path d="M74 148 Q100 192 126 148 Q100 156 74 148 Z" fill="${s}"/><path d="M86 166 Q100 180 114 166 Q100 170 86 166 Z" fill="#f08a7a"/>`;
+  const body = `<ellipse cx="100" cy="140" rx="62" ry="56" fill="${C.tomato}" stroke="${s}" stroke-width="${w}"/>
+    <path d="M58 118 Q66 96 86 90" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="5" stroke-linecap="round"/>
+    <path d="M128 86 Q146 78 154 92 Q140 96 132 92 Z" fill="${C.leaf}" stroke="${s}" stroke-width="4" stroke-linejoin="round"/>`;
+  const legs = `<path d="M84 194 Q82 210 76 220" fill="none" stroke="${s}" stroke-width="6" stroke-linecap="round"/><path d="M116 194 Q118 210 124 220" fill="none" stroke="${s}" stroke-width="6" stroke-linecap="round"/>
+    <ellipse cx="70" cy="222" rx="13" ry="7" fill="${C.cobalt}" stroke="${s}" stroke-width="4"/><ellipse cx="130" cy="222" rx="13" ry="7" fill="${C.cobalt}" stroke="${s}" stroke-width="4"/>`;
+  const glove = (x, y) => `<circle cx="${x}" cy="${y}" r="11" fill="${C.glove}" stroke="${s}" stroke-width="4"/>`;
+  const armL = `<path d="M40 142 Q24 160 30 176" fill="none" stroke="${s}" stroke-width="6" stroke-linecap="round"/>${glove(30, 180)}`;
+  let armR = `<path d="M160 142 Q176 160 170 176" fill="none" stroke="${s}" stroke-width="6" stroke-linecap="round"/>${glove(170, 180)}`;
+  let face = eyesNormal + browsNormal + mouthSmile, extra = "", cls = "a-body";
+  if (pose === "idle") {
+    armR = `<g class="a-wave"><path d="M160 138 Q182 122 184 98" fill="none" stroke="${s}" stroke-width="6" stroke-linecap="round"/>${glove(184, 92)}</g>`;
+  }
+  if (pose === "thinking") {
+    face = eyesUp + browsThink + mouthHmm;
+    armR = `<g class="a-tap"><path d="M160 140 Q170 170 128 170" fill="none" stroke="${s}" stroke-width="6" stroke-linecap="round"/>${glove(122, 168)}</g>`;
+    extra = `<circle class="dot1" cx="150" cy="56" r="5" fill="${s}"/><circle class="dot2" cx="164" cy="42" r="7" fill="${s}"/><circle class="dot3" cx="182" cy="24" r="9" fill="${s}"/>`;
+    cls = "";
+  }
+  if (pose === "celebrating") {
+    face = eyesHappy + browsNormal + mouthOpen;
+    armR = `<path d="M160 136 Q182 116 180 86" fill="none" stroke="${s}" stroke-width="6" stroke-linecap="round"/>${glove(180, 80)}`;
+    extra = `<path d="M30 60 l6 -14 l6 14 l-6 8 z" fill="${C.mustard}" stroke="${s}" stroke-width="3"/><path d="M166 40 l5 -12 l5 12 l-5 7 z" fill="${C.mustard}" stroke="${s}" stroke-width="3"/>`;
+    cls = "a-pop";
+  }
+  const armL2 = pose === "celebrating" ? `<path d="M40 136 Q18 116 20 86" fill="none" stroke="${s}" stroke-width="6" stroke-linecap="round"/>${glove(20, 80)}` : armL;
+  return `<svg viewBox="0 0 200 240" role="img" aria-label="Direction A, ${pose}"><g filter="url(#glowA)"><g class="${cls}">${legs}${armL2}${body}${toque(s, w, C.cream)}${face}${armR}</g>${extra}</g></svg>`;
+}
+
+// B: soft toy 3D
+function poseB(pose) {
+  const eyes = (lookY, happy) => happy
+    ? `<path d="M74 124 Q86 112 98 124" fill="none" stroke="#1a1630" stroke-width="5" stroke-linecap="round"/><path d="M102 124 Q114 112 126 124" fill="none" stroke="#1a1630" stroke-width="5" stroke-linecap="round"/>`
+    : `<g class="b-eye"><ellipse cx="86" cy="${124 + lookY}" rx="11" ry="13" fill="url(#bEye)"/><ellipse cx="114" cy="${124 + lookY}" rx="11" ry="13" fill="url(#bEye)"/>
+      <circle cx="82" cy="${119 + lookY}" r="3.6" fill="#fff"/><circle cx="110" cy="${119 + lookY}" r="3.6" fill="#fff"/><circle cx="90" cy="${129 + lookY}" r="1.6" fill="#fff" opacity=".7"/><circle cx="118" cy="${129 + lookY}" r="1.6" fill="#fff" opacity=".7"/></g>`;
+  const cheeks = `<ellipse cx="68" cy="146" rx="9" ry="5" fill="#ff8f7a" opacity=".55"/><ellipse cx="132" cy="146" rx="9" ry="5" fill="#ff8f7a" opacity=".55"/>`;
+  let mouth = `<path d="M92 150 Q100 158 108 150" fill="none" stroke="#5a1a14" stroke-width="4" stroke-linecap="round"/>`;
+  let brows = "", look = 0, happy = false, arms, cls = "b-body", wrap = "b-tilt", extra = "";
+  arms = `<ellipse cx="44" cy="158" rx="11" ry="14" fill="url(#bBody)"/><ellipse cx="156" cy="158" rx="11" ry="14" fill="url(#bBody)"/>`;
+  if (pose === "thinking") {
+    look = -5; wrap = "";
+    brows = `<path d="M76 104 Q86 100 94 104" fill="none" stroke="#7a2416" stroke-width="3.5" stroke-linecap="round"/><path d="M106 106 Q114 104 124 107" fill="none" stroke="#7a2416" stroke-width="3.5" stroke-linecap="round"/>`;
+    mouth = `<path d="M96 152 Q102 150 108 153" fill="none" stroke="#5a1a14" stroke-width="4" stroke-linecap="round"/>`;
+    arms = `<ellipse cx="44" cy="158" rx="11" ry="14" fill="url(#bBody)"/><ellipse cx="124" cy="160" rx="11" ry="12" fill="url(#bBody)"/>`;
+  }
+  if (pose === "celebrating") {
+    happy = true; wrap = "b-hop";
+    mouth = `<path d="M86 146 Q100 168 114 146 Z" fill="#5a1a14"/><path d="M92 156 Q100 162 108 156 Q100 158 92 156 Z" fill="#ff8f7a"/>`;
+    arms = `<ellipse cx="38" cy="112" rx="11" ry="14" fill="url(#bBody)"/><ellipse cx="162" cy="112" rx="11" ry="14" fill="url(#bBody)"/>`;
+  }
+  const body = `<ellipse cx="100" cy="226" rx="56" ry="7" fill="#000" opacity=".12"/>
+    <ellipse cx="80" cy="210" rx="14" ry="9" fill="url(#bBody)"/><ellipse cx="120" cy="210" rx="14" ry="9" fill="url(#bBody)"/>
+    <ellipse cx="100" cy="140" rx="64" ry="62" fill="url(#bBody)"/>
+    <ellipse cx="78" cy="108" rx="18" ry="10" fill="#fff" opacity=".35" transform="rotate(-25 78 108)"/>
+    <path d="M124 82 Q142 72 152 86 Q138 92 128 88 Z" fill="url(#bLeaf)"/>`;
+  const hat = `<path d="M62 84 Q50 54 74 48 Q80 24 100 28 Q120 24 126 48 Q150 54 138 84 Z" fill="url(#bHat)"/><rect x="64" y="76" width="72" height="16" rx="8" fill="url(#bHat)"/>`;
+  return `<svg viewBox="0 0 200 240" role="img" aria-label="Direction B, ${pose}"><g class="${wrap}"><g class="${cls}">${body}${arms}${hat}${brows}${eyes(look, happy)}${cheeks}${mouth}</g></g>${extra}</svg>`;
+}
+
+// C: printed mascot, alive
+function poseC(pose) {
+  const s = C.cobalt, w = 4;
+  let eyes = `<g class="c-eye"><circle cx="86" cy="126" r="12" fill="#fff" stroke="${s}" stroke-width="${w}"/><circle cx="114" cy="126" r="12" fill="#fff" stroke="${s}" stroke-width="${w}"/><circle cx="87" cy="127" r="6" fill="${s}"/><circle cx="113" cy="127" r="6" fill="${s}"/></g>`;
+  let mouth = `<path d="M88 150 Q100 162 112 150 Z" fill="${s}"/>`;
+  let extra = "", cls = "c-body", brows = "";
+  if (pose === "thinking") {
+    eyes = `<g class="c-eye"><circle cx="86" cy="126" r="12" fill="#fff" stroke="${s}" stroke-width="${w}"/><circle cx="114" cy="126" r="12" fill="#fff" stroke="${s}" stroke-width="${w}"/><circle cx="83" cy="120" r="6" fill="${s}"/><circle cx="111" cy="120" r="6" fill="${s}"/></g>`;
+    brows = `<path d="M76 104 L94 100" stroke="${s}" stroke-width="${w}" stroke-linecap="round"/><path d="M106 102 L124 104" stroke="${s}" stroke-width="${w}" stroke-linecap="round"/>`;
+    mouth = `<path d="M94 154 L108 152" stroke="${s}" stroke-width="${w}" stroke-linecap="round"/>`;
+    extra = `<g fill="#fff" stroke="${s}" stroke-width="3"><circle cx="152" cy="70" r="5"/><circle cx="164" cy="54" r="7"/><ellipse cx="178" cy="30" rx="18" ry="13"/></g><text x="178" y="35" text-anchor="middle" font-family="Gloock, serif" font-size="14" fill="${s}">?</text>`;
+    cls = "";
+  }
+  if (pose === "celebrating") {
+    eyes = `<path d="M76 128 Q86 116 96 128" fill="none" stroke="${s}" stroke-width="${w}" stroke-linecap="round"/><path d="M104 128 Q114 116 124 128" fill="none" stroke="${s}" stroke-width="${w}" stroke-linecap="round"/>`;
+    mouth = `<path d="M84 146 Q100 168 116 146 Z" fill="${s}"/>`;
+    extra = `<g stroke="${C.mustard}" stroke-width="4" stroke-linecap="round"><path d="M30 70 l10 8"/><path d="M26 96 l12 0"/><path d="M170 70 l-10 8"/><path d="M174 96 l-12 0"/></g>`;
+    cls = "c-jig";
+  }
+  return `<svg viewBox="0 0 200 240" role="img" aria-label="Direction C, ${pose}"><g class="${cls}">
+    <circle cx="100" cy="140" r="58" fill="${C.tomato}" stroke="${s}" stroke-width="${w}"/>
+    <path d="M128 92 Q146 80 158 90 Q144 100 132 96 Z" fill="${C.mustard}" stroke="${s}" stroke-width="3" stroke-linejoin="round"/>
+    ${toque(s, w, C.cream)}${brows}${eyes}${mouth}</g>${extra}</svg>`;
+}
+
+const defs = `<svg width="0" height="0" style="position:absolute"><defs>
+  <filter id="glowA" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#ffb36b" flood-opacity=".55"/></filter>
+  <radialGradient id="bBody" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#ff7a5c"/><stop offset=".55" stop-color="#e2482f"/><stop offset="1" stop-color="#9e2a18"/></radialGradient>
+  <radialGradient id="bHat" cx="35%" cy="25%" r="80%"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3dccd"/></radialGradient>
+  <radialGradient id="bLeaf" cx="30%" cy="30%" r="80%"><stop offset="0" stop-color="#b9c6f2"/><stop offset="1" stop-color="#6a7fc9"/></radialGradient>
+  <radialGradient id="bEye" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#3a4aa0"/><stop offset="1" stop-color="#0e1338"/></radialGradient>
+</defs></svg>`;
+document.body.insertAdjacentHTML("afterbegin", defs);
+
+const makers = { a: poseA, b: poseB, c: poseC };
+document.querySelectorAll(".stage").forEach(stage => {
+  const make = makers[stage.dataset.style];
+  stage.innerHTML = ["idle", "thinking", "celebrating"].map(p => `<div class="pose">${make(p)}<span>${p}</span></div>`).join("");
+});
+
+document.getElementById("motion").addEventListener("change", e => {
+  document.querySelectorAll(".stage").forEach(s => s.classList.toggle("still", !e.target.checked));
+});
+</script>
+</body>
+</html>

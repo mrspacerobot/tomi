@@ -2,6 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>TomiAPIBaseURL</key>
+	<string>$(TOMI_API_BASE_URL)</string>
+	<key>TomiSupabaseURL</key>
+	<string>$(TOMI_SUPABASE_URL)</string>
+	<key>TomiSupabasePublishableKey</key>
+	<string>$(TOMI_SUPABASE_PUBLISHABLE_KEY)</string>
+	<key>TomiLocalAPIBaseURL</key>
+	<string>$(TOMI_LOCAL_API_BASE_URL)</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Gloock-Regular.ttf</string>

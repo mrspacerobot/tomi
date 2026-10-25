@@ -2,7 +2,7 @@ import Foundation
 
 @testable import TomiCore
 
-/// The text of a small lesson file for the fixture lists, with one part that a test can change.
+/// The text of a small lesson file for the fixture catalog, with one part that a test can change.
 enum LessonFile {
     static let butterLine =
         #"{"ingredient": "butter", "metric": {"value": 30, "unit": "gram"}, "#
@@ -29,8 +29,8 @@ enum LessonFile {
         Data(text.utf8)
     }
 
-    /// Decodes against the fixture lists.
+    /// Decodes against the fixture catalog.
     static func decode(_ text: String) throws -> Lesson {
-        try Lesson.decode(from: data(text), lists: .fixture())
+        try Lesson.decode(from: data(text), catalog: .fixture())
     }
 }

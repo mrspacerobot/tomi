@@ -6,4 +6,6 @@ public enum LessonError: Error, Equatable {
     case invalid(LessonID, [LessonIssue])
     /// A swap was applied to a lesson that does not use the ingredient it replaces.
     case swapOfIngredientNotInLesson(IngredientID)
+    /// A suggestion or a bookmark named a swap the lesson does not list.
+    case swapNotListed(AppliedSwap)
 }

@@ -3,7 +3,7 @@
 
     nonisolated enum CompanionGalleryLaunch {
         static var requested: Bool { ProcessInfo.processInfo.arguments.contains("--companion-gallery") }
-        static var turned: Bool { ProcessInfo.processInfo.arguments.contains("--companion-turn") }
+        static var still: Bool { ProcessInfo.processInfo.arguments.contains("--companion-still") }
 
         static var state: CompanionState {
             let arguments = ProcessInfo.processInfo.arguments

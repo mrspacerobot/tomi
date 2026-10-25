@@ -25,13 +25,18 @@ final class AppearanceUITests: XCTestCase {
     @MainActor
     private func groundBrightnessOfWelcome(in appearance: XCUIDevice.Appearance) -> Double {
         prepareAppearance()
-        let app = XCUIApplication()
-        app.launchArguments = ["--store-in-memory"]
-        app.launch()
+        let app = XCUIApplication.launched(XCUIApplication.returningCook + ["--store-in-memory"])
 
+        dismissAppleAccountVerificationIfNeeded()
         XCTAssertTrue(app.staticTexts["welcome-title"].waitForExistence(timeout: 5))
         showAppearance(appearance, in: app)
         return app.screenshot().groundBrightness
+    }
+
+    @MainActor private func dismissAppleAccountVerificationIfNeeded() {
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let notNow = springboard.buttons["Not Now"]
+        if notNow.waitForExistence(timeout: 1) { notNow.tap() }
     }
     @MainActor private func prepareAppearance() {
         let original = XCUIDevice.shared.appearance

@@ -2,34 +2,35 @@
 extension SavedProfile {
     public init(_ profile: CookProfile) {
         self.init()
-        writeFood(of: profile.preferences)
-        writeKitchen(of: profile.preferences)
+        writeFood(of: profile)
+        writeKitchen(of: profile)
         if let focusSkill = profile.focusSkill {
             self.focusSkill = focusSkill.rawValue
         }
         onboardingDone = profile.isOnboardingDone
     }
 
-    private mutating func writeFood(of preferences: CookPreferences) {
-        if let diet = preferences.diet {
+    private mutating func writeFood(of profile: CookProfile) {
+        if let diet = profile.diet {
             self.diet = diet.rawValue
         }
-        avoid = preferences.avoid.savedIDs
-        cuisinesLoved = preferences.cuisines.cuisines(answered: .love).savedIDs
-        cuisinesToTry = preferences.cuisines.cuisines(answered: .try).savedIDs
-        cuisinesNever = preferences.cuisines.cuisines(answered: .never).savedIDs
-        cupboardStaples = preferences.cupboardStaples.savedIDs
+        avoid = profile.avoid.savedIDs
+        cuisinesLoved = profile.cuisinesLoved.savedIDs
+        cuisinesToTry = profile.cuisinesToTry.savedIDs
+        cuisinesNever = profile.cuisinesNever.savedIDs
+        cupboardStaples = profile.cupboardStaples.savedIDs
+        cupboardAnswered = profile.cupboardAnswered
     }
 
-    private mutating func writeKitchen(of preferences: CookPreferences) {
-        if let chosenEquipment = preferences.chosenEquipment {
-            equipment = chosenEquipment.savedIDs
+    private mutating func writeKitchen(of profile: CookProfile) {
+        if let equipment = profile.equipment {
+            self.equipment = equipment.savedIDs
         }
-        experience = preferences.experience.rawValue
-        if let chosenUnits = preferences.chosenUnits {
-            units = chosenUnits.rawValue
+        experience = profile.experience.rawValue
+        if let units = profile.units {
+            self.units = units.rawValue
         }
-        servings = preferences.servings
-        weeklyGoal = preferences.weeklyGoal
+        servings = profile.servings
+        weeklyGoal = profile.weeklyGoal
     }
 }

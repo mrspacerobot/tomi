@@ -1,28 +1,42 @@
 import XCTest
 
 final class CompanionGalleryUITests: XCTestCase {
+    static let states = ["idle", "listening", "thinking", "explaining", "celebrating"]
+
     override func setUp() {
         continueAfterFailure = false
     }
 
-    @MainActor func testTheGalleryOpensTheAnimatedCompanion() {
+    @MainActor func testTheGalleryOpensTheAnimatedCompanion() async {
         let app = XCUIApplication.launchingGallery()
         app.buttons["gallery-companion"].tap()
         XCTAssertTrue(app.staticTexts["companion-title"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["companion-state-idle"].isSelected)
-        XCTAssertGreaterThan(app.element("companion-stage").screenshot().tomatoCoverage, 0.015)
+        await app.element("companion-stage").assertTomatoRendered()
     }
 
-    @MainActor func testEveryStateAndDepthControlWorks() {
+    @MainActor func testEveryStateAndTheStillControlWork() {
         let app = companion()
-        for state in ["idle", "listening", "thinking", "explaining", "celebrating"] {
+        for state in Self.states {
             app.assertCanBeTapped(app.buttons["companion-state-\(state)"])
             app.buttons["companion-state-\(state)"].tap()
             XCTAssertTrue(app.buttons["companion-state-\(state)"].isSelected)
         }
-        app.assertCanBeTapped(app.buttons["companion-turn"])
-        app.buttons["companion-turn"].tap()
-        XCTAssertTrue(app.buttons["companion-turn"].isSelected)
+        app.assertCanBeTapped(app.buttons["companion-still"])
+        app.buttons["companion-still"].tap()
+        XCTAssertTrue(app.buttons["companion-still"].isSelected)
+        XCTAssertTrue(app.staticTexts["companion-motion-still"].exists)
+    }
+
+    /// Each mood must be recognisable without motion, so no two still poses may draw the same picture.
+    @MainActor func testEveryStateDrawsADifferentStillPose() {
+        let app = companion(arguments: ["--companion-reduce-motion"])
+        var drawings: [String: Data] = [:]
+        for state in Self.states {
+            app.buttons["companion-state-\(state)"].tap()
+            drawings[state] = app.element("companion-viewport").screenshot().pngRepresentation
+        }
+        XCTAssertEqual(Set(drawings.values).count, drawings.count)
     }
 
     @MainActor func testControlsWorkWithLargestTextAndReducedMotion() {
@@ -31,9 +45,8 @@ final class CompanionGalleryUITests: XCTestCase {
         app.buttons["companion-state-celebrating"].tap()
         XCTAssertTrue(app.buttons["companion-state-celebrating"].isSelected)
         XCTAssertGreaterThan(app.buttons["companion-state-celebrating"].frame.width, app.frame.width * 0.7)
-        app.assertCanBeTapped(app.buttons["companion-turn"])
-        app.buttons["companion-turn"].tap()
         XCTAssertTrue(app.staticTexts["companion-motion-still"].exists)
+        app.assertCanBeTapped(app.buttons["companion-still"])
         captureLargestControls(in: app)
     }
 

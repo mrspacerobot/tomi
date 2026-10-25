@@ -3,7 +3,7 @@
 
     struct CompanionGalleryControls: View {
         @Binding var state: CompanionState
-        @Binding var turned: Bool
+        @Binding var still: Bool
         @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
         private var columns: [GridItem] {
@@ -17,13 +17,13 @@
                 ForEach(CompanionState.allCases, id: \.self) { option in
                     CompanionStateButton(option: option, selected: state == option) { state = option }
                 }
-                Button(.companionTurn) { turned.toggle() }
+                Button(.companionStill) { still.toggle() }
                     .buttonStyle(.tomiSecondary)
-                    .accessibilitySelected(turned)
-                    .accessibilityIdentifier("companion-turn")
+                    .accessibilitySelected(still)
+                    .accessibilityIdentifier("companion-still")
             }
         }
     }
 
-    #Preview { CompanionGalleryControls(state: .constant(.idle), turned: .constant(false)) }
+    #Preview { CompanionGalleryControls(state: .constant(.idle), still: .constant(false)) }
 #endif

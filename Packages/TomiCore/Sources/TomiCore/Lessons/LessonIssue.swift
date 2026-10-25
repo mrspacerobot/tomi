@@ -13,14 +13,10 @@ public enum LessonIssue: Hashable, Sendable {
     case missingText(LessonTextField)
     case noIngredients
     case duplicateIngredient(IngredientID)
-    /// The ingredient is not in the ingredient table, so nothing is known about who may eat it.
-    case unknownIngredient(IngredientID)
     /// The amount of this ingredient in this unit system is zero, negative or not a number.
     case amountNotPositive(IngredientID, Units)
     /// The amount of this ingredient for this unit system uses a unit of the other one, such as grams for cups.
     case unitOutsideSystem(IngredientID, Units)
-    /// The equipment is not in the equipment list, so no kitchen could ever have it.
-    case unknownEquipment(EquipmentID)
     /// The lesson names a main food that is not a `DishMain`, so its scenes could not be drawn.
     case unknownMain(String)
     case noSteps
@@ -37,8 +33,6 @@ public enum LessonIssue: Hashable, Sendable {
     case correctAnswerOutOfRange(Int)
     /// A swap replaces an ingredient the lesson does not use.
     case swapOfIngredientNotInLesson(IngredientID)
-    /// A swap brings in an ingredient that is not in the ingredient table.
-    case unknownSwapReplacement(IngredientID)
     /// A swap brings in an ingredient the lesson already uses, which would list it twice.
     case swapReplacementAlreadyInLesson(IngredientID)
 }

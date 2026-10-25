@@ -4,8 +4,8 @@ import TomiCore
 
 @testable import Tomi
 
-/// The profile in the SwiftData store, including what iCloud can do to it: nothing is unique,
-/// so a second profile record can arrive from another device.
+/// The phone's copy of the server's profile in the SwiftData store, including what iCloud can do to it:
+/// nothing is unique, so a second profile record can arrive from another device.
 @MainActor
 @Suite struct StoredProfileTests {
     let fixture: StoreFixture
@@ -24,15 +24,13 @@ import TomiCore
         #expect(try record().updatedAt == .october(6))
     }
 
-    @Test func anOlderRecordsRestrictionsAreNotDroppedByANewerRecord() throws {
+    @Test func ofTwoRecordsTheNewerCopyIsRead() throws {
         try fixture.insertProfile(.fixture(diet: "vegan", avoid: ["nuts"]), changedOnOctober: 5)
         try fixture.insertProfile(.fixture(diet: nil, avoid: ["pork"]), changedOnOctober: 6)
-        let preferences = try fixture.store.profile().preferences
-        #expect(preferences.diet == "vegan")
-        #expect(preferences.avoid == ["nuts", "pork"])
+        #expect(try fixture.store.profile() == .fixture(diet: nil, avoid: ["pork"]))
     }
 
-    @Test func savingLeavesOneRecordHoldingExactlyTheCooksNewAnswer() throws {
+    @Test func savingLeavesOneRecordHoldingExactlyTheNewCopy() throws {
         try fixture.insertProfile(.fixture(diet: "vegan", avoid: ["nuts"]), changedOnOctober: 5)
         try fixture.insertProfile(.fixture(diet: nil, avoid: ["pork"]), changedOnOctober: 6)
         try fixture.store.saveProfile(.fixture(diet: "vegetarian"), at: .october(7))
@@ -40,13 +38,10 @@ import TomiCore
         #expect(try fixture.store.profile() == .fixture(diet: "vegetarian"))
     }
 
-    /// A diet saved by a newer app must come back as it is, so the shipped table refuses every dish.
-    @Test func aDietTheShippedTableDoesNotKnowIsKeptAndRefused() throws {
-        let table = try #require(BundledLibrary.ingredientTable())
-        try fixture.store.saveProfile(.fixture(diet: "a-diet-from-a-newer-app"), at: .october(5))
-        let preferences = try fixture.store.profile().preferences
-        #expect(preferences.diet == "a-diet-from-a-newer-app")
-        #expect(!table.understands(preferences))
+    /// The copy keeps whatever id the server sent, known to this build or not.
+    @Test func anIdTheAppHasNeverSeenIsKeptAsItIs() throws {
+        try fixture.store.saveProfile(.fixture(diet: "a-diet-from-a-newer-server"), at: .october(5))
+        #expect(try fixture.store.profile().diet == "a-diet-from-a-newer-server")
     }
 
     @Test func aRecordWithNoFieldsAtAllIsReadAsTheDefaults() throws {

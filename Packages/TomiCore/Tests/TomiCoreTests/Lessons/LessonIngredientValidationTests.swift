@@ -3,12 +3,6 @@ import Testing
 @testable import TomiCore
 
 @Suite struct LessonIngredientValidationTests {
-    @Test func anIngredientMissingFromTheTableIsReported() {
-        var lesson = Lesson.fixture()
-        lesson.ingredients.append(.fixture("dragon-fruit"))
-        #expect(lesson.issuesInTheFixtureLibrary() == [.unknownIngredient("dragon-fruit")])
-    }
-
     @Test func anIngredientIsListedOnlyOnce() {
         var lesson = Lesson.fixture()
         lesson.ingredients.append(.fixture("garlic"))

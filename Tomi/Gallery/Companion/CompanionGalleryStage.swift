@@ -3,18 +3,16 @@
 
     struct CompanionGalleryStage: View {
         let state: CompanionState
-        let turned: Bool
+        let still: Bool
         @Environment(\.accessibilityReduceMotion) private var systemReduced
 
         private var reduced: Bool {
-            systemReduced || ProcessInfo.processInfo.arguments.contains("--companion-reduce-motion")
+            systemReduced || still || ProcessInfo.processInfo.arguments.contains("--companion-reduce-motion")
         }
 
         var body: some View {
             VStack(spacing: Spacing.small) {
-                TomiCompanion(state: state, turned: turned, reduceMotion: reduced)
-                    .frame(height: MascotSize.companion)
-                    .accessibilityIdentifier("companion-viewport")
+                CompanionGalleryViewport(state: state, reduced: reduced)
                 Text(state.line).textStyle(.body).multilineTextAlignment(.center)
                     .accessibilityIdentifier("companion-line")
                 if reduced {
@@ -26,5 +24,5 @@
         }
     }
 
-    #Preview { CompanionGalleryStage(state: .listening, turned: false) }
+    #Preview { CompanionGalleryStage(state: .listening, still: false) }
 #endif

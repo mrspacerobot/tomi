@@ -299,6 +299,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/Tomi.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Config/Tomi-Info.plist";
@@ -316,7 +317,11 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
+				TOMI_API_BASE_URL = "https://tomi-api-130793692388.europe-west3.run.app";
+				TOMI_LOCAL_API_BASE_URL = "";
+				TOMI_SUPABASE_PUBLISHABLE_KEY = sb_publishable_1QJLF5Ppax8XIEMO-xSMlg_Wmmix9i5;
+				TOMI_SUPABASE_URL = "https://cdpuwvugzwmvrgvanbud.supabase.co";
 			};
 			name = Release;
 		};
@@ -339,6 +344,8 @@
 		64F355AFA7DDF4DE27B656F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 35YBBLQ33M;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -410,6 +417,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/Tomi.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Config/Tomi-Info.plist";
@@ -427,13 +435,19 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
+				TOMI_API_BASE_URL = "https://tomi-api-130793692388.europe-west3.run.app";
+				TOMI_LOCAL_API_BASE_URL = "http://localhost:8080";
+				TOMI_SUPABASE_PUBLISHABLE_KEY = sb_publishable_1QJLF5Ppax8XIEMO-xSMlg_Wmmix9i5;
+				TOMI_SUPABASE_URL = "https://cdpuwvugzwmvrgvanbud.supabase.co";
 			};
 			name = Debug;
 		};
 		89ADCD2038C0D90BDEB299B2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 35YBBLQ33M;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;

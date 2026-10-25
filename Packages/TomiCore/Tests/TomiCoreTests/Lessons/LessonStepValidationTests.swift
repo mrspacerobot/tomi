@@ -54,7 +54,7 @@ import Testing
         #expect(lesson.issuesInTheFixtureLibrary().isEmpty)
     }
 
-    @Test func aQuizOffersAChoice() {
+    @Test func aQuizSuggestionsAChoice() {
         var lesson = Lesson.fixture()
         lesson.quiz.answers = [LocalizedText(["en": "One"])]
         lesson.quiz.correctAnswer = 0

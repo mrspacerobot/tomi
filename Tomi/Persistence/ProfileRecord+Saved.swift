@@ -24,6 +24,7 @@ extension ProfileRecord {
         saved.cuisinesToTry = cuisinesToTry
         saved.cuisinesNever = cuisinesNever
         saved.cupboardStaples = cupboardStaples
+        saved.cupboardAnswered = cupboardAnswered
     }
 
     private func readKitchen(into saved: inout SavedProfile) {
@@ -43,6 +44,7 @@ extension ProfileRecord {
         cuisinesToTry = saved.cuisinesToTry
         cuisinesNever = saved.cuisinesNever
         cupboardStaples = saved.cupboardStaples
+        cupboardAnswered = saved.cupboardAnswered
     }
 
     private func writeKitchen(of saved: SavedProfile) {

@@ -15,6 +15,7 @@ final class ProfileRecord {
     var cuisinesToTry: [String]?
     var cuisinesNever: [String]?
     var cupboardStaples: [String]?
+    var cupboardAnswered: Bool?
     var equipment: [String]?
     var experience: String?
     var servings: Int?

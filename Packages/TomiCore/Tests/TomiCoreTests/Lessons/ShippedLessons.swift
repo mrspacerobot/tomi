@@ -18,18 +18,13 @@ enum ShippedLessons {
         return files.sorted { $0.path() < $1.path() }
     }
 
-    /// Decodes and validates one file against the shipped lists.
+    /// Decodes and validates one file against the shipped catalog.
     static func lesson(at file: URL) throws -> Lesson {
-        try Lesson.decode(from: Data(contentsOf: file), lists: try lists())
+        try Lesson.decode(from: Data(contentsOf: file), catalog: try catalog())
     }
 
-    /// The shipped catalog, the shipped ingredient table and the shipped equipment list.
-    static func lists() throws -> LibraryLists {
-        LibraryLists(
-            catalog: try SkillCatalog.decode(from: Data(contentsOf: ShippedCatalogTests.catalogURL)),
-            ingredientTable: try ShippedIngredientTable.load(),
-            equipmentList: try ShippedEquipmentList.load()
-        )
+    static func catalog() throws -> SkillCatalog {
+        try SkillCatalog.decode(from: Data(contentsOf: ShippedCatalogTests.catalogURL))
     }
 
     static func lesson(_ id: LessonID) throws -> Lesson {

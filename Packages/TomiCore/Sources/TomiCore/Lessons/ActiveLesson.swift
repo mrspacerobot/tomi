@@ -1,5 +1,5 @@
 /// The lesson the cook is in the middle of, kept so that it survives the app being closed.
-/// It is a bookmark, not a copy: it names the lesson and the swaps applied, and `resumed(from:for:in:)`
+/// It is a bookmark, not a copy: it names the lesson and the swaps applied, and `resumed(from:)`
 /// builds the dish again from the library, so a lesson that was corrected or withdrawn is never cooked from memory.
 public struct ActiveLesson: Hashable, Sendable {
     public var lesson: LessonID
