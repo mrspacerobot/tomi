@@ -16,6 +16,7 @@ struct CookingStepsView: View {
 
     var body: some View {
         ScrollView { content }
+            .id(walk?.position)
             .background(ColorRole.paper.color)
             .navigationTitle(Text(.cookingStepsTitle))
             .navigationBarTitleDisplayMode(.inline)
