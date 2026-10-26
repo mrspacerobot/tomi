@@ -15,6 +15,9 @@ public struct SavedCookEntry: Hashable, Sendable {
     public var quizCorrect: Bool?
     /// The cook's weekly goal at the time.
     public var weeklyGoal: Int?
+    /// The server's problem code when it rejected the cook. A refused cook is never sent again.
+    /// Missing for every cook the server has not refused.
+    public var refusedCode: String?
 
     public init() {}
 
