@@ -9,11 +9,7 @@ struct HomeMastheadWords: View {
             TomiMascot()
                 .frame(width: MascotSize.home, height: MascotSize.home)
                 .accessibilityHidden(true)
-            Text(.homeMastheadTitle).textStyle(.displayM).accessibilityIdentifier("home-title")
-            Text(date, format: .dateTime.weekday(.wide).month(.wide).day())
-                .textStyle(.caption)
-                .foregroundStyle(ColorRole.inkFaded.color)
-                .accessibilityIdentifier("home-date")
+            HomeMastheadHeading(date: date)
         }
     }
 }
