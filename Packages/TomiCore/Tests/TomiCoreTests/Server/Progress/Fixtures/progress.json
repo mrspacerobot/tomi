@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "rulesVersion": 1,
+  "catalogVersion": 1,
+  "computedAt": "2026-10-26T18:43:02Z",
+  "calendar": { "timeZone": "Europe/Amsterdam", "firstWeekday": 2 },
+  "xp": 360,
+  "rank": { "id": "commis", "name": "Commis", "tier": 1, "startsAt": 150, "nextAt": 400 },
+  "streak": {
+    "weeks": 2, "weeksBeforeThisWeek": 2, "daysThisWeek": 1, "goal": 3, "daysLeftInWeek": 4,
+    "thisWeekMet": false, "atRisk": false, "lost": false,
+    "weekStartsAt": "2026-10-25T23:00:00Z", "weekEndsAt": "2026-11-01T23:00:00Z"
+  },
+  "skills": [
+    {
+      "skill": "eggs", "status": "mastered", "missingPrerequisites": [], "currentLevel": 2,
+      "levels": [
+        { "number": 1, "cooks": 2, "cooksToComplete": 2, "open": true, "granted": false, "complete": true },
+        { "number": 2, "cooks": 2, "cooksToComplete": 2, "open": true, "granted": false, "complete": true }
+      ]
+    }
+  ],
+  "masteredCount": 4,
+  "focusSkill": "roux",
+  "counted": { "finishedCooks": 6, "ignoredUnknownSkillOrLevel": 0 }
+}
