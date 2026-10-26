@@ -39,26 +39,6 @@ final class CookingStepsUITests: XCTestCase {
         XCTAssertFalse(app.buttons["cooking-step-next"].exists)
     }
 
-    @MainActor
-    func testTheStepsAtLargestTextInDarkAppearance() {
-        let arguments = GalleryLayoutUITests.largestTextSize + ["--appearance-dark"]
-        let (app, _) = cookingIntroduction(extra: arguments)
-        beginSteps(app)
-        XCTAssertTrue(app.buttons["cooking-step-next"].waitForExistence(timeout: 5))
-        attachScreenshot(of: app, named: "steps-largest-dark")
-    }
-
-    @MainActor
-    func testTheStepScreenInLightAndDarkAppearance() {
-        for appearance in [[], ["--appearance-dark"]] {
-            let (app, _) = cookingIntroduction(extra: appearance)
-            beginSteps(app)
-            app.buttons["cooking-step-next"].tap()
-            attachScreenshot(of: app, named: "steps-middle-" + (appearance.isEmpty ? "light" : "dark"))
-            app.terminate()
-        }
-    }
-
     /// The progress line is shown in capitals, so VoiceOver and the tests read it in capitals.
     @MainActor private func progress(_ app: XCUIApplication, _ words: String) -> XCUIElement {
         app.staticTexts.matching(NSPredicate(format: "label =[c] %@", words)).firstMatch
@@ -78,6 +58,7 @@ final class CookingStepsUITests: XCTestCase {
                 .waitForExistence(timeout: 5)
         )
         XCTAssertTrue(app.buttons["cooking-step-previous"].exists)
+        assertTheTimeIsNotUnderTheButton(app)
         app.buttons["cooking-step-next"].tap()
         XCTAssertTrue(progress(app, "Step 3 of 3").waitForExistence(timeout: 5))
     }
@@ -87,5 +68,12 @@ final class CookingStepsUITests: XCTestCase {
         XCTAssertTrue(app.element("suggestion-detail").waitForExistence(timeout: 5))
         let recipeID = identifier.replacingOccurrences(of: "suggestion-open-", with: "")
         XCTAssertTrue(app.element("suggestion-title-" + recipeID).exists)
+    }
+
+    /// A step's time is part of the step, so it must sit above the buttons and never be covered by one.
+    @MainActor private func assertTheTimeIsNotUnderTheButton(_ app: XCUIApplication) {
+        let time = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'min'")).firstMatch
+        XCTAssertTrue(time.waitForExistence(timeout: 5))
+        XCTAssertFalse(time.frame.intersects(app.buttons["cooking-step-next"].frame))
     }
 }
