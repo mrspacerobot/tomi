@@ -167,7 +167,7 @@ The cook's answers are one value, `CookProfile` in TomiCore, with the server's J
 
 ## Guided cooking introduction and preparation (#152)
 
-The first graph-native cooking slice decodes optional teaching and provides introduction plus preparation screens. It does not reuse bundled `LessonID` records or add saved fields. Teaching must be compatible with an unchanged server-adapted recipe; draft content is labelled. Quiz questions arrive without their answers (teaching schema 2); the app holds no correct choice, and the server will check each pick (#165). A fresh profile fetch, checked-suggestion validation and exact avoid-list match are required to begin preparation, so changes in either direction require new suggestions. Guided steps, quiz, session persistence and rewards belong to later slices.
+The first graph-native cooking slice decodes optional teaching and provides introduction plus preparation screens. It does not reuse bundled `LessonID` records or add saved fields. Teaching must be compatible with an unchanged server-adapted recipe; draft content is labelled. The app reads quiz questions without their answers (teaching schema 1); the currently deployed server still sends answers until tomi-backend#42. The app holds no correct choice, and the server will check each pick (#165). A fresh profile fetch, checked-suggestion validation and exact avoid-list match are required to begin preparation, so changes in either direction require new suggestions. Guided steps, quiz, session persistence and rewards belong to later slices.
 
 ## Progress and the quiz on the server (#157)
 
@@ -177,7 +177,7 @@ Owner decision, 26 October 2026. The cook log, every game and progress rule (XP,
 - **Cook entries, not events.** A cook is a cook entry with a client-made UUID, written to the phone's outbox first and uploaded with retry and backoff. The server is idempotent on the entry id: a second copy with the same body is a `duplicate`; with a different body the first accepted copy wins, the second is answered `conflict`, changes nothing and is logged.
 - **Offline.** The app shows the last snapshot plus a note that pending cooks will count when the cook is back online. With no snapshot yet it says progress shows once online. A snapshot that cannot be read is never shown as zero.
 - **Calendar.** Each entry stores its own IANA time zone, and past weeks are judged by each entry's zone. The current week is judged by the `timeZone` and `firstWeekday` sent with the request.
-- **Quiz.** Server-run. The server sends questions and choices without answers (teaching schema 2), receives each pick (`POST /v1/quiz-answers`) and answers right or wrong; correct answers never leave the server. The first answer to each question is the score, retries only teach. The quiz needs a connection. The phone never sends `quizCorrect`.
+- **Quiz.** Server-run. The server sends questions and choices without answers (teaching schema 1), receives each pick (`POST /v1/quiz-answers`) and answers right or wrong; correct answers never leave the server. The first answer to each question is the score, retries only teach. The quiz needs a connection. The phone never sends `quizCorrect`.
 - **Catalog.** tomi-backend's `library/catalog.json` is the canonical catalog; the app's copy stays only while the bundled library exists (#156).
 - **Until #167** the old TomiCore rules (`Game`, the rule files of `Progress`, `Experience+GrantedSkills`) and the screens that use them stay as they are. Nothing new is built on them.
 

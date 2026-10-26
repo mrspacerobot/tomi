@@ -1,9 +1,5 @@
 /// Decodes schema, graph identity and production review gates for teaching.
 struct TeachingMetadata {
-    /// Schema 2 sends quiz questions without answers. Schema 1 is still read until every server sends 2;
-    /// its answer fields are never decoded, so they are never trusted.
-    static let supportedSchemaVersions: Set<Int> = [1, 2]
-
     let graphVersion: String
     let graphChannel: TeachingChannel
     var isProduction: Bool { graphChannel == .production }
@@ -35,7 +31,7 @@ struct TeachingMetadata {
         _ language: String,
         in values: KeyedDecodingContainer<Teaching.CodingKeys>
     ) throws {
-        guard supportedSchemaVersions.contains(version), language == "en" else {
+        guard version == 1, language == "en" else {
             throw DecodingError.dataCorruptedError(
                 forKey: .schemaVersion,
                 in: values,

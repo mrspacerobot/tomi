@@ -2,9 +2,19 @@ import Testing
 
 @testable import TomiCore
 
-/// Teaching schema 2: quiz questions arrive without their answers, which only the server holds.
+/// Teaching schema 1 reads quiz questions without trusting any answers in the response.
 @Suite struct TeachingQuizSchemaTests {
-    @Test func theSchemaTwoExampleKeepsEveryQuestion() throws {
+    @Test func schemaTwoIsRefusedWithoutHidingTheRecipe() throws {
+        let payload = TeachingJSON.liveSuggestion.replacingOccurrences(
+            of: #""schemaVersion": 1"#,
+            with: #""schemaVersion": 2"#
+        )
+        let suggestion = try ServerJSON.decode(Suggestion.self, from: payload)
+        #expect(suggestion.teaching == nil)
+        #expect(suggestion.title == "Soft scrambled eggs")
+    }
+
+    @Test func theSchemaOneExampleKeepsEveryQuestion() throws {
         let quiz = try #require(
             try ServerJSON.decode(Suggestion.self, from: TeachingJSON.liveSuggestion).teaching?.quiz
         )
@@ -36,7 +46,7 @@ import Testing
         #expect(app == TeachingJSON.liveSuggestion)
     }
 
-    /// Until the server sends schema 2, schema 1 is still read. Its answers are never read, so never trusted.
+    /// The current server sends answers that the app never reads or trusts.
     @Test func schemaOneIsStillReadAndItsAnswersAreIgnored() throws {
         let suggestion = try ServerJSON.decode(Suggestion.self, from: TeachingQuizJSON.schemaOneWithAnswers)
         #expect(suggestion.canOfferTeaching)

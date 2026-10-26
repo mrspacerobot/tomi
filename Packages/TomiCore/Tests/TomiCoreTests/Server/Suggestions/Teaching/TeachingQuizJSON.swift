@@ -6,7 +6,6 @@ enum TeachingQuizJSON {
     /// The index points past the choices and the explanation is blank, which schema 1 once refused.
     static var schemaOneWithAnswers: String {
         TeachingJSON.liveSuggestion
-            .replacingOccurrences(of: #""schemaVersion": 2"#, with: #""schemaVersion": 1"#)
             .replacingOccurrences(of: #""choices": ["#, with: #""answerIndex": 9, "explanation": " ", "choices": ["#)
     }
 
