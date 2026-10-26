@@ -166,6 +166,10 @@ The cook's answers are one value, `CookProfile` in TomiCore, with the server's J
 
 The first graph-native cooking slice decodes optional teaching and provides introduction plus preparation screens. It does not reuse bundled `LessonID` records or add saved fields. Teaching must be compatible with an unchanged server-adapted recipe; draft content is labelled. A fresh profile fetch, checked-suggestion validation and exact avoid-list match are required to begin preparation, so changes in either direction require new suggestions. Guided steps, quiz, session persistence and rewards belong to later slices.
 
+## Guided cooking steps (#154)
+
+Preparation now leads to the steps. "Begin the steps" reads the cook's profile again and rechecks the suggestion against it, exactly as starting preparation does; a changed or unreadable profile sends the cook back to Home, because the old scan, menu and recipe may no longer fit. The steps are the server's adapted `recipe.steps`, walked one at a time by `StepWalk` in TomiCore (never past either end; a recipe with no steps cannot be walked and says so). A step shows "Step n of m", the server's text, and its time, heat and safety points as supplied; the app words none of them. After the last step the cook goes back to the recipe. There is no timer, saved session, illustration, quiz, XP or finish celebration in this slice: those need the graph session contract, a reviewed mapping from steps to `StepScene`, and the cook log, and come in later slices. No saved field is added.
+
 ## Phases
 
 Each phase ends with something runnable. GitHub milestones mirror these.

@@ -46,9 +46,10 @@ extension AppServices {
         FakeTomiAPIConfiguration(
             suggestionsNothing: options.suggestionsNothing,
             guidedCooking: options.guidedCooking,
-            profileRefreshFails: options.profileRefreshFails,
-            profileRefreshChanges: options.profileRefreshChanges,
-            profileRefreshWaits: options.profileRefreshWaits
+            profileRefreshFails: options.profileRefresh.fails,
+            profileRefreshChanges: options.profileRefresh.changes,
+            profileRefreshWaits: options.profileRefresh.waits,
+            profileRefreshChangesLate: options.profileRefresh.changesLate
         )
     }
 
