@@ -164,7 +164,7 @@ The cook's answers are one value, `CookProfile` in TomiCore, with the server's J
 
 ## Guided cooking introduction and preparation (#152)
 
-The first graph-native cooking slice decodes optional teaching and provides introduction plus preparation screens. It does not reuse bundled `LessonID` records or add saved fields. Teaching must be compatible with an unchanged server-adapted recipe; draft content is labelled. A fresh profile fetch, checked-suggestion validation and exact avoid-list match are required to begin preparation, so changes in either direction require new suggestions. Guided steps, quiz, session persistence and rewards belong to later slices.
+The first graph-native cooking slice decodes optional teaching and provides introduction plus preparation screens. It does not reuse bundled `LessonID` records or add saved fields. Teaching must be compatible with an unchanged server-adapted recipe; draft content is labelled. Quiz questions arrive without their answers (teaching schema 2); the app holds no correct choice, and the server will check each pick (#165). A fresh profile fetch, checked-suggestion validation and exact avoid-list match are required to begin preparation, so changes in either direction require new suggestions. Guided steps, quiz, session persistence and rewards belong to later slices.
 
 ## Phases
 
