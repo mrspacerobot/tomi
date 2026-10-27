@@ -6,7 +6,7 @@ import Testing
 /// A cook is sent only with the credentials of the account that made it. When another cook signs in on the same
 /// phone, the first cook's unsent cooks stay on the phone and wait for their own account.
 @Suite struct OutboxAccountTests {
-    let calendar = StreakTestCalendar(timeZone: "Europe/Amsterdam", firstWeekday: 2).calendar
+    let calendar = TestCalendar(timeZone: "Europe/Amsterdam", firstWeekday: 2).calendar
     let first = CookEntry.fixture("knife", on: .october(5)).cooked(by: "cook-a")
     let second = CookEntry.fixture("eggs", on: .october(6)).cooked(by: "cook-b")
 
