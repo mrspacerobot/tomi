@@ -1,18 +1,22 @@
 import SwiftUI
 
-/// Leaves preparation and returns to its suggestion detail.
+/// Leaves the cooking screens and returns to the suggestion detail they began from.
 struct CookingReturnButton: View {
     @Binding var path: [HomeRoute]
+    var words: LocalizedStringResource = .cookingNotTonight
+    var identifier = "cooking-return-to-suggestion"
 
     var body: some View {
         Button(action: returnToSuggestion) {
-            Text(.cookingNotTonight).frame(maxWidth: .infinity)
+            Text(words).frame(maxWidth: .infinity)
         }
         .buttonStyle(.tomiSecondary)
-        .accessibilityIdentifier("cooking-return-to-suggestion")
+        .accessibilityIdentifier(identifier)
     }
 
     private func returnToSuggestion() {
-        if path.count >= 2 { path.removeLast(2) } else { path.removeLast() }
+        while let last = path.last, !last.isSuggestion {
+            path.removeLast()
+        }
     }
 }

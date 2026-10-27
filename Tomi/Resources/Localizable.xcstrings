@@ -2610,10 +2610,40 @@
       "extractionState": "manual",
       "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Equipment" } } }
     },
-    "cooking.steps.unavailable": {
-      "comment": "Terminal preparation message until the guided session screens are implemented.",
+    "cooking.steps.begin": {
+      "comment": "Button on the preparation checklist that starts the guided steps.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Guided cooking steps are not available yet." } } }
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Begin the steps" } } }
+    },
+    "cooking.steps.title": {
+      "comment": "Navigation title for the guided cooking steps.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Cooking" } } }
+    },
+    "cooking.steps.progress": {
+      "comment": "Where the cook is in the recipe, above a step. The first number is the step shown, counted from 1; the second is how many steps the recipe has. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Step %1$lld of %2$lld" } } }
+    },
+    "cooking.steps.next": {
+      "comment": "Button on a cooking step that moves on to the next step.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Next step" } } }
+    },
+    "cooking.steps.previous": {
+      "comment": "Button on a cooking step that goes back to the step before.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Previous step" } } }
+    },
+    "cooking.steps.finish": {
+      "comment": "Button on the last cooking step, and on a recipe without steps, that returns to the recipe details.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Back to the recipe" } } }
+    },
+    "cooking.steps.none": {
+      "comment": "Shown instead of the steps when a recipe arrived without any steps.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "This recipe has no steps to follow." } } }
     },
     "common.okay": {
       "comment": "Button that dismisses an alert.",
