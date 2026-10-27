@@ -14,8 +14,22 @@ import TomiCore
         let server = FakeProgressServer(fixture: .returning)
         let api = FakeTomiAPI(library: BundledLessonLibrary(), configuration: .init(progressServer: server))
         await harness.upload(with: harness.uploader(api))
-        #expect(try harness.store.pendingCookEntries().isEmpty)
+        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
         #expect(try harness.store.progressSnapshot() == (try FakeProgressFixture.returning.snapshot()))
+    }
+
+    /// A read of the progress that finished later can have been kept already, with a newer snapshot than the answer.
+    @Test func anAnswerWithAnOlderSnapshotThanTheOneKeptDoesNotReplaceIt() async throws {
+        try harness.saveCooks(1)
+        let newer = ProgressSnapshotBody.example(xp: 999, computedAt: "2030-01-01T00:00:00Z")
+        try harness.store.saveProgressSnapshot(newer, at: .october(26))
+        let api = FakeTomiAPI(
+            library: BundledLessonLibrary(),
+            configuration: .init(progressServer: FakeProgressServer(fixture: .returning))
+        )
+        await harness.upload(with: harness.uploader(api))
+        #expect(try harness.store.progressSnapshot()?.xp == 999)
+        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
     }
 
     @Test func onlineTheOutboxIsSentOnceWithTheCooksCalendar() async throws {
@@ -38,7 +52,7 @@ import TomiCore
         uploader.upload()
         #expect(await waits.next() == .seconds(2))
         #expect(await waits.next() == .seconds(4))
-        #expect(try harness.store.pendingCookEntries().map(\.id) == ids)
+        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).map(\.id) == ids)
     }
 
     /// The server is idempotent on each cook's id, so a batch sent again can never count twice.
@@ -50,7 +64,7 @@ import TomiCore
         await harness.upload(with: uploader)
         let sent = await api.sent
         #expect(sent.map { $0.entries.map(\.id) } == [ids, ids])
-        #expect(try harness.store.pendingCookEntries().isEmpty)
+        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
     }
 
     @Test func theTimerSendsTheSameBatchAgain() async throws {
@@ -73,7 +87,7 @@ import TomiCore
         await harness.upload(with: uploader)
         await harness.upload(with: uploader)
         #expect(await api.sent.count == 1)
-        #expect(try harness.store.pendingCookEntries().isEmpty)
+        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
         #expect(try harness.store.cookLog().map(\.id) == [ids[0]])
     }
 
@@ -82,6 +96,6 @@ import TomiCore
         let api = ScriptedProgressAPI(ScriptedReply.acceptingAll)
         await harness.upload(with: harness.uploader(api))
         #expect(await api.sent.map(\.entries.count) == [CookOutbox.largestBatch, 1])
-        #expect(try harness.store.pendingCookEntries().isEmpty)
+        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
     }
 }

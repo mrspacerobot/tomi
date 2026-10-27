@@ -17,7 +17,7 @@ final class AppFlowModel {
     init(services: AppServices) {
         self.services = services
         profile = ProfileModel(api: services.api, store: services.store)
-        uploader = CookEntryUploader(api: services.api, store: services.store, clock: .phone)
+        uploader = CookEntryUploader(OutboxServices(services), clock: .phone)
     }
 
     func start() async {

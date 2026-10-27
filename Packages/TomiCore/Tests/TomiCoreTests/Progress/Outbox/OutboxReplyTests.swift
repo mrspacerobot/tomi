@@ -9,7 +9,7 @@ import Testing
     let cook = CookEntry.fixture("eggs")
 
     func sent(_ cooks: [CookEntry]) -> [CookEntryPayload] {
-        cooks.map { SavedCookEntry($0) }.outboxBatch(calendar: calendar).entries
+        cooks.map { SavedCookEntry($0) }.outboxBatch(for: CookEntry.fixtureAccount, calendar: calendar).entries
     }
 
     func result(_ id: UUID?, _ status: String, problems: String = "") throws -> CookEntryResult {

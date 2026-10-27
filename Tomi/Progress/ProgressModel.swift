@@ -14,13 +14,12 @@ final class ProgressModel {
     /// The server could not be reached the last time it was asked.
     private var isOffline = false
     private let store: any ProgressStore
-    /// Nil when this build has no server configured.
-    private let api: (any TomiAPI)?
+    private let server: ProgressServer
     private let clock: ProgressClock
 
-    init(store: any ProgressStore, api: (any TomiAPI)?, clock: ProgressClock) {
+    init(store: any ProgressStore, server: ProgressServer, clock: ProgressClock) {
         self.store = store
-        self.api = api
+        self.server = server
         self.clock = clock
         reload()
     }
@@ -28,7 +27,7 @@ final class ProgressModel {
     /// Reads the snapshot saved last and the unsent cooks again, such as after the uploader kept an answer.
     func reload() {
         do {
-            let situation = ProgressSituation(unsentCooks: try store.pendingCookEntries().count, isOffline: isOffline)
+            let situation = ProgressSituation(unsentCooks: try unsentCooks(), isOffline: isOffline)
             shown = ShownProgress(snapshot: try store.progressSnapshot(), situation: situation, now: clock.now())
         } catch {
             Self.logger.error("Saved data could not be read: \(String(describing: error), privacy: .public)")
@@ -36,10 +35,18 @@ final class ProgressModel {
         }
     }
 
+    /// The cooks of the signed-in account that wait to be sent. With nobody signed in there are none to speak of.
+    private func unsentCooks() throws -> Int {
+        guard let account = server.accountID else {
+            return 0
+        }
+        return try store.pendingCookEntries(for: account).count
+    }
+
     /// Asks the server, keeps its snapshot as it was sent, and shows it. When the server cannot be reached, the
     /// snapshot saved last stays, and the note says what will count once the cook is back online.
     func refresh() async {
-        guard let api else {
+        guard let api = server.api else {
             return
         }
         await ask(api)
@@ -59,7 +66,7 @@ final class ProgressModel {
 
     private func keep(_ body: Data) {
         do {
-            try store.saveProgressSnapshot(body, at: clock.now())
+            try store.keepProgressSnapshot(body, at: clock.now())
         } catch {
             Self.logger.error("The snapshot could not be kept: \(String(describing: error), privacy: .public)")
         }

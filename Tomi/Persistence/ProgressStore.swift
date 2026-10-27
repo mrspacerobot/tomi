@@ -34,8 +34,9 @@ protocol ProgressStore {
     /// Forgets the lesson in progress, when it is finished or given up.
     func clearActiveLesson() throws
 
-    /// The outbox: every cook the server has neither acknowledged nor refused, each once, oldest first.
-    func pendingCookEntries() throws -> [CookEntry]
+    /// The outbox of one account: every cook it made that the server has neither acknowledged nor refused, each once,
+    /// oldest first. Cooks of another account, or of none, stay in the store and are not returned.
+    func pendingCookEntries(for account: String) throws -> [CookEntry]
 
     /// Deletes every copy of these cooks, once the server holds a copy that counts. An unknown id changes nothing.
     func forgetCookEntries(ids: Set<UUID>) throws

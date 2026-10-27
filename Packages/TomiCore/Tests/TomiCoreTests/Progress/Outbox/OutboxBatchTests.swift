@@ -11,22 +11,34 @@ import Testing
         (0..<count).map { CookEntry.fixture("knife", on: .october(1 + $0 % 28)) }
     }
 
+    func batch(of records: [SavedCookEntry]) -> CookEntriesRequest {
+        records.outboxBatch(for: CookEntry.fixtureAccount, calendar: calendar)
+    }
+
     @Test func aBatchHoldsAtMostAHundredCooksOldestFirst() {
         let records = cooks(130).map { SavedCookEntry($0) }
         let oldestHundred = records.cookLog.prefix(100).map(\.id)
         #expect(CookOutbox.largestBatch == 100)
-        #expect(records.outboxBatch(calendar: calendar).entries.map(\.id) == oldestHundred)
+        #expect(
+            records.outboxBatch(for: CookEntry.fixtureAccount, calendar: calendar).entries.map(\.id) == oldestHundred
+        )
     }
 
     @Test func theSameRecordsInAnyOrderGiveTheSameBatch() {
         let records = cooks(130).map { SavedCookEntry($0) }
         let shuffled = records.shuffled()
-        #expect(records.outboxBatch(calendar: calendar) == shuffled.outboxBatch(calendar: calendar))
-        #expect(records.outboxBatch(calendar: calendar) == Array(records.reversed()).outboxBatch(calendar: calendar))
+        #expect(
+            records.outboxBatch(for: CookEntry.fixtureAccount, calendar: calendar)
+                == shuffled.outboxBatch(for: CookEntry.fixtureAccount, calendar: calendar)
+        )
+        #expect(
+            records.outboxBatch(for: CookEntry.fixtureAccount, calendar: calendar)
+                == Array(records.reversed()).outboxBatch(for: CookEntry.fixtureAccount, calendar: calendar)
+        )
     }
 
     @Test func aBatchCarriesTheCalendarPassedIn() {
-        let batch = cooks(1).map { SavedCookEntry($0) }.outboxBatch(calendar: calendar)
+        let batch = cooks(1).map { SavedCookEntry($0) }.outboxBatch(for: CookEntry.fixtureAccount, calendar: calendar)
         #expect(batch.calendar == CalendarContext(timeZone: "Europe/Amsterdam", firstWeekday: 2))
         #expect(batch.entries.map(\.timeZone) == ["Europe/Amsterdam"])
     }
@@ -35,7 +47,7 @@ import Testing
         let log = cooks(3)
         var records = log.map { SavedCookEntry($0) }
         records[1].refusedCode = "cooked_in_future"
-        let sent = records.outboxBatch(calendar: calendar).entries.map(\.id)
+        let sent = records.outboxBatch(for: CookEntry.fixtureAccount, calendar: calendar).entries.map(\.id)
         #expect(sent.count == 2)
         #expect(!sent.contains(log[1].id))
     }
@@ -44,15 +56,15 @@ import Testing
     /// when the first try failed, and when other cooks around it came and went.
     @Test func aCookKeepsItsIDInEveryBatchItIsSentIn() {
         let kept = CookEntry.fixture("eggs", on: .september(30))
-        let first = ([kept] + cooks(2)).map { SavedCookEntry($0) }.outboxBatch(calendar: calendar)
-        let retried = ([kept] + cooks(150)).map { SavedCookEntry($0) }.shuffled().outboxBatch(calendar: calendar)
-        let later = [SavedCookEntry(kept)].outboxBatch(calendar: calendar)
+        let first = batch(of: ([kept] + cooks(2)).map { SavedCookEntry($0) })
+        let retried = batch(of: ([kept] + cooks(150)).map { SavedCookEntry($0) }.shuffled())
+        let later = batch(of: [SavedCookEntry(kept)])
         #expect(first.entries.contains { $0.id == kept.id })
         #expect(retried.entries.contains { $0.id == kept.id })
         #expect(later.entries.map(\.id) == [kept.id])
     }
 
     @Test func anEmptyOutboxGivesAnEmptyBatch() {
-        #expect([SavedCookEntry]().outboxBatch(calendar: calendar).entries.isEmpty)
+        #expect([SavedCookEntry]().outboxBatch(for: CookEntry.fixtureAccount, calendar: calendar).entries.isEmpty)
     }
 }

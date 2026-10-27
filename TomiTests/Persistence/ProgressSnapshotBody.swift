@@ -2,9 +2,11 @@ import Foundation
 
 /// Snapshot bodies as `GET /v1/progress` sends them, built from tomi-backend's example in `docs/progress.md`.
 enum ProgressSnapshotBody {
-    /// The backend's example, with the XP given.
-    static func example(xp: Int = 360) -> Data {
-        Data(exampleText.replacingOccurrences(of: #""xp": 360"#, with: #""xp": "# + String(xp)).utf8)
+    /// The backend's example, with the XP given and, when a test needs one, the moment the server computed it.
+    static func example(xp: Int = 360, computedAt: String = "2026-10-26T18:43:02Z") -> Data {
+        let withXP = exampleText.replacingOccurrences(of: #""xp": 360"#, with: #""xp": "# + String(xp))
+        let moment = withXP.replacingOccurrences(of: "2026-10-26T18:43:02Z", with: computedAt)
+        return Data(moment.utf8)
     }
 
     private static let exampleText = """

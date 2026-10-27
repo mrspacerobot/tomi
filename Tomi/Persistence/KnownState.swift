@@ -55,7 +55,7 @@ struct KnownState {
     private func entry(of lesson: CookedLesson, on date: Date) -> CookEntry {
         let goal = profile.weeklyGoal
         let session = CookSession(date: date, result: .finished(quizCorrect: true), weeklyGoal: goal)
-        return CookEntry(id: UUID(), lesson: lesson, session: session)
+        return CookEntry(id: UUID(), lesson: lesson, session: session, account: FakeAuthService.account)
     }
 
     /// Six in the evening, so many days after Monday 5 October 2026. A fixed day, never the clock.

@@ -3,6 +3,7 @@ import Synchronization
 /// Sign-in for previews and UI tests: any identity signs in, and the token is a fixed word.
 nonisolated final class FakeAuthService: AuthService {
     static let token = "fake-access-token"
+    static let account = "fake-account"
 
     private let signedIn: Mutex<Bool>
 
@@ -37,6 +38,13 @@ nonisolated final class FakeAuthService: AuthService {
 
     func renewedAccessToken() async throws -> String {
         try await accessToken()
+    }
+
+    func accountID() -> String? {
+        guard signedIn.withLock({ $0 }) else {
+            return nil
+        }
+        return Self.account
     }
 
     func signOut() async throws {

@@ -20,6 +20,7 @@ final class CookLogRecord {
     var weeklyGoal: Int?
     var refusedCode: String?
     var timeZone: String?
+    var account: String?
 
     init(_ saved: SavedCookEntry) {
         stableID = saved.stableID
@@ -30,7 +31,12 @@ final class CookLogRecord {
         stoppedEarly = saved.stoppedEarly
         quizCorrect = saved.quizCorrect
         weeklyGoal = saved.weeklyGoal
+        copyOutbox(from: saved)
+    }
+
+    private func copyOutbox(from saved: SavedCookEntry) {
         refusedCode = saved.refusedCode
         timeZone = saved.timeZone
+        account = saved.account
     }
 }

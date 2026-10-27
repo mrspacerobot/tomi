@@ -15,12 +15,22 @@ public struct ServerInstant: Hashable, Codable, Sendable {
     public init(from decoder: any Decoder) throws {
         let text = try decoder.singleValueContainer().decode(String.self)
         for style in Self.styles {
-            if let date = try? style.parse(text) {
+            if let date = try? style.parse(text), Self.isExactly(text, the: date) {
                 self.date = date
                 return
             }
         }
         throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "Not an instant."))
+    }
+
+    /// The parser reads past the end of the text and moves an impossible day, such as 30 February, to the next
+    /// month. The text is an instant only when it is nothing but the date and time it names, to the second and
+    /// in UTC, so the instant must write itself back as the same seconds.
+    private static func isExactly(_ text: String, the date: Date) -> Bool {
+        guard let shape = text.wholeMatch(of: /(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(\.\d+)?Z/) else {
+            return false
+        }
+        return date.formatted(Date.ISO8601FormatStyle()) == shape.1 + "Z"
     }
 
     public func encode(to encoder: any Encoder) throws {

@@ -15,18 +15,24 @@ extension CookEntryUploader {
         }
     }
 
-    /// Every cook stays in the outbox after a failure. Only when it is tried again differs.
+    /// Every cook stays in the outbox after a failure. `CookOutbox.wait(after:)` says when it is sent again.
     private func react(to error: any Error) {
-        switch error as? BackendError {
-        case .server(status: 422, _)?:
-            Self.logger.error("The server could not read a batch. The cooks wait for the next launch.")
-            isHeldUntilLaunch = true
-        case .notSignedIn?:
-            Self.logger.notice("Nobody is signed in. The cooks wait for the next sign-in.")
-        default:
-            Self.logger.notice("A batch was not sent: \(String(describing: error), privacy: .public)")
-            tryAgainLater()
+        let failure = (error as? BackendError)?.outboxFailure ?? .other
+        switch CookOutbox.wait(after: failure) {
+        case .untilLaunch: holdUntilLaunch()
+        case .untilSignIn: Self.logger.notice("Nobody is signed in. The cooks wait for the next sign-in.")
+        case .withBackoff: retryWithBackoff(after: error)
         }
+    }
+
+    private func holdUntilLaunch() {
+        Self.logger.error("The server could not read a batch. The cooks wait for the next launch.")
+        isHeldUntilLaunch = true
+    }
+
+    private func retryWithBackoff(after error: any Error) {
+        Self.logger.notice("A batch was not sent: \(String(describing: error), privacy: .public)")
+        tryAgainLater()
     }
 
     /// Keeps the snapshot, then forgets or refuses each cook the server answered for. An answer that changed no
@@ -76,7 +82,7 @@ extension CookEntryUploader {
             return
         }
         do {
-            try store.saveProgressSnapshot(body, at: clock.now())
+            try store.keepProgressSnapshot(body, at: clock.now())
         } catch {
             Self.logger.error("The snapshot could not be kept: \(String(describing: error), privacy: .public)")
         }

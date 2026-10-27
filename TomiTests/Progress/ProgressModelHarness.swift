@@ -12,7 +12,7 @@ enum ProgressModelHarness {
     }
 
     static func model(store: any ProgressStore, server: Server, now: Date = .october(27)) -> ProgressModel {
-        ProgressModel(store: store, api: api(server), clock: clock(at: now))
+        ProgressModel(store: store, server: progressServer(server), clock: clock(at: now))
     }
 
     /// A store holding the backend's example snapshot, 360 XP, whose week ends on 1 November at 23:00 UTC.
@@ -20,6 +20,10 @@ enum ProgressModelHarness {
         let store = InMemoryProgressStore()
         try store.saveProgressSnapshot(ProgressSnapshotBody.example(), at: .october(26))
         return store
+    }
+
+    private static func progressServer(_ server: Server) -> ProgressServer {
+        ProgressServer(api: api(server), auth: FakeAuthService(signedIn: true))
     }
 
     private static func api(_ server: Server) -> FakeTomiAPI {

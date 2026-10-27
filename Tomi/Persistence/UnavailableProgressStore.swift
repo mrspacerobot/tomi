@@ -33,7 +33,7 @@ struct UnavailableProgressStore: ProgressStore {
         throw ProgressStoreError.unavailable
     }
 
-    func pendingCookEntries() throws -> [CookEntry] {
+    func pendingCookEntries(for account: String) throws -> [CookEntry] {
         throw ProgressStoreError.unavailable
     }
 
