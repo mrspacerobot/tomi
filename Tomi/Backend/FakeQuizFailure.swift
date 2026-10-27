@@ -1,3 +1,5 @@
+import TomiCore
+
 /// How the fake server fails every quiz pick, when a flow needs it to.
 nonisolated enum FakeQuizFailure: Equatable {
     /// As if the phone had no connection.
