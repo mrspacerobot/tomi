@@ -6,21 +6,8 @@ import TomiCore
 
 /// How every call reaches the server: address, language, token, one renewal on 401, and the error body.
 @Suite struct APIClientTests {
-    let base = URL(string: "https://api.example.test")!
-
-    /// The client under test with the transport and sign-in it talks to.
-    struct Harness {
-        let api: URLSessionTomiAPI
-        let transport: StubTransport
-        let auth: StubAuth
-    }
-
-    func make(_ answers: [StubTransport.Answer]) -> Harness {
-        let transport = StubTransport(answers)
-        let auth = StubAuth()
-        var client = APIClient(baseURL: base, auth: auth, transport: transport)
-        client.languages = ["fr-CH", "en"]
-        return Harness(api: URLSessionTomiAPI(client: client), transport: transport, auth: auth)
+    func make(_ answers: [StubTransport.Answer]) -> APIHarness {
+        APIHarness(answers)
     }
 
     @Test func theOptionsAreAskedInTheCooksLanguageWithoutAToken() async throws {

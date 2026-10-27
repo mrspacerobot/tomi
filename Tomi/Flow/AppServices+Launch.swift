@@ -46,10 +46,20 @@ extension AppServices {
         FakeTomiAPIConfiguration(
             suggestionsNothing: options.suggestionsNothing,
             guidedCooking: options.guidedCooking,
-            profileRefreshFails: options.profileRefreshFails,
-            profileRefreshChanges: options.profileRefreshChanges,
-            profileRefreshWaits: options.profileRefreshWaits
+            profileRefreshFails: options.profileRefresh.fails,
+            profileRefreshChanges: options.profileRefresh.changes,
+            profileRefreshWaits: options.profileRefresh.waits,
+            quiz: fakeQuiz(options),
+            quizOffline: options.quiz.isOffline
         )
+    }
+
+    /// The invented quiz the launch handed over, or none when there is none or it cannot be read.
+    private static func fakeQuiz(_ options: BackendLaunchOptions) -> FakeQuiz? {
+        guard let text = options.quiz.fixture else {
+            return nil
+        }
+        return try? FakeQuiz.decode(from: text)
     }
 
     /// A cook who starts signed in has been here before: the fake server holds the answers saved on the phone,

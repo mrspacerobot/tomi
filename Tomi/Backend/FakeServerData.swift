@@ -58,10 +58,11 @@ nonisolated struct FakeServerData: Sendable {
         return response
     }
 
-    func guidedSuggestion(for profile: CookProfile) throws -> SuggestionsResponse {
+    /// The backend's teaching suggestion, asking the invented quiz in place of the graph's, or no quiz without one.
+    func guidedSuggestion(for profile: CookProfile, quiz: FakeQuiz?) throws -> SuggestionsResponse {
         var response = SuggestionsResponse()
         response.rankedBy = .overlap
-        response.special = try FakeGuidedSuggestion.read(profile: profile)
+        response.special = try FakeGuidedSuggestion.read(profile: profile, quiz: quiz)
         return response
     }
 }

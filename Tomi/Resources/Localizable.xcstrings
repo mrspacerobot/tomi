@@ -2912,6 +2912,18 @@
           }
         }
       }
+    },
+    "problem.graphVersionChanged": {
+      "comment": "Shown when Tomi's server has a newer cooking graph than the suggestion the cook is using, for example during a quiz. The cook asks for tonight's suggestions again.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi's recipes changed since this suggestion. Ask for tonight's suggestions again."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

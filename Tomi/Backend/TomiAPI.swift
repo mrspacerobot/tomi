@@ -15,4 +15,7 @@ nonisolated protocol TomiAPI: Sendable {
     func scan(jpeg: Data) async throws -> ScanResult
     func resolve(_ labels: [String]) async throws -> ResolveResponse
     func suggestions(_ request: SuggestionsRequest) async throws -> SuggestionsResponse
+    /// Sends one quiz pick and reads the server's right or wrong. The app never knows the right choice: the server
+    /// holds it, scores the first pick of each question, and explains once the pick is right. Needs a connection.
+    func answerQuiz(_ pick: QuizPick) async throws -> QuizVerdict
 }

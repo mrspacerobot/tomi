@@ -29,4 +29,13 @@ nonisolated struct URLSessionTomiAPI: TomiAPI {
     func suggestions(_ request: SuggestionsRequest) async throws -> SuggestionsResponse {
         try await client.value(SuggestionsResponse.self, for: try APIRequest.suggestions.sending(request))
     }
+
+    /// An answer to another question than the one asked is refused, never shown.
+    func answerQuiz(_ pick: QuizPick) async throws -> QuizVerdict {
+        let verdict = try await client.value(QuizVerdict.self, for: try APIRequest.quizAnswers.sending(pick))
+        guard verdict.answers(pick) else {
+            throw BackendError.unreadableResponse(status: 200)
+        }
+        return verdict
+    }
 }

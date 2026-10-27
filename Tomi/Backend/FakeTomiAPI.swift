@@ -12,6 +12,7 @@ actor FakeTomiAPI: TomiAPI {
     private var profileReadCount = 0
     private var pendingProfile: CheckedContinuation<ProfileEnvelope, Never>?
     private var envelope: ProfileEnvelope
+    private var quizMarking: FakeQuizMarking?
 
     /// The fake cook's profile starts as given: a new cook by default.
     init(
@@ -22,6 +23,7 @@ actor FakeTomiAPI: TomiAPI {
         data = FakeServerData(library: library)
         envelope = ProfileEnvelope(version: 0, schemaVersion: Self.profileSchemaVersion, profile: profile)
         self.configuration = configuration
+        quizMarking = configuration.quiz.map(FakeQuizMarking.init)
     }
 
     func options() async throws -> LibraryOptions {
@@ -75,7 +77,18 @@ actor FakeTomiAPI: TomiAPI {
         if configuration.suggestionsNothing {
             return SuggestionsResponse()
         }
-        if configuration.guidedCooking { return try data.guidedSuggestion(for: envelope.profile) }
+        if configuration.guidedCooking {
+            return try data.guidedSuggestion(for: envelope.profile, quiz: configuration.quiz)
+        }
         return try data.suggestions(for: envelope.profile)
+    }
+
+    /// Marks the pick from the invented quiz, or fails as offline. Without a quiz the fake asked no question.
+    func answerQuiz(_ pick: QuizPick) async throws -> QuizVerdict {
+        guard !configuration.quizOffline, var marking = quizMarking else {
+            throw BackendError.unreachable
+        }
+        defer { quizMarking = marking }
+        return try marking.verdict(for: pick)
     }
 }
