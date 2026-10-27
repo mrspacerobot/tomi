@@ -76,6 +76,8 @@ import TomiCore
         #expect(options.quiz.fixture == (try FakeQuizFixture.text()))
         #expect(!options.quiz.isOffline)
         #expect(BackendLaunchOptions(arguments: ["--fake-quiz-offline"]).quiz.isOffline)
+        #expect(BackendLaunchOptions(arguments: ["--fake-quiz-graph-changed"]).quiz.isGraphChanged)
+        #expect(!options.quiz.isGraphChanged)
         #expect(BackendLaunchOptions(arguments: ["--fake-quiz"]).quiz.fixture == nil)
         #expect(BackendLaunchOptions(arguments: ["--fake-quiz", "{not base64}"]).quiz.fixture == nil)
     }

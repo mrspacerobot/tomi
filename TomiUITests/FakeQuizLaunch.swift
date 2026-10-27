@@ -17,4 +17,8 @@ final class FakeQuizLaunch {
     static var offline: [String] {
         arguments + ["--fake-quiz-offline"]
     }
+
+    static var graphChanged: [String] {
+        arguments + ["--fake-quiz-graph-changed"]
+    }
 }

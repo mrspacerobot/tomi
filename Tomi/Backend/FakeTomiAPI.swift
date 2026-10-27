@@ -10,6 +10,8 @@ actor FakeTomiAPI: TomiAPI {
     private let data: FakeServerData
     private let configuration: FakeTomiAPIConfiguration
     private var profileReadCount = 0
+    /// How many quiz picks reached the fake, so a test can tell a pick that was never sent.
+    private(set) var quizPicksReceived = 0
     private var pendingProfile: CheckedContinuation<ProfileEnvelope, Never>?
     private var envelope: ProfileEnvelope
     private var quizMarking: FakeQuizMarking?
@@ -86,6 +88,10 @@ actor FakeTomiAPI: TomiAPI {
 
     /// Marks the pick from the invented quiz, or fails as offline. Without a quiz the fake asked no question.
     func answerQuiz(_ pick: QuizPick) async throws -> QuizVerdict {
+        quizPicksReceived += 1
+        if configuration.quizGraphChanged {
+            throw BackendError.server(status: 409, APIError(codeName: "graph_version_changed", message: "New."))
+        }
         guard !configuration.quizOffline, var marking = quizMarking else {
             throw BackendError.unreachable
         }

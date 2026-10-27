@@ -11,6 +11,8 @@ nonisolated struct FakeTomiAPIConfiguration {
     let quiz: FakeQuiz?
     /// Every quiz pick fails as if the phone had no connection.
     let quizOffline: Bool
+    /// Every quiz pick is answered `409 graph_version_changed`, as when the server's graph moved on.
+    let quizGraphChanged: Bool
 
     init(
         suggestionsNothing: Bool = false,
@@ -20,7 +22,8 @@ nonisolated struct FakeTomiAPIConfiguration {
         profileRefreshWaits: Bool = false,
         profileRefreshChangesLate: Bool = false,
         quiz: FakeQuiz? = nil,
-        quizOffline: Bool = false
+        quizOffline: Bool = false,
+        quizGraphChanged: Bool = false
     ) {
         self.suggestionsNothing = suggestionsNothing
         self.guidedCooking = guidedCooking
@@ -30,5 +33,6 @@ nonisolated struct FakeTomiAPIConfiguration {
         self.profileRefreshChangesLate = profileRefreshChangesLate
         self.quiz = quiz
         self.quizOffline = quizOffline
+        self.quizGraphChanged = quizGraphChanged
     }
 }

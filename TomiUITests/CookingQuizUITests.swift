@@ -32,6 +32,19 @@ final class CookingQuizUITests: XCTestCase {
         assertBackAtTheRecipe(app, identifier: identifier)
     }
 
+    /// The graph moved on: the pick cannot be checked again, so the only way on is to carry on without the quiz.
+    @MainActor
+    func testAfterTheGraphChangedTheQuizCannotBeCheckedAgainAndTheCookCarriesOn() {
+        let (app, identifier) = cookingIntroduction(extra: FakeQuizLaunch.graphChanged)
+        openTheQuiz(app)
+        pick(app, choice: 0)
+        XCTAssertTrue(app.element("cooking-quiz-problem").waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["cooking-quiz-check"].exists)
+        XCTAssertFalse(app.element("cooking-quiz-verdict").exists)
+        app.buttons["cooking-quiz-skip"].tap()
+        assertBackAtTheRecipe(app, identifier: identifier)
+    }
+
     /// Nothing can be checked before a choice is ticked; a wrong pick is struck out and says so in words, with no
     /// explanation; the right one then shows the server's explanation.
     @MainActor private func answerTheFirstQuestionWrongThenRight(_ app: XCUIApplication) {
