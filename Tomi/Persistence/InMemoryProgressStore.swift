@@ -38,8 +38,8 @@ final class InMemoryProgressStore: ProgressStore {
         bookmark = nil
     }
 
-    func pendingCookEntries() throws -> [CookEntry] {
-        cooks.pendingCookEntries
+    func pendingCookEntries(for account: String) throws -> [CookEntry] {
+        cooks.pendingCookEntries(for: account)
     }
 
     func forgetCookEntries(ids: Set<UUID>) throws {

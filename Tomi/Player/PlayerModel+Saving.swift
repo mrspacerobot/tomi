@@ -26,8 +26,9 @@ extension PlayerModel {
         let lesson = CookedLesson(id: dish.id, skill: dish.skill, level: dish.level)
         var session = CookSession(date: .now, result: result, weeklyGoal: profile.weeklyGoal)
         session.timeZone = .current
+        let account = auth.accountID()
         attempt {
-            try store.add(CookEntry(id: UUID(), lesson: lesson, session: session))
+            try store.add(CookEntry(id: UUID(), lesson: lesson, session: session, account: account))
             try store.clearActiveLesson()
         }
         uploader.upload()

@@ -138,9 +138,11 @@ The stored records and their fields. These names, and the names of the four reco
 | Record | Stored fields |
 |---|---|
 | `ProfileRecord` | `stableID`, `updatedAt`, `diet`, `avoid`, `cuisinesLoved`, `cuisinesToTry`, `cuisinesNever`, `cupboardStaples`, `cupboardAnswered`, `equipment`, `experience`, `servings`, `units`, `weeklyGoal`, `focusSkill`, `onboardingDone` |
-| `CookLogRecord` | `stableID`, `lesson`, `skill`, `level`, `date`, `stoppedEarly`, `quizCorrect`, `weeklyGoal`, `refusedCode`, `timeZone` |
+| `CookLogRecord` | `stableID`, `lesson`, `skill`, `level`, `date`, `stoppedEarly`, `quizCorrect`, `weeklyGoal`, `refusedCode`, `timeZone`, `account` |
 | `ActiveLessonRecord` | `stableID`, `updatedAt`, `lesson`, `lessonRevision`, `swappedOut`, `swappedIn`, `ingredients`, `currentStep` |
 | `ProgressSnapshotRecord` | `stableID`, `receivedAt`, `body` |
+
+Added in #162: `account` on `CookLogRecord`, the id of the signed-in account that cooked it (the `sub` of its access token, read by `AuthSession.accountID`). Only that account sends the cook (`pendingCookEntries(for:)`), so cooks saved by one cook are never uploaded with the credentials of the next cook who signs in on the same phone, where the server would credit them to the wrong account. A cook saved without an account, or before the field existed, stays on the phone and is never sent.
 
 Added in #161: `refusedCode` and `timeZone` on `CookLogRecord`, and the record `ProgressSnapshotRecord`. `refusedCode` is the server's problem code when it rejected the entry, so it is never sent again. `timeZone` is the IANA identifier of the zone the cook was made in, written when the cook is saved (owner's decision: the server judges each past week by every entry's own zone, so a cook who travels before the phone is back online still counts on the day they cooked). `ProgressSnapshotRecord` holds the server's snapshot JSON exactly as received (`body`) and when the phone received it (`receivedAt`), so the record holds no rule.
 

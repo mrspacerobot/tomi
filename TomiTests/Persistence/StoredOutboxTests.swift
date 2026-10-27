@@ -35,7 +35,7 @@ import TomiCore
         broken.date = nil
         try fixture.insertCook(broken)
         try fixture.store.add(cook)
-        #expect(try fixture.store.pendingCookEntries() == [cook])
+        #expect(try fixture.store.pendingCookEntries(for: CookEntry.fixtureAccount) == [cook])
         try fixture.store.forgetCookEntries(ids: [cook.id])
         #expect(try fixture.count(of: CookLogRecord.self) == 1)
     }

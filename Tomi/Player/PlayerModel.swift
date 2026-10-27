@@ -15,6 +15,7 @@ final class PlayerModel {
     private(set) var chosenAnswer: Int?
     let store: any ProgressStore
     let uploader: CookEntryUploader
+    let auth: any AuthService
 
     init(dish: Lesson, brief: PlayerBrief, flow: AppFlowModel) {
         self.dish = dish
@@ -22,6 +23,7 @@ final class PlayerModel {
         profile = flow.profile.profile
         store = flow.services.store
         uploader = flow.uploader
+        auth = flow.services.auth
     }
 
     var units: Units {

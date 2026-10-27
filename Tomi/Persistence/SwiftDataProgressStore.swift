@@ -65,8 +65,8 @@ final class SwiftDataProgressStore: ProgressStore {
         try saving { try bookmarks.clear() }
     }
 
-    func pendingCookEntries() throws -> [CookEntry] {
-        try cooks.records().map(\.saved).pendingCookEntries
+    func pendingCookEntries(for account: String) throws -> [CookEntry] {
+        try cooks.records().map(\.saved).pendingCookEntries(for: account)
     }
 
     func forgetCookEntries(ids: Set<UUID>) throws {

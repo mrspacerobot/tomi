@@ -13,7 +13,7 @@ import TomiCore
     @Test func aCookIsSavedWithTheZoneItWasCookedIn() throws {
         let model = try player()
         model.stop()
-        let saved = try store.pendingCookEntries()
+        let saved = try store.pendingCookEntries(for: CookEntry.fixtureAccount)
         #expect(saved.count == 1)
         #expect(saved.first?.session.timeZone == TimeZone.current)
     }
@@ -23,14 +23,29 @@ import TomiCore
         let model = try player()
         model.finish()
         await model.uploader.waitUntilIdle()
-        #expect(try store.pendingCookEntries().isEmpty)
+        #expect(try store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
         #expect(try store.progressSnapshot() != nil)
     }
 
-    private func player() throws -> PlayerModel {
+    /// The cook is saved under the account that cooked it, so no other account who signs in on this phone sends it.
+    @Test func aCookIsSavedUnderTheAccountThatCookedIt() throws {
+        let model = try player()
+        model.stop()
+        let saved = try store.cookLog()
+        #expect(saved.map(\.account) == [FakeAuthService.account])
+    }
+
+    @Test func aCookSavedWithNobodySignedInHasNoAccountAndIsNeverSent() throws {
+        let model = try player(signedIn: false)
+        model.stop()
+        #expect(try store.cookLog().map(\.account) == [nil])
+        #expect(try store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
+    }
+
+    private func player(signedIn: Bool = true) throws -> PlayerModel {
         let dish = try LibraryFixture.shippedOmelette()
         let brief = PlayerBrief(lessonID: dish.id, revision: dish.revision, title: "", swaps: [], ingredients: [])
-        let flow = AppFlowModel(services: .fake(library: BundledLessonLibrary(), store: store))
-        return PlayerModel(dish: dish, brief: brief, flow: flow)
+        let services = AppServices.fake(library: BundledLessonLibrary(), store: store, signedIn: signedIn)
+        return PlayerModel(dish: dish, brief: brief, flow: AppFlowModel(services: services))
     }
 }

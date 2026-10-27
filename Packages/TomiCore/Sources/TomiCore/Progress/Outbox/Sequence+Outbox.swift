@@ -9,9 +9,14 @@ extension Sequence where Element == SavedCookEntry {
         return cookLog.filter { !refused.contains($0.id) }
     }
 
-    /// The next batch to send out of the pending cooks. The same records in any order give the same batch.
-    public func outboxBatch(calendar: Calendar) -> CookEntriesRequest {
-        pendingCookEntries.outboxBatch(calendar: calendar)
+    /// The pending cooks this account made. A cook of another account, or of none, stays on the phone untouched.
+    public func pendingCookEntries(for account: String) -> [CookEntry] {
+        pendingCookEntries.filter { $0.account == account }
+    }
+
+    /// The next batch to send out of the cooks this account made. The same records in any order give the same batch.
+    public func outboxBatch(for account: String, calendar: Calendar) -> CookEntriesRequest {
+        pendingCookEntries(for: account).outboxBatch(calendar: calendar)
     }
 
     private var refusedIDs: Set<UUID> {

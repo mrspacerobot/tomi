@@ -31,10 +31,10 @@ import TomiCore
         await harness.upload(with: uploader)
         await harness.upload(with: uploader)
         #expect(await api.sent.count == 1)
-        #expect(try harness.store.pendingCookEntries().map(\.id) == ids)
+        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).map(\.id) == ids)
         await harness.upload(with: harness.uploader(api))
         #expect(await api.sent.count == 2)
-        #expect(try harness.store.pendingCookEntries().isEmpty)
+        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
     }
 
     @Test func aBatchTheServerCannotReadSetsNoTimer() async throws {
@@ -52,7 +52,7 @@ import TomiCore
         let uploader = harness.uploader(api)
         await harness.upload(with: uploader)
         #expect(uploader.nextTryDelay == nil)
-        #expect(try harness.store.pendingCookEntries().count == 1)
+        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).count == 1)
     }
 
     /// An answer that changes nothing, such as a status this app does not know, is a failed try: the cooks stay and
@@ -64,7 +64,7 @@ import TomiCore
         await harness.upload(with: harness.uploader(api))
         #expect(await waits.next() == .seconds(2))
         #expect(await api.sent.count == 1)
-        #expect(try harness.store.pendingCookEntries().count == 1)
+        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).count == 1)
         #expect(try harness.store.progressSnapshot() == (try FakeProgressFixture.returning.snapshot()))
     }
 
@@ -76,12 +76,7 @@ import TomiCore
 
     @Test func savedDataThatCannotBeReadSendsNothing() async {
         let api = ScriptedProgressAPI(ScriptedReply.acceptingAll)
-        let clock = UploaderClock(
-            now: { .october(27) },
-            calendar: { UploaderHarness.calendar },
-            sleeper: harness.sleeper
-        )
-        let uploader = CookEntryUploader(api: api, store: UnavailableProgressStore(), clock: clock)
+        let uploader = harness.uploader(api, over: UnavailableProgressStore())
         await harness.upload(with: uploader)
         #expect(await api.sent.isEmpty)
     }

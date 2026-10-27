@@ -16,6 +16,7 @@ final class StubAuth: AuthService {
     func createAccount(email: String, password: String) async throws -> SignUpResult { .emailConfirmationRequired }
     func sendPasswordReset(to email: String) async throws {}
     func signOut() async throws {}
+    func accountID() -> String? { "stub-account" }
 
     func accessToken() async throws -> String {
         if renewalCount == 0 {

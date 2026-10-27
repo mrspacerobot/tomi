@@ -10,7 +10,7 @@ import Testing
 
     @Test func aCookIsSentWithTheZoneItWasCookedInNotTheZoneOfTheUpload() {
         let tokyo = CookEntry.fixture("knife").cooked(in: "Asia/Tokyo")
-        let batch = [SavedCookEntry(tokyo)].outboxBatch(calendar: home)
+        let batch = [SavedCookEntry(tokyo)].outboxBatch(for: CookEntry.fixtureAccount, calendar: home)
         #expect(batch.entries.map(\.timeZone) == ["Asia/Tokyo"])
         #expect(batch.calendar == CalendarContext(timeZone: "Europe/Amsterdam", firstWeekday: 2))
     }
@@ -18,7 +18,10 @@ import Testing
     @Test func cooksFromSeveralZonesKeepTheirOwnZoneInOneBatch() {
         let tokyo = CookEntry.fixture("knife", on: .october(5)).cooked(in: "Asia/Tokyo")
         let newYork = CookEntry.fixture("eggs", on: .october(6)).cooked(in: "America/New_York")
-        let batch = [newYork, tokyo].map { SavedCookEntry($0) }.outboxBatch(calendar: home)
+        let batch = [newYork, tokyo].map { SavedCookEntry($0) }.outboxBatch(
+            for: CookEntry.fixtureAccount,
+            calendar: home
+        )
         #expect(batch.entries.map(\.timeZone) == ["Asia/Tokyo", "America/New_York"])
     }
 
@@ -26,14 +29,18 @@ import Testing
     @Test func aCookSavedBeforeZonesWereRecordedIsSentWithTheCalendarsZone() {
         let older = CookEntry.fixture("knife", on: .october(5))
         let newer = CookEntry.fixture("eggs", on: .october(6)).cooked(in: "Asia/Tokyo")
-        let batch = [older, newer].map { SavedCookEntry($0) }.outboxBatch(calendar: home)
+        let batch = [older, newer].map { SavedCookEntry($0) }.outboxBatch(for: CookEntry.fixtureAccount, calendar: home)
         #expect(batch.entries.map(\.timeZone) == ["Europe/Amsterdam", "Asia/Tokyo"])
     }
 
     @Test func aZoneThisPhoneCannotReadIsSentWithTheCalendarsZone() {
         var saved = SavedCookEntry(.fixture("knife"))
         saved.timeZone = "Mars/Olympus_Mons"
-        #expect([saved].outboxBatch(calendar: home).entries.map(\.timeZone) == ["Europe/Amsterdam"])
+        #expect(
+            [saved].outboxBatch(for: CookEntry.fixtureAccount, calendar: home).entries.map(\.timeZone) == [
+                "Europe/Amsterdam"
+            ]
+        )
     }
 
     @Test func theCooksOfTheLogBatchTheSameAsTheirRecords() {
@@ -42,6 +49,9 @@ import Testing
             CookEntry.fixture("eggs", on: .october(6)),
         ]
         let records = cooks.map { SavedCookEntry($0) }
-        #expect(records.pendingCookEntries.outboxBatch(calendar: home) == records.outboxBatch(calendar: home))
+        #expect(
+            records.pendingCookEntries.outboxBatch(calendar: home)
+                == records.outboxBatch(for: CookEntry.fixtureAccount, calendar: home)
+        )
     }
 }

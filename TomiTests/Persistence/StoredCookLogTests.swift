@@ -45,7 +45,7 @@ import TomiCore
 
     @Test func aCookStoppedEarlyIsKeptAndEarnsNothing() throws {
         let session = CookSession(date: .october(5), result: .stoppedEarly, weeklyGoal: 3)
-        let stopped = CookEntry(id: UUID(), lesson: cook.lesson, session: session)
+        let stopped = CookEntry(id: UUID(), lesson: cook.lesson, session: session, account: cook.account)
         try fixture.store.add(stopped)
         #expect(try fixture.store.cookLog() == [stopped])
         #expect(try fixture.store.cookLog().earnedXP == 0)

@@ -41,6 +41,6 @@ import TomiCore
         let cook = CookEntry.fixture("eggs", onOctober: 5)
         let store = try kind.storeHolding([cook])
         try store.saveProgressSnapshot(ProgressSnapshotBody.example(), at: .october(6))
-        #expect(try store.pendingCookEntries() == [cook])
+        #expect(try store.pendingCookEntries(for: CookEntry.fixtureAccount) == [cook])
     }
 }

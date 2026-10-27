@@ -11,6 +11,7 @@ final class CookEntryUploader {
     static let logger = Logger(category: .progress)
 
     let api: any TomiAPI
+    let auth: any AuthService
     let store: any ProgressStore
     let clock: UploaderClock
     /// The upload running now. A trigger while it runs starts nothing.
@@ -25,9 +26,10 @@ final class CookEntryUploader {
     /// the next launch, which may be a newer app.
     var isHeldUntilLaunch = false
 
-    init(api: any TomiAPI, store: any ProgressStore, clock: UploaderClock) {
-        self.api = api
-        self.store = store
+    init(_ services: OutboxServices, clock: UploaderClock) {
+        api = services.api
+        auth = services.auth
+        store = services.store
         self.clock = clock
     }
 
@@ -60,11 +62,20 @@ final class CookEntryUploader {
         }
     }
 
-    /// The oldest pending cooks, or nil when there are none or saved data cannot be read. Then nothing is sent:
-    /// without the store, no answer could be kept.
+    /// The oldest pending cooks of the signed-in account, or nil when there are none, nobody is signed in or saved
+    /// data cannot be read. Then nothing is sent: without the account no cook may go, and without the store no
+    /// answer could be kept. A cook of another account stays on the phone until that account signs in.
     private func nextBatch() -> CookEntriesRequest? {
+        guard let account = auth.accountID() else {
+            Self.logger.notice("Nobody is signed in. The cooks wait for the next sign-in.")
+            return nil
+        }
+        return batch(of: account)
+    }
+
+    private func batch(of account: String) -> CookEntriesRequest? {
         do {
-            let pending = try store.pendingCookEntries()
+            let pending = try store.pendingCookEntries(for: account)
             guard !pending.isEmpty else {
                 return nil
             }
