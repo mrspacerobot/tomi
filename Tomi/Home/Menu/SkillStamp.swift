@@ -15,6 +15,8 @@ struct SkillStamp: View {
                 .foregroundStyle(ColorRole.stampRedMark.color)
         }
         .frame(width: Spacing.large, height: Spacing.large)
+        // The ring is stroked on the frame's edge, so half its line stands outside: this keeps it in the margin.
+        .padding(RuleWeight.outline)
         .accessibilityLabel(Text(.homeSkillMastered))
     }
 }
