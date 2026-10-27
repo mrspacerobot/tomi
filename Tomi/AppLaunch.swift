@@ -16,7 +16,7 @@ struct AppLaunch {
         let flow = Self.flow(arguments: arguments, store: store)
         self.catalog = catalog
         self.flow = flow
-        progress = ProgressModel(store: store, api: flow?.services.api, clock: .phone)
+        progress = ProgressModel(store: store, server: ProgressServer(flow?.services), clock: .phone)
     }
 
     private static func flow(arguments: [String], store: any ProgressStore) -> AppFlowModel? {

@@ -82,7 +82,7 @@ extension CookEntryUploader {
             return
         }
         do {
-            try store.saveProgressSnapshot(body, at: clock.now())
+            try store.keepProgressSnapshot(body, at: clock.now())
         } catch {
             Self.logger.error("The snapshot could not be kept: \(String(describing: error), privacy: .public)")
         }

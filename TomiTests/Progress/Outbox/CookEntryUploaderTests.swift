@@ -18,6 +18,20 @@ import TomiCore
         #expect(try harness.store.progressSnapshot() == (try FakeProgressFixture.returning.snapshot()))
     }
 
+    /// A read of the progress that finished later can have been kept already, with a newer snapshot than the answer.
+    @Test func anAnswerWithAnOlderSnapshotThanTheOneKeptDoesNotReplaceIt() async throws {
+        try harness.saveCooks(1)
+        let newer = ProgressSnapshotBody.example(xp: 999, computedAt: "2030-01-01T00:00:00Z")
+        try harness.store.saveProgressSnapshot(newer, at: .october(26))
+        let api = FakeTomiAPI(
+            library: BundledLessonLibrary(),
+            configuration: .init(progressServer: FakeProgressServer(fixture: .returning))
+        )
+        await harness.upload(with: harness.uploader(api))
+        #expect(try harness.store.progressSnapshot()?.xp == 999)
+        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
+    }
+
     @Test func onlineTheOutboxIsSentOnceWithTheCooksCalendar() async throws {
         let ids = try harness.saveCooks(2)
         let api = ScriptedProgressAPI(ScriptedReply.acceptingAll)

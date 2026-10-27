@@ -11,12 +11,12 @@ extension ProgressModel {
         if let catalog = BundledLibrary.catalog() {
             fill(store, with: KnownState(catalog: catalog))
         }
-        return ProgressModel(store: store, api: nil, clock: .phone)
+        return ProgressModel(store: store, server: .preview, clock: .phone)
     }
 
     /// A launch on which saved data could not be opened.
     static func previewUnavailable() -> ProgressModel {
-        ProgressModel(store: UnavailableProgressStore(), api: nil, clock: .phone)
+        ProgressModel(store: UnavailableProgressStore(), server: .preview, clock: .phone)
     }
 
     private static func fill(_ store: InMemoryProgressStore, with state: KnownState) {

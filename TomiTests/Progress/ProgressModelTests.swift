@@ -20,6 +20,19 @@ import TomiCore
         #expect(model.shown == nil)
     }
 
+    /// A read can be computed before an upload is accepted and still arrive after the upload's answer.
+    @Test func aSnapshotOlderThanTheOneKeptNeverReplacesItAndIsNotShown() async throws {
+        let store = InMemoryProgressStore()
+        try store.saveProgressSnapshot(
+            ProgressSnapshotBody.example(xp: 999, computedAt: "2026-10-28T09:00:00Z"),
+            at: .october(28)
+        )
+        let model = ProgressModelHarness.model(store: store, server: .returning)
+        await model.refresh()
+        #expect(try store.progressSnapshot()?.xp == 999)
+        #expect(model.shown?.snapshot?.xp == 999)
+    }
+
     @Test func theServersSnapshotIsShownAndKept() async throws {
         let store = InMemoryProgressStore()
         let model = ProgressModelHarness.model(store: store, server: .returning)
@@ -59,7 +72,7 @@ import TomiCore
         try store.add(.fixture("eggs", onOctober: 26))
         let model = ProgressModelHarness.model(store: store, server: .offline)
         await model.refresh()
-        try store.forgetCookEntries(ids: Set(try store.pendingCookEntries().map(\.id)))
+        try store.forgetCookEntries(ids: Set(try store.pendingCookEntries(for: CookEntry.fixtureAccount).map(\.id)))
         try store.saveProgressSnapshot(ProgressSnapshotBody.example(xp: 410), at: .october(27))
         model.reload()
         #expect(model.shown?.snapshot?.xp == 410)
