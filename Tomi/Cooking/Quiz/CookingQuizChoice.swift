@@ -2,7 +2,8 @@ import SwiftUI
 import TomiCore
 
 /// One choice of the question. VoiceOver reads its words, "Not right" once the server said so, and "selected" when
-/// it is ticked.
+/// it is ticked. A crossed-out choice, or any choice once the question is right, ignores a tap (`QuizRound.tick`)
+/// rather than being disabled, so it keeps its full colour, as in the mockup.
 struct CookingQuizChoice: View {
     let model: CookingQuizModel
     let position: Int
@@ -17,7 +18,6 @@ struct CookingQuizChoice: View {
         ) {
             model.tick(position)
         }
-        .disabled(isRuledOut || model.round.isAnsweredRight)
         .accessibilityIdentifier("cooking-quiz-choice-" + String(position))
     }
 
