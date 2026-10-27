@@ -29,6 +29,13 @@ extension CookEntry {
         return CookEntry(id: id, lesson: lesson, session: changed)
     }
 
+    /// The same cook, made in the zone with that IANA identifier.
+    func cooked(in zone: String) -> CookEntry {
+        var located = session
+        located.timeZone = TimeZone(identifier: zone)!
+        return CookEntry(id: id, lesson: lesson, session: located)
+    }
+
     func with(lesson id: LessonID) -> CookEntry {
         let changed = CookedLesson(id: id, skill: lesson.skill, level: lesson.level)
         return CookEntry(id: self.id, lesson: changed, session: session)

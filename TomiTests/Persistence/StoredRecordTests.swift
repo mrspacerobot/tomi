@@ -42,6 +42,15 @@ import TomiCore
         #expect(CookLogRecord(saved).saved == saved)
     }
 
+    @Test func aCookRecordKeepsItsZoneAndTheServersRefusal() {
+        var saved = SavedCookEntry(CookEntry.fixture("eggs", onOctober: 5).cooked(in: "Asia/Tokyo"))
+        saved.refusedCode = "cooked_in_future"
+        let record = CookLogRecord(saved)
+        #expect(record.timeZone == "Asia/Tokyo")
+        #expect(record.refusedCode == "cooked_in_future")
+        #expect(record.saved == saved)
+    }
+
     @Test func aCookRecordMadeFromNothingHasNoFields() {
         #expect(CookLogRecord(SavedCookEntry()).saved == SavedCookEntry())
     }
@@ -52,5 +61,16 @@ import TomiCore
         record.write(saved)
         #expect(record.saved == saved)
         #expect(ActiveLessonRecord().saved == SavedActiveLesson())
+    }
+
+    @Test func aSnapshotRecordKeepsEveryField() {
+        let record = ProgressSnapshotRecord()
+        record.stableID = UUID()
+        record.receivedAt = .october(5)
+        record.write(body: ProgressSnapshotBody.example())
+        #expect(record.saved.stableID == record.stableID)
+        #expect(record.saved.receivedAt == .october(5))
+        #expect(record.saved.body == ProgressSnapshotBody.example())
+        #expect(ProgressSnapshotRecord().saved == SavedProgressSnapshot())
     }
 }

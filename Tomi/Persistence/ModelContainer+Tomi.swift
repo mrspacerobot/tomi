@@ -2,9 +2,12 @@ import Foundation
 import SwiftData
 
 extension ModelContainer {
-    /// The container for everything Tomi saves. The three record types are the whole layout.
+    /// The container for everything Tomi saves. The four record types are the whole layout.
     static func tomi(at location: StoreLocation) throws -> ModelContainer {
-        let schema = Schema([ProfileRecord.self, CookLogRecord.self, ActiveLessonRecord.self])
+        let records: [any PersistentModel.Type] = [
+            ProfileRecord.self, CookLogRecord.self, ActiveLessonRecord.self, ProgressSnapshotRecord.self,
+        ]
+        let schema = Schema(records)
         let configuration = try location.configuration(for: schema)
         let container = try ModelContainer(for: schema, configurations: [configuration])
         try container.checkItIsKept(asAskedBy: configuration, at: location)

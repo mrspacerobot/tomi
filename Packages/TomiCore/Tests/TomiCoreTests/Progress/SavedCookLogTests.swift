@@ -52,6 +52,16 @@ import Testing
         #expect([finished, wrong].cookLog == [monday.withTheQuizWrong()])
     }
 
+    @Test func copiesOfOneCookThatDisagreeOnlyInTheirZoneAlwaysGiveTheSameEntry() {
+        let tokyo = SavedCookEntry(monday.cooked(in: "Asia/Tokyo"))
+        let lima = SavedCookEntry(monday.cooked(in: "America/Lima"))
+        let unzoned = SavedCookEntry(monday)
+        #expect([tokyo, lima].cookLog == [lima, tokyo].cookLog)
+        #expect([tokyo, lima].cookLog == [monday.cooked(in: "America/Lima")])
+        #expect([tokyo, unzoned].cookLog == [unzoned, tokyo].cookLog)
+        #expect([tokyo, unzoned].cookLog == [monday])
+    }
+
     @Test func progressAndXPFromTheStoredLogMatchTheLogItWasSavedFrom() {
         let entries = log.cooks(2, of: "knife") + [CookEntry.fixture("eggs").stoppedBeforeTheEnd()]
         let records = (entries + entries).map { SavedCookEntry($0) }

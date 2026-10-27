@@ -20,9 +20,12 @@ extension PlayerModel {
         attempt { try store.saveActiveLesson(active, at: .now) }
     }
 
+    /// The moment and the zone are taken as the cook is saved, so the server counts it on the day it was cooked
+    /// where it was cooked, however far the cook travels before it is sent.
     private func log(_ result: CookResult) {
         let lesson = CookedLesson(id: dish.id, skill: dish.skill, level: dish.level)
-        let session = CookSession(date: .now, result: result, weeklyGoal: profile.weeklyGoal)
+        var session = CookSession(date: .now, result: result, weeklyGoal: profile.weeklyGoal)
+        session.timeZone = .current
         attempt {
             try store.add(CookEntry(id: UUID(), lesson: lesson, session: session))
             try store.clearActiveLesson()

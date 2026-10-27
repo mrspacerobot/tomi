@@ -9,12 +9,9 @@ extension Sequence where Element == SavedCookEntry {
         return cookLog.filter { !refused.contains($0.id) }
     }
 
-    /// The next batch to send: the oldest pending cooks, at most `CookOutbox.largestBatch`, each under the id it
-    /// was saved with, and the calendar passed in. The same records in any order give the same batch.
+    /// The next batch to send out of the pending cooks. The same records in any order give the same batch.
     public func outboxBatch(calendar: Calendar) -> CookEntriesRequest {
-        let oldest = pendingCookEntries.prefix(CookOutbox.largestBatch)
-        let entries = oldest.map { CookEntryPayload(entry: $0, timeZone: calendar.timeZone) }
-        return CookEntriesRequest(calendar: CalendarContext(calendar: calendar), entries: entries)
+        pendingCookEntries.outboxBatch(calendar: calendar)
     }
 
     private var refusedIDs: Set<UUID> {

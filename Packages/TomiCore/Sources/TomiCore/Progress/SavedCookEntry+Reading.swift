@@ -1,3 +1,5 @@
+import Foundation
+
 /// Reads a stored cook back. A record that lacks anything a cook entry needs is not an entry: it gives nil,
 /// counts for nothing, and stays in the store untouched, so nothing is lost and nothing is guessed.
 extension SavedCookEntry {
@@ -20,7 +22,17 @@ extension SavedCookEntry {
         guard let date, let result, let weeklyGoal else {
             return nil
         }
-        return CookSession(date: date, result: result, weeklyGoal: weeklyGoal)
+        var session = CookSession(date: date, result: result, weeklyGoal: weeklyGoal)
+        session.timeZone = readableZone
+        return session
+    }
+
+    /// A zone this phone cannot read is no zone: the cook still counts, and is sent with the zone of the upload.
+    private var readableZone: TimeZone? {
+        guard let timeZone else {
+            return nil
+        }
+        return TimeZone(identifier: timeZone)
     }
 
     /// A record that does not say how the cook ended is not read, so it can never earn anything.

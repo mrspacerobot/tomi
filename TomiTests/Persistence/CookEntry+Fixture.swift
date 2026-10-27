@@ -8,4 +8,11 @@ extension CookEntry {
         let session = CookSession(date: .october(day), result: .finished(quizCorrect: true), weeklyGoal: 3)
         return CookEntry(id: UUID(), lesson: lesson, session: session)
     }
+
+    /// The same cook, made in the zone with that IANA identifier.
+    func cooked(in zone: String) -> CookEntry {
+        var located = session
+        located.timeZone = TimeZone(identifier: zone)!
+        return CookEntry(id: id, lesson: lesson, session: located)
+    }
 }

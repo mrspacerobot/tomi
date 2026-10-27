@@ -11,9 +11,17 @@ extension CookEntry {
 
     private var orderKey: LogOrderKey {
         LogOrderKey(
-            words: [id.uuidString, lesson.id.rawValue, lesson.skill.rawValue],
+            words: [id.uuidString, lesson.id.rawValue, lesson.skill.rawValue, zoneIdentifier],
             numbers: [resultRank, session.weeklyGoal, lesson.level]
         )
+    }
+
+    /// A cook saved before zones were recorded comes before one with a zone.
+    private var zoneIdentifier: String {
+        guard let zone = session.timeZone else {
+            return ""
+        }
+        return zone.identifier
     }
 
     /// Only used to order copies that disagree. The copy that earns least comes first and is the one kept.
