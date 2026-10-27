@@ -4,7 +4,7 @@ import TomiCore
 extension APIClient {
     /// The request as it goes over the wire.
     nonisolated func urlRequest(for request: APIRequest, token: String?) -> URLRequest {
-        var built = URLRequest(url: baseURL.appending(path: request.path))
+        var built = URLRequest(url: url(for: request))
         built.httpMethod = request.method.rawValue
         built.setValue(acceptLanguage, forHTTPHeaderField: HTTPHeader.acceptLanguage)
         built.httpBody = request.body
@@ -25,6 +25,19 @@ extension APIClient {
             throw BackendError.unreadableResponse(status: response.statusCode)
         }
         throw BackendError.server(status: response.statusCode, error)
+    }
+
+    /// The address with the query. A query that cannot be added leaves it out, and the server then refuses the call.
+    nonisolated private func url(for request: APIRequest) -> URL {
+        let path = baseURL.appending(path: request.path)
+        guard !request.query.isEmpty, var components = URLComponents(url: path, resolvingAgainstBaseURL: false) else {
+            return path
+        }
+        components.percentEncodedQueryItems = request.query.map(QueryEscaping.escaped)
+        guard let withQuery = components.url else {
+            return path
+        }
+        return withQuery
     }
 
     /// The cook's languages, most wanted first, as the header lists them.

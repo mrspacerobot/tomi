@@ -15,6 +15,12 @@ nonisolated struct BackendLaunchOptions: Equatable {
     static let fakeProfileRefreshFailsArgument = "--fake-profile-refresh-fails"
     static let fakeProfileRefreshChangesArgument = "--fake-profile-refresh-changes"
     static let fakeProfileRefreshWaitsArgument = "--fake-profile-refresh-waits"
+    /// The fake server's progress is that of a new cook, as it is without an argument.
+    static let fakeProgressNewCookArgument = "--fake-progress-new-cook"
+    /// The fake server's progress is that of a cook who has cooked before.
+    static let fakeProgressReturningArgument = "--fake-progress-returning"
+    /// The fake server's progress routes fail as if the phone were offline.
+    static let fakeCookEntriesOfflineArgument = "--fake-cook-entries-offline"
     /// The fake cook is already signed in.
     static let fakeSignedInArgument = "--fake-signed-in"
 
@@ -24,11 +30,8 @@ nonisolated struct BackendLaunchOptions: Equatable {
     let usesFake: Bool
     let showsAppleSignInButton: Bool
     let usesLocalAPI: Bool
-    let suggestionsNothing: Bool
-    let guidedCooking: Bool
-    let profileRefreshFails: Bool
-    let profileRefreshChanges: Bool
-    let profileRefreshWaits: Bool
+    /// How the fake server behaves, when it is used.
+    let fakeServer: FakeTomiAPIConfiguration
     let startsSignedIn: Bool
     let savedUnlistedAvoid: Bool
 
@@ -36,11 +39,7 @@ nonisolated struct BackendLaunchOptions: Equatable {
         usesFake = arguments.contains(Self.fakeBackendArgument)
         showsAppleSignInButton = arguments.contains(Self.appleSignInButtonArgument)
         usesLocalAPI = arguments.contains(Self.localBackendArgument)
-        suggestionsNothing = arguments.contains(Self.fakeNoSuggestionsArgument)
-        guidedCooking = arguments.contains(Self.fakeGuidedArgument)
-        profileRefreshFails = arguments.contains(Self.fakeProfileRefreshFailsArgument)
-        profileRefreshChanges = arguments.contains(Self.fakeProfileRefreshChangesArgument)
-        profileRefreshWaits = arguments.contains(Self.fakeProfileRefreshWaitsArgument)
+        fakeServer = FakeTomiAPIConfiguration(arguments: arguments)
         startsSignedIn = arguments.contains(Self.fakeSignedInArgument)
         savedUnlistedAvoid = arguments.contains(Self.fakeUnlistedAvoidArgument)
     }

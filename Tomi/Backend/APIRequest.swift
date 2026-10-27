@@ -4,6 +4,8 @@ import Foundation
 nonisolated struct APIRequest: Sendable {
     let method: HTTPMethod
     let path: String
+    /// Values of the query, written as given: `APIClient` escapes them for the wire.
+    var query: [URLQueryItem] = []
     var body: Data?
     var contentType = HTTPHeader.json
     /// Every call but the options carries the cook's access token.

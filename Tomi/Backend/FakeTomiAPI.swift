@@ -3,7 +3,7 @@ import TomiCore
 
 /// Tomi's server for previews and UI tests. It answers from the bundled library and keeps the profile in memory.
 /// It imitates the server's refusals the app must handle: a stale version, and a removed restriction without the
-/// cook's confirmation. It never touches the network.
+/// cook's confirmation. Progress comes from fixture snapshots (`FakeProgressServer`). It never touches the network.
 actor FakeTomiAPI: TomiAPI {
     static let profileSchemaVersion = 2
 
@@ -77,5 +77,13 @@ actor FakeTomiAPI: TomiAPI {
         }
         if configuration.guidedCooking { return try data.guidedSuggestion(for: envelope.profile) }
         return try data.suggestions(for: envelope.profile)
+    }
+
+    func sendCookEntries(_ request: CookEntriesRequest) async throws -> CookEntriesAnswer {
+        try configuration.progressServer.answer(request)
+    }
+
+    func progress(_ calendar: CalendarContext) async throws -> ProgressSnapshot {
+        try configuration.progressServer.progress()
     }
 }

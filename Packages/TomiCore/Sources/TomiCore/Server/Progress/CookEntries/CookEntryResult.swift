@@ -12,6 +12,12 @@ public struct CookEntryResult: Hashable, Decodable, Sendable {
         case id, status, problems
     }
 
+    public init(id: UUID?, status: CookEntryStatus, problems: [CookEntryProblem] = []) {
+        self.id = id
+        self.status = status
+        self.problems = problems
+    }
+
     public init(from decoder: any Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decodeIfPresent(UUID.self, forKey: .id)
