@@ -1,9 +1,7 @@
 import Foundation
 
-@testable import TomiCore
-
-/// A fixed calendar and dates for streak tests, so they never depend on the machine's clock, zone or locale.
-struct StreakTestCalendar {
+/// A fixed calendar and dates for tests, so they never depend on the machine's clock, zone or locale.
+struct TestCalendar {
     let calendar: Calendar
 
     init(timeZone: String = "UTC", firstWeekday: Int = 2) {
@@ -18,13 +16,5 @@ struct StreakTestCalendar {
         var moment = day
         moment.hour = hour
         return calendar.date(from: moment)!
-    }
-
-    func cooks(on days: [DateComponents], goal: Int = 2) -> [CompletedCook] {
-        days.map { CompletedCook(date: date($0), weeklyGoal: goal) }
-    }
-
-    func streak(_ cooks: [CompletedCook], goal: Int = 2, on day: DateComponents) -> Streak {
-        StreakRules(calendar: calendar).streak(for: cooks, goal: goal, now: date(day))
     }
 }

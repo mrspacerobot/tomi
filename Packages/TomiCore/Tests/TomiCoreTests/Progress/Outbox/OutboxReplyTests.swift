@@ -5,7 +5,7 @@ import Testing
 
 /// What the server's answer for each sent cook does to the outbox.
 @Suite struct OutboxReplyTests {
-    let calendar = StreakTestCalendar().calendar
+    let calendar = TestCalendar().calendar
     let cook = CookEntry.fixture("eggs")
 
     func sent(_ cooks: [CookEntry]) -> [CookEntryPayload] {

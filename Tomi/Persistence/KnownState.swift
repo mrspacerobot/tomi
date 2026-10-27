@@ -3,12 +3,15 @@ import TomiCore
 
 /// The saved state UI tests start from, so that what they assert is known in advance.
 /// It is built from the menu it is given and names no technique:
-/// a cook who answered "comfortable", finished onboarding, and has since cooked every level
-/// of the first technique after the first course until it was complete, getting each quiz right.
-/// So the first course is mastered by the profile and one more technique by the cook log.
+/// a cook who answered "comfortable", finished onboarding, and has cooked the first technique after the first course,
+/// twice at each of its levels, getting each quiz right. The cooks are written as unsent cooks; what they are worth
+/// is the server's to say, so the state also holds the fake server's returning snapshot (`KnownState+Writing`).
 struct KnownState {
-    /// Not a lesson of any library. The entries record their own skill and level, which is what counts.
+    /// Not a lesson of any library. The entries record their own skill and level.
     static let lesson = LessonID(rawValue: "known-state-lesson")
+
+    /// How many cooks the log holds at each level. A fixed shape of the seed, not a rule of the game.
+    static let cooksAtEachLevel = 2
 
     let catalog: SkillCatalog
 
@@ -37,7 +40,7 @@ struct KnownState {
         var lessons: [CookedLesson] = []
         for level in skill.levels {
             let lesson = CookedLesson(id: Self.lesson, skill: skill.id, level: level.number)
-            lessons += Array(repeating: lesson, count: GameRules.cooksToCompleteLevel)
+            lessons += Array(repeating: lesson, count: Self.cooksAtEachLevel)
         }
         return lessons
     }

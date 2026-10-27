@@ -5,7 +5,6 @@ import Testing
 
 /// The cook log read out of the store: every cook once, in one fixed order, whatever order the records come in.
 @Suite struct SavedCookLogTests {
-    let log = ProgressTestLog()
     let monday = CookEntry.fixture("knife", on: .october(5))
     let tuesday = CookEntry.fixture("knife", on: .october(6))
     let wednesday = CookEntry.fixture("eggs", on: .october(7))
@@ -62,16 +61,16 @@ import Testing
         #expect([tokyo, unzoned].cookLog == [monday])
     }
 
-    @Test func progressAndXPFromTheStoredLogMatchTheLogItWasSavedFrom() {
-        let entries = log.cooks(2, of: "knife") + [CookEntry.fixture("eggs").stoppedBeforeTheEnd()]
+    @Test func theStoredLogHoldsEveryCookItWasSavedFromOnceStoppedCooksIncluded() {
+        let stopped = CookEntry.fixture("eggs", on: .october(7)).stoppedBeforeTheEnd()
+        let entries = [monday, tuesday, stopped]
         let records = (entries + entries).map { SavedCookEntry($0) }
-        #expect(log.progress(records.cookLog) == log.progress(entries))
-        #expect(records.cookLog.earnedXP == entries.earnedXP)
+        #expect(records.cookLog == entries)
     }
 
-    @Test func aCookOfASkillTheMenuLacksStillEarnsAndNeverBreaksProgress() {
-        let records = [SavedCookEntry(.fixture("sous-vide"))]
-        #expect(records.cookLog.earnedXP == GameRules.xpForFinishedCook(quizCorrect: true))
-        #expect(log.progress(records.cookLog) == log.progress([]))
+    /// The menu plays no part in reading the store: what the server makes of a skill is its own business.
+    @Test func aCookOfASkillTheMenuLacksIsStillRead() {
+        let unknown = CookEntry.fixture("sous-vide")
+        #expect([SavedCookEntry(unknown)].cookLog == [unknown])
     }
 }

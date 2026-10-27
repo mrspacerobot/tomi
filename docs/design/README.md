@@ -9,7 +9,7 @@ Static HTML mockups, approved by the owner. Open a file in a browser. They are t
 | `round1.html` | Three directions compared | Only direction B, "Tasting menu", applies. It has the light home screen with a special (`dir-b-home`). Ignore A and C |
 | `companion-directions.html` | Three directions for how Tomi looks and moves, with the 3D companion of #94 they replace | Only direction A, "Broadcast cartoon", applies (#137): the reference for Tomi's proportions, line, face, gloves and timing everywhere he is drawn. `companion.md` is its handoff |
 
-The mockups show the layout, not the content. Technique, course and level names come from `Tomi/Resources/Library/catalog.json`, which has moved on from the names drawn here (the mockups still say "Knife basics" and "Boil & blanch"). Streaks are weekly and ranks follow `GameRules`; the streak and rank figures in the mockups were updated to match.
+The mockups show the layout, not the content. Technique, course and level names come from `Tomi/Resources/Library/catalog.json`, which has moved on from the names drawn here (the mockups still say "Knife basics" and "Boil & blanch"). Streaks are weekly and ranks follow the server's game rules (tomi-backend); the streak and rank figures in the mockups were updated to match.
 
 Every screen has a stable `id` (for example `ob-cuisines`, `home-empty`, `lp-quiz-wrong`). Issues refer to screens by file and id.
 

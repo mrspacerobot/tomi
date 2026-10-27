@@ -60,7 +60,7 @@ extension SavedProgressSnapshot {
     fileprivate static func received(_ body: String, on day: DateComponents) -> SavedProgressSnapshot {
         var saved = SavedProgressSnapshot()
         saved.stableID = UUID()
-        saved.receivedAt = StreakTestCalendar().date(day)
+        saved.receivedAt = TestCalendar().date(day)
         saved.body = Data(body.utf8)
         return saved
     }

@@ -6,13 +6,12 @@ import TomiCore
 /// the phone or a fake.
 ///
 /// Nothing here is a total. XP, rank, streak and mastery come from the server's snapshot, kept as it was received.
-/// Until #167 the old screens still work them out from the cook log with TomiCore (`ProgressRules`, `GameStateRules`).
 ///
 /// Every read throws when the store cannot be opened or read. The caller must then show that saved data
 /// is unavailable, and never carry on with a default profile.
 protocol ProgressStore {
     /// The last copy of the server's profile, or the defaults when nothing has been saved yet.
-    /// It feeds the progress rules and cooking offline; it never decides what the cook may eat.
+    /// It feeds cooking offline; it never decides what the cook may eat.
     func profile() throws -> CookProfile
 
     /// Saves the copy of the server's profile, replacing whatever was saved before.

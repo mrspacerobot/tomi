@@ -1,6 +1,6 @@
 import Foundation
 
-/// Days of autumn 2026 for the streak tests, as typed values instead of date strings.
+/// Days of autumn 2026 for tests, as typed values instead of date strings.
 /// Mondays: 14, 21 and 28 September, 5, 19 and 26 October, 2 November.
 extension DateComponents {
     static func september(_ day: Int) -> DateComponents {

@@ -29,7 +29,7 @@ import Testing
         #expect(saved.lesson == "a-lesson")
         #expect(saved.skill == "knife")
         #expect(saved.level == 2)
-        #expect(saved.date == StreakTestCalendar().date(.october(7)))
+        #expect(saved.date == TestCalendar().date(.october(7)))
         #expect(saved.stoppedEarly == false)
         #expect(saved.quizCorrect == true)
         #expect(saved.weeklyGoal == 4)

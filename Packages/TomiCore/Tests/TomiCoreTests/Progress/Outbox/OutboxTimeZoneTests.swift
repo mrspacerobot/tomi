@@ -6,7 +6,7 @@ import Testing
 /// Each cook is sent with the zone it was cooked in, so the server counts it on the day it was cooked there,
 /// even when the cook has travelled before the phone is back online.
 @Suite struct OutboxTimeZoneTests {
-    let home = StreakTestCalendar(timeZone: "Europe/Amsterdam", firstWeekday: 2).calendar
+    let home = TestCalendar(timeZone: "Europe/Amsterdam", firstWeekday: 2).calendar
 
     @Test func aCookIsSentWithTheZoneItWasCookedInNotTheZoneOfTheUpload() {
         let tokyo = CookEntry.fixture("knife").cooked(in: "Asia/Tokyo")

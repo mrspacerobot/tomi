@@ -10,7 +10,7 @@ extension SavedCookEntry {
         return CookEntry(id: stableID, lesson: lesson, session: session)
     }
 
-    /// The skill and level are kept as saved, known or not: the progress rules leave out what the menu lacks.
+    /// The skill and level are kept as saved, known or not: the server decides what an unknown one is worth.
     private var cookedLesson: CookedLesson? {
         guard let lesson, let skill, let level else {
             return nil

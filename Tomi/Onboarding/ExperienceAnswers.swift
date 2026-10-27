@@ -2,7 +2,7 @@ import SwiftUI
 import TomiCore
 
 /// How much the cook already cooks, from the server's list, and how many days a week they want to cook.
-/// Only answers this build understands are shown, because the progress rules act on them.
+/// Only answers this build understands are shown, because only those can be kept in the profile.
 struct ExperienceAnswers: View {
     let draft: AnswersDraft
 

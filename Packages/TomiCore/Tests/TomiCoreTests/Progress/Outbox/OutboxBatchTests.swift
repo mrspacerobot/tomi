@@ -5,7 +5,7 @@ import Testing
 
 /// What one upload sends: at most a hundred pending cooks, oldest first, each under the id it was saved with.
 @Suite struct OutboxBatchTests {
-    let calendar = StreakTestCalendar(timeZone: "Europe/Amsterdam", firstWeekday: 2).calendar
+    let calendar = TestCalendar(timeZone: "Europe/Amsterdam", firstWeekday: 2).calendar
 
     func cooks(_ count: Int) -> [CookEntry] {
         (0..<count).map { CookEntry.fixture("knife", on: .october(1 + $0 % 28)) }

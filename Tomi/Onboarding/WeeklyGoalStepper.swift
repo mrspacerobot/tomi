@@ -1,12 +1,12 @@
 import SwiftUI
 import TomiCore
 
-/// Cooking days a week, kept inside the game's range by `CookProfile.setWeeklyGoal`.
+/// Cooking days a week, kept inside `CookProfile.weeklyGoalRange` by `CookProfile.setWeeklyGoal`.
 struct WeeklyGoalStepper: View {
     let draft: AnswersDraft
 
     var body: some View {
-        Stepper(value: goal, in: GameRules.weeklyGoalOptions) {
+        Stepper(value: goal, in: CookProfile.weeklyGoalRange) {
             Text(.questionExperienceGoal(draft.answers.weeklyGoal))
                 .textStyle(.body)
         }

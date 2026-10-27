@@ -20,12 +20,11 @@ import TomiCore
         #expect(try fixture.count(of: CookLogRecord.self) == 1)
     }
 
-    @Test func theSameCookArrivingAsTwoRecordsIsReadOnceAndEarnsOnce() throws {
+    @Test func theSameCookArrivingAsTwoRecordsIsReadOnce() throws {
         try fixture.insertCook(SavedCookEntry(cook))
         try fixture.insertCook(SavedCookEntry(cook))
         #expect(try fixture.count(of: CookLogRecord.self) == 2)
         #expect(try fixture.store.cookLog() == [cook])
-        #expect(try fixture.store.cookLog().earnedXP == GameRules.xpForFinishedCook(quizCorrect: true))
     }
 
     @Test func aRecordThatCannotBeReadIsLeftOutAndKeptInTheStore() throws {
@@ -43,11 +42,10 @@ import TomiCore
         #expect(try fixture.store.cookLog() == [fromNewerApp])
     }
 
-    @Test func aCookStoppedEarlyIsKeptAndEarnsNothing() throws {
+    @Test func aCookStoppedEarlyIsKept() throws {
         let session = CookSession(date: .october(5), result: .stoppedEarly, weeklyGoal: 3)
         let stopped = CookEntry(id: UUID(), lesson: cook.lesson, session: session)
         try fixture.store.add(stopped)
         #expect(try fixture.store.cookLog() == [stopped])
-        #expect(try fixture.store.cookLog().earnedXP == 0)
     }
 }

@@ -15,18 +15,15 @@ import TomiCore
         known = KnownState(catalog: catalog)
     }
 
-    @Test func theCookMasteredTheFirstCourseByExperienceAndOneMoreTechniqueByCooking() throws {
+    /// The first technique after the first course, cooked twice at each level, and nothing else.
+    @Test func theCookCookedTheFirstTechniqueAfterTheFirstCourseTwiceAtEachLevel() throws {
         let firstCourse = try #require(catalog.courses.first)
-        let rules = ProgressRules(catalog: catalog, experience: known.profile.experience)
-        let mastered = rules.progress(for: known.cookLog).masteredCount
-        #expect(mastered == catalog.skills(in: firstCourse.id).count + 1)
-        #expect(ProgressRules(catalog: catalog, experience: .basics).progress(for: known.cookLog).masteredCount == 1)
-    }
-
-    @Test func everyCookEarnedTheFullXP() {
-        let cooks = known.cookLog.count
-        #expect(cooks > 0)
-        #expect(known.cookLog.earnedXP == cooks * GameRules.xpForFinishedCook(quizCorrect: true))
+        let skill = try #require(catalog.skills.first { $0.course != firstCourse.id })
+        let levels = known.cookLog.map(\.lesson.level)
+        #expect(Set(known.cookLog.map(\.lesson.skill)) == [skill.id])
+        #expect(levels.count == skill.levels.count * KnownState.cooksAtEachLevel)
+        #expect(levels == levels.sorted())
+        #expect(known.cookLog.allSatisfy { $0.session.result == .finished(quizCorrect: true) })
     }
 
     @Test func theCooksAreOnFixedDaysOneADay() {

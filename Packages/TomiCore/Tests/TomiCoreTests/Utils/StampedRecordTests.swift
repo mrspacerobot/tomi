@@ -50,7 +50,7 @@ extension SavedActiveLesson {
     fileprivate static func stamped(on day: DateComponents) -> SavedActiveLesson {
         var saved = SavedActiveLesson()
         saved.stableID = UUID()
-        saved.updatedAt = StreakTestCalendar().date(day)
+        saved.updatedAt = TestCalendar().date(day)
         return saved
     }
 }

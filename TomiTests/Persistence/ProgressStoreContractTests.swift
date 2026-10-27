@@ -42,13 +42,12 @@ import TomiCore
     }
 
     @Test(arguments: StoreKind.allCases)
-    func theSameCookAddedTwiceCountsOnce(kind: StoreKind) throws {
+    func theSameCookAddedTwiceIsKeptOnce(kind: StoreKind) throws {
         let store = try kind.emptyStore()
         let cook = CookEntry.fixture("eggs", onOctober: 5)
         try store.add(cook)
         try store.add(cook)
         #expect(try store.cookLog() == [cook])
-        #expect(try store.cookLog().earnedXP == GameRules.xpForFinishedCook(quizCorrect: true))
     }
 
     @Test(arguments: StoreKind.allCases)

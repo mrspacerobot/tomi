@@ -6,7 +6,7 @@ extension CookEntry {
     /// A finished cook with its own new id, at level 1 on 5 October unless a test says otherwise.
     static func fixture(_ skill: SkillID, level: Int = 1, on day: DateComponents = .october(5)) -> CookEntry {
         let lesson = CookedLesson(id: "a-lesson", skill: skill, level: level)
-        let date = StreakTestCalendar().date(day)
+        let date = TestCalendar().date(day)
         let session = CookSession(date: date, result: .finished(quizCorrect: true), weeklyGoal: 2)
         return CookEntry(id: UUID(), lesson: lesson, session: session)
     }

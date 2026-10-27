@@ -5,6 +5,6 @@ public enum Experience: String, CaseIterable, Hashable, Codable, Sendable {
     case never
     /// Starts at the first course, with shorter explanations.
     case basics
-    /// The first course arrives already mastered.
+    /// The server counts the first course as already mastered.
     case comfortable
 }
