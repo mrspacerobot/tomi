@@ -2,6 +2,7 @@
 extension CookEntry {
     /// Oldest first. Entries of the same moment are ordered by id, and two copies of one id that disagree,
     /// which a log written once never holds, by what they say, so the copy that is kept is always the same one.
+    /// How the cook ended comes before the zone, so the copy that earns least stays the one kept whatever the zone.
     func comesInLog(before other: CookEntry) -> Bool {
         if session.date != other.session.date {
             return session.date < other.session.date
@@ -11,8 +12,9 @@ extension CookEntry {
 
     private var orderKey: LogOrderKey {
         LogOrderKey(
-            words: [id.uuidString, lesson.id.rawValue, lesson.skill.rawValue, zoneIdentifier],
-            numbers: [resultRank, session.weeklyGoal, lesson.level]
+            words: [id.uuidString, lesson.id.rawValue, lesson.skill.rawValue],
+            numbers: [resultRank, session.weeklyGoal, lesson.level],
+            zone: zoneIdentifier
         )
     }
 
@@ -42,11 +44,16 @@ extension CookEntry {
 private struct LogOrderKey: Comparable {
     let words: [String]
     let numbers: [Int]
+    /// Only breaks a tie that nothing else does.
+    let zone: String
 
     static func < (left: LogOrderKey, right: LogOrderKey) -> Bool {
         if left.words != right.words {
             return left.words.lexicographicallyPrecedes(right.words)
         }
-        return left.numbers.lexicographicallyPrecedes(right.numbers)
+        if left.numbers != right.numbers {
+            return left.numbers.lexicographicallyPrecedes(right.numbers)
+        }
+        return left.zone < right.zone
     }
 }

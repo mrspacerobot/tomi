@@ -11,11 +11,13 @@ import TomiCore
 
     /// The server judges each past week by the zone every cook was made in, so the zone is kept with the cook.
     @Test func aCookIsSavedWithTheZoneItWasCookedIn() throws {
+        let tokyo = try #require(TimeZone(identifier: "Asia/Tokyo"))
         let model = try player()
+        model.cookingZone = tokyo
         model.stop()
         let saved = try store.pendingCookEntries()
         #expect(saved.count == 1)
-        #expect(saved.first?.session.timeZone == TimeZone.current)
+        #expect(saved.first?.session.timeZone == tokyo)
     }
 
     private func player() throws -> PlayerModel {

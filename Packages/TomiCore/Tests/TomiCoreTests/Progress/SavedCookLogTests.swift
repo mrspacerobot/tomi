@@ -41,6 +41,17 @@ import Testing
         #expect(records.cookLog.count == 2)
     }
 
+    /// The zone only breaks a tie. A finished copy in Lima must not beat a copy stopped early in Tokyo, whatever
+    /// the order of the zones, because the copy that earns least is the one kept.
+    @Test func theZoneNeverOutranksHowTheCookEnded() {
+        let monday = CookEntry.fixture("knife", on: .october(5))
+        let finished = SavedCookEntry(monday.cooked(in: "America/Lima"))
+        let stopped = SavedCookEntry(monday.stoppedBeforeTheEnd().cooked(in: "Asia/Tokyo"))
+        let kept = [finished, stopped].cookLog
+        #expect(kept == [monday.stoppedBeforeTheEnd().cooked(in: "Asia/Tokyo")])
+        #expect([stopped, finished].cookLog == kept)
+    }
+
     /// A log written once never holds two copies that disagree. If it ever does, the same copy must always win.
     @Test func copiesOfOneCookThatDisagreeAlwaysGiveTheSameEntry() {
         let finished = SavedCookEntry(monday)

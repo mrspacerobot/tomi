@@ -14,6 +14,8 @@ final class PlayerModel {
     private(set) var page = PlayerPage.ingredients
     private(set) var chosenAnswer: Int?
     let store: any ProgressStore
+    /// The zone a cook is saved in. The phone's own zone while cooking; a test sets a fixed one.
+    var cookingZone = TimeZone.current
 
     init(dish: Lesson, brief: PlayerBrief, flow: AppFlowModel) {
         self.dish = dish

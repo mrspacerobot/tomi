@@ -25,7 +25,7 @@ extension PlayerModel {
     private func log(_ result: CookResult) {
         let lesson = CookedLesson(id: dish.id, skill: dish.skill, level: dish.level)
         var session = CookSession(date: .now, result: result, weeklyGoal: profile.weeklyGoal)
-        session.timeZone = .current
+        session.timeZone = cookingZone
         attempt {
             try store.add(CookEntry(id: UUID(), lesson: lesson, session: session))
             try store.clearActiveLesson()
