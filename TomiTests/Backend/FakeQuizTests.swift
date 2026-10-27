@@ -72,10 +72,24 @@ import TomiCore
     }
 
     @Test func aQuizFixtureIsReadFromItsLaunchArgument() throws {
-        let options = BackendLaunchOptions(arguments: ["--fake-backend", "--fake-quiz", try FakeQuizFixture.text()])
+        let options = BackendLaunchOptions(arguments: ["--fake-backend", "--fake-quiz", try FakeQuizFixture.base64()])
         #expect(options.quiz.fixture == (try FakeQuizFixture.text()))
         #expect(!options.quiz.isOffline)
         #expect(BackendLaunchOptions(arguments: ["--fake-quiz-offline"]).quiz.isOffline)
         #expect(BackendLaunchOptions(arguments: ["--fake-quiz"]).quiz.fixture == nil)
+        #expect(BackendLaunchOptions(arguments: ["--fake-quiz", "{not base64}"]).quiz.fixture == nil)
+    }
+}
+
+/// The launch path the UI tests take: the quiz handed over by argument reaches tonight's guided suggestion.
+@MainActor
+@Suite struct FakeQuizLaunchTests {
+    @Test func theLaunchArgumentGivesTheGuidedSuggestionTheInventedQuiz() async throws {
+        let arguments = ["--fake-backend", "--fake-guided-cooking", "--fake-quiz", try FakeQuizFixture.base64()]
+        let services = try #require(
+            AppServices.forLaunch(BackendLaunchOptions(arguments: arguments), store: InMemoryProgressStore())
+        )
+        let special = try await services.api.suggestions(.init(ingredients: [], scanID: nil)).special
+        #expect(special?.teaching?.quiz?.map(\.id) == [FakeQuizFixture.spoon, FakeQuizFixture.bell])
     }
 }

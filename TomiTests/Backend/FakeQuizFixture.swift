@@ -18,6 +18,11 @@ enum FakeQuizFixture {
         try String(contentsOf: file, encoding: .utf8)
     }
 
+    /// The text as the launch argument carries it.
+    static func base64() throws -> String {
+        Data(try text().utf8).base64EncodedString()
+    }
+
     static func quiz() throws -> FakeQuiz {
         try FakeQuiz.decode(from: text())
     }

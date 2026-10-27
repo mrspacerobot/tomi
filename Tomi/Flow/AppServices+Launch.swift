@@ -1,4 +1,5 @@
 import Foundation
+import OSLog
 import TomiCore
 
 extension AppServices {
@@ -60,7 +61,12 @@ extension AppServices {
         guard let text = options.quiz.fixture else {
             return nil
         }
-        return try? FakeQuiz.decode(from: text)
+        do {
+            return try FakeQuiz.decode(from: text)
+        } catch {
+            Logger(category: .backend).error("The fake quiz handed over at launch cannot be read.")
+            return nil
+        }
     }
 
     /// A cook who starts signed in has been here before: the fake server holds the answers saved on the phone,
