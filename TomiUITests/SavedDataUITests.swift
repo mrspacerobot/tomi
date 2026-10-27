@@ -22,9 +22,8 @@ final class SavedDataUITests: XCTestCase {
     @MainActor
     func testAnEmptyStoreShowsNoProgress() {
         let app = launch(["--store-in-memory"])
-        XCTAssertTrue(app.staticTexts["welcome-xp"].waitForExistence(timeout: 5))
-        XCTAssertEqual(app.staticTexts["welcome-xp"].label, "0 XP")
-        XCTAssertEqual(app.staticTexts["welcome-mastered"].label, "Techniques mastered: 0")
+        XCTAssertTrue(app.otherElements["home-progress-strip"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.otherElements["home-progress-strip"].value as? String, "0 XP; 0 techniques mastered")
     }
 
     @MainActor
@@ -43,17 +42,16 @@ final class SavedDataUITests: XCTestCase {
     private func assertSavedDataIsUnavailable(in app: XCUIApplication) {
         XCTAssertTrue(app.staticTexts["saved-data-unavailable-title"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["saved-data-unavailable-title"].label, "Tomi cannot read your saved answers")
-        XCTAssertFalse(app.staticTexts["welcome-title"].exists)
-        XCTAssertFalse(app.staticTexts["welcome-xp"].exists)
+        XCTAssertFalse(app.staticTexts["home-title"].exists)
+        XCTAssertFalse(app.otherElements["home-progress-strip"].exists)
     }
 
-    /// The known state of the shipped menu: the three techniques of the first course by the experience answer,
-    /// and one technique of three levels cooked twice each with the quiz right, at 60 XP a cook.
+    /// The known cook state continues to show game progress and course menu after relaunch.
     @MainActor
     private func assertKnownProgressIsShown(in app: XCUIApplication) {
-        XCTAssertTrue(app.staticTexts["welcome-xp"].waitForExistence(timeout: 5))
-        XCTAssertEqual(app.staticTexts["welcome-xp"].label, "360 XP")
-        XCTAssertEqual(app.staticTexts["welcome-mastered"].label, "Techniques mastered: 4")
+        XCTAssertTrue(app.otherElements["home-progress-strip"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.otherElements["home-progress-strip"].value as? String, "360 XP; 4 techniques mastered")
+        XCTAssertTrue(app.otherElements["home-menu"].exists)
     }
 
     @MainActor

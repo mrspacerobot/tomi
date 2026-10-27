@@ -5,6 +5,8 @@ import CoreGraphics
 nonisolated enum MascotSize {
     /// The companion stage in the gallery.
     static let companion: CGFloat = 240
+    /// The printed Tomi on the home masthead (`round2.html`, `home-empty`).
+    static let home: CGFloat = 66
 
     /// The animated companion on the welcome screen of onboarding (`round2.html`, `ob-welcome`).
     static let companionWelcome: CGFloat = 174

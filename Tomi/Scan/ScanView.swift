@@ -6,10 +6,14 @@ struct ScanView: View {
     @Binding var path: [HomeRoute]
     @State private var model: ScanModel
 
-    init(flow: AppFlowModel, path: Binding<[HomeRoute]>) {
+    init(flow: AppFlowModel, path: Binding<[HomeRoute]>, startsWithTyping: Bool = false) {
         self.flow = flow
         _path = path
-        _model = State(initialValue: ScanModel(api: flow.services.api, profile: flow.profile))
+        let model = ScanModel(api: flow.services.api, profile: flow.profile)
+        if startsWithTyping {
+            model.typeInstead()
+        }
+        _model = State(initialValue: model)
     }
 
     var body: some View {
