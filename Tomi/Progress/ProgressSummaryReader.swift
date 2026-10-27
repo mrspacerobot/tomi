@@ -16,15 +16,15 @@ struct ProgressSummaryReader {
         let log = try store.cookLog()
         let goal = profile.weeklyGoal
         let game = GameStateRules(calendar: calendar).gameState(for: log, goal: goal, now: now)
-        let mastered = masteredCount(in: log, experience: profile.experience)
-        return ProgressSummary(game: game, masteredCount: mastered)
+        let result = progress(in: log, experience: profile.experience)
+        return ProgressSummary(game: game, skillProgress: result, masteredCount: result?.masteredCount)
     }
 
-    private func masteredCount(in log: [CookEntry], experience: Experience) -> Int? {
+    private func progress(in log: [CookEntry], experience: Experience) -> CookProgress? {
         guard let catalog else {
             return nil
         }
         let rules = ProgressRules(catalog: catalog, experience: experience)
-        return rules.progress(for: log).masteredCount
+        return rules.progress(for: log)
     }
 }
