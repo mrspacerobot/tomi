@@ -52,8 +52,7 @@ extension AppServices {
             profileRefreshWaits: options.profileRefresh.waits,
             profileRefreshChangesLate: options.profileRefresh.changesLate,
             quiz: fakeQuiz(options),
-            quizOffline: options.quiz.isOffline,
-            quizGraphChanged: options.quiz.isGraphChanged
+            quizFailure: options.quiz.failure
         )
     }
 

@@ -89,10 +89,10 @@ actor FakeTomiAPI: TomiAPI {
     /// Marks the pick from the invented quiz, or fails as offline. Without a quiz the fake asked no question.
     func answerQuiz(_ pick: QuizPick) async throws -> QuizVerdict {
         quizPicksReceived += 1
-        if configuration.quizGraphChanged {
-            throw BackendError.server(status: 409, APIError(codeName: "graph_version_changed", message: "New."))
+        if let failure = configuration.quizFailure {
+            throw failure.error
         }
-        guard !configuration.quizOffline, var marking = quizMarking else {
+        guard var marking = quizMarking else {
             throw BackendError.unreachable
         }
         defer { quizMarking = marking }

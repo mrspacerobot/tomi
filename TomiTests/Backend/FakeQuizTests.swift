@@ -8,10 +8,10 @@ import TomiCore
 @Suite struct FakeQuizTests {
     let sitting = QuizSitting(entryID: UUID(), recipeID: "recipe/fake", graphVersion: "fake")
 
-    func api(quiz: FakeQuiz?, offline: Bool = false) -> FakeTomiAPI {
+    func api(quiz: FakeQuiz?, failure: FakeQuizFailure? = nil) -> FakeTomiAPI {
         FakeTomiAPI(
             library: BundledLessonLibrary(),
-            configuration: FakeTomiAPIConfiguration(guidedCooking: true, quiz: quiz, quizOffline: offline)
+            configuration: FakeTomiAPIConfiguration(guidedCooking: true, quiz: quiz, quizFailure: failure)
         )
     }
 
@@ -42,7 +42,7 @@ import TomiCore
     }
 
     @Test func offlineEveryPickIsUnreachable() async throws {
-        let fake = api(quiz: try FakeQuizFixture.quiz(), offline: true)
+        let fake = api(quiz: try FakeQuizFixture.quiz(), failure: .offline)
         await #expect(throws: BackendError.unreachable) {
             try await fake.answerQuiz(pick(0))
         }

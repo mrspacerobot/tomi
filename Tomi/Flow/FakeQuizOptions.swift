@@ -16,6 +16,17 @@ nonisolated struct FakeQuizOptions: Equatable {
     let isOffline: Bool
     let isGraphChanged: Bool
 
+    /// The failure the arguments ask for. Offline wins when both are given.
+    var failure: FakeQuizFailure? {
+        if isOffline {
+            return .offline
+        }
+        if isGraphChanged {
+            return .graphChanged
+        }
+        return nil
+    }
+
     init(arguments: [String]) {
         fixture = Self.text(base64: Self.value(after: Self.fixtureArgument, in: arguments))
         isOffline = arguments.contains(Self.offlineArgument)
