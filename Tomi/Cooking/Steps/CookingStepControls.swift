@@ -5,6 +5,7 @@ import TomiCore
 /// the first.
 struct CookingStepControls: View {
     let session: CookingSession
+    let recorder: CookRecorder
     @Binding var walk: StepWalk
     @Binding var path: [HomeRoute]
 
@@ -25,7 +26,7 @@ struct CookingStepControls: View {
 
     @ViewBuilder private var forward: some View {
         if walk.isLast {
-            CookingStepsEnd(session: session, path: $path)
+            CookingStepsEnd(session: session, recorder: recorder, path: $path)
         } else {
             Button {
                 walk = walk.advanced()

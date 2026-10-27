@@ -4,6 +4,7 @@ import TomiCore
 /// One step: where the cook is in the recipe, the step as the server wrote it, and the way on.
 struct CookingStepPage: View {
     let session: CookingSession
+    let recorder: CookRecorder
     @Binding var walk: StepWalk
     @Binding var path: [HomeRoute]
 
@@ -15,7 +16,7 @@ struct CookingStepPage: View {
                 .textStyle(.step)
                 .accessibilityIdentifier("cooking-step-text")
             RecipeStepNotes(step: walk.current)
-            CookingStepControls(session: session, walk: $walk, path: $path)
+            CookingStepControls(session: session, recorder: recorder, walk: $walk, path: $path)
         }
         .padding(Spacing.screenMargin)
     }

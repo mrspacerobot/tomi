@@ -8,10 +8,12 @@ struct CookingStepsView: View {
     let session: CookingSession
     @Binding var path: [HomeRoute]
     @State private var walk: StepWalk?
+    @State private var recorder: CookRecorder
 
-    init(session: CookingSession, path: Binding<[HomeRoute]>) {
+    init(session: CookingSession, flow: AppFlowModel, path: Binding<[HomeRoute]>) {
         self.session = session
         self._path = path
+        _recorder = State(initialValue: CookRecorder(session: session, flow: flow))
         _walk = State(initialValue: StepWalk(steps: session.suggestion.recipe.steps))
     }
 
@@ -22,11 +24,12 @@ struct CookingStepsView: View {
             .navigationTitle(Text(.cookingStepsTitle))
             .navigationBarTitleDisplayMode(.inline)
             .accessibilityIdentifier("cooking-steps")
+            .onDisappear { recorder.stop() }
     }
 
     @ViewBuilder private var content: some View {
         if let current = Binding($walk) {
-            CookingStepPage(session: session, walk: current, path: $path)
+            CookingStepPage(session: session, recorder: recorder, walk: current, path: $path)
         } else {
             CookingNoSteps(path: $path)
         }

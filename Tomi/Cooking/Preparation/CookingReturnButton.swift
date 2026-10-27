@@ -5,6 +5,7 @@ struct CookingReturnButton: View {
     @Binding var path: [HomeRoute]
     var words: LocalizedStringResource = .cookingNotTonight
     var identifier = "cooking-return-to-suggestion"
+    var beforeLeaving: () -> Void = {}
 
     var body: some View {
         Button(action: returnToSuggestion) {
@@ -15,6 +16,7 @@ struct CookingReturnButton: View {
     }
 
     private func returnToSuggestion() {
+        beforeLeaving()
         while let last = path.last, !last.isSuggestion {
             path.removeLast()
         }

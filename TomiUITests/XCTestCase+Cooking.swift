@@ -3,9 +3,12 @@ import XCTest
 /// The way into the cooking screens that every cooking UI test shares: the fake server, a returning cook, tonight's
 /// special, and its introduction.
 extension XCTestCase {
-    @MainActor func cookingIntroduction(extra: [String] = []) -> (XCUIApplication, String) {
+    @MainActor func cookingIntroduction(
+        store: String = "--store-in-memory",
+        extra: [String] = []
+    ) -> (XCUIApplication, String) {
         let app = XCUIApplication.launched(
-            XCUIApplication.returningCook + ["--store-in-memory", "--fake-guided-cooking"] + extra
+            XCUIApplication.returningCook + [store, "--fake-guided-cooking"] + extra
         )
         enterCookingMenu(app)
         return openIntroduction(app)

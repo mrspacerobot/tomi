@@ -29,7 +29,7 @@ struct CookingPlanPreview: View {
         case .preparation:
             CookingPreparationView(suggestion: suggestion, flow: .preview(), path: $path)
         case .steps:
-            CookingStepsView(session: CookingSession(suggestion: suggestion), path: $path)
+            CookingStepsView(session: CookingSession(suggestion: suggestion), flow: .preview(), path: $path)
         }
     }
 }

@@ -14,6 +14,9 @@ public struct Suggestion: Identifiable, Hashable, Decodable, Sendable {
     public let reason: String?
     public let checked: CheckedRestrictions
     public let teaching: Teaching?
+    /// The version of the cooking graph the recipe was suggested from, which a cook of it names. The answer's own
+    /// version when it sent one, else the teaching's. Nil when the server named none: such a cook cannot be sent.
+    public private(set) var graphVersion: String?
 
     public var id: RecipeID {
         recipeID
@@ -41,6 +44,7 @@ public struct Suggestion: Identifiable, Hashable, Decodable, Sendable {
         safePlan = try values.decode(SafePlan.self, forKey: .safePlan)
         (reason, checked) = try Self.reasonAndCheck(values)
         teaching = try? values.decodeIfPresent(Teaching.self, forKey: .teaching)
+        graphVersion = teaching?.graphVersion
     }
 
     private static func reasonAndCheck(
@@ -49,5 +53,17 @@ public struct Suggestion: Identifiable, Hashable, Decodable, Sendable {
         let reason = try? values.decodeIfPresent(String.self, forKey: .reason)
         let checked = try values.decode(CheckedRestrictions.self, forKey: .checked)
         return (reason ?? nil, checked)
+    }
+}
+
+extension Suggestion {
+    /// The same suggestion, from the graph version the whole answer named. An answer that named none changes nothing.
+    func from(graphVersion version: String?) -> Suggestion {
+        guard let version else {
+            return self
+        }
+        var stamped = self
+        stamped.graphVersion = version
+        return stamped
     }
 }
