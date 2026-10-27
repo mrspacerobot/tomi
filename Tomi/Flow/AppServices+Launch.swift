@@ -21,7 +21,7 @@ extension AppServices {
     ) -> AppServices {
         let profile = fakeProfile(options, store: store)
         return AppServices(
-            api: fakeAPI(options, profile: profile, library: library),
+            api: fakeAPI(fakeServer(options, store: store), profile: profile, library: library),
             auth: FakeAuthService(signedIn: options.startsSignedIn),
             library: library,
             store: store,
@@ -31,14 +31,14 @@ extension AppServices {
     }
 
     private static func fakeAPI(
-        _ options: BackendLaunchOptions,
+        _ configuration: FakeTomiAPIConfiguration,
         profile: CookProfile,
         library: any LessonLibrary
     ) -> any TomiAPI {
         FakeTomiAPI(
             library: library,
             profile: profile,
-            configuration: options.fakeServer
+            configuration: configuration
         )
     }
 

@@ -20,19 +20,24 @@ import TomiCore
     }
 
     @Test func aNewCookGetsTheNewCookFixtureUnchanged() async throws {
-        let snapshot = try await fake(.newCook).progress(amsterdam)
+        let snapshot = try await fake(.newCook).progress(amsterdam).snapshot
         #expect(snapshot == (try decoded(ProgressFixtureText.newCook)))
         #expect(snapshot.xp == 0)
     }
 
+    @Test func theSnapshotComesWithTheFixturesBytes() async throws {
+        let response = try await fake(.returning).progress(amsterdam)
+        #expect(response.body == (try FakeProgressFixture.returning.body()))
+    }
+
     @Test func aReturningCookGetsTheReturningFixtureUnchanged() async throws {
-        let snapshot = try await fake(.returning).progress(amsterdam)
+        let snapshot = try await fake(.returning).progress(amsterdam).snapshot
         #expect(snapshot == (try decoded(ProgressFixtureText.returning)))
         #expect(snapshot.xp == 350)
     }
 
     @Test func theFakeStartsAsANewCook() async throws {
-        let snapshot = try await FakeTomiAPI(library: BundledLessonLibrary()).progress(amsterdam)
+        let snapshot = try await FakeTomiAPI(library: BundledLessonLibrary()).progress(amsterdam).snapshot
         #expect(snapshot == (try decoded(ProgressFixtureText.newCook)))
     }
 
@@ -49,8 +54,8 @@ import TomiCore
 
     @Test func theCalendarAskedForChangesNothing() async throws {
         let api = fake(.returning)
-        let amsterdamSnapshot = try await api.progress(amsterdam)
-        let tokyo = try await api.progress(CalendarContext(timeZone: "Asia/Tokyo", firstWeekday: 1))
+        let amsterdamSnapshot = try await api.progress(amsterdam).snapshot
+        let tokyo = try await api.progress(CalendarContext(timeZone: "Asia/Tokyo", firstWeekday: 1)).snapshot
         #expect(amsterdamSnapshot == tokyo)
     }
 

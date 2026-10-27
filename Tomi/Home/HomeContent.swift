@@ -1,9 +1,10 @@
 import SwiftUI
+import TomiCore
 
 /// The masthead, the cook's progress and the buttons of home.
 struct HomeContent: View {
     let flow: AppFlowModel
-    let progress: SavedProgressModel
+    let progress: ProgressModel
     @Binding var path: [HomeRoute]
     let now: Date
 
@@ -11,7 +12,7 @@ struct HomeContent: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.xLarge) {
                 HomeMasthead(path: $path, date: now)
-                progressStrip
+                progressSection
                 HomeSpecialCard(path: $path, profile: flow.profile.profile, options: flow.profile.options)
                 skillMenu
             }
@@ -21,19 +22,27 @@ struct HomeContent: View {
         .background(ColorRole.paper.color)
     }
 
-    @ViewBuilder private var progressStrip: some View {
-        if let summary = progress.summary {
-            HomeProgressStrip(summary: summary)
+    @ViewBuilder private var progressSection: some View {
+        if let shown = progress.shown {
+            HomeProgressSection(shown: shown)
         }
     }
 
     @ViewBuilder private var skillMenu: some View {
         if let options = flow.profile.options {
-            HomeSkillMenu(
-                options: options.courses,
-                catalog: flow.services.library.catalog,
-                progress: progress.summary?.skillProgress
-            )
+            HomeSkillMenu(options: options.courses, skills: snapshotSkills)
         }
     }
+
+    /// Nil before the first snapshot, so no technique reads as locked or unstarted.
+    private var snapshotSkills: [SnapshotSkill]? {
+        guard let shown = progress.shown, let snapshot = shown.snapshot else {
+            return nil
+        }
+        return snapshot.skills
+    }
+}
+
+#Preview {
+    HomeContent(flow: .preview(), progress: .previewWithProgress(), path: .constant([]), now: .now)
 }

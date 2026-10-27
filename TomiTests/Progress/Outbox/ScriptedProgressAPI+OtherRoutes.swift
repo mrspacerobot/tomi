@@ -4,7 +4,9 @@ import TomiCore
 @testable import Tomi
 
 /// The routes the uploader never calls. Each fails, so a test that reached one would show it.
-extension ScriptedProgressAPI {
+/// The conformance is declared here, not on the actor: Xcode 27 otherwise carries the protocol's `nonisolated`
+/// onto the actor and its initializer, and refuses to build them.
+extension ScriptedProgressAPI: TomiAPI {
     func options() async throws -> LibraryOptions {
         throw BackendError.notConfigured
     }
@@ -29,7 +31,7 @@ extension ScriptedProgressAPI {
         throw BackendError.notConfigured
     }
 
-    func progress(_ calendar: CalendarContext) async throws -> ProgressSnapshot {
+    func progress(_ calendar: CalendarContext) async throws -> ProgressResponse {
         throw BackendError.notConfigured
     }
 }

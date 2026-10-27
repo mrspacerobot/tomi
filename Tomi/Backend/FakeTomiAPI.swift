@@ -83,7 +83,7 @@ actor FakeTomiAPI: TomiAPI {
         try configuration.progressServer.answer(request)
     }
 
-    func progress(_ calendar: CalendarContext) async throws -> ProgressSnapshot {
+    func progress(_ calendar: CalendarContext) async throws -> ProgressResponse {
         try configuration.progressServer.progress()
     }
 }

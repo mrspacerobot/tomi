@@ -1,4 +1,4 @@
-/// A server-named course with an optional count when every skill has a compatible local match.
+/// A server-named course, with a count of mastered techniques when the snapshot names every one of them.
 public struct HomeCourseProgress: Equatable, Identifiable, Sendable {
     public let id: CourseID
     public let title: String
@@ -16,6 +16,6 @@ public struct HomeCourseProgress: Equatable, Identifiable, Sendable {
 
     private static func mastered(_ skills: [HomeSkillProgress]) -> Int? {
         guard !skills.isEmpty, skills.allSatisfy({ $0.progress != nil }) else { return nil }
-        return skills.count(where: { $0.progress?.isMastered == true })
+        return skills.count(where: { $0.progress?.status == .mastered })
     }
 }

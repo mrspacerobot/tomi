@@ -42,4 +42,11 @@ import TomiCore
         #expect(try store.profile() == known.profile)
         #expect(try store.cookLog().count == known.cookLog.count)
     }
+
+    /// The server's last answer for this cook comes with the state, so Home shows progress before any call.
+    @Test func itKeepsTheReturningCooksSnapshot() throws {
+        let store = InMemoryProgressStore()
+        try known.write(to: store)
+        #expect(try store.progressSnapshot() == (try FakeProgressFixture.returning.snapshot()))
+    }
 }

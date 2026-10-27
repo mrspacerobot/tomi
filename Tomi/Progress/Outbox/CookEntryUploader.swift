@@ -1,5 +1,6 @@
 import Foundation
 import OSLog
+import Observation
 import TomiCore
 
 /// Sends the outbox of unsent cooks to Tomi's server by itself: on launch, when the app becomes active, right after a
@@ -7,6 +8,7 @@ import TomiCore
 /// is empty. Every cook keeps its id across every try, and the server is idempotent on it, so trying again is safe.
 /// The uploader works nothing out: what each answer does to a cook and how long to wait are the outbox rules
 /// (`CookOutbox`, `OutboxReply`), and the snapshot is kept as the server sent it.
+@Observable
 final class CookEntryUploader {
     static let logger = Logger(category: .progress)
 
@@ -24,6 +26,8 @@ final class CookEntryUploader {
     /// The server could not read a batch (`422`). The same batch would fail the same way, so every cook waits for
     /// the next launch, which may be a newer app.
     var isHeldUntilLaunch = false
+    /// Batches tried since launch. It changes after every try, so Home reads the snapshot and the outbox again.
+    private(set) var finishedTries = 0
 
     init(api: any TomiAPI, store: any ProgressStore, clock: UploaderClock) {
         self.api = api
@@ -54,6 +58,7 @@ final class CookEntryUploader {
     private func sendEveryBatch() async {
         while let batch = nextBatch() {
             let outboxChanged = await send(batch)
+            finishedTries += 1
             guard outboxChanged else {
                 return
             }

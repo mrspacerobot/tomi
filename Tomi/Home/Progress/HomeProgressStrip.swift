@@ -1,14 +1,16 @@
 import SwiftUI
 import TomiCore
 
-/// The cook's streak, rank and progress to the next rank from the saved log.
+/// The cook's streak, rank and way to the next rank, exactly as the server's snapshot gives them.
 struct HomeProgressStrip: View {
-    let summary: ProgressSummary
+    let snapshot: ProgressSnapshot
+    /// False once the snapshot's week is over: its days this week are then hidden.
+    let showsThisWeek: Bool
 
     var body: some View {
-        StatsColumns(stats: stats, progress: summary.game.rank.progress)
+        StatsColumns(stats: stats, progress: snapshot.rankBar.fraction)
             .accessibilityElement(children: .contain)
-            .accessibilityValue(totals)
+            .accessibilityValue(Text(.homeProgressTotals(snapshot.xp, mastered: snapshot.masteredCount)))
             .accessibilityIdentifier("home-progress-strip")
     }
 
@@ -17,42 +19,39 @@ struct HomeProgressStrip: View {
     }
 
     private var streakStat: Stat {
-        let streak = summary.game.streak
-        return Stat(
+        Stat(
             label: String(localized: .homeStreakLabel),
-            value: String(localized: .homeStreakWeeks(streak.weeks)),
-            detail: String(localized: .homeStreakDays(streak.daysThisWeek, streak.goal))
+            value: String(localized: .homeStreakWeeks(snapshot.streak.weeks)),
+            detail: String(localized: streakDetail)
         )
+    }
+
+    private var streakDetail: LocalizedStringResource {
+        guard showsThisWeek else { return .homeStreakNewWeek }
+        return .homeStreakDays(snapshot.streak.daysThisWeek, snapshot.streak.goal)
     }
 
     private var rankStat: Stat {
         Stat(
             label: String(localized: .homeRankLabel),
-            value: summary.game.rank.words,
-            detail: String(localized: .homeRankTotalXp(summary.game.xp))
+            value: snapshot.rank.words,
+            detail: String(localized: .homeRankTotalXp(snapshot.xp))
         )
     }
 
     private var nextRankStat: Stat {
-        let rank = summary.game.rank
+        let bar = snapshot.rankBar
         return Stat(
             label: String(localized: .homeNextRankLabel),
-            value: String(localized: .homeRankRemainingXp(rank.nextAt - rank.xp)),
-            detail: String(localized: .homeRankXpProgress(rank.xp - rank.startsAt, rank.nextAt - rank.startsAt))
+            value: String(localized: .homeRankRemainingXp(bar.remaining)),
+            detail: String(localized: .homeRankXpProgress(bar.earned, bar.needed))
         )
-    }
-
-    private var totals: String {
-        guard let mastered = summary.masteredCount else {
-            return String(localized: .homeRankTotalXp(summary.game.xp))
-        }
-        return String(localized: .homeProgressTotals(summary.game.xp, mastered))
     }
 }
 
 #Preview {
-    if let summary = SavedProgressModel.previewWithProgress().summary {
-        HomeProgressStrip(summary: summary)
+    if let snapshot = ShownProgress.previewReturning()?.snapshot {
+        HomeProgressStrip(snapshot: snapshot, showsThisWeek: true)
             .padding()
             .background(ColorRole.paper.color)
     }

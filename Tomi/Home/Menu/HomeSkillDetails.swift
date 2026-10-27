@@ -15,7 +15,7 @@ struct HomeSkillDetails: View {
     }
 
     @ViewBuilder private var lockedExplanation: some View {
-        if case .locked = skill.progress?.status, let names = skill.missingPrerequisiteNames {
+        if skill.progress?.status == .locked, let names = skill.missingPrerequisiteNames {
             Text(.homeSkillServedAfter(names.formatted(.list(type: .and))))
                 .textStyle(.description)
                 .foregroundStyle(ColorRole.inkFaded.color)

@@ -3,7 +3,7 @@ import TomiCore
 
 /// The progress snapshots the fake server answers with, chosen by launch argument. Each is a fixture file in the
 /// app's bundle, read and handed over unchanged: the fake works nothing out, so no game rule comes back into the app.
-nonisolated enum FakeProgressFixture: String, Sendable {
+nonisolated enum FakeProgressFixture: String, CaseIterable, Sendable {
     /// A cook with no cooks yet: every number zero, as the server sends it.
     case newCook = "progress-new-cook"
     /// tomi-backend's `docs/examples/progress.json`, copied verbatim.

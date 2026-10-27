@@ -7,10 +7,12 @@ nonisolated struct FakeProgressServer: Equatable, Sendable {
     var fixture = FakeProgressFixture.newCook
     /// Both calls fail as if the phone could not reach the server, so the cooks stay in the outbox.
     var isOffline = false
+    /// A launch argument chose the fixture, so nothing saved on the phone changes it.
+    var isFixtureNamed = false
 
-    func progress() throws -> ProgressSnapshot {
+    func progress() throws -> ProgressResponse {
         try checkOnline()
-        return try fixture.snapshot()
+        return ProgressResponse(snapshot: try fixture.snapshot(), body: try fixture.body())
     }
 
     func answer(_ request: CookEntriesRequest) throws -> CookEntriesResponse {

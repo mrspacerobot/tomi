@@ -41,8 +41,9 @@ import TomiCore
     @Test func theSnapshotIsReadAsTheServerSentIt() async throws {
         let harness = APIHarness.make([.init(status: 200, body: snapshot)])
         let read = try await harness.api.progress(amsterdam)
-        #expect(read == (try JSONDecoder().decode(ProgressSnapshot.self, from: Data(snapshot.utf8))))
-        #expect(read.xp == 350)
+        #expect(read.snapshot == (try JSONDecoder().decode(ProgressSnapshot.self, from: Data(snapshot.utf8))))
+        #expect(read.snapshot.xp == 350)
+        #expect(read.body == Data(snapshot.utf8))
     }
 
     @Test func a401RenewsTheTokenOnceAndAsksAgain() async throws {

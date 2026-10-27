@@ -49,18 +49,6 @@
         }
       }
     },
-    "welcome.mastered": {
-      "comment": "Line on the first screen. The number is how many techniques the cook has mastered.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Techniques mastered: %lld"
-          }
-        }
-      }
-    },
     "welcome.subtitle": {
       "comment": "Line under the masthead. First number is the count of techniques, second the count of courses.",
       "extractionState": "manual",
@@ -81,18 +69,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tonight at Tomi's"
-          }
-        }
-      }
-    },
-    "welcome.xp": {
-      "comment": "Line on the first screen. The number is the cook's total experience points. Shown in capitals by the design.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld XP"
           }
         }
       }
@@ -3094,7 +3070,7 @@
       }
     },
     "home.rank.tiered": {
-      "comment": "Second progress column value once the cook is past the first tier of the top rank. %1$@ is the rank name, for example Toque. %2$lld is the tier number, 2 or more.",
+      "comment": "Second progress column value once the cook is past the first tier of a rank. %1$@ is the rank name as Tomi's server sends it, for example Toque. %2$lld is the tier number the server sends, 2 or more.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -3161,102 +3137,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Level %lld"
-          }
-        }
-      }
-    },
-    "rank.novice": {
-      "comment": "Name of the first cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Novice"
-          }
-        }
-      }
-    },
-    "rank.commis": {
-      "comment": "Name of the second cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Commis"
-          }
-        }
-      }
-    },
-    "rank.cook": {
-      "comment": "Name of the third cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cook"
-          }
-        }
-      }
-    },
-    "rank.saucier": {
-      "comment": "Name of the fourth cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Saucier"
-          }
-        }
-      }
-    },
-    "rank.sous": {
-      "comment": "Name of the fifth cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sous"
-          }
-        }
-      }
-    },
-    "rank.chef": {
-      "comment": "Name of the sixth cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Chef"
-          }
-        }
-      }
-    },
-    "rank.patron": {
-      "comment": "Name of the seventh cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Patron"
-          }
-        }
-      }
-    },
-    "rank.toque": {
-      "comment": "Name of the eighth cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Toque"
           }
         }
       }
@@ -3346,13 +3226,95 @@
       }
     },
     "home.progress.totals": {
-      "comment": "Accessibility value summarizing saved XP and total mastered techniques.",
+      "comment": "Accessibility value of the progress columns: the cook's XP and the techniques mastered, as Tomi's server counted them. %1$lld is the XP, %2$lld the number of techniques.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld XP; %2$lld techniques mastered"
+            "value": "%1$lld XP; %#@mastered@"
+          },
+          "substitutions": {
+            "mastered": {
+              "argNum": 2,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg technique mastered"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg techniques mastered"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "home.progress.unsentCooks": {
+      "comment": "Note under the progress columns when the phone is offline and cooks saved on it have not reached Tomi's server yet. The number is how many cooks wait. The XP and rank above stay as the server last sent them.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld cook will count when you're back online."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld cooks will count when you're back online."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "home.progress.showsOnline": {
+      "comment": "Note on home in place of the progress columns, when the phone is offline and Tomi's server has never sent the cook's progress. No numbers are shown until it does.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your progress will show when you're online."
+          }
+        }
+      }
+    },
+    "home.progress.weekShowsOnline": {
+      "comment": "Note under the progress columns when the phone is offline and the week of the progress Tomi's server last sent is over, so this week's cooking days are not known yet.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This week's cooking days will show when you're back online."
+          }
+        }
+      }
+    },
+    "home.streak.newWeek": {
+      "comment": "First progress column detail in place of this week's cooking days, when the week of the progress Tomi's server last sent is over. Keep it short: the column is narrow.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A new week"
           }
         }
       }

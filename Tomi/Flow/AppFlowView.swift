@@ -3,7 +3,7 @@ import SwiftUI
 /// The screen for each stage of the app's order.
 struct AppFlowView: View {
     let flow: AppFlowModel
-    let progress: SavedProgressModel
+    let progress: ProgressModel
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {

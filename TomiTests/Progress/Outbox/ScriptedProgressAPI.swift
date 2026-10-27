@@ -8,7 +8,7 @@ typealias ScriptedAnswer = @Sendable (CookEntriesRequest) throws -> CookEntriesR
 
 /// A server for the uploader's tests. It answers each batch as the test scripts it, the last answer for every batch
 /// after, keeps every batch it was sent, and can hold an answer back until the test lets it go.
-actor ScriptedProgressAPI: TomiAPI {
+actor ScriptedProgressAPI {
     private(set) var sent: [CookEntriesRequest] = []
     /// Each batch as it arrives, before it is answered.
     let arrivals: AsyncStream<CookEntriesRequest>

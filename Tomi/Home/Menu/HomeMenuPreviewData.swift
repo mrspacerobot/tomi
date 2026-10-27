@@ -7,13 +7,12 @@ enum HomeMenuPreviewData {
     static let options = options(catalog: catalog)
     static let menu = makeMenu()
 
+    /// The fake server's returning cook.
+    static let skills = ShownProgress.previewReturning()?.snapshot?.skills
+
     private static func makeMenu() -> HomeMenuProgress? {
-        guard let catalog else { return nil }
-        return HomeMenuProgress.make(
-            options: options,
-            catalog: catalog,
-            progress: SavedProgressModel.previewWithProgress().summary?.skillProgress
-        )
+        guard catalog != nil else { return nil }
+        return HomeMenuProgress.make(options: options, skills: skills)
     }
 
     static func options(catalog: SkillCatalog?) -> [OptionCourse] {
