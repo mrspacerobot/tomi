@@ -35,6 +35,7 @@ actor FakeTomiAPI: TomiAPI {
         if profileReadCount > 1 && configuration.profileRefreshWaits { return await waitForProfile() }
         if profileReadCount > 1 && configuration.profileRefreshFails { throw BackendError.notSignedIn }
         if profileReadCount > 1 && configuration.profileRefreshChanges { return changedProfile }
+        if profileReadCount > 2 && configuration.profileRefreshChangesLate { return changedProfile }
         return envelope
     }
 

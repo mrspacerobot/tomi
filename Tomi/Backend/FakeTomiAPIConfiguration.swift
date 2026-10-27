@@ -5,6 +5,8 @@ nonisolated struct FakeTomiAPIConfiguration {
     let profileRefreshFails: Bool
     let profileRefreshChanges: Bool
     let profileRefreshWaits: Bool
+    /// The profile read when the steps begin differs, after the one before preparation passed.
+    let profileRefreshChangesLate: Bool
     /// The invented quiz the guided suggestion asks and the fake marks picks from. Nil: the suggestion has no quiz.
     let quiz: FakeQuiz?
     /// Every quiz pick fails as if the phone had no connection.
@@ -16,6 +18,7 @@ nonisolated struct FakeTomiAPIConfiguration {
         profileRefreshFails: Bool = false,
         profileRefreshChanges: Bool = false,
         profileRefreshWaits: Bool = false,
+        profileRefreshChangesLate: Bool = false,
         quiz: FakeQuiz? = nil,
         quizOffline: Bool = false
     ) {
@@ -24,6 +27,7 @@ nonisolated struct FakeTomiAPIConfiguration {
         self.profileRefreshFails = profileRefreshFails
         self.profileRefreshChanges = profileRefreshChanges
         self.profileRefreshWaits = profileRefreshWaits
+        self.profileRefreshChangesLate = profileRefreshChangesLate
         self.quiz = quiz
         self.quizOffline = quizOffline
     }
