@@ -8,7 +8,7 @@ import Testing
 @Suite struct SavedProgressSnapshotTests {
     let older = SavedProgressSnapshot.received(ProgressJSON.snapshot, on: .october(5))
     let newer = SavedProgressSnapshot.received(
-        ProgressJSON.snapshot(replacing: #""xp": 360"#, with: #""xp": 420"#),
+        ProgressJSON.snapshot(setting: ["xp"], to: 420),
         on: .october(6)
     )
 
@@ -35,7 +35,7 @@ import Testing
     /// An unreadable newest snapshot is not swapped for an older one: the phone asks the server again.
     @Test func aNewestBodyThatCannotBeReadIsNoSnapshot() {
         let unknownLayout = SavedProgressSnapshot.received(
-            ProgressJSON.snapshot(replacing: #""schemaVersion": 1"#, with: #""schemaVersion": 2"#),
+            ProgressJSON.snapshot(setting: ["schemaVersion"], to: 2),
             on: .october(7)
         )
         let broken = SavedProgressSnapshot.received("{\"xp\":", on: .october(7))

@@ -10,8 +10,8 @@ import TomiCore
         .server(status: status, APIError(codeName: "any_code", message: "A problem."))
     }
 
-    @Test func aBatchTheServerCannotReadIsToldApart() {
-        #expect(server(422).outboxFailure == .batchUnreadable)
+    @Test func aRequestTheServerCannotReadIsToldApart() {
+        #expect(server(422).outboxFailure == .requestUnreadable)
     }
 
     @Test func nobodySignedInIsToldApart() {

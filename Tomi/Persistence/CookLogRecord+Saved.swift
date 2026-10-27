@@ -24,5 +24,6 @@ extension CookLogRecord {
         saved.refusedCode = refusedCode
         saved.timeZone = timeZone
         saved.account = account
+        saved.graphVersion = graphVersion
     }
 }

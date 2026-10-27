@@ -3,7 +3,7 @@ import Testing
 
 @testable import TomiCore
 
-/// Each entry's answer in a cook-entries batch. Whatever the app does not know keeps the entry for another try.
+/// The answer for the cook entry that was sent. Whatever the app does not know keeps the entry for another try.
 @Suite struct CookEntryResultTests {
     func result(_ text: String) throws -> CookEntryResult {
         try ServerJSON.decode(CookEntryResult.self, from: text)
@@ -35,20 +35,20 @@ import Testing
     }
 
     @Test func anAnswerCarryingTheSnapshotReadsIt() throws {
-        let text = #"{"results": [], "progress": \#(ProgressJSON.snapshot)}"#
-        let answer = try ServerJSON.decode(CookEntriesAnswer.self, from: text)
-        #expect(answer.progress?.xp == 360)
+        let text = #"{"result": {"id": null, "status": "accepted"}, "progress": \#(ProgressJSON.snapshot)}"#
+        let answer = try ServerJSON.decode(CookEntryAnswer.self, from: text)
+        #expect(answer.progress?.xp == 350)
     }
 
-    /// The acknowledgements matter more than the snapshot: a snapshot that cannot be read is left out,
-    /// never shown as zero, and the results are still read so no cook is sent again for nothing.
-    @Test func anUnreadableSnapshotLeavesTheResultsReadable() throws {
-        let results = #"[{"id": "4e2c2a0e-7e6b-4c7a-9c2b-6e0a3d1f9a11", "status": "accepted"}]"#
+    /// The acknowledgement matters more than the snapshot: a snapshot that cannot be read is left out,
+    /// never shown as zero, and the result is still read so the cook is not sent again for nothing.
+    @Test func anUnreadableSnapshotLeavesTheResultReadable() throws {
+        let result = #"{"id": "4e2c2a0e-7e6b-4c7a-9c2b-6e0a3d1f9a11", "status": "accepted"}"#
         let answer = try ServerJSON.decode(
-            CookEntriesAnswer.self,
-            from: #"{"results": \#(results), "progress": {"schemaVersion": 9}}"#
+            CookEntryAnswer.self,
+            from: #"{"result": \#(result), "progress": {"schemaVersion": 9}}"#
         )
-        #expect(answer.results.map(\.status) == [.accepted])
+        #expect(answer.result.status == .accepted)
         #expect(answer.progress == nil)
     }
 }

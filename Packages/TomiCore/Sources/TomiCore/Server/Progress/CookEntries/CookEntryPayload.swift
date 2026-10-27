@@ -1,7 +1,7 @@
 import Foundation
 
 /// One cook entry as `POST /v1/cook-entries` takes it. The id is the one the phone made when cooking began,
-/// sent unchanged in every batch, so the server counts the cook once however often it arrives.
+/// sent unchanged in every request, so the server counts the cook once however often it arrives.
 /// There is no quiz result, XP or total in it: the server works all of those out itself.
 public struct CookEntryPayload: Hashable, Codable, Sendable {
     public static let currentSchemaVersion = 1

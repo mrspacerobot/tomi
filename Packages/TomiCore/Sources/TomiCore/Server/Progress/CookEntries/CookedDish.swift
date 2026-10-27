@@ -1,36 +1,29 @@
-/// What a cook entry cooked: a graph recipe in the graph version it came from,
-/// or a bundled lesson, for the development logs already on phones. Exactly one of the two.
-public enum CookedDish: Hashable, Codable, Sendable {
-    case recipe(RecipeID, graphVersion: String)
-    case lesson(LessonID)
+/// What a cook entry cooked: a graph recipe in the graph version it came from. The server takes nothing else, so a
+/// cook of a bundled lesson has no dish and cannot be sent.
+public struct CookedDish: Hashable, Codable, Sendable {
+    public let recipe: RecipeID
+    public let graphVersion: String
+
+    public init(recipe: RecipeID, graphVersion: String) {
+        self.recipe = recipe
+        self.graphVersion = graphVersion
+    }
 
     enum CodingKeys: String, CodingKey {
-        case recipeID = "recipeId"
+        case recipe = "recipeId"
         case graphVersion
-        case lessonID = "lessonId"
     }
 
+    /// A dish with any other field is refused, as the server refuses it, so a lesson id is never read as a dish.
     public init(from decoder: any Decoder) throws {
+        let all = try decoder.container(keyedBy: AnyCodingKey.self)
+        guard all.allKeys.allSatisfy({ CodingKeys(stringValue: $0.stringValue) != nil }) else {
+            throw DecodingError.dataCorrupted(
+                .init(codingPath: decoder.codingPath, debugDescription: "Not a graph recipe.")
+            )
+        }
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        guard values.contains(.lessonID) else {
-            let recipe = try values.decode(RecipeID.self, forKey: .recipeID)
-            self = .recipe(recipe, graphVersion: try values.decode(String.self, forKey: .graphVersion))
-            return
-        }
-        guard !values.contains(.recipeID), !values.contains(.graphVersion) else {
-            throw DecodingError.dataCorruptedError(forKey: .lessonID, in: values, debugDescription: "Two dishes.")
-        }
-        self = .lesson(try values.decode(LessonID.self, forKey: .lessonID))
-    }
-
-    public func encode(to encoder: any Encoder) throws {
-        var values = encoder.container(keyedBy: CodingKeys.self)
-        switch self {
-        case .recipe(let recipe, let graphVersion):
-            try values.encode(recipe, forKey: .recipeID)
-            try values.encode(graphVersion, forKey: .graphVersion)
-        case .lesson(let lesson):
-            try values.encode(lesson, forKey: .lessonID)
-        }
+        recipe = try values.decode(RecipeID.self, forKey: .recipe)
+        graphVersion = try values.decode(String.self, forKey: .graphVersion)
     }
 }

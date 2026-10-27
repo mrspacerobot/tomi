@@ -15,11 +15,11 @@ nonisolated struct FakeProgressServer: Equatable, Sendable {
         return ProgressResponse(snapshot: try fixture.snapshot(), body: try fixture.body())
     }
 
-    func answer(_ request: CookEntriesRequest) throws -> CookEntriesResponse {
+    func answer(_ request: CookEntryRequest) throws -> CookEntryResponse {
         try checkOnline()
-        let results = request.entries.map { CookEntryResult(id: $0.id, status: .accepted) }
-        let answer = CookEntriesAnswer(results: results, progress: try fixture.snapshot())
-        return CookEntriesResponse(answer: answer, snapshotBody: try fixture.body())
+        let result = CookEntryResult(id: request.entry.id, status: .accepted)
+        let answer = CookEntryAnswer(result: result, progress: try fixture.snapshot())
+        return CookEntryResponse(answer: answer, snapshotBody: try fixture.body())
     }
 
     private func checkOnline() throws {

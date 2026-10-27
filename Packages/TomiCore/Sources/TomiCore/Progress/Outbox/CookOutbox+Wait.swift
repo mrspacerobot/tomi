@@ -3,7 +3,7 @@ extension CookOutbox {
     public static func wait(after failure: OutboxFailure) -> OutboxWait {
         switch failure {
         case .notSignedIn: .untilSignIn
-        case .batchUnreadable: .untilLaunch
+        case .requestUnreadable: .untilLaunch
         case .other: .withBackoff
         }
     }

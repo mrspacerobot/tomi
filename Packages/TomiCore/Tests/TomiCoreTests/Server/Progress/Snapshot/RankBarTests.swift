@@ -9,13 +9,13 @@ import Testing
         RankBar(xp: xp, rank: SnapshotRank(id: "commis", name: "Commis", tier: 1, startsAt: startsAt, nextAt: nextAt))
     }
 
-    @Test func theExampleIsTwoHundredAndTenOfTwoHundredAndFifty() throws {
+    @Test func theExampleIsTwoHundredOfTwoHundredAndFifty() throws {
         let snapshot = try ServerJSON.decode(ProgressSnapshot.self, from: ProgressJSON.snapshot)
         let bar = snapshot.rankBar
-        #expect(bar.earned == 210)
+        #expect(bar.earned == 200)
         #expect(bar.needed == 250)
-        #expect(bar.remaining == 40)
-        #expect(bar.fraction == 0.84)
+        #expect(bar.remaining == 50)
+        #expect(bar.fraction == 0.8)
     }
 
     @Test func atTheStartOfARankTheBarIsEmpty() {

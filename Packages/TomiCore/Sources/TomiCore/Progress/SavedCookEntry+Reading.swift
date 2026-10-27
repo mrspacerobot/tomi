@@ -15,7 +15,12 @@ extension SavedCookEntry {
         guard let lesson, let skill, let level else {
             return nil
         }
-        return CookedLesson(id: LessonID(rawValue: lesson), skill: SkillID(rawValue: skill), level: level)
+        return CookedLesson(
+            id: LessonID(rawValue: lesson),
+            skill: SkillID(rawValue: skill),
+            level: level,
+            graphVersion: graphVersion
+        )
     }
 
     private var session: CookSession? {

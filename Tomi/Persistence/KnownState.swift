@@ -7,8 +7,10 @@ import TomiCore
 /// twice at each of its levels, getting each quiz right. The cooks are written as unsent cooks; what they are worth
 /// is the server's to say, so the state also holds the fake server's returning snapshot (`KnownState+Writing`).
 struct KnownState {
-    /// Not a lesson of any library. The entries record their own skill and level.
+    /// Not a recipe of any graph. The entries record their own skill and level.
     static let lesson = LessonID(rawValue: "known-state-lesson")
+    /// The graph version the seeded cooks name, so they are cooks of a graph recipe and wait to be sent.
+    static let graphVersion = "known-state-graph"
 
     /// How many cooks the log holds at each level. A fixed shape of the seed, not a rule of the game.
     static let cooksAtEachLevel = 2
@@ -39,7 +41,12 @@ struct KnownState {
         }
         var lessons: [CookedLesson] = []
         for level in skill.levels {
-            let lesson = CookedLesson(id: Self.lesson, skill: skill.id, level: level.number)
+            let lesson = CookedLesson(
+                id: Self.lesson,
+                skill: skill.id,
+                level: level.number,
+                graphVersion: Self.graphVersion
+            )
             lessons += Array(repeating: lesson, count: Self.cooksAtEachLevel)
         }
         return lessons

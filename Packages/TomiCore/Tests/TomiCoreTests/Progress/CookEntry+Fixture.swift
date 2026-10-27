@@ -8,7 +8,7 @@ extension CookEntry {
 
     /// A finished cook with its own new id, at level 1 on 5 October unless a test says otherwise.
     static func fixture(_ skill: SkillID, level: Int = 1, on day: DateComponents = .october(5)) -> CookEntry {
-        let lesson = CookedLesson(id: "a-lesson", skill: skill, level: level)
+        let lesson = CookedLesson(id: "a-recipe", skill: skill, level: level, graphVersion: "2026.10.20")
         let date = TestCalendar().date(day)
         let session = CookSession(date: date, result: .finished(quizCorrect: true), weeklyGoal: 2)
         return CookEntry(id: UUID(), lesson: lesson, session: session, account: fixtureAccount)
@@ -40,12 +40,18 @@ extension CookEntry {
     }
 
     func with(lesson id: LessonID) -> CookEntry {
-        let changed = CookedLesson(id: id, skill: lesson.skill, level: lesson.level)
+        let changed = CookedLesson(id: id, skill: lesson.skill, level: lesson.level, graphVersion: lesson.graphVersion)
         return CookEntry(id: self.id, lesson: changed, session: session, account: account)
     }
 
     /// The same cook, made by another account.
     func cooked(by account: String?) -> CookEntry {
         CookEntry(id: id, lesson: lesson, session: session, account: account)
+    }
+
+    /// The same cook of a bundled lesson, which has no graph recipe and so cannot be sent.
+    func ofABundledLesson() -> CookEntry {
+        let bundled = CookedLesson(id: "a-lesson", skill: lesson.skill, level: lesson.level)
+        return CookEntry(id: id, lesson: bundled, session: session, account: account)
     }
 }

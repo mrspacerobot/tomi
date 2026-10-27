@@ -26,13 +26,17 @@ import Testing
         let cook = CookEntry.fixture("knife", level: 2, on: .october(7)).with(weeklyGoal: 4)
         let saved = SavedCookEntry(cook)
         #expect(saved.stableID == cook.id)
-        #expect(saved.lesson == "a-lesson")
+        #expect(saved.lesson == "a-recipe")
         #expect(saved.skill == "knife")
         #expect(saved.level == 2)
         #expect(saved.date == TestCalendar().date(.october(7)))
         #expect(saved.stoppedEarly == false)
         #expect(saved.quizCorrect == true)
         #expect(saved.weeklyGoal == 4)
+    }
+
+    @Test func theGraphVersionOfARecipeIsWrittenWithIt() {
+        #expect(SavedCookEntry(.fixture("knife")).graphVersion == "2026.10.20")
     }
 
     @Test func aSkillAndLevelUnknownHereAreKeptForTheRulesToJudge() {

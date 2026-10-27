@@ -4,7 +4,7 @@ import Observation
 import TomiCore
 
 /// Sends the outbox of unsent cooks to Tomi's server by itself: on launch, when the app becomes active, right after a
-/// cook is saved, and when its backoff timer ends. One upload runs at a time, a batch after another until the outbox
+/// cook is saved, and when its backoff timer ends. One upload runs at a time, one cook after another until the outbox
 /// is empty. Every cook keeps its id across every try, and the server is idempotent on it, so trying again is safe.
 /// The uploader works nothing out: what each answer does to a cook and how long to wait are the outbox rules
 /// (`CookOutbox`, `OutboxReply`), and the snapshot is kept as the server sent it.
@@ -22,12 +22,12 @@ final class CookEntryUploader {
     var timer: Task<Void, Never>?
     /// How long the timer that is set waits. Nil when none is set.
     var nextTryDelay: Duration?
-    /// Tries that failed in a row, which set the next wait. A batch the server answers resets it.
+    /// Tries that failed in a row, which set the next wait. A cook the server answers resets it.
     var failedTries = 0
-    /// The server could not read a batch (`422`). The same batch would fail the same way, so every cook waits for
+    /// The server could not read a request (`422`). The same request would fail the same way, so every cook waits for
     /// the next launch, which may be a newer app.
     var isHeldUntilLaunch = false
-    /// Batches tried since launch. It changes after every try, so Home reads the snapshot and the outbox again.
+    /// Cooks tried since launch. It changes after every try, so Home reads the snapshot and the outbox again.
     private(set) var finishedTries = 0
 
     init(_ services: OutboxServices, clock: UploaderClock) {
@@ -45,7 +45,7 @@ final class CookEntryUploader {
         }
         stopTimer()
         running = Task {
-            await sendEveryBatch()
+            await sendEveryCook()
             running = nil
         }
     }
@@ -57,9 +57,9 @@ final class CookEntryUploader {
         }
     }
 
-    private func sendEveryBatch() async {
-        while let batch = nextBatch() {
-            let outboxChanged = await send(batch)
+    private func sendEveryCook() async {
+        while let request = nextRequest() {
+            let outboxChanged = await send(request)
             finishedTries += 1
             guard outboxChanged else {
                 return
@@ -67,24 +67,21 @@ final class CookEntryUploader {
         }
     }
 
-    /// The oldest pending cooks of the signed-in account, or nil when there are none, nobody is signed in or saved
+    /// The oldest pending cook of the signed-in account, or nil when there is none, nobody is signed in or saved
     /// data cannot be read. Then nothing is sent: without the account no cook may go, and without the store no
     /// answer could be kept. A cook of another account stays on the phone until that account signs in.
-    private func nextBatch() -> CookEntriesRequest? {
+    private func nextRequest() -> CookEntryRequest? {
         guard let account = auth.accountID() else {
             Self.logger.notice("Nobody is signed in. The cooks wait for the next sign-in.")
             return nil
         }
-        return batch(of: account)
+        return request(of: account)
     }
 
-    private func batch(of account: String) -> CookEntriesRequest? {
+    private func request(of account: String) -> CookEntryRequest? {
         do {
             let pending = try store.pendingCookEntries(for: account)
-            guard !pending.isEmpty else {
-                return nil
-            }
-            return pending.outboxBatch(calendar: clock.calendar())
+            return pending.nextOutboxRequest(calendar: clock.calendar())
         } catch {
             Self.logger.error("The outbox could not be read: \(String(describing: error), privacy: .public)")
             return nil

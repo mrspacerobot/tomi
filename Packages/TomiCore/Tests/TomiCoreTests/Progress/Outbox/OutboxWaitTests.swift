@@ -4,8 +4,8 @@ import Testing
 
 /// When the outbox is sent again after each kind of failure. The upload service only carries this out.
 @Suite struct OutboxWaitTests {
-    @Test func aBatchTheServerCannotReadWaitsForTheNextLaunch() {
-        #expect(CookOutbox.wait(after: .batchUnreadable) == .untilLaunch)
+    @Test func aRequestTheServerCannotReadWaitsForTheNextLaunch() {
+        #expect(CookOutbox.wait(after: .requestUnreadable) == .untilLaunch)
     }
 
     @Test func nobodySignedInWaitsForTheNextSignIn() {

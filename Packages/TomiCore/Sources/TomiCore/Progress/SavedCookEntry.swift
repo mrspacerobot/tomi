@@ -21,6 +21,8 @@ public struct SavedCookEntry: Hashable, Sendable {
     /// The IANA identifier of the zone the cook was made in, such as `Europe/Amsterdam`.
     /// Missing for cooks saved before the zone was recorded.
     public var timeZone: String?
+    /// The graph version a recipe was cooked at. Missing for a cook of a bundled lesson, which cannot be sent.
+    public var graphVersion: String?
     /// The id of the account that cooked it. Missing for cooks saved before it was recorded: they are never sent.
     public var account: String?
 
@@ -34,6 +36,7 @@ public struct SavedCookEntry: Hashable, Sendable {
         date = entry.session.date
         weeklyGoal = entry.session.weeklyGoal
         account = entry.account
+        graphVersion = entry.lesson.graphVersion
         write(entry.session.result)
         write(entry.session.timeZone)
     }

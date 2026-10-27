@@ -5,18 +5,16 @@ import Testing
 
 /// A snapshot the app cannot read in full is refused, never shown as zero or as a guess.
 @Suite struct ProgressSnapshotRefusalTests {
-    func expectRefused(replacing old: String, with new: String = "") {
-        let text = ProgressJSON.snapshot(replacing: old, with: new)
+    func expectRefused(_ text: String) {
         #expect(text != ProgressJSON.snapshot)
         #expect(throws: (any Error).self) {
             try ServerJSON.decode(ProgressSnapshot.self, from: text)
         }
     }
 
-    @Test func anUnknownSchemaVersionIsRefusedBeforeAnythingElseIsRead() {
-        let newerLayout = ProgressJSON.snapshot(replacing: #""schemaVersion": 1,"#, with: #""schemaVersion": 2,"#)
-        let text = newerLayout.replacingOccurrences(of: #""xp": 360,"#, with: "")
-        #expect(newerLayout != ProgressJSON.snapshot)
+    @Test func anUnknownSchemaVersionIsRefusedBeforeAnythingElseIsRead() throws {
+        let newerLayout = ProgressJSON.snapshot(setting: ["schemaVersion"], to: 2)
+        let text = ProgressJSON.removing(["xp"], from: newerLayout)
         #expect(text != newerLayout)
         #expect(throws: ProgressSnapshotError.unsupportedSchemaVersion(2)) {
             try ServerJSON.decode(ProgressSnapshot.self, from: text)
@@ -24,34 +22,34 @@ import Testing
     }
 
     @Test func aSnapshotWithoutASchemaVersionIsRefused() {
-        expectRefused(replacing: #""schemaVersion": 1,"#)
+        expectRefused(ProgressJSON.snapshot(removing: ["schemaVersion"]))
     }
 
     @Test func aSnapshotWithoutXPIsRefused() {
-        expectRefused(replacing: #""xp": 360,"#)
+        expectRefused(ProgressJSON.snapshot(removing: ["xp"]))
     }
 
     @Test func aRankWithoutTheXPItStartsAtIsRefused() {
-        expectRefused(replacing: #""startsAt": 150, "#)
+        expectRefused(ProgressJSON.snapshot(removing: ["rank", "startsAt"]))
     }
 
     @Test func aRankWithoutTheXPOfTheNextRankIsRefused() {
-        expectRefused(replacing: #", "nextAt": 400"#)
+        expectRefused(ProgressJSON.snapshot(removing: ["rank", "nextAt"]))
     }
 
     @Test func aLevelWithoutTheCooksToCompleteItIsRefused() {
-        expectRefused(replacing: #""cooksToComplete": 2, "#)
+        expectRefused(ProgressJSON.snapshot(removing: ["skills", 0, "levels", 0, "cooksToComplete"]))
     }
 
     @Test func aSkillWithAnUnknownStatusIsRefused() {
-        expectRefused(replacing: #""status": "mastered""#, with: #""status": "glazed""#)
+        expectRefused(ProgressJSON.snapshot(setting: ["skills", 0, "status"], to: "glazed"))
     }
 
     @Test func aSnapshotWithoutItsCalendarIsRefused() {
-        expectRefused(replacing: #""calendar": { "timeZone": "Europe/Amsterdam", "firstWeekday": 2 },"#)
+        expectRefused(ProgressJSON.snapshot(removing: ["calendar"]))
     }
 
     @Test func anInstantThatIsNotAnRFC3339InstantIsRefused() {
-        expectRefused(replacing: #""2026-10-26T18:43:02Z""#, with: #""26 October 2026""#)
+        expectRefused(ProgressJSON.snapshot(setting: ["computedAt"], to: "26 October 2026"))
     }
 }

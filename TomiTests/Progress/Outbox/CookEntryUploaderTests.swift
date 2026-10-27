@@ -32,14 +32,13 @@ import TomiCore
         #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
     }
 
-    @Test func onlineTheOutboxIsSentOnceWithTheCooksCalendar() async throws {
+    @Test func onlineEachCookIsSentInItsOwnRequestWithTheCooksCalendar() async throws {
         let ids = try harness.saveCooks(2)
-        let api = ScriptedProgressAPI(ScriptedReply.acceptingAll)
+        let api = ScriptedProgressAPI(ScriptedReply.accepting)
         await harness.upload(with: harness.uploader(api))
         let sent = await api.sent
-        #expect(sent.count == 1)
-        #expect(sent.first?.entries.map(\.id) == ids)
-        #expect(sent.first?.calendar == CalendarContext(timeZone: "Europe/Amsterdam", firstWeekday: 2))
+        #expect(sent.map(\.entry.id) == ids)
+        #expect(sent.allSatisfy { $0.calendar == CalendarContext(timeZone: "Europe/Amsterdam", firstWeekday: 2) })
     }
 
     @Test func offlineEveryCookIsKeptAndEachNextTryWaitsLonger() async throws {
@@ -55,47 +54,25 @@ import TomiCore
         #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).map(\.id) == ids)
     }
 
-    /// The server is idempotent on each cook's id, so a batch sent again can never count twice.
-    @Test func aBatchSentAgainKeepsTheSameIDs() async throws {
-        let ids = try harness.saveCooks(2)
-        let api = ScriptedProgressAPI(ScriptedReply.failing(.unreachable), ScriptedReply.acceptingAll)
+    /// The server is idempotent on each cook's id, so a cook sent again can never count twice.
+    @Test func aCookSentAgainKeepsTheSameID() async throws {
+        let ids = try harness.saveCooks(1)
+        let api = ScriptedProgressAPI(ScriptedReply.failing(.unreachable), ScriptedReply.accepting)
         let uploader = harness.uploader(api)
         await harness.upload(with: uploader)
         await harness.upload(with: uploader)
-        let sent = await api.sent
-        #expect(sent.map { $0.entries.map(\.id) } == [ids, ids])
+        #expect(await api.sent.map(\.entry.id) == ids + ids)
         #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
     }
 
-    @Test func theTimerSendsTheSameBatchAgain() async throws {
+    @Test func theTimerSendsTheSameCookAgain() async throws {
         let harness = UploaderHarness(wakes: 1)
         let ids = try harness.saveCooks(1)
-        let api = ScriptedProgressAPI(ScriptedReply.failing(.unreachable), ScriptedReply.acceptingAll)
+        let api = ScriptedProgressAPI(ScriptedReply.failing(.unreachable), ScriptedReply.accepting)
         var arrivals = api.arrivals.makeAsyncIterator()
         let uploader = harness.uploader(api)
         uploader.upload()
-        #expect(await arrivals.next()?.entries.map(\.id) == ids)
-        #expect(await arrivals.next()?.entries.map(\.id) == ids)
-    }
-
-    /// A rejected cook stays on the phone, marked with the server's code, and is never sent again.
-    @Test func aRejectedCookIsNeverSentAgain() async throws {
-        let ids = try harness.saveCooks(2)
-        let reply = ScriptedReply.answering([.rejected, .accepted], problems: ["cooked_in_future"])
-        let api = ScriptedProgressAPI(reply, ScriptedReply.acceptingAll)
-        let uploader = harness.uploader(api)
-        await harness.upload(with: uploader)
-        await harness.upload(with: uploader)
-        #expect(await api.sent.count == 1)
-        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
-        #expect(try harness.store.cookLog().map(\.id) == [ids[0]])
-    }
-
-    @Test func anOutboxOverOneBatchIsSentBatchAfterBatch() async throws {
-        try harness.saveCooks(CookOutbox.largestBatch + 1)
-        let api = ScriptedProgressAPI(ScriptedReply.acceptingAll)
-        await harness.upload(with: harness.uploader(api))
-        #expect(await api.sent.map(\.entries.count) == [CookOutbox.largestBatch, 1])
-        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
+        #expect(await arrivals.next()?.entry.id == ids[0])
+        #expect(await arrivals.next()?.entry.id == ids[0])
     }
 }

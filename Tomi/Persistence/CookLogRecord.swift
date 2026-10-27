@@ -21,6 +21,7 @@ final class CookLogRecord {
     var refusedCode: String?
     var timeZone: String?
     var account: String?
+    var graphVersion: String?
 
     init(_ saved: SavedCookEntry) {
         stableID = saved.stableID
@@ -38,5 +39,6 @@ final class CookLogRecord {
         refusedCode = saved.refusedCode
         timeZone = saved.timeZone
         account = saved.account
+        graphVersion = saved.graphVersion
     }
 }

@@ -1,8 +1,6 @@
 /// The rules of the outbox: the cook log on the phone, holding each cook until the server has acknowledged it.
 /// The upload service asks these rules what to send, what each answer changes and how long to wait.
 public enum CookOutbox {
-    /// The most cooks `POST /v1/cook-entries` takes in one batch.
-    public static let largestBatch = 100
     /// Kept as the code of a cook the server rejected without naming a problem, so it is still never resent.
     public static let unstatedProblem: CookEntryProblem = "unstated"
     /// The wait after the first failed try. Each further failure doubles it.

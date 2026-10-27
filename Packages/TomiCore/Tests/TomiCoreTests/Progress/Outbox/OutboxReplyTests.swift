@@ -3,13 +3,14 @@ import Testing
 
 @testable import TomiCore
 
-/// What the server's answer for each sent cook does to the outbox.
+/// What the server's answer for the sent cook does to the outbox.
 @Suite struct OutboxReplyTests {
     let calendar = TestCalendar().calendar
     let cook = CookEntry.fixture("eggs")
 
-    func sent(_ cooks: [CookEntry]) -> [CookEntryPayload] {
-        cooks.map { SavedCookEntry($0) }.outboxBatch(for: CookEntry.fixtureAccount, calendar: calendar).entries
+    func sent(_ cook: CookEntry) -> CookEntryPayload {
+        let request = [SavedCookEntry(cook)].nextOutboxRequest(for: CookEntry.fixtureAccount, calendar: calendar)
+        return request!.entry
     }
 
     func result(_ id: UUID?, _ status: String, problems: String = "") throws -> CookEntryResult {
@@ -22,8 +23,8 @@ import Testing
     }
 
     func change(for status: String, problems: String = "") throws -> OutboxChange? {
-        let reply = OutboxReply(sent: sent([cook]), results: [try result(cook.id, status, problems: problems)])
-        return reply.changes[cook.id]
+        let reply = OutboxReply(sent: sent(cook), result: try result(cook.id, status, problems: problems))
+        return reply.change
     }
 
     @Test func anAcceptedCookIsForgotten() throws {

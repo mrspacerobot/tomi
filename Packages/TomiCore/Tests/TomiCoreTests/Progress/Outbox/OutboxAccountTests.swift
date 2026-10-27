@@ -20,9 +20,9 @@ import Testing
         #expect(records.pendingCookEntries(for: "cook-b") == [second])
     }
 
-    @Test func theBatchOfAnAccountHoldsOnlyItsOwnCooks() {
-        let batch = saved([first, second]).outboxBatch(for: "cook-b", calendar: calendar)
-        #expect(batch.entries.map(\.id) == [second.id])
+    @Test func theRequestOfAnAccountIsForItsOwnCookOnly() {
+        let request = saved([first, second]).nextOutboxRequest(for: "cook-b", calendar: calendar)
+        #expect(request?.entry.id == second.id)
     }
 
     @Test func aCookWithoutAnAccountIsSentByNoAccount() {
@@ -33,8 +33,7 @@ import Testing
     }
 
     @Test func anAccountWithNoCooksSendsNothing() {
-        let batch = saved([first]).outboxBatch(for: "cook-c", calendar: calendar)
-        #expect(batch.entries.isEmpty)
+        #expect(saved([first]).nextOutboxRequest(for: "cook-c", calendar: calendar) == nil)
     }
 
     @Test func theAccountIsKeptWhenACookIsSavedAndRead() {
@@ -53,5 +52,20 @@ import Testing
         var refused = SavedCookEntry(first)
         refused.refusedCode = "invalid_entry"
         #expect([refused].pendingCookEntries(for: "cook-a").isEmpty)
+    }
+
+    @Test func theGraphVersionIsKeptWhenACookIsSavedAndRead() {
+        let record = SavedCookEntry(first)
+        #expect(record.graphVersion == "2026.10.20")
+        #expect(record.entry == first)
+    }
+
+    /// The server takes only graph recipes. A cook of a bundled lesson is kept and never counted as waiting.
+    @Test func aCookOfABundledLessonIsKeptAndPendingForNoAccount() {
+        let bundled = first.ofABundledLesson()
+        let records = saved([bundled])
+        #expect(records.cookLog == [bundled])
+        #expect(records.pendingCookEntries(for: "cook-a").isEmpty)
+        #expect(records.nextOutboxRequest(for: "cook-a", calendar: calendar) == nil)
     }
 }

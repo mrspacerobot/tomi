@@ -41,14 +41,14 @@ import TomiCore
         #expect(snapshot == (try decoded(ProgressFixtureText.newCook)))
     }
 
-    /// The real server would count the cooks; the fake only says it has them, and its snapshot stays as it was.
-    @Test func sentCooksAreAcceptedAndTheSnapshotStaysTheFixture() async throws {
-        let batch = CookEntriesFixture.batch()
-        let response = try await fake(.returning).sendCookEntries(batch)
+    /// The real server would count the cook; the fake only says it has it, and its snapshot stays as it was.
+    @Test func aSentCookIsAcceptedAndTheSnapshotStaysTheFixture() async throws {
+        let request = CookEntryFixture.request()
+        let response = try await fake(.returning).sendCookEntry(request)
         let answer = response.answer
         #expect(response.snapshotBody == (try FakeProgressFixture.returning.body()))
-        #expect(answer.results.map(\.id) == batch.entries.map(\.id))
-        #expect(answer.results.map(\.status) == [.accepted, .accepted])
+        #expect(answer.result.id == request.entry.id)
+        #expect(answer.result.status == .accepted)
         #expect(answer.progress == (try decoded(ProgressFixtureText.returning)))
     }
 
@@ -63,7 +63,7 @@ import TomiCore
         let api = fake(.returning, offline: true)
         await #expect(throws: BackendError.unreachable) { try await api.progress(amsterdam) }
         await #expect(throws: BackendError.unreachable) {
-            try await api.sendCookEntries(CookEntriesFixture.batch())
+            try await api.sendCookEntry(CookEntryFixture.request())
         }
     }
 }

@@ -1,8 +1,8 @@
 import Foundation
 
-/// The server's answer for one cook entry, in the place of that entry in the batch.
+/// The server's answer for the cook entry that was sent.
 public struct CookEntryResult: Hashable, Decodable, Sendable {
-    /// Missing only when the server could not read the entry's id. The place in the batch says which it was.
+    /// Missing only when the server could not read the entry's id. It is the one entry that was sent.
     public let id: UUID?
     public let status: CookEntryStatus
     /// Why a rejected entry was refused. Empty for every other status.

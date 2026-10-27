@@ -3,40 +3,32 @@ import Testing
 
 @testable import TomiCore
 
-/// The server answers in the order the cooks were sent. An answer that does not line up with the batch
+/// The result counts for the cook that was sent only when it is that cook's. An answer that does not line up
 /// changes nothing, so no cook is ever forgotten because of someone else's result.
 @Suite struct OutboxReplyMatchingTests {
     let tests = OutboxReplyTests()
     let monday = CookEntry.fixture("knife", on: .october(5))
     let tuesday = CookEntry.fixture("knife", on: .october(6))
 
-    @Test func eachResultChangesTheCookSentInItsPlace() throws {
-        let results = [try tests.result(monday.id, "accepted"), try tests.result(tuesday.id, "parked")]
-        let reply = OutboxReply(sent: tests.sent([monday, tuesday]), results: results)
-        #expect(reply.changes == [monday.id: .forget])
+    @Test func aResultNamingTheSentCookChangesIt() throws {
+        let reply = OutboxReply(sent: tests.sent(monday), result: try tests.result(monday.id, "accepted"))
+        #expect(reply.change == .forget)
     }
 
-    /// One entry the server could not read cannot block the outbox forever: it is refused in its place.
-    @Test func aResultWithoutAnIDChangesTheCookSentInItsPlace() throws {
-        let results = [
-            try tests.result(monday.id, "accepted"),
-            try tests.result(nil, "rejected", problems: #""unreadable_entry""#),
-        ]
-        let reply = OutboxReply(sent: tests.sent([monday, tuesday]), results: results)
-        #expect(reply.changes == [monday.id: .forget, tuesday.id: .refuse(code: "unreadable_entry")])
+    /// An entry the server could not read cannot block the outbox forever: it is refused.
+    @Test func aResultWithoutAnIDChangesTheSentCook() throws {
+        let result = try tests.result(nil, "rejected", problems: #""unreadable_entry""#)
+        let reply = OutboxReply(sent: tests.sent(tuesday), result: result)
+        #expect(reply.change == .refuse(code: "unreadable_entry"))
     }
 
-    @Test func aResultNamingAnotherCookChangesNothingForIt() throws {
-        let results = [try tests.result(tuesday.id, "accepted"), try tests.result(monday.id, "accepted")]
-        let reply = OutboxReply(sent: tests.sent([monday, tuesday]), results: results)
-        #expect(reply.changes == [:])
+    @Test func aResultNamingAnotherCookChangesNothing() throws {
+        let reply = OutboxReply(sent: tests.sent(monday), result: try tests.result(tuesday.id, "accepted"))
+        #expect(reply.change == nil)
     }
 
-    @Test func anAnswerWithMoreOrFewerResultsThanCooksChangesNothing() throws {
-        let sent = tests.sent([monday, tuesday])
-        let one = OutboxReply(sent: sent, results: [try tests.result(monday.id, "accepted")])
-        let three = OutboxReply(sent: sent, results: Array(repeating: try tests.result(nil, "accepted"), count: 3))
-        #expect(one.changes == [:])
-        #expect(three.changes == [:])
+    @Test func aResultWithAStatusUnknownHereChangesNothing() throws {
+        let reply = OutboxReply(sent: tests.sent(monday), result: try tests.result(monday.id, "parked"))
+        #expect(reply.change == nil)
     }
 }

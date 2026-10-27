@@ -15,18 +15,20 @@ import TomiCore
         let model = try player()
         model.cookingZone = tokyo
         model.stop()
-        let saved = try store.pendingCookEntries(for: CookEntry.fixtureAccount)
+        let saved = try store.cookLog()
         #expect(saved.count == 1)
         #expect(saved.first?.session.timeZone == tokyo)
     }
 
-    /// The cook goes to the server as soon as it is saved, without waiting for the next launch.
-    @Test(.timeLimit(.minutes(1))) func aSavedCookIsSentAtOnce() async throws {
+    /// The server takes only graph recipes. The player cooks a bundled lesson, so its cook is kept on the phone and
+    /// is never sent, nor counted as waiting to be.
+    @Test(.timeLimit(.minutes(1))) func aCookOfABundledLessonIsKeptAndNeverSent() async throws {
         let model = try player()
         model.finish()
         await model.uploader.waitUntilIdle()
+        #expect(try store.cookLog().count == 1)
         #expect(try store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
-        #expect(try store.progressSnapshot() != nil)
+        #expect(try store.progressSnapshot() == nil)
     }
 
     /// The cook is saved under the account that cooked it, so no other account who signs in on this phone sends it.

@@ -2,7 +2,7 @@ import TomiCore
 
 /// The progress routes of the fake server. They answer from the chosen fixture and compute nothing.
 extension FakeTomiAPI {
-    func sendCookEntries(_ request: CookEntriesRequest) async throws -> CookEntriesResponse {
+    func sendCookEntry(_ request: CookEntryRequest) async throws -> CookEntryResponse {
         try configuration.progressServer.answer(request)
     }
 

@@ -5,7 +5,7 @@ extension BackendError {
     var outboxFailure: OutboxFailure {
         switch self {
         case .notSignedIn: .notSignedIn
-        case .server(status: 422, _): .batchUnreadable
+        case .server(status: 422, _): .requestUnreadable
         default: .other
         }
     }

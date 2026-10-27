@@ -4,12 +4,12 @@ import Testing
 @testable import TomiCore
 
 /// The answer to `POST /v1/cook-entries` as it arrived: read, and with the snapshot's own JSON kept for the store.
-@Suite struct CookEntriesResponseTests {
-    static let results = #"[{"id": "4e2c2a0e-7e6b-4c7a-9c2b-6e0a3d1f9a11", "status": "accepted"}]"#
+@Suite struct CookEntryResponseTests {
+    static let result = #"{"id": "4e2c2a0e-7e6b-4c7a-9c2b-6e0a3d1f9a11", "status": "accepted"}"#
 
-    func response(progress: String) throws -> CookEntriesResponse {
-        let text = #"{"results": "# + Self.results + #", "progress": "# + progress + "}"
-        return try CookEntriesResponse(reading: Data(text.utf8))
+    func response(progress: String) throws -> CookEntryResponse {
+        let text = #"{"result": "# + Self.result + #", "progress": "# + progress + "}"
+        return try CookEntryResponse(reading: Data(text.utf8))
     }
 
     @Test func theSnapshotIsKeptAsTheServerSentIt() throws {
@@ -17,7 +17,7 @@ import Testing
         let body = try #require(response.snapshotBody)
         #expect(try ProgressJSON.object(of: body) == (try ProgressJSON.object(of: Data(ProgressJSON.snapshot.utf8))))
         #expect(try JSONDecoder().decode(ProgressSnapshot.self, from: body) == response.answer.progress)
-        #expect(response.answer.results.map(\.status) == [.accepted])
+        #expect(response.answer.result.status == .accepted)
     }
 
     /// A field a newer server adds is kept too, so the store holds everything that was sent.
@@ -34,17 +34,17 @@ import Testing
         #expect(unknown != ProgressJSON.snapshot)
         let response = try response(progress: unknown)
         #expect(response.snapshotBody == nil)
-        #expect(response.answer.results.count == 1)
+        #expect(response.answer.result.status == .accepted)
     }
 
     @Test func anAnswerWithoutASnapshotKeepsNone() throws {
-        let text = #"{"results": "# + Self.results + "}"
-        #expect(try CookEntriesResponse(reading: Data(text.utf8)).snapshotBody == nil)
+        let text = #"{"result": "# + Self.result + "}"
+        #expect(try CookEntryResponse(reading: Data(text.utf8)).snapshotBody == nil)
     }
 
-    @Test func anAnswerWhoseResultsCannotBeReadIsRefused() {
+    @Test func anAnswerWhoseResultCannotBeReadIsRefused() {
         #expect(throws: (any Error).self) {
-            try CookEntriesResponse(reading: Data(#"{"progress": {}}"#.utf8))
+            try CookEntryResponse(reading: Data(#"{"progress": {}}"#.utf8))
         }
     }
 }

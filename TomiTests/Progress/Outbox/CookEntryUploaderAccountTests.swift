@@ -15,9 +15,9 @@ import TomiCore
         try harness.store.add(strangers)
         try harness.store.add(unowned)
         let own = try harness.saveCooks(1)
-        let api = ScriptedProgressAPI(ScriptedReply.acceptingAll)
+        let api = ScriptedProgressAPI(ScriptedReply.accepting)
         await harness.upload(with: harness.uploader(api))
-        #expect(await api.sent.flatMap(\.entries).map(\.id) == own)
+        #expect(await api.sent.map(\.entry.id) == own)
         #expect(try harness.store.cookLog().map(\.id).contains(strangers.id))
         #expect(try harness.store.cookLog().map(\.id).contains(unowned.id))
     }
@@ -25,7 +25,7 @@ import TomiCore
     @Test func whenNobodyIsSignedInNothingIsSent() async throws {
         try harness.saveCooks(2)
         try await harness.auth.signOut()
-        let api = ScriptedProgressAPI(ScriptedReply.acceptingAll)
+        let api = ScriptedProgressAPI(ScriptedReply.accepting)
         await harness.upload(with: harness.uploader(api))
         #expect(await api.sent.isEmpty)
         #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).count == 2)
@@ -33,7 +33,7 @@ import TomiCore
 
     @Test func theNextAccountToSignInSendsOnlyItsOwnCooks() async throws {
         try harness.store.add(strangers)
-        let api = ScriptedProgressAPI(ScriptedReply.acceptingAll)
+        let api = ScriptedProgressAPI(ScriptedReply.accepting)
         await harness.upload(with: harness.uploader(api))
         #expect(await api.sent.isEmpty)
         #expect(try harness.store.pendingCookEntries(for: "another-cook") == [strangers])

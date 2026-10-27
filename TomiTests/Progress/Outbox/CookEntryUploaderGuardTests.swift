@@ -4,7 +4,7 @@ import TomiCore
 
 @testable import Tomi
 
-/// When the uploader must not send: while it already sends, after a batch the server could not read, and when
+/// When the uploader must not send: while it already sends, after a request the server could not read, and when
 /// there is nothing it can safely do. Every cook stays on the phone in each case.
 @MainActor
 @Suite(.timeLimit(.minutes(1))) struct CookEntryUploaderGuardTests {
@@ -12,7 +12,7 @@ import TomiCore
 
     @Test func aSecondTriggerWhileAnUploadRunsStartsNothing() async throws {
         try harness.saveCooks(1)
-        let api = ScriptedProgressAPI(holdingFirstAnswer: true, ScriptedReply.acceptingAll)
+        let api = ScriptedProgressAPI(holdingFirstAnswer: true, ScriptedReply.accepting)
         let uploader = harness.uploader(api)
         var arrivals = api.arrivals.makeAsyncIterator()
         uploader.upload()
@@ -23,10 +23,10 @@ import TomiCore
         #expect(await api.sent.count == 1)
     }
 
-    /// The server could not read the batch: sending it again would fail the same way, so it waits for a launch.
-    @Test func aBatchTheServerCannotReadKeepsEveryCookUntilTheNextLaunch() async throws {
+    /// The server could not read the request: sending it again would fail the same way, so it waits for a launch.
+    @Test func aRequestTheServerCannotReadKeepsEveryCookUntilTheNextLaunch() async throws {
         let ids = try harness.saveCooks(2)
-        let api = ScriptedProgressAPI(ScriptedReply.invalidRequest, ScriptedReply.acceptingAll)
+        let api = ScriptedProgressAPI(ScriptedReply.invalidRequest, ScriptedReply.accepting)
         let uploader = harness.uploader(api)
         await harness.upload(with: uploader)
         await harness.upload(with: uploader)
@@ -37,7 +37,7 @@ import TomiCore
         #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
     }
 
-    @Test func aBatchTheServerCannotReadSetsNoTimer() async throws {
+    @Test func aRequestTheServerCannotReadSetsNoTimer() async throws {
         try harness.saveCooks(1)
         let api = ScriptedProgressAPI(ScriptedReply.invalidRequest)
         let uploader = harness.uploader(api)
@@ -56,10 +56,10 @@ import TomiCore
     }
 
     /// An answer that changes nothing, such as a status this app does not know, is a failed try: the cooks stay and
-    /// the next try waits, so the same batch is never sent in a tight loop.
+    /// the next try waits, so the same cook is never sent in a tight loop.
     @Test func anAnswerThatChangesNothingWaitsBeforeTheNextTry() async throws {
         try harness.saveCooks(1)
-        let api = ScriptedProgressAPI(ScriptedReply.answering([.unknown("parked")]))
+        let api = ScriptedProgressAPI(ScriptedReply.answering(.unknown("parked")))
         var waits = harness.sleeper.requests.makeAsyncIterator()
         await harness.upload(with: harness.uploader(api))
         #expect(await waits.next() == .seconds(2))
@@ -69,13 +69,13 @@ import TomiCore
     }
 
     @Test func anEmptyOutboxSendsNothing() async {
-        let api = ScriptedProgressAPI(ScriptedReply.acceptingAll)
+        let api = ScriptedProgressAPI(ScriptedReply.accepting)
         await harness.upload(with: harness.uploader(api))
         #expect(await api.sent.isEmpty)
     }
 
     @Test func savedDataThatCannotBeReadSendsNothing() async {
-        let api = ScriptedProgressAPI(ScriptedReply.acceptingAll)
+        let api = ScriptedProgressAPI(ScriptedReply.accepting)
         let uploader = harness.uploader(api, over: UnavailableProgressStore())
         await harness.upload(with: uploader)
         #expect(await api.sent.isEmpty)

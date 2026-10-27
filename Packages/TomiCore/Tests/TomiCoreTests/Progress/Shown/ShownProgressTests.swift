@@ -26,7 +26,7 @@ import Testing
         let situation = ProgressSituation(unsentCooks: 2, isOffline: true)
         let shown = ShownProgress(snapshot: try snapshot, situation: situation, now: duringTheWeek)
         #expect(shown.note == .unsentCooks(2))
-        #expect(shown.snapshot?.xp == 360)
+        #expect(shown.snapshot?.xp == 350)
         #expect(shown.snapshot?.rank == (try snapshot).rank)
     }
 
