@@ -8,7 +8,8 @@ enum HomeRoute: Hashable {
     case suggestion(Suggestion)
     case introduction(Suggestion)
     case preparation(Suggestion)
-    case steps(Suggestion)
+    case steps(CookingSession)
+    case quiz(CookingSession)
 
     /// The recipe detail a cooking flow comes back to.
     var isSuggestion: Bool {

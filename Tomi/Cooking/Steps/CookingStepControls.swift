@@ -1,8 +1,10 @@
 import SwiftUI
 import TomiCore
 
-/// The way on from a step: the next one, or back to the recipe after the last, and back one step except at the first.
+/// The way on from a step: the next one, after the last the quiz or back to the recipe, and back one step except at
+/// the first.
 struct CookingStepControls: View {
+    let session: CookingSession
     @Binding var walk: StepWalk
     @Binding var path: [HomeRoute]
 
@@ -23,7 +25,7 @@ struct CookingStepControls: View {
 
     @ViewBuilder private var forward: some View {
         if walk.isLast {
-            CookingReturnButton(path: $path, words: .cookingStepsFinish, identifier: "cooking-steps-finish")
+            CookingStepsEnd(session: session, path: $path)
         } else {
             Button {
                 walk = walk.advanced()

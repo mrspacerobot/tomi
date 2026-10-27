@@ -6,20 +6,29 @@ struct TickRowWords: View {
     let name: String
     let note: String?
     let isSelected: Bool
+    var isCrossedOut = false
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         layout {
             Text(name)
-                .textStyle(.option)
+                .strikethrough(isCrossedOut, color: ColorRole.stampRed.color)
+                .textStyle(.option, color: nameColor)
                 .layoutPriority(1)
             if let note {
                 if !dynamicTypeSize.isAccessibilitySize {
                     DottedLeader()
                 }
-                TickRowNote(words: note, isSelected: isSelected)
+                TickRowNote(words: note, isSelected: isSelected, isCrossedOut: isCrossedOut)
             }
         }
+    }
+
+    private var nameColor: ColorRole {
+        if isCrossedOut {
+            return .inkFaded
+        }
+        return TextStyle.option.defaultColor
     }
 
     private var layout: AnyLayout {

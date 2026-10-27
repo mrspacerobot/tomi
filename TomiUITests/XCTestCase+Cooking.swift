@@ -17,6 +17,16 @@ extension XCTestCase {
         app.buttons["confirm-find"].tap()
     }
 
+    /// Starts preparation, begins the steps and walks to the last of the guided suggestion's three steps.
+    @MainActor func beginAndWalkAllSteps(_ app: XCUIApplication) {
+        app.buttons["cooking-start"].tap()
+        XCTAssertTrue(app.buttons["cooking-steps-begin"].waitForExistence(timeout: 5))
+        app.buttons["cooking-steps-begin"].tap()
+        XCTAssertTrue(app.buttons["cooking-step-next"].waitForExistence(timeout: 5))
+        app.buttons["cooking-step-next"].tap()
+        app.buttons["cooking-step-next"].tap()
+    }
+
     @MainActor func attachScreenshot(of app: XCUIApplication, named name: String) {
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = name

@@ -13,12 +13,13 @@ struct TickRowFace: View {
     let name: String
     let note: String?
     let isSelected: Bool
+    var isCrossedOut = false
 
     var body: some View {
         HStack(alignment: .top, spacing: Spacing.small) {
             TickBox(isTicked: isSelected)
                 .dynamicTypeSize(...Self.largestBox)
-            TickRowWords(name: name, note: note, isSelected: isSelected)
+            TickRowWords(name: name, note: note, isSelected: isSelected, isCrossedOut: isCrossedOut)
         }
         .padding(.top, Spacing.medium)
         .padding(.bottom, Self.bottomPadding)
