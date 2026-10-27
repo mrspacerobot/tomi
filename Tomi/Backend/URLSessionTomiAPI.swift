@@ -29,4 +29,12 @@ nonisolated struct URLSessionTomiAPI: TomiAPI {
     func suggestions(_ request: SuggestionsRequest) async throws -> SuggestionsResponse {
         try await client.value(SuggestionsResponse.self, for: try APIRequest.suggestions.sending(request))
     }
+
+    func sendCookEntries(_ request: CookEntriesRequest) async throws -> CookEntriesAnswer {
+        try await client.value(CookEntriesAnswer.self, for: try APIRequest.cookEntries.sending(request))
+    }
+
+    func progress(_ calendar: CalendarContext) async throws -> ProgressSnapshot {
+        try await client.value(ProgressSnapshot.self, for: .progress(calendar))
+    }
 }

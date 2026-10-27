@@ -10,6 +10,11 @@ public struct CookEntriesAnswer: Hashable, Decodable, Sendable {
         case results, progress
     }
 
+    public init(results: [CookEntryResult], progress: ProgressSnapshot?) {
+        self.results = results
+        self.progress = progress
+    }
+
     public init(from decoder: any Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         results = try values.decode([CookEntryResult].self, forKey: .results)
