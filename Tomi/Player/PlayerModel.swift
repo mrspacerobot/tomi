@@ -14,12 +14,14 @@ final class PlayerModel {
     private(set) var page = PlayerPage.ingredients
     private(set) var chosenAnswer: Int?
     let store: any ProgressStore
+    let uploader: CookEntryUploader
 
     init(dish: Lesson, brief: PlayerBrief, flow: AppFlowModel) {
         self.dish = dish
         self.brief = brief
         profile = flow.profile.profile
         store = flow.services.store
+        uploader = flow.uploader
     }
 
     var units: Units {

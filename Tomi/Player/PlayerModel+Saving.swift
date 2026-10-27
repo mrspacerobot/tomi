@@ -21,7 +21,7 @@ extension PlayerModel {
     }
 
     /// The moment and the zone are taken as the cook is saved, so the server counts it on the day it was cooked
-    /// where it was cooked, however far the cook travels before it is sent.
+    /// where it was cooked, however far the cook travels before it is sent. It is sent at once, when it can be.
     private func log(_ result: CookResult) {
         let lesson = CookedLesson(id: dish.id, skill: dish.skill, level: dish.level)
         var session = CookSession(date: .now, result: result, weeklyGoal: profile.weeklyGoal)
@@ -30,6 +30,7 @@ extension PlayerModel {
             try store.add(CookEntry(id: UUID(), lesson: lesson, session: session))
             try store.clearActiveLesson()
         }
+        uploader.upload()
     }
 
     private func attempt(_ saving: () throws -> Void) {

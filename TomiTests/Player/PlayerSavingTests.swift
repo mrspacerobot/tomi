@@ -18,6 +18,15 @@ import TomiCore
         #expect(saved.first?.session.timeZone == TimeZone.current)
     }
 
+    /// The cook goes to the server as soon as it is saved, without waiting for the next launch.
+    @Test(.timeLimit(.minutes(1))) func aSavedCookIsSentAtOnce() async throws {
+        let model = try player()
+        model.finish()
+        await model.uploader.waitUntilIdle()
+        #expect(try store.pendingCookEntries().isEmpty)
+        #expect(try store.progressSnapshot() != nil)
+    }
+
     private func player() throws -> PlayerModel {
         let dish = try LibraryFixture.shippedOmelette()
         let brief = PlayerBrief(lessonID: dish.id, revision: dish.revision, title: "", swaps: [], ingredients: [])

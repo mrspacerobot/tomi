@@ -24,9 +24,14 @@ nonisolated struct APIClient: Sendable {
 
     /// The decoded answer of a call that succeeded.
     func value<Value: Decodable>(_ type: Value.Type, for request: APIRequest) async throws -> Value {
+        try await read(request) { try JSONDecoder().decode(type, from: $0) }
+    }
+
+    /// The answer of a call that succeeded, read from its body by `reading`.
+    func read<Value>(_ request: APIRequest, with reading: (Data) throws -> Value) async throws -> Value {
         let data = try await data(for: request)
         do {
-            return try JSONDecoder().decode(type, from: data)
+            return try reading(data)
         } catch {
             throw BackendError.unreadableResponse(status: 200)
         }

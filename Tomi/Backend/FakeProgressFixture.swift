@@ -11,9 +11,14 @@ nonisolated enum FakeProgressFixture: String, Sendable {
 
     /// The snapshot in the fixture. Throws when the file is missing or cannot be read, never gives zeros instead.
     func snapshot() throws -> ProgressSnapshot {
+        try JSONDecoder().decode(ProgressSnapshot.self, from: try body())
+    }
+
+    /// The fixture's JSON, as the server would send it.
+    func body() throws -> Data {
         guard let url = Bundle.main.url(forResource: rawValue, withExtension: "json") else {
             throw CocoaError(.fileNoSuchFile)
         }
-        return try JSONDecoder().decode(ProgressSnapshot.self, from: try Data(contentsOf: url))
+        return try Data(contentsOf: url)
     }
 }

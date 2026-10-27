@@ -79,7 +79,7 @@ actor FakeTomiAPI: TomiAPI {
         return try data.suggestions(for: envelope.profile)
     }
 
-    func sendCookEntries(_ request: CookEntriesRequest) async throws -> CookEntriesAnswer {
+    func sendCookEntries(_ request: CookEntriesRequest) async throws -> CookEntriesResponse {
         try configuration.progressServer.answer(request)
     }
 

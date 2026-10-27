@@ -7,13 +7,15 @@ final class SavedDataUITests: XCTestCase {
         continueAfterFailure = false
     }
 
+    /// The fake server is offline, so the seeded cooks stay unsent: online, the uploader would hand them to the
+    /// server, and the progress worked out on the phone shows only unsent cooks until #163 shows the server's.
     @MainActor
     func testSeededProgressIsStillShownAfterARelaunch() {
-        let seeded = launch(["--store-ui-test-file", "--seed-known-state"])
+        let seeded = launch(["--store-ui-test-file", "--seed-known-state", "--fake-cook-entries-offline"])
         assertKnownProgressIsShown(in: seeded)
         seeded.terminate()
 
-        let relaunched = launch(["--store-ui-test-file"])
+        let relaunched = launch(["--store-ui-test-file", "--fake-cook-entries-offline"])
         assertKnownProgressIsShown(in: relaunched)
     }
 

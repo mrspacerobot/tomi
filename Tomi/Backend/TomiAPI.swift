@@ -16,8 +16,9 @@ nonisolated protocol TomiAPI: Sendable {
     func resolve(_ labels: [String]) async throws -> ResolveResponse
     func suggestions(_ request: SuggestionsRequest) async throws -> SuggestionsResponse
     /// Sends one batch of the outbox. The server answers each cook in the place it was sent, with the snapshot
-    /// after the batch. A batch the server cannot read is `422 invalid_request`: every cook stays to be sent again.
-    func sendCookEntries(_ request: CookEntriesRequest) async throws -> CookEntriesAnswer
+    /// after the batch, kept as it was sent. A batch the server cannot read is `422 invalid_request`: every cook
+    /// stays to be sent again.
+    func sendCookEntries(_ request: CookEntriesRequest) async throws -> CookEntriesResponse
     /// The cook's progress, worked out by the server, with the week in progress judged by this calendar.
     func progress(_ calendar: CalendarContext) async throws -> ProgressSnapshot
 }

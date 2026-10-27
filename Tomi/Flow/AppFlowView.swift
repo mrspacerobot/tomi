@@ -4,6 +4,7 @@ import SwiftUI
 struct AppFlowView: View {
     let flow: AppFlowModel
     let progress: SavedProgressModel
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         Group {
@@ -17,6 +18,11 @@ struct AppFlowView: View {
         }
         .task {
             await flow.start()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                flow.appBecameActive()
+            }
         }
     }
 }

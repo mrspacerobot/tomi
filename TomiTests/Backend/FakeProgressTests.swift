@@ -39,7 +39,9 @@ import TomiCore
     /// The real server would count the cooks; the fake only says it has them, and its snapshot stays as it was.
     @Test func sentCooksAreAcceptedAndTheSnapshotStaysTheFixture() async throws {
         let batch = CookEntriesFixture.batch()
-        let answer = try await fake(.returning).sendCookEntries(batch)
+        let response = try await fake(.returning).sendCookEntries(batch)
+        let answer = response.answer
+        #expect(response.snapshotBody == (try FakeProgressFixture.returning.body()))
         #expect(answer.results.map(\.id) == batch.entries.map(\.id))
         #expect(answer.results.map(\.status) == [.accepted, .accepted])
         #expect(answer.progress == (try decoded(ProgressFixtureText.returning)))

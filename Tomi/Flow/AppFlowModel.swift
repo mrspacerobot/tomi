@@ -11,10 +11,13 @@ final class AppFlowModel {
     private(set) var problem: ProblemText?
     let services: AppServices
     let profile: ProfileModel
+    /// Sends the cooks saved on this phone to the server, by itself.
+    let uploader: CookEntryUploader
 
     init(services: AppServices) {
         self.services = services
         profile = ProfileModel(api: services.api, store: services.store)
+        uploader = CookEntryUploader(api: services.api, store: services.store, clock: .phone)
     }
 
     func start() async {
@@ -52,6 +55,13 @@ final class AppFlowModel {
         try await services.auth.sendPasswordReset(to: email)
     }
 
+    /// The app came back to the screen: cooks saved offline may go now. Only a signed-in cook's cooks are sent.
+    func appBecameActive() {
+        if stage == .home || stage == .onboarding {
+            uploader.upload()
+        }
+    }
+
     func finishOnboarding() {
         stage = .home
     }
@@ -64,14 +74,20 @@ final class AppFlowModel {
     private func loadProfile() async {
         do {
             try await profile.load()
-            problem = nil
-            stage = stageAfterLoading
+            showLoadedProfile()
         } catch BackendError.notSignedIn {
             stage = .signedOut
         } catch {
             report(error)
             stage = .failed
         }
+    }
+
+    /// The cook is signed in and their answers are here, so the cooks saved on the phone can go to the server.
+    private func showLoadedProfile() {
+        problem = nil
+        stage = stageAfterLoading
+        uploader.upload()
     }
 
     private var stageAfterLoading: AppStage {

@@ -25,10 +25,18 @@ import TomiCore
 
     @Test func theAnswerIsReadInTheOrderTheCooksWereSent() async throws {
         let harness = APIHarness.make([.init(status: 200, body: answer)])
-        let read = try await harness.api.sendCookEntries(batch)
+        let read = try await harness.api.sendCookEntries(batch).answer
         #expect(read.results.map(\.id) == batch.entries.map(\.id))
         #expect(read.results.map(\.status) == [.accepted, .accepted])
         #expect(read.progress?.xp == 350)
+    }
+
+    /// The store keeps the snapshot as the server sent it, so the answer hands over its JSON with it.
+    @Test func theSnapshotComesWithItsJSON() async throws {
+        let harness = APIHarness.make([.init(status: 200, body: answer)])
+        let response = try await harness.api.sendCookEntries(batch)
+        let body = try #require(response.snapshotBody)
+        #expect(try JSONDecoder().decode(ProgressSnapshot.self, from: body) == response.answer.progress)
     }
 
     @Test func a401RenewsTheTokenOnceAndSendsTheSameBatchAgain() async throws {
