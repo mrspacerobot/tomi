@@ -56,6 +56,11 @@ actor SupabaseAuthService: AuthService {
         try await renewed(try currentSession()).accessToken
     }
 
+    nonisolated func accountID() -> String? {
+        let session = try? store.load()
+        return session?.accountID
+    }
+
     func signOut() async throws {
         try store.delete()
     }

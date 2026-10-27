@@ -23,5 +23,6 @@ extension CookLogRecord {
     private func readOutbox(into saved: inout SavedCookEntry) {
         saved.refusedCode = refusedCode
         saved.timeZone = timeZone
+        saved.account = account
     }
 }

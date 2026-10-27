@@ -7,6 +7,7 @@ import TomiCore
 @MainActor
 struct UploaderHarness {
     let store = InMemoryProgressStore()
+    let auth = FakeAuthService(signedIn: true)
     let sleeper: RecordingSleeper
 
     init(wakes: Int = 0) {
@@ -21,9 +22,10 @@ struct UploaderHarness {
         return calendar
     }
 
-    func uploader(_ api: any TomiAPI) -> CookEntryUploader {
+    func uploader(_ api: any TomiAPI, over store: (any ProgressStore)? = nil) -> CookEntryUploader {
         let clock = UploaderClock(now: { .october(27) }, calendar: { Self.calendar }, sleeper: sleeper)
-        return CookEntryUploader(api: api, store: store, clock: clock)
+        let services = OutboxServices(api: api, auth: auth, store: store ?? self.store)
+        return CookEntryUploader(services, clock: clock)
     }
 
     /// Saves that many finished cooks, one a day from the first of October, and gives their ids in that order.

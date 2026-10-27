@@ -30,7 +30,7 @@ import TomiCore
         let flow = try flow(signedIn: true)
         await flow.start()
         await flow.uploader.waitUntilIdle()
-        #expect(try store.pendingCookEntries().isEmpty)
+        #expect(try store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
         #expect(try store.progressSnapshot() != nil)
     }
 
@@ -39,19 +39,19 @@ import TomiCore
         await flow.start()
         flow.appBecameActive()
         await flow.uploader.waitUntilIdle()
-        #expect(try store.pendingCookEntries().count == 1)
+        #expect(try store.pendingCookEntries(for: CookEntry.fixtureAccount).count == 1)
     }
 
     @Test func becomingActiveSendsTheOutbox() async throws {
         let flow = try flow(signedIn: true)
         flow.appBecameActive()
         await flow.uploader.waitUntilIdle()
-        #expect(try store.pendingCookEntries().count == 1)
+        #expect(try store.pendingCookEntries(for: CookEntry.fixtureAccount).count == 1)
         await flow.start()
         await flow.uploader.waitUntilIdle()
         try store.add(CookEntry.fixture("eggs", onOctober: 6))
         flow.appBecameActive()
         await flow.uploader.waitUntilIdle()
-        #expect(try store.pendingCookEntries().isEmpty)
+        #expect(try store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
     }
 }

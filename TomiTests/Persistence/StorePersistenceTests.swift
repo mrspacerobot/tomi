@@ -38,7 +38,7 @@ import TomiCore
         try store.add(tokyo)
         try store.add(refused)
         try store.markCookEntryRefused(id: refused.id, code: "cooked_in_future")
-        #expect(try StoreFixture(at: file).store.pendingCookEntries() == [tokyo])
+        #expect(try StoreFixture(at: file).store.pendingCookEntries(for: CookEntry.fixtureAccount) == [tokyo])
         #expect(try StoreFixture(at: file).store.cookLog() == [tokyo, refused])
     }
 

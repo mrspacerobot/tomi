@@ -11,7 +11,7 @@ import TomiCore
     let store = UnavailableProgressStore()
 
     @Test func everyReadFails() {
-        #expect(throws: ProgressStoreError.unavailable) { try store.pendingCookEntries() }
+        #expect(throws: ProgressStoreError.unavailable) { try store.pendingCookEntries(for: CookEntry.fixtureAccount) }
         #expect(throws: ProgressStoreError.unavailable) { try store.progressSnapshot() }
     }
 

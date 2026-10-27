@@ -8,10 +8,15 @@ public struct CookEntry: Identifiable, Hashable, Sendable {
     public let id: UUID
     public let lesson: CookedLesson
     public let session: CookSession
+    /// The id of the signed-in account that cooked it. Only that account's outbox sends it, so a cook saved by one
+    /// cook is never credited to the next cook who signs in on the same phone. Nil when no account was known:
+    /// such a cook is kept and never sent.
+    public let account: String?
 
-    public init(id: UUID, lesson: CookedLesson, session: CookSession) {
+    public init(id: UUID, lesson: CookedLesson, session: CookSession, account: String? = nil) {
         self.id = id
         self.lesson = lesson
         self.session = session
+        self.account = account
     }
 }

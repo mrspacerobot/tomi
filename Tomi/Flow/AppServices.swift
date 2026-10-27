@@ -11,10 +11,10 @@ struct AppServices {
     let usesFakeSignInButton: Bool
 
     /// Fakes over the given library and store, for previews and tests.
-    static func fake(library: any LessonLibrary, store: any ProgressStore) -> AppServices {
+    static func fake(library: any LessonLibrary, store: any ProgressStore, signedIn: Bool = false) -> AppServices {
         AppServices(
             api: FakeTomiAPI(library: library),
-            auth: FakeAuthService(),
+            auth: FakeAuthService(signedIn: signedIn),
             library: library,
             store: store,
             photos: .fixed(PhotoSource.fakePhoto),

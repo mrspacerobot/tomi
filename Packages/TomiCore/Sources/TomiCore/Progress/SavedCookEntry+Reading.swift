@@ -7,7 +7,7 @@ extension SavedCookEntry {
         guard let stableID, let lesson = cookedLesson, let session else {
             return nil
         }
-        return CookEntry(id: stableID, lesson: lesson, session: session)
+        return CookEntry(id: stableID, lesson: lesson, session: session, account: account)
     }
 
     /// The skill and level are kept as saved, known or not: the progress rules leave out what the menu lacks.
