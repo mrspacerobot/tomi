@@ -37,4 +37,13 @@ nonisolated struct URLSessionTomiAPI: TomiAPI {
     func progress(_ calendar: CalendarContext) async throws -> ProgressResponse {
         try await client.read(.progress(calendar), with: ProgressResponse.init(reading:))
     }
+
+    /// An answer to another question than the one asked is refused, never shown.
+    func answerQuiz(_ pick: QuizPick) async throws -> QuizVerdict {
+        let verdict = try await client.value(QuizVerdict.self, for: try APIRequest.quizAnswers.sending(pick))
+        guard verdict.answers(pick) else {
+            throw BackendError.unreadableResponse(status: 200)
+        }
+        return verdict
+    }
 }

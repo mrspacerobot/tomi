@@ -3,7 +3,7 @@ import TomiCore
 
 /// Fake graph suggestion for design previews, drawn from the bundled graph suggestion fixture.
 struct CookingPlanPreview: View {
-    enum Screen { case detail, introduction, preparation }
+    enum Screen { case detail, introduction, preparation, steps }
 
     let screen: Screen
     @State private var path: [HomeRoute] = []
@@ -27,7 +27,9 @@ struct CookingPlanPreview: View {
         case .introduction:
             CookingIntroductionView(suggestion: suggestion, flow: .preview(), path: $path)
         case .preparation:
-            CookingPreparationView(suggestion: suggestion, path: $path)
+            CookingPreparationView(suggestion: suggestion, flow: .preview(), path: $path)
+        case .steps:
+            CookingStepsView(session: CookingSession(suggestion: suggestion), path: $path)
         }
     }
 }
@@ -35,3 +37,4 @@ struct CookingPlanPreview: View {
 #Preview("Recipe details") { CookingPlanPreview(screen: .detail) }
 #Preview("Cooking introduction") { CookingPlanPreview(screen: .introduction) }
 #Preview("Preparation") { CookingPlanPreview(screen: .preparation) }
+#Preview("Cooking steps") { CookingPlanPreview(screen: .steps) }

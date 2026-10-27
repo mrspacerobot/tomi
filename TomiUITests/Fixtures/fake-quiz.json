@@ -1,0 +1,20 @@
+{
+  "questions": [
+    {
+      "id": "technique/scramble/quiz/fake-spoon",
+      "question": "Which tool does Tomi's test kitchen stir with?",
+      "choices": ["A wooden spoon", "A whisk", "A ladle"],
+      "tier": "drafted",
+      "rightChoice": 0,
+      "explanation": "In the test kitchen Tomi stirs with a wooden spoon."
+    },
+    {
+      "id": "technique/scramble/quiz/fake-bell",
+      "question": "What rings when the test kitchen's timer ends?",
+      "choices": ["A whistle", "A small bell"],
+      "tier": "drafted",
+      "rightChoice": 1,
+      "explanation": "The test kitchen's timer rings a small bell."
+    }
+  ]
+}

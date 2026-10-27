@@ -2586,10 +2586,40 @@
       "extractionState": "manual",
       "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Equipment" } } }
     },
-    "cooking.steps.unavailable": {
-      "comment": "Terminal preparation message until the guided session screens are implemented.",
+    "cooking.steps.begin": {
+      "comment": "Button on the preparation checklist that starts the guided steps.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Guided cooking steps are not available yet." } } }
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Begin the steps" } } }
+    },
+    "cooking.steps.title": {
+      "comment": "Navigation title for the guided cooking steps.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Cooking" } } }
+    },
+    "cooking.steps.progress": {
+      "comment": "Where the cook is in the recipe, above a step. The first number is the step shown, counted from 1; the second is how many steps the recipe has. Shown in capitals by the design.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Step %1$lld of %2$lld" } } }
+    },
+    "cooking.steps.next": {
+      "comment": "Button on a cooking step that moves on to the next step.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Next step" } } }
+    },
+    "cooking.steps.previous": {
+      "comment": "Button on a cooking step that goes back to the step before.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Previous step" } } }
+    },
+    "cooking.steps.finish": {
+      "comment": "Button on the last cooking step, and on a recipe without steps, that returns to the recipe details.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Back to the recipe" } } }
+    },
+    "cooking.steps.none": {
+      "comment": "Shown instead of the steps when a recipe arrived without any steps.",
+      "extractionState": "manual",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "This recipe has no steps to follow." } } }
     },
     "common.okay": {
       "comment": "Button that dismisses an alert.",
@@ -2885,6 +2915,270 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "problem.graphVersionChanged": {
+      "comment": "Shown when Tomi's server has a newer cooking graph than the suggestion the cook is using, for example during a quiz. The cook asks for tonight's suggestions again.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi's recipes changed since this suggestion. Ask for tonight's suggestions again."
+          }
+        }
+      }
+    },
+    "cooking.quiz.open": {
+      "comment": "Button on the last cooking step when the recipe's teaching has a quiz. Opens the quiz.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take the quiz"
+          }
+        }
+      }
+    },
+    "cooking.quiz.title": {
+      "comment": "Navigation title of the short quiz after the cooking steps.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick check"
+          }
+        }
+      }
+    },
+    "cooking.quiz.progress": {
+      "comment": "Over a quiz question, shown in capitals: which question the cook is on. The first placeholder is the question's number, the second how many questions there are.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Question %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "cooking.quiz.check": {
+      "comment": "Quiz button that sends the ticked answer to Tomi's server to be checked. Disabled until an answer is ticked.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check"
+          }
+        }
+      }
+    },
+    "cooking.quiz.checking": {
+      "comment": "Quiz button label while the ticked answer is being checked by Tomi's server.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking..."
+          }
+        }
+      }
+    },
+    "cooking.quiz.tryAgain": {
+      "comment": "Quiz button that sends the same ticked answer again after it could not be checked, for example offline.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        }
+      }
+    },
+    "cooking.quiz.next": {
+      "comment": "Quiz button after a right answer that moves on to the next question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next question"
+          }
+        }
+      }
+    },
+    "cooking.quiz.finish": {
+      "comment": "Quiz button after the right answer to the last question that ends the quiz.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish the quiz"
+          }
+        }
+      }
+    },
+    "cooking.quiz.right": {
+      "comment": "Title of the note under a quiz question when Tomi's server said the answer is right. Tomi's explanation follows it.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right."
+          }
+        }
+      }
+    },
+    "cooking.quiz.wrong": {
+      "comment": "Title of the note under a quiz question when Tomi's server said the answer is wrong.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not quite."
+          }
+        }
+      }
+    },
+    "cooking.quiz.wrong.message": {
+      "comment": "Under 'Not quite.' after a wrong quiz answer. The cook can pick another answer; a wrong answer costs nothing.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick another answer and check again. A wrong answer costs nothing."
+          }
+        }
+      }
+    },
+    "cooking.quiz.notRight": {
+      "comment": "Shown in capitals next to a quiz answer that Tomi's server said is wrong. The answer is also struck through.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not right"
+          }
+        }
+      }
+    },
+    "cooking.quiz.offline.title": {
+      "comment": "Title of the note under a quiz question when the answer could not be sent because the phone is offline.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The quiz needs a connection."
+          }
+        }
+      }
+    },
+    "cooking.quiz.offline.message": {
+      "comment": "Under 'The quiz needs a connection.': what the cook can do.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again when you are back online, or carry on without the quiz."
+          }
+        }
+      }
+    },
+    "cooking.quiz.graphChanged.title": {
+      "comment": "Title of the note under a quiz question when Tomi's recipes were updated since the cook started, so the quiz cannot be checked.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This quiz has changed."
+          }
+        }
+      }
+    },
+    "cooking.quiz.graphChanged.message": {
+      "comment": "Under 'This quiz has changed.': the quiz cannot be checked tonight and the cook can carry on.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi's recipes were updated since you started, so this quiz cannot be checked tonight. Carry on without it."
+          }
+        }
+      }
+    },
+    "cooking.quiz.failed.title": {
+      "comment": "Title of the note under a quiz question when Tomi's server could not check the answer for another reason.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi could not check that answer."
+          }
+        }
+      }
+    },
+    "cooking.quiz.failed.message": {
+      "comment": "Under 'Tomi could not check that answer.': what the cook can do.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again, or carry on without the quiz."
+          }
+        }
+      }
+    },
+    "cooking.quiz.skip": {
+      "comment": "Quiz button shown when an answer could not be checked. Leaves the quiz and returns to the recipe details.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carry on without the quiz"
+          }
+        }
+      }
+    },
+    "cooking.quiz.done.title": {
+      "comment": "Title at the end of the quiz, after every question was answered right.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That's the quiz."
+          }
+        }
+      }
+    },
+    "cooking.quiz.done.message": {
+      "comment": "Under the title at the end of the quiz. No score is shown: Tomi's server keeps the first answer to each question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every question answered. Well done."
           }
         }
       }

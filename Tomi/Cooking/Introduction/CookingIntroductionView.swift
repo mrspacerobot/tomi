@@ -20,13 +20,7 @@ struct CookingIntroductionView: View {
             .background(ColorRole.paper.color)
             .navigationTitle(Text(.cookingIntroductionTitle))
             .navigationBarTitleDisplayMode(.inline)
-            .alert(item: $refusal) { _ in
-                Alert(
-                    title: Text(.cookingRefreshRefusedTitle),
-                    message: Text(.cookingRefreshRefusedMessage),
-                    dismissButton: .default(Text(.commonOkay), action: startOver)
-                )
-            }
+            .cookingStartAlert($refusal, path: $path)
             .onAppear { model.activate() }
             .onDisappear {
                 startTask?.cancel()
@@ -60,18 +54,11 @@ struct CookingIntroductionView: View {
         show(result)
     }
 
-    /// The checked menu may no longer fit the cook, so nothing of this scan stays reachable.
-    private func startOver() {
-        path.removeAll()
-    }
-
     private func show(_ result: CookingIntroductionStartResult) {
-        switch result {
-        case .ready: path.append(.preparation(suggestion))
-        case .restrictionsChanged: refusal = .restrictionsChanged
-        case .profileUnavailable: refusal = .profileUnavailable
-        case .unavailable: refusal = .restrictionsChanged
-        case .cancelled: return
+        if result == .ready {
+            path.append(.preparation(suggestion))
+            return
         }
+        refusal = result.refusal
     }
 }

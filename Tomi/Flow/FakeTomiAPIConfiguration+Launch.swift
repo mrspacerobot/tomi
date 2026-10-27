@@ -1,12 +1,13 @@
 extension FakeTomiAPIConfiguration {
     /// The fake server's behaviour the launch arguments ask for.
     nonisolated init(arguments: [String]) {
+        let quiz = FakeQuizOptions(arguments: arguments)
         self.init(
             suggestionsNothing: arguments.contains(BackendLaunchOptions.fakeNoSuggestionsArgument),
             guidedCooking: arguments.contains(BackendLaunchOptions.fakeGuidedArgument),
-            profileRefreshFails: arguments.contains(BackendLaunchOptions.fakeProfileRefreshFailsArgument),
-            profileRefreshChanges: arguments.contains(BackendLaunchOptions.fakeProfileRefreshChangesArgument),
-            profileRefreshWaits: arguments.contains(BackendLaunchOptions.fakeProfileRefreshWaitsArgument),
+            profileRefresh: FakeProfileRefreshOptions(arguments: arguments),
+            quiz: quiz.inventedQuiz,
+            quizFailure: quiz.failure,
             progressServer: FakeProgressServer(arguments: arguments)
         )
     }

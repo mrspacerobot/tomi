@@ -35,10 +35,15 @@ enum Repository {
         try FileManager.default.contentsOfDirectory(atPath: file(folder).path()).sorted()
     }
 
-    private static func swiftPaths(under folder: String) throws -> [String] {
+    /// The paths of every file under a folder of the repository whose name ends so, in any subfolder, sorted.
+    static func paths(under folder: String, ending suffix: String) throws -> [String] {
         let all = try FileManager.default.subpathsOfDirectory(atPath: file(folder).path())
-        let swift = all.filter { $0.hasSuffix(".swift") }
-        return swift.sorted().map { folder + "/" + $0 }
+        let matching = all.filter { $0.hasSuffix(suffix) }
+        return matching.sorted().map { folder + "/" + $0 }
+    }
+
+    private static func swiftPaths(under folder: String) throws -> [String] {
+        try paths(under: folder, ending: ".swift")
     }
 
     /// Walks up from this file to the `Packages` folder. The repository root is the folder above it.

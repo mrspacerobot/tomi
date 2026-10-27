@@ -1,4 +1,5 @@
 import Foundation
+import OSLog
 import TomiCore
 
 extension AppServices {

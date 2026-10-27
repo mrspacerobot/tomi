@@ -21,6 +21,11 @@ import Testing
         #expect(decoded?.code == .graphUnavailable)
     }
 
+    @Test func aChangedGraphVersionIsAKnownCode() {
+        let decoded = error(#"{"error": {"code": "graph_version_changed", "message": "New graph."}}"#)
+        #expect(decoded?.code == .graphVersionChanged)
+    }
+
     @Test func anUnknownCodeIsKeptWithItsMessage() {
         let decoded = error(#"{"error": {"code": "teapot", "message": "Short and stout."}}"#)
         #expect(decoded?.code == nil)

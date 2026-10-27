@@ -19,6 +19,8 @@ extension APIRequest {
         return request
     }
 
+    nonisolated static let quizAnswers = APIRequest(.post, "v1/quiz-answers")
+
     nonisolated static func saveProfile(_ patch: ProfilePatch) throws -> APIRequest {
         var request = APIRequest(.patch, "v1/profile")
         request.body = try patch.body()

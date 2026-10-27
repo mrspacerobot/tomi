@@ -12,9 +12,6 @@ nonisolated struct BackendLaunchOptions: Equatable {
     /// The fake server suggests nothing tonight, as the real one does before the cook has reached a lesson's level.
     static let fakeNoSuggestionsArgument = "--fake-no-suggestions"
     static let fakeGuidedArgument = "--fake-guided-cooking"
-    static let fakeProfileRefreshFailsArgument = "--fake-profile-refresh-fails"
-    static let fakeProfileRefreshChangesArgument = "--fake-profile-refresh-changes"
-    static let fakeProfileRefreshWaitsArgument = "--fake-profile-refresh-waits"
     /// The fake server's progress is that of a new cook, as it is without an argument.
     static let fakeProgressNewCookArgument = "--fake-progress-new-cook"
     /// The fake server's progress is that of a cook who has cooked before.
@@ -34,6 +31,7 @@ nonisolated struct BackendLaunchOptions: Equatable {
     let fakeServer: FakeTomiAPIConfiguration
     let startsSignedIn: Bool
     let savedUnlistedAvoid: Bool
+    let quiz: FakeQuizOptions
 
     init(arguments: [String]) {
         usesFake = arguments.contains(Self.fakeBackendArgument)
@@ -42,5 +40,6 @@ nonisolated struct BackendLaunchOptions: Equatable {
         fakeServer = FakeTomiAPIConfiguration(arguments: arguments)
         startsSignedIn = arguments.contains(Self.fakeSignedInArgument)
         savedUnlistedAvoid = arguments.contains(Self.fakeUnlistedAvoidArgument)
+        quiz = FakeQuizOptions(arguments: arguments)
     }
 }

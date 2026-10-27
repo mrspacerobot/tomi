@@ -11,6 +11,9 @@ public enum APIErrorCode: String, CaseIterable, Hashable, Sendable {
     case photoUnreadable = "photo_unreadable"
     case aiUnavailable = "ai_unavailable"
     case graphUnavailable = "graph_unavailable"
+    /// The graph version a quiz pick names is not the server's any more. Permanent: the cook asks for new
+    /// suggestions.
+    case graphVersionChanged = "graph_version_changed"
     case authUnavailable = "auth_unavailable"
     case internalError = "internal"
 }

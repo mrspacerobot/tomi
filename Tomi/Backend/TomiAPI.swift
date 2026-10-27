@@ -22,4 +22,8 @@ nonisolated protocol TomiAPI: Sendable {
     /// The cook's progress, worked out by the server, with the week in progress judged by this calendar,
     /// and its JSON as it arrived, for the store.
     func progress(_ calendar: CalendarContext) async throws -> ProgressResponse
+
+    /// Sends one quiz pick and reads the server's right or wrong. The app never knows the right choice: the server
+    /// holds it, scores the first pick of each question, and explains once the pick is right. Needs a connection.
+    func answerQuiz(_ pick: QuizPick) async throws -> QuizVerdict
 }

@@ -56,7 +56,7 @@ import Testing
         #expect(decoded.teaching?.technique.name == "Scramble")
         #expect(decoded.teaching?.introduction.concept == "Gentle curds")
         #expect(!decoded.canOfferTeaching)
-        let bad = TeachingJSON.valid.replacing("\"schemaVersion\":1", with: "\"schemaVersion\":2")
+        let bad = TeachingJSON.valid.replacing("\"schemaVersion\":1", with: "\"schemaVersion\":3")
         let fallback = try suggestion(with: bad)
         #expect(fallback.teaching == nil)
         #expect(fallback.title == "Soft scrambled eggs")
