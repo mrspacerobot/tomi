@@ -22,7 +22,7 @@ import TomiCore
     @Test func anAnswerWithAnOlderSnapshotThanTheOneKeptDoesNotReplaceIt() async throws {
         try harness.saveCooks(1)
         let newer = ProgressSnapshotBody.example(xp: 999, computedAt: "2030-01-01T00:00:00Z")
-        try harness.store.saveProgressSnapshot(newer, at: .october(26))
+        try harness.store.saveProgressSnapshot(newer, at: .october(26), for: FakeAuthService.account)
         let api = FakeTomiAPI(
             configuration: .init(progressServer: FakeProgressServer(fixture: .returning))
         )

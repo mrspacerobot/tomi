@@ -25,7 +25,8 @@ import TomiCore
         let store = InMemoryProgressStore()
         try store.saveProgressSnapshot(
             ProgressSnapshotBody.example(xp: 999, computedAt: "2026-10-28T09:00:00Z"),
-            at: .october(28)
+            at: .october(28),
+            for: FakeAuthService.account
         )
         let model = ProgressModelHarness.model(store: store, server: .returning)
         await model.refresh()
@@ -73,7 +74,8 @@ import TomiCore
         let model = ProgressModelHarness.model(store: store, server: .offline)
         await model.refresh()
         try store.forgetCookEntries(ids: Set(try store.pendingCookEntries(for: CookEntry.fixtureAccount).map(\.id)))
-        try store.saveProgressSnapshot(ProgressSnapshotBody.example(xp: 410), at: .october(27))
+        let body = ProgressSnapshotBody.example(xp: 410)
+        try store.saveProgressSnapshot(body, at: .october(27), for: FakeAuthService.account)
         model.reload()
         #expect(model.shown?.snapshot?.xp == 410)
         #expect(model.shown?.note == nil)

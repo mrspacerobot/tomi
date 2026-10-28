@@ -12,6 +12,7 @@ final class ProgressSnapshotRecord {
     var stableID: UUID?
     var receivedAt: Date?
     var body: Data?
+    var account: String?
 
     init() {}
 }

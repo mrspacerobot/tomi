@@ -60,6 +60,33 @@ import Testing
         #expect(record.entry == first)
     }
 
+    @Test func conflictingGraphVersionsProduceTheSameOutboxInEitherOrder() {
+        var older = SavedCookEntry(first)
+        older.graphVersion = nil
+        let newer = SavedCookEntry(first)
+        let records = [older, newer]
+        let forward = records.pendingCookEntries(for: "cook-a")
+        let backward = Array(records.reversed()).pendingCookEntries(for: "cook-a")
+        #expect(forward == backward)
+    }
+
+    @Test func twoGraphVersionsProduceTheSameRequestInEitherOrder() {
+        var other = SavedCookEntry(first)
+        other.graphVersion = "another-version"
+        let records = [SavedCookEntry(first), other]
+        let forward = records.nextOutboxRequest(for: "cook-a", calendar: calendar)
+        let backward = Array(records.reversed()).nextOutboxRequest(for: "cook-a", calendar: calendar)
+        #expect(forward?.entry == backward?.entry)
+    }
+
+    @Test func conflictingAccountCopiesAreNeverSentByEitherAccount() {
+        let records = [SavedCookEntry(first), SavedCookEntry(first.cooked(by: "cook-b"))]
+        for copies in [records, Array(records.reversed())] {
+            #expect(copies.pendingCookEntries(for: "cook-a").isEmpty)
+            #expect(copies.pendingCookEntries(for: "cook-b").isEmpty)
+        }
+    }
+
     /// The server takes only graph recipes. A cook of a bundled lesson is kept and never counted as waiting.
     @Test func aCookOfABundledLessonIsKeptAndPendingForNoAccount() {
         let bundled = first.ofABundledLesson()

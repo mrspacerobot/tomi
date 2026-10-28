@@ -37,6 +37,12 @@ protocol ProgressStore {
     /// the caller then says progress shows once online, and never shows zeros.
     func progressSnapshot() throws -> ProgressSnapshot?
 
+    /// The snapshot belonging to this account only.
+    func progressSnapshot(for account: String) throws -> ProgressSnapshot?
+
     /// Keeps the server's snapshot JSON exactly as it arrived, replacing the one received before.
     func saveProgressSnapshot(_ body: Data, at moment: Date) throws
+
+    /// Keeps a snapshot for the account whose credentials received it.
+    func saveProgressSnapshot(_ body: Data, at moment: Date, for account: String) throws
 }

@@ -5,21 +5,32 @@ struct CookingStepsEnd: View {
     let session: CookingSession
     let recorder: CookRecorder
     @Binding var path: [HomeRoute]
+    @State private var saveFailed = false
 
     var body: some View {
+        Group {
+            if session.quiz == nil {
+                Button(action: saveAndContinue) { Text(.cookingStepsFinish).frame(maxWidth: .infinity) }
+                    .buttonStyle(.tomiSecondary)
+                    .accessibilityIdentifier("cooking-steps-finish")
+            } else {
+                Button(action: saveAndContinue) { Text(.cookingQuizOpen).frame(maxWidth: .infinity) }
+                    .buttonStyle(.tomiPrimary)
+                    .accessibilityIdentifier("cooking-quiz-open")
+            }
+        }
+        .modifier(CookingSaveFailure(showing: $saveFailed, retry: saveAndContinue))
+    }
+
+    private func saveAndContinue() {
+        guard recorder.finish() else {
+            saveFailed = true
+            return
+        }
         if session.quiz == nil {
-            CookingReturnButton(path: $path, words: .cookingStepsFinish, identifier: "cooking-steps-finish") {
-                recorder.finish()
-            }
+            path.returnToSuggestion()
         } else {
-            Button {
-                recorder.finish()
-                path.append(.quiz(session))
-            } label: {
-                Text(.cookingQuizOpen).frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.tomiPrimary)
-            .accessibilityIdentifier("cooking-quiz-open")
+            path.append(.quiz(session))
         }
     }
 }

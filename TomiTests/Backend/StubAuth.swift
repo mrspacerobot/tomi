@@ -29,4 +29,10 @@ final class StubAuth: AuthService {
         renewals.withLock { $0 += 1 }
         return "new"
     }
+
+    func accessToken(for account: String, renewing: Bool) async throws -> String {
+        guard accountID() == account else { throw BackendError.notSignedIn }
+        if renewing { return try await renewedAccessToken() }
+        return try await accessToken()
+    }
 }

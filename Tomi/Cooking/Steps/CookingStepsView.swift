@@ -9,6 +9,7 @@ struct CookingStepsView: View {
     @Binding var path: [HomeRoute]
     @State private var walk: StepWalk?
     @State private var recorder: CookRecorder
+    @State private var saveFailed = false
 
     init(session: CookingSession, flow: AppFlowModel, path: Binding<[HomeRoute]>) {
         self.session = session
@@ -24,7 +25,22 @@ struct CookingStepsView: View {
             .navigationTitle(Text(.cookingStepsTitle))
             .navigationBarTitleDisplayMode(.inline)
             .accessibilityIdentifier("cooking-steps")
-            .onDisappear { recorder.stop() }
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: saveAndGoBack) { Label(.cookingStepsBack, systemImage: "chevron.left") }
+                        .accessibilityIdentifier("cooking-steps-back")
+                }
+            }
+            .modifier(CookingSaveFailure(showing: $saveFailed, retry: saveAndGoBack))
+    }
+
+    private func saveAndGoBack() {
+        guard recorder.stop() else {
+            saveFailed = true
+            return
+        }
+        if !path.isEmpty { path.removeLast() }
     }
 
     @ViewBuilder private var content: some View {
@@ -32,6 +48,15 @@ struct CookingStepsView: View {
             CookingStepPage(session: session, recorder: recorder, walk: current, path: $path)
         } else {
             CookingNoSteps(path: $path)
+        }
+    }
+}
+
+#Preview {
+    @Previewable @State var path: [HomeRoute] = []
+    if let suggestion = PreviewSuggestion.make() {
+        NavigationStack {
+            CookingStepsView(session: CookingSession(suggestion: suggestion), flow: .preview(), path: $path)
         }
     }
 }

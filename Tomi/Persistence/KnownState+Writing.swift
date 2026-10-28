@@ -9,6 +9,7 @@ extension KnownState {
         for entry in cookLog {
             try store.add(entry)
         }
-        try store.saveProgressSnapshot(try FakeProgressFixture.returning.body(), at: firstEvening)
+        let snapshot = try FakeProgressFixture.returning.body()
+        try store.saveProgressSnapshot(snapshot, at: firstEvening, for: FakeAuthService.account)
     }
 }

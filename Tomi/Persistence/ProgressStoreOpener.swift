@@ -12,6 +12,7 @@ enum ProgressStoreOpener {
         do {
             let store = SwiftDataProgressStore(container: try .tomi(at: options.location))
             try prepare(store, for: options)
+            if options.failsFirstCookSave { return FailFirstCookStore(store: store) }
             return store
         } catch {
             logger.error("Saved data could not be opened: \(String(describing: error), privacy: .public)")

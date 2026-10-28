@@ -20,6 +20,8 @@ nonisolated struct BackendLaunchOptions: Equatable {
     static let fakeCookEntriesOfflineArgument = "--fake-cook-entries-offline"
     /// The fake cook is already signed in.
     static let fakeSignedInArgument = "--fake-signed-in"
+    /// Use a second fake account to exercise account changes without a real sign-in.
+    static let fakeOtherAccountArgument = "--fake-other-account"
 
     /// The fake cook saved an avoid item the fake lists do not name, as a newer server could have.
     static let fakeUnlistedAvoidArgument = "--fake-unlisted-avoid"
@@ -30,6 +32,7 @@ nonisolated struct BackendLaunchOptions: Equatable {
     /// How the fake server behaves, when it is used.
     let fakeServer: FakeTomiAPIConfiguration
     let startsSignedIn: Bool
+    let usesOtherAccount: Bool
     let savedUnlistedAvoid: Bool
     let quiz: FakeQuizOptions
 
@@ -39,6 +42,7 @@ nonisolated struct BackendLaunchOptions: Equatable {
         usesLocalAPI = arguments.contains(Self.localBackendArgument)
         fakeServer = FakeTomiAPIConfiguration(arguments: arguments)
         startsSignedIn = arguments.contains(Self.fakeSignedInArgument)
+        usesOtherAccount = arguments.contains(Self.fakeOtherAccountArgument)
         savedUnlistedAvoid = arguments.contains(Self.fakeUnlistedAvoidArgument)
         quiz = FakeQuizOptions(arguments: arguments)
     }

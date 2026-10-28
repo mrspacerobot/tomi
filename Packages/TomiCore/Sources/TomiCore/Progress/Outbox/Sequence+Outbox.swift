@@ -12,7 +12,11 @@ extension Sequence where Element == SavedCookEntry {
     /// The pending cooks this account made that the server could take. A cook of another account, or of none, or
     /// of no graph recipe, stays on the phone untouched.
     public func pendingCookEntries(for account: String) -> [CookEntry] {
-        pendingCookEntries.filter { $0.account == account && $0.isSendable }
+        let records = Array(self)
+        let conflicts = records.conflictingAccountIDs
+        return records.pendingCookEntries.filter {
+            $0.account == account && $0.isSendable && !conflicts.contains($0.id)
+        }
     }
 
     /// The next request to send: the oldest cook this account made. The same records in any order give the same

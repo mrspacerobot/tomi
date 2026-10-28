@@ -1,6 +1,66 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "cooking.saveFailed.title": {
+      "comment": "Title of the alert when Tomi could not save a cook from the guided steps.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi could not save your cook"
+          }
+        }
+      }
+    },
+    "cooking.saveFailed.message": {
+      "comment": "Explanation when saving a guided cook fails. The cook stays on the steps until it can be saved.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please try again before you leave."
+          }
+        }
+      }
+    },
+    "cooking.saveFailed.retry": {
+      "comment": "Button to retry saving the same cook after a storage error.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        }
+      }
+    },
+    "cooking.saveFailed.stay": {
+      "comment": "Button to dismiss a cook save error and stay on the guided steps.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stay here"
+          }
+        }
+      }
+    },
+    "cooking.steps.back": {
+      "comment": "Navigation button that saves a stopped cook and returns to preparation.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
+          }
+        }
+      }
+    },
     "mascot.label": {
       "comment": "VoiceOver description of the mascot.",
       "extractionState": "manual",

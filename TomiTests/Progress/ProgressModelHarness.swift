@@ -18,7 +18,7 @@ enum ProgressModelHarness {
     /// A store holding the backend's example snapshot, 360 XP, whose week ends on 1 November at 23:00 UTC.
     static func storeWithSnapshot() throws -> InMemoryProgressStore {
         let store = InMemoryProgressStore()
-        try store.saveProgressSnapshot(ProgressSnapshotBody.example(), at: .october(26))
+        try store.saveProgressSnapshot(ProgressSnapshotBody.example(), at: .october(26), for: FakeAuthService.account)
         return store
     }
 

@@ -46,6 +46,17 @@ import TomiCore
         #expect(uploader.nextTryDelay == nil)
     }
 
+    @Test func anUnreadable422HoldsTheOutboxUntilLaunch() async throws {
+        try harness.saveCooks(1)
+        let api = ScriptedProgressAPI(ScriptedReply.failing(.unreadableResponse(status: 422)))
+        let uploader = harness.uploader(api)
+        await harness.upload(with: uploader)
+        await harness.upload(with: uploader)
+        #expect(await api.sent.count == 1)
+        #expect(uploader.nextTryDelay == nil)
+        #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).count == 1)
+    }
+
     /// Without a session no try can succeed, so the cooks wait for the cook to sign in again, which uploads.
     @Test func signedOutTheCooksWaitForTheNextSignIn() async throws {
         try harness.saveCooks(1)

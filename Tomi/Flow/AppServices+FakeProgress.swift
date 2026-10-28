@@ -10,14 +10,14 @@ extension AppServices {
         guard options.startsSignedIn, !configuration.progressServer.isFixtureNamed else {
             return configuration
         }
-        if let saved = savedFixture(in: store) {
+        if let saved = savedFixture(in: store, for: options.fakeAccount) {
             configuration.progressServer.fixture = saved
         }
         return configuration
     }
 
-    private static func savedFixture(in store: any ProgressStore) -> FakeProgressFixture? {
-        guard let saved = try? store.progressSnapshot() else {
+    private static func savedFixture(in store: any ProgressStore, for account: String) -> FakeProgressFixture? {
+        guard let saved = try? store.progressSnapshot(for: account) else {
             return nil
         }
         return FakeProgressFixture.allCases.first { fixture in

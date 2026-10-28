@@ -16,6 +16,7 @@ final class CookRecorder {
     private let uploader: CookEntryUploader
     private let auth: any AuthService
     private var isRecorded = false
+    private var firstTried: Date?
     /// The zone a cook is saved in. The phone's own zone while cooking; a test sets a fixed one.
     var cookingZone = TimeZone.current
 
@@ -27,32 +28,40 @@ final class CookRecorder {
         auth = flow.services.auth
     }
 
-    func finish() {
+    @discardableResult
+    func finish() -> Bool {
         record(.finished(quizCorrect: false))
     }
 
     /// A no-op once the cook is finished, so leaving the steps for the quiz never undoes the finish.
-    func stop() {
+    @discardableResult
+    func stop() -> Bool {
         record(.stoppedEarly)
     }
 
-    private func record(_ result: CookResult) {
-        guard !isRecorded else {
-            return
-        }
+    private func record(_ result: CookResult) -> Bool {
+        if isRecorded { return true }
+        guard save(entry(for: result)) else { return false }
         isRecorded = true
-        var cook = CookSession(date: .now, result: result, weeklyGoal: weeklyGoal)
-        cook.timeZone = cookingZone
-        let entry = session.suggestion.cooked(id: session.entryID, session: cook, account: auth.accountID())
-        save(entry)
         uploader.upload()
+        return true
     }
 
-    private func save(_ entry: CookEntry) {
+    private func entry(for result: CookResult) -> CookEntry {
+        let cookedAt = firstTried ?? .now
+        firstTried = cookedAt
+        var cook = CookSession(date: cookedAt, result: result, weeklyGoal: weeklyGoal)
+        cook.timeZone = cookingZone
+        return session.suggestion.cooked(id: session.entryID, session: cook, account: auth.accountID())
+    }
+
+    private func save(_ entry: CookEntry) -> Bool {
         do {
             try store.add(entry)
+            return true
         } catch {
             Self.logger.error("The cook could not be saved: \(String(describing: error), privacy: .public)")
+            return false
         }
     }
 }

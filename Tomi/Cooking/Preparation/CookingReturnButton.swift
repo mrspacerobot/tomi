@@ -17,8 +17,6 @@ struct CookingReturnButton: View {
 
     private func returnToSuggestion() {
         beforeLeaving()
-        while let last = path.last, !last.isSuggestion {
-            path.removeLast()
-        }
+        path.returnToSuggestion()
     }
 }

@@ -58,8 +58,8 @@ final class CookEntryUploader {
     }
 
     private func sendEveryCook() async {
-        while let request = nextRequest() {
-            let outboxChanged = await send(request)
+        while let owned = nextRequest() {
+            let outboxChanged = await send(owned.request, for: owned.account)
             finishedTries += 1
             guard outboxChanged else {
                 return
@@ -70,7 +70,7 @@ final class CookEntryUploader {
     /// The oldest pending cook of the signed-in account, or nil when there is none, nobody is signed in or saved
     /// data cannot be read. Then nothing is sent: without the account no cook may go, and without the store no
     /// answer could be kept. A cook of another account stays on the phone until that account signs in.
-    private func nextRequest() -> CookEntryRequest? {
+    private func nextRequest() -> OwnedCookRequest? {
         guard let account = auth.accountID() else {
             Self.logger.notice("Nobody is signed in. The cooks wait for the next sign-in.")
             return nil
@@ -78,10 +78,11 @@ final class CookEntryUploader {
         return request(of: account)
     }
 
-    private func request(of account: String) -> CookEntryRequest? {
+    private func request(of account: String) -> OwnedCookRequest? {
         do {
             let pending = try store.pendingCookEntries(for: account)
-            return pending.nextOutboxRequest(calendar: clock.calendar())
+            guard let request = pending.nextOutboxRequest(calendar: clock.calendar()) else { return nil }
+            return OwnedCookRequest(request: request, account: account)
         } catch {
             Self.logger.error("The outbox could not be read: \(String(describing: error), privacy: .public)")
             return nil

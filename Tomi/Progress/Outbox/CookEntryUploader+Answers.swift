@@ -5,10 +5,12 @@ import TomiCore
 /// What the server's answer to one cook does on the phone.
 extension CookEntryUploader {
     /// Sends one cook and keeps what the answer says. True when the outbox changed, so the next cook can go.
-    func send(_ request: CookEntryRequest) async -> Bool {
+    func send(_ request: CookEntryRequest, for account: String) async -> Bool {
+        guard auth.accountID() == account else { return false }
         do {
-            let response = try await api.sendCookEntry(request)
-            return keep(response, for: request)
+            let response = try await api.sendCookEntry(request, for: account)
+            guard auth.accountID() == account else { return false }
+            return keep(response, for: request, account: account)
         } catch {
             react(to: error)
             return false
@@ -38,8 +40,8 @@ extension CookEntryUploader {
     /// Keeps the snapshot, then forgets or refuses the cook the server answered for. An answer that changed nothing,
     /// such as one with a status this app does not know, counts as a failed try, so it is never resent in a tight
     /// loop.
-    private func keep(_ response: CookEntryResponse, for request: CookEntryRequest) -> Bool {
-        keepSnapshot(response.snapshotBody)
+    private func keep(_ response: CookEntryResponse, for request: CookEntryRequest, account: String) -> Bool {
+        keepSnapshot(response.snapshotBody, for: account)
         logConflict(in: response.answer.result)
         let reply = OutboxReply(sent: request.entry, result: response.answer.result)
         guard let change = reply.change, apply(change, to: request.entry.id) else {
@@ -64,12 +66,12 @@ extension CookEntryUploader {
         }
     }
 
-    private func keepSnapshot(_ body: Data?) {
+    private func keepSnapshot(_ body: Data?, for account: String) {
         guard let body else {
             return
         }
         do {
-            try store.keepProgressSnapshot(body, at: clock.now())
+            try store.keepProgressSnapshot(body, at: clock.now(), for: account)
         } catch {
             Self.logger.error("The snapshot could not be kept: \(String(describing: error), privacy: .public)")
         }

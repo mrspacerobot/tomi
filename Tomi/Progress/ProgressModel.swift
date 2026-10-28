@@ -10,7 +10,12 @@ final class ProgressModel {
     private static let logger = Logger(category: .progress)
 
     /// Nil when saved data cannot be read. Nothing may be shown then: the screen says saved data is unavailable.
-    private(set) var shown: ShownProgress?
+    var shown: ShownProgress? {
+        guard shownAccount == server.accountID else { return nil }
+        return savedShown
+    }
+    private var savedShown: ShownProgress?
+    private var shownAccount: String?
     /// The server could not be reached the last time it was asked.
     private var isOffline = false
     private let store: any ProgressStore
@@ -26,13 +31,21 @@ final class ProgressModel {
 
     /// Reads the snapshot saved last and the unsent cooks again, such as after the uploader kept an answer.
     func reload() {
+        let account = server.accountID
+        shownAccount = account
         do {
             let situation = ProgressSituation(unsentCooks: try unsentCooks(), isOffline: isOffline)
-            shown = ShownProgress(snapshot: try store.progressSnapshot(), situation: situation, now: clock.now())
+            let snapshot = try snapshot(for: account)
+            savedShown = ShownProgress(snapshot: snapshot, situation: situation, now: clock.now())
         } catch {
             Self.logger.error("Saved data could not be read: \(String(describing: error), privacy: .public)")
-            shown = nil
+            savedShown = nil
         }
+    }
+
+    private func snapshot(for account: String?) throws -> ProgressSnapshot? {
+        guard let account else { return nil }
+        return try store.progressSnapshot(for: account)
     }
 
     /// The cooks of the signed-in account that wait to be sent. With nobody signed in there are none to speak of.
@@ -46,27 +59,30 @@ final class ProgressModel {
     /// Asks the server, keeps its snapshot as it was sent, and shows it. When the server cannot be reached, the
     /// snapshot saved last stays, and the note says what will count once the cook is back online.
     func refresh() async {
-        guard let api = server.api else {
+        reload()
+        guard let api = server.api, let account = server.accountID else {
             return
         }
-        await ask(api)
+        await ask(api, for: account)
         reload()
     }
 
-    private func ask(_ api: any TomiAPI) async {
+    private func ask(_ api: any TomiAPI, for account: String) async {
         do {
-            let response = try await api.progress(CalendarContext(calendar: clock.calendar()))
+            let response = try await api.progress(CalendarContext(calendar: clock.calendar()), for: account)
+            guard server.accountID == account else { return }
             isOffline = false
-            keep(response.body)
+            keep(response.body, for: account)
         } catch {
+            guard server.accountID == account else { return }
             Self.logger.notice("Progress was not read: \(String(describing: error), privacy: .public)")
             isOffline = true
         }
     }
 
-    private func keep(_ body: Data) {
+    private func keep(_ body: Data, for account: String) {
         do {
-            try store.keepProgressSnapshot(body, at: clock.now())
+            try store.keepProgressSnapshot(body, at: clock.now(), for: account)
         } catch {
             Self.logger.error("The snapshot could not be kept: \(String(describing: error), privacy: .public)")
         }

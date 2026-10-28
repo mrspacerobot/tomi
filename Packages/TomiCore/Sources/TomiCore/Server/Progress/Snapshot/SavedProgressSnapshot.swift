@@ -8,6 +8,8 @@ public struct SavedProgressSnapshot: StampedRecord, Hashable, Sendable {
     /// When the phone received the snapshot, by its own clock. The server's own time is in the body.
     public var receivedAt: Date?
     public var body: Data?
+    /// The account whose progress this snapshot describes. Older snapshots have no known owner.
+    public var account: String?
 
     public init() {}
 

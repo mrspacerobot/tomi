@@ -14,6 +14,8 @@ nonisolated struct StoreLaunchOptions: Equatable {
     static let seedKnownStateArgument = "--seed-known-state"
     /// Empty the store before the first screen, so a test starts as a new cook. Ignored for the cook's own store.
     static let startEmptyArgument = "--store-start-empty"
+    /// UI tests can fail one cook save after the store has been prepared.
+    static let failFirstCookSaveArgument = "--store-fail-first-cook-save"
 
     private static let testLocations: [(argument: String, location: StoreLocation)] = [
         (unavailableArgument, .unavailable),
@@ -25,6 +27,7 @@ nonisolated struct StoreLaunchOptions: Equatable {
     let location: StoreLocation
     let seedsKnownState: Bool
     let startsEmpty: Bool
+    private(set) var failsFirstCookSave = false
 
     init(location: StoreLocation, seedsKnownState: Bool, startsEmpty: Bool = false) {
         self.location = location
@@ -38,6 +41,7 @@ nonisolated struct StoreLaunchOptions: Equatable {
             seedsKnownState: arguments.contains(Self.seedKnownStateArgument),
             startsEmpty: arguments.contains(Self.startEmptyArgument)
         )
+        failsFirstCookSave = arguments.contains(Self.failFirstCookSaveArgument) && !location.isTheCooksOwn
     }
 
     /// When several are given, the one that keeps the least wins.

@@ -50,6 +50,27 @@ import TomiCore
         #expect(waiting.count == 1)
     }
 
+    @Test func aFailedSaveCanRetryTheSameEntry() throws {
+        let failing = FailFirstCookStore(store: store)
+        let services = AppServices.fake(store: failing, signedIn: true)
+        let recorder = CookRecorder(session: try cookingSession(), flow: AppFlowModel(services: services))
+        #expect(!recorder.finish())
+        #expect(try store.cookLog().isEmpty)
+        #expect(recorder.finish())
+        #expect(try store.cookLog().first == failing.failedEntry)
+    }
+
+    @Test func aCookCanContinueAfterAStoppedSaveFails() throws {
+        let failing = FailFirstCookStore(store: store)
+        let services = AppServices.fake(store: failing, signedIn: true)
+        let recorder = CookRecorder(session: try cookingSession(), flow: AppFlowModel(services: services))
+        #expect(!recorder.stop())
+        #expect(recorder.finish())
+        let saved = try #require(try store.cookLog().first)
+        #expect(saved.id == failing.failedEntry?.id)
+        #expect(saved.session.result == .finished(quizCorrect: false))
+    }
+
     private func cookingSession() throws -> CookingSession {
         CookingSession(suggestion: try FakeGuidedSuggestion.read(profile: CookProfile()))
     }

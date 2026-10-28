@@ -13,4 +13,13 @@ extension ProgressStore {
         try saveProgressSnapshot(body, at: moment)
         return true
     }
+
+    @discardableResult
+    func keepProgressSnapshot(_ body: Data, at moment: Date, for account: String) throws -> Bool {
+        guard SnapshotKeeping.shouldKeep(body, over: try progressSnapshot(for: account)) else {
+            return false
+        }
+        try saveProgressSnapshot(body, at: moment, for: account)
+        return true
+    }
 }

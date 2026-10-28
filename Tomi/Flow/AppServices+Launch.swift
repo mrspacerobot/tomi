@@ -21,7 +21,7 @@ extension AppServices {
         let profile = fakeProfile(options, store: store)
         return AppServices(
             api: fakeAPI(fakeServer(options, store: store), profile: profile),
-            auth: FakeAuthService(signedIn: options.startsSignedIn),
+            auth: FakeAuthService(signedIn: options.startsSignedIn, account: options.fakeAccount),
             store: store,
             photos: .fixed(PhotoSource.fakePhoto),
             usesFakeSignInButton: !options.showsAppleSignInButton

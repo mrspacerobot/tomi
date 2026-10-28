@@ -10,6 +10,8 @@ nonisolated struct APIRequest: Sendable {
     var contentType = HTTPHeader.json
     /// Every call but the options carries the cook's access token.
     var isAuthenticated = true
+    /// When present, the request must use this account's credentials, even after a retry.
+    var account: String?
 
     init(_ method: HTTPMethod, _ path: String) {
         self.method = method

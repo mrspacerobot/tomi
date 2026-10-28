@@ -6,6 +6,7 @@ extension BackendError {
         switch self {
         case .notSignedIn: .notSignedIn
         case .server(status: 422, _): .requestUnreadable
+        case .unreadableResponse(status: 422): .requestUnreadable
         default: .other
         }
     }

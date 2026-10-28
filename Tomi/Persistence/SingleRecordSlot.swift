@@ -15,7 +15,11 @@ struct SingleRecordSlot<Record: SingleRecord> {
     /// The record to write into, stamped with the moment: the newest one, or a new one when there is none.
     /// Every other record is deleted, so what is written now becomes the one answer.
     func recordToWrite(at moment: Date) throws -> Record {
-        let records = try records()
+        try recordToWrite(at: moment, matching: { _ in true })
+    }
+
+    func recordToWrite(at moment: Date, matching: (Record) -> Bool) throws -> Record {
+        let records = try records().filter(matching)
         let record = newest(of: records) ?? inserted()
         for other in records where other !== record {
             context.delete(other)
