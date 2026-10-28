@@ -8,6 +8,7 @@ extension ProgressSnapshotRecord {
         saved.stableID = stableID
         saved.receivedAt = receivedAt
         saved.body = body
+        saved.account = account
         return saved
     }
 

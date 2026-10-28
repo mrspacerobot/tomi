@@ -35,6 +35,14 @@ extension ScriptedProgressAPI: TomiAPI {
         throw BackendError.notConfigured
     }
 
+    func progress(_ calendar: CalendarContext, for account: String) async throws -> ProgressResponse {
+        throw BackendError.notConfigured
+    }
+
+    func sendCookEntry(_ request: CookEntryRequest, for account: String) async throws -> CookEntryResponse {
+        try await sendCookEntry(request)
+    }
+
     func answerQuiz(_ pick: QuizPick) async throws -> QuizVerdict {
         throw BackendError.notConfigured
     }

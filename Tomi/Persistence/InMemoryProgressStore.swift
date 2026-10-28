@@ -56,11 +56,25 @@ final class InMemoryProgressStore: ProgressStore {
         snapshots.lastSnapshot
     }
 
+    func progressSnapshot(for account: String) throws -> ProgressSnapshot? {
+        snapshots.lastSnapshot(for: account)
+    }
+
     func saveProgressSnapshot(_ body: Data, at moment: Date) throws {
         var saved = SavedProgressSnapshot()
         saved.stableID = UUID()
         saved.receivedAt = moment
         saved.body = body
         snapshots = [saved]
+    }
+
+    func saveProgressSnapshot(_ body: Data, at moment: Date, for account: String) throws {
+        var saved = SavedProgressSnapshot()
+        saved.stableID = UUID()
+        saved.receivedAt = moment
+        saved.body = body
+        saved.account = account
+        snapshots.removeAll { $0.account == account }
+        snapshots.append(saved)
     }
 }

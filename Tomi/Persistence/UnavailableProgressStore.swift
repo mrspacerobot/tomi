@@ -49,7 +49,15 @@ struct UnavailableProgressStore: ProgressStore {
         throw ProgressStoreError.unavailable
     }
 
+    func progressSnapshot(for account: String) throws -> ProgressSnapshot? {
+        throw ProgressStoreError.unavailable
+    }
+
     func saveProgressSnapshot(_ body: Data, at moment: Date) throws {
+        throw ProgressStoreError.unavailable
+    }
+
+    func saveProgressSnapshot(_ body: Data, at moment: Date, for account: String) throws {
         throw ProgressStoreError.unavailable
     }
 }

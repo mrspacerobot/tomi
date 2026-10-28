@@ -10,7 +10,7 @@ final class SwiftDataProgressStore: ProgressStore {
     private let context: ModelContext
     private let profiles: SingleRecordSlot<ProfileRecord>
     private let bookmarks: SingleRecordSlot<ActiveLessonRecord>
-    private let snapshots: SingleRecordSlot<ProgressSnapshotRecord>
+    let snapshots: SingleRecordSlot<ProgressSnapshotRecord>
     private let cooks: CookLogRecords
 
     init(container: ModelContainer) {
@@ -77,17 +77,6 @@ final class SwiftDataProgressStore: ProgressStore {
         try saving { try cooks.markRefused(id: id, code: code) }
     }
 
-    func progressSnapshot() throws -> ProgressSnapshot? {
-        try snapshots.records().map(\.saved).lastSnapshot
-    }
-
-    func saveProgressSnapshot(_ body: Data, at moment: Date) throws {
-        try saving {
-            let record = try snapshots.recordToWrite(at: moment)
-            record.write(body: body)
-        }
-    }
-
     /// Empties the store. Only test launches call it, and never on the cook's own store.
     func erase() throws {
         try saving {
@@ -99,7 +88,7 @@ final class SwiftDataProgressStore: ProgressStore {
     }
 
     /// Makes the changes and saves them, or takes them all back.
-    private func saving(_ changes: () throws -> Void) throws {
+    func saving(_ changes: () throws -> Void) throws {
         try context.saveOrRollBack(changes)
     }
 }

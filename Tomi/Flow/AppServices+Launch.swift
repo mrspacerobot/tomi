@@ -23,7 +23,7 @@ extension AppServices {
         let profile = fakeProfile(options, store: store)
         return AppServices(
             api: fakeAPI(fakeServer(options, store: store), profile: profile, library: library),
-            auth: FakeAuthService(signedIn: options.startsSignedIn),
+            auth: FakeAuthService(signedIn: options.startsSignedIn, account: options.fakeAccount),
             library: library,
             store: store,
             photos: .fixed(PhotoSource.fakePhoto),

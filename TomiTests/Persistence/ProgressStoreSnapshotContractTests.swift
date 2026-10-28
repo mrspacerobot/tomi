@@ -43,4 +43,21 @@ import TomiCore
         try store.saveProgressSnapshot(ProgressSnapshotBody.example(), at: .october(6))
         #expect(try store.pendingCookEntries(for: CookEntry.fixtureAccount) == [cook])
     }
+
+    @Test(arguments: StoreKind.allCases)
+    func snapshotsBelongToTheirAccounts(kind: StoreKind) throws {
+        let store = try kind.emptyStore()
+        try store.saveProgressSnapshot(ProgressSnapshotBody.example(xp: 360), at: .october(5), for: "a")
+        try store.saveProgressSnapshot(ProgressSnapshotBody.example(xp: 420), at: .october(6), for: "b")
+        #expect(try store.progressSnapshot(for: "a")?.xp == 360)
+        #expect(try store.progressSnapshot(for: "b")?.xp == 420)
+        #expect(try store.progressSnapshot(for: "c") == nil)
+    }
+
+    @Test(arguments: StoreKind.allCases)
+    func aSnapshotWithoutAnOwnerIsNotShownForAnyAccount(kind: StoreKind) throws {
+        let store = try kind.emptyStore()
+        try store.saveProgressSnapshot(ProgressSnapshotBody.example(), at: .october(5))
+        #expect(try store.progressSnapshot(for: "a") == nil)
+    }
 }

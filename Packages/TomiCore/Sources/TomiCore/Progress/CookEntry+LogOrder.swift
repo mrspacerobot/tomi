@@ -14,7 +14,9 @@ extension CookEntry {
         LogOrderKey(
             words: [id.uuidString, lesson.id.rawValue, lesson.skill.rawValue],
             numbers: [resultRank, session.weeklyGoal, lesson.level],
-            zone: zoneIdentifier
+            zone: zoneIdentifier,
+            graphVersion: lesson.graphVersion,
+            account: account
         )
     }
 
@@ -37,23 +39,5 @@ extension CookEntry {
                 1
             }
         }
-    }
-}
-
-/// Every field that tells two copies apart. Any fixed order will do, as long as it is the same everywhere.
-private struct LogOrderKey: Comparable {
-    let words: [String]
-    let numbers: [Int]
-    /// Only breaks a tie that nothing else does.
-    let zone: String
-
-    static func < (left: LogOrderKey, right: LogOrderKey) -> Bool {
-        if left.words != right.words {
-            return left.words.lexicographicallyPrecedes(right.words)
-        }
-        if left.numbers != right.numbers {
-            return left.numbers.lexicographicallyPrecedes(right.numbers)
-        }
-        return left.zone < right.zone
     }
 }
