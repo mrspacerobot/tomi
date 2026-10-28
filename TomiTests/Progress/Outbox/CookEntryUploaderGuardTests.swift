@@ -33,7 +33,8 @@ import TomiCore
         #expect(await api.sent.count == 1)
         #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).map(\.id) == ids)
         await harness.upload(with: harness.uploader(api))
-        #expect(await api.sent.count == 2)
+        // The next launch sends both cooks, one after the other; the script's last answer repeats.
+        #expect(await api.sent.count == 3)
         #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
     }
 
