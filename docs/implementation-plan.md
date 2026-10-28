@@ -12,7 +12,8 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 |---|---|
 | Platform | iOS 27, iPhone only, portrait. SwiftUI, SwiftData, Swift 6 strict concurrency |
 | Design | Direction B, "Tasting menu": navy ink on paper, red stamp, the skill path as a menu of four courses and twelve dishes. Not a Duolingo look |
-| Dependencies | No third-party dependencies in the app |
+| Dependencies | No third-party dependencies in the app, except FluidAudio (Apache-2.0, exact version pinned) for Tomi's voice, approved by the owner in #96 |
+| Tomi's voice | Kokoro-82M, a neural voice that runs on the phone, with the voice `am_fenrir`, chosen by the owner after comparing voices on an iPhone 15 Pro. The built-in system voices sound robotic. It sits behind a `Speaker` protocol with the system voice as the fallback, so the engine can be replaced. Lesson steps may later be made ahead of time with the same voice. Nothing is spoken by a cloud voice |
 | Project | A standard Xcode project committed to git, with synchronized folders |
 | Pull request evidence | Every PR uses `.github/pull_request_template.md`. UI tasks embed current screenshots of the running app in light and dark; capture or posting blockers keep the PR in draft. Capture and posting instructions are in `agent-on-pull-requests.md` |
 | Test phone | Any iPhone that runs iOS 27. No on-device AI is needed |

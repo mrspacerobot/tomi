@@ -10,6 +10,7 @@ enum LogCategory: String {
     case preview
     case progress
     case scan
+    case voice
 }
 
 extension Logger {

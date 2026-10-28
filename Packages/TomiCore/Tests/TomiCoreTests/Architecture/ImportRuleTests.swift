@@ -30,6 +30,16 @@ import Testing
         #expect(ImportRule.violationsInApp([service]) == [])
     }
 
+    @Test func aScreenThatImportsTheSpeechModelPackageIsCaught() {
+        let screen = SourceFile(path: "Tomi/Home/HomeView.swift", text: "import FluidAudio\n")
+        #expect(ImportRule.violationsInApp([screen]) == ["Tomi/Home/HomeView.swift imports FluidAudio"])
+    }
+
+    @Test func theVoiceServiceMayImportTheSpeechModelPackage() {
+        let service = SourceFile(path: "Tomi/Voice/KokoroSpeaker.swift", text: "import FluidAudio\n")
+        #expect(ImportRule.violationsInApp([service]) == [])
+    }
+
     @Test func anImportInACommentIsNotAnImport() {
         let file = SourceFile(path: "Tomi/Home/HomeView.swift", text: "// import SwiftData would break the rule\n")
         #expect(file.imports.isEmpty)

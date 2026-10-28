@@ -103,3 +103,10 @@ custom_rules:
     regex: '\bprint\('
     message: "Use Logger, and never log photos, ingredients or chat text."
     severity: error
+  typed_logging_subsystem:
+    name: "Typed logging subsystem"
+    included: "Tomi/.*\\.swift"
+    excluded: "Tomi/Logger\\+Tomi\\.swift"
+    regex: '\bLogger\(\s*subsystem:'
+    message: "Use Logger(category:) with a LogCategory. The subsystem is named once, in Logger+Tomi.swift."
+    severity: error
