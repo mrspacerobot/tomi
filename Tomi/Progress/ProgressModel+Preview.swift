@@ -8,9 +8,7 @@ extension ProgressModel {
     /// A cook with the progress of `KnownState`: its unsent cooks and the fake server's returning snapshot.
     static func previewWithProgress() -> ProgressModel {
         let store = InMemoryProgressStore()
-        if let catalog = BundledLibrary.catalog() {
-            fill(store, with: KnownState(catalog: catalog))
-        }
+        fill(store, with: KnownState())
         return ProgressModel(store: store, server: .preview, clock: .phone)
     }
 

@@ -10,7 +10,7 @@ import TomiCore
     let store = InMemoryProgressStore()
 
     func model(starting profile: CookProfile = CookProfile()) async throws -> ProfileModel {
-        let api = FakeTomiAPI(library: BundledLessonLibrary(), profile: profile)
+        let api = FakeTomiAPI(profile: profile)
         let model = ProfileModel(api: api, store: store)
         try await model.load()
         return model
@@ -42,24 +42,5 @@ import TomiCore
         #expect(model.profile.avoid == ["fake-nuts"])
         #expect(try await model.save(CookProfile(), confirmedWeaker: true) == .saved)
         #expect(model.profile.avoid.isEmpty)
-    }
-
-    /// The cook started a dish, then said they avoid something more: only the server can check the dish again.
-    @Test func aChangedRestrictionForgetsTheLessonInProgress() async throws {
-        let model = try await model()
-        try store.saveActiveLesson(ActiveLesson(lesson: "a-lesson", revision: 1), at: .october(5))
-        var answers = model.profile
-        answers.toggleAvoid("fake-nuts")
-        _ = try await model.save(answers, confirmedWeaker: false)
-        #expect(try store.activeLesson() == nil)
-    }
-
-    @Test func anOtherAnswerKeepsTheLessonInProgress() async throws {
-        let model = try await model()
-        try store.saveActiveLesson(ActiveLesson(lesson: "a-lesson", revision: 1), at: .october(5))
-        var answers = model.profile
-        answers.setWeeklyGoal(6)
-        _ = try await model.save(answers, confirmedWeaker: false)
-        #expect(try store.activeLesson() != nil)
     }
 }

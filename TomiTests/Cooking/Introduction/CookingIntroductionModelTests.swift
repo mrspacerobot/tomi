@@ -46,8 +46,8 @@ import TomiCore
 
     @Test func unavailableTeachingDoesNotFetchProfile() async throws {
         let profile = CookProfile()
-        let lesson = try #require(BundledLessonLibrary().lessons.first)
-        let suggestion = try FakeSuggestion(lesson: lesson, wantsSwap: false).suggestion(checkedFor: profile)
+        let answer = try FakeServerData().suggestions(for: profile)
+        let suggestion = try #require(answer.special)
         let reader = CountingProfileReader(profile)
         let model = CookingIntroductionModel(suggestion: suggestion, profile: reader)
         #expect(await model.prepare() == .unavailable)

@@ -26,11 +26,6 @@ import TomiCore
         #expect(try StoreFixture(at: file).store.cookLog() == cooks)
     }
 
-    @Test func theBookmarkSurvivesReopeningTheStore() throws {
-        try StoreFixture(at: file).store.saveActiveLesson(.fixture("an-omelette", onStep: 2), at: .october(5))
-        #expect(try StoreFixture(at: file).store.activeLesson() == .fixture("an-omelette", onStep: 2))
-    }
-
     @Test func unsentCooksWithTheirZonesAndRefusalsSurviveReopeningTheStore() throws {
         let tokyo = CookEntry.fixture("eggs", onOctober: 5).cooked(in: "Asia/Tokyo")
         let refused = CookEntry.fixture("eggs", onOctober: 6)

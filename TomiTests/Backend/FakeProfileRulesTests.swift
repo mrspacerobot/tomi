@@ -5,7 +5,7 @@ import TomiCore
 
 /// The fake server refuses what the real one refuses, so UI tests meet the same errors.
 @Suite struct FakeProfileRulesTests {
-    private let options = FakeServerData(library: BundledLessonLibrary()).options
+    private let options = FakeServerData().options
 
     private func rules() -> FakeProfileRules {
         FakeProfileRules(

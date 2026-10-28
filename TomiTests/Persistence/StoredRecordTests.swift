@@ -56,7 +56,7 @@ import TomiCore
     }
 
     @Test func aBookmarkRecordKeepsEveryField() {
-        let saved = SavedActiveLesson(.fixture("an-omelette", onStep: 3))
+        let saved = SavedActiveLesson.example
         let record = ActiveLessonRecord()
         record.write(saved)
         #expect(record.saved == saved)
@@ -72,5 +72,19 @@ import TomiCore
         #expect(record.saved.receivedAt == .october(5))
         #expect(record.saved.body == ProgressSnapshotBody.example())
         #expect(ProgressSnapshotRecord().saved == SavedProgressSnapshot())
+    }
+}
+
+extension SavedActiveLesson {
+    /// A bookmark with every field filled.
+    fileprivate static var example: SavedActiveLesson {
+        var saved = SavedActiveLesson()
+        saved.lesson = "an-omelette"
+        saved.lessonRevision = 2
+        saved.swappedOut = ["butter"]
+        saved.swappedIn = ["oil"]
+        saved.ingredients = ["eggs"]
+        saved.currentStep = 3
+        return saved
     }
 }

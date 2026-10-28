@@ -55,7 +55,7 @@ import TomiCore
     }
 
     private func recorder(for session: CookingSession) throws -> CookRecorder {
-        let services = AppServices.fake(library: BundledLessonLibrary(), store: store, signedIn: true)
+        let services = AppServices.fake(store: store, signedIn: true)
         return CookRecorder(session: session, flow: AppFlowModel(services: services))
     }
 }

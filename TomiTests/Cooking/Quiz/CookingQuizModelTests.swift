@@ -11,7 +11,6 @@ import TomiCore
     func api(failure: FakeQuizFailure? = nil, quiz: FakeQuiz? = nil) throws -> FakeTomiAPI {
         let invented = try quiz ?? FakeQuizFixture.quiz()
         return FakeTomiAPI(
-            library: BundledLessonLibrary(),
             configuration: FakeTomiAPIConfiguration(guidedCooking: true, quiz: invented, quizFailure: failure)
         )
     }

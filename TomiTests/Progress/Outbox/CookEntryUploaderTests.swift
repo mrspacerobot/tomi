@@ -12,7 +12,7 @@ import TomiCore
     @Test func onlineTheAcknowledgedCooksAreForgottenAndTheSnapshotIsSaved() async throws {
         try harness.saveCooks(2)
         let server = FakeProgressServer(fixture: .returning)
-        let api = FakeTomiAPI(library: BundledLessonLibrary(), configuration: .init(progressServer: server))
+        let api = FakeTomiAPI(configuration: .init(progressServer: server))
         await harness.upload(with: harness.uploader(api))
         #expect(try harness.store.pendingCookEntries(for: CookEntry.fixtureAccount).isEmpty)
         #expect(try harness.store.progressSnapshot() == (try FakeProgressFixture.returning.snapshot()))
@@ -24,7 +24,6 @@ import TomiCore
         let newer = ProgressSnapshotBody.example(xp: 999, computedAt: "2030-01-01T00:00:00Z")
         try harness.store.saveProgressSnapshot(newer, at: .october(26))
         let api = FakeTomiAPI(
-            library: BundledLessonLibrary(),
             configuration: .init(progressServer: FakeProgressServer(fixture: .returning))
         )
         await harness.upload(with: harness.uploader(api))
@@ -45,7 +44,7 @@ import TomiCore
         let harness = UploaderHarness(wakes: 1)
         let ids = try harness.saveCooks(2)
         let offline = FakeProgressServer(isOffline: true)
-        let api = FakeTomiAPI(library: BundledLessonLibrary(), configuration: .init(progressServer: offline))
+        let api = FakeTomiAPI(configuration: .init(progressServer: offline))
         var waits = harness.sleeper.requests.makeAsyncIterator()
         let uploader = harness.uploader(api)
         uploader.upload()

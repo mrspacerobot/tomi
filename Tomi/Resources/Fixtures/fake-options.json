@@ -1,0 +1,482 @@
+{
+  "avoidItems" : [
+    {
+      "id" : "fake-nuts",
+      "kind" : "allergen",
+      "name" : "Nuts"
+    },
+    {
+      "id" : "fake-dairy",
+      "kind" : "allergen",
+      "name" : "Dairy"
+    },
+    {
+      "id" : "fake-pork",
+      "kind" : "choice",
+      "name" : "Pork"
+    },
+    {
+      "id" : "fake-celery",
+      "kind" : "allergen",
+      "name" : "Celery"
+    },
+    {
+      "id" : "fake-alcohol",
+      "kind" : "choice",
+      "name" : "Alcohol"
+    }
+  ],
+  "courses" : [
+    {
+      "id" : "foundations",
+      "skills" : [
+        {
+          "id" : "knife-cuts",
+          "levels" : [
+            {
+              "name" : "Mirepoix",
+              "number" : 1
+            },
+            {
+              "name" : "Brunoise",
+              "number" : 2
+            },
+            {
+              "name" : "Julienne",
+              "number" : 3
+            }
+          ],
+          "name" : "Knife cuts",
+          "prerequisites" : [
+
+          ],
+          "summary" : "Even pieces cook evenly"
+        },
+        {
+          "id" : "eggs",
+          "levels" : [
+            {
+              "name" : "Soft scramble",
+              "number" : 1
+            },
+            {
+              "name" : "Poached egg",
+              "number" : 2
+            },
+            {
+              "name" : "Rolled omelette",
+              "number" : 3
+            }
+          ],
+          "name" : "Eggs",
+          "prerequisites" : [
+
+          ],
+          "summary" : "Low heat, gentle hands"
+        },
+        {
+          "id" : "stocks",
+          "levels" : [
+            {
+              "name" : "Vegetable stock",
+              "number" : 1
+            },
+            {
+              "name" : "White chicken stock",
+              "number" : 2
+            },
+            {
+              "name" : "Brown stock",
+              "number" : 3
+            }
+          ],
+          "name" : "Stocks",
+          "prerequisites" : [
+            "knife-cuts"
+          ],
+          "summary" : "Mirepoix, bones and a slow simmer"
+        }
+      ],
+      "title" : "Foundations"
+    },
+    {
+      "id" : "heat",
+      "skills" : [
+        {
+          "id" : "saute",
+          "levels" : [
+            {
+              "name" : "Sweat without color",
+              "number" : 1
+            },
+            {
+              "name" : "Sauté in a hot pan",
+              "number" : 2
+            },
+            {
+              "name" : "Caramelized onions",
+              "number" : 3
+            }
+          ],
+          "name" : "Sauté",
+          "prerequisites" : [
+            "knife-cuts"
+          ],
+          "summary" : "From a gentle sweat to deep color"
+        },
+        {
+          "id" : "sear",
+          "levels" : [
+            {
+              "name" : "Chicken thighs, skin down",
+              "number" : 1
+            },
+            {
+              "name" : "Steak to temperature",
+              "number" : 2
+            },
+            {
+              "name" : "Crisp fish skin",
+              "number" : 3
+            }
+          ],
+          "name" : "Sear",
+          "prerequisites" : [
+            "saute"
+          ],
+          "summary" : "Dry surface, hot pan, hands off"
+        },
+        {
+          "id" : "poach",
+          "levels" : [
+            {
+              "name" : "Chicken in stock",
+              "number" : 1
+            },
+            {
+              "name" : "Fish in court-bouillon",
+              "number" : 2
+            },
+            {
+              "name" : "Pears in syrup",
+              "number" : 3
+            }
+          ],
+          "name" : "Poach",
+          "prerequisites" : [
+            "stocks"
+          ],
+          "summary" : "Barely trembling, never boiling"
+        }
+      ],
+      "title" : "Heat control"
+    },
+    {
+      "id" : "sauces",
+      "skills" : [
+        {
+          "id" : "roux",
+          "levels" : [
+            {
+              "name" : "White roux for béchamel",
+              "number" : 1
+            },
+            {
+              "name" : "Blond roux for velouté",
+              "number" : 2
+            },
+            {
+              "name" : "Brown roux",
+              "number" : 3
+            }
+          ],
+          "name" : "Roux",
+          "prerequisites" : [
+            "stocks"
+          ],
+          "summary" : "Butter and flour, cooked to a color"
+        },
+        {
+          "id" : "pan-sauce",
+          "levels" : [
+            {
+              "name" : "Deglaze the fond",
+              "number" : 1
+            },
+            {
+              "name" : "Reduce to coat a spoon",
+              "number" : 2
+            },
+            {
+              "name" : "Monter au beurre",
+              "number" : 3
+            }
+          ],
+          "name" : "Pan sauces",
+          "prerequisites" : [
+            "sear"
+          ],
+          "summary" : "Deglaze, reduce, monter au beurre"
+        },
+        {
+          "id" : "emulsions",
+          "levels" : [
+            {
+              "name" : "Vinaigrette",
+              "number" : 1
+            },
+            {
+              "name" : "Mayonnaise",
+              "number" : 2
+            },
+            {
+              "name" : "Hollandaise",
+              "number" : 3
+            },
+            {
+              "name" : "Beurre blanc",
+              "number" : 4
+            }
+          ],
+          "name" : "Emulsions",
+          "prerequisites" : [
+            "eggs"
+          ],
+          "summary" : "Oil and water, made to hold"
+        }
+      ],
+      "title" : "Sauces"
+    },
+    {
+      "id" : "together",
+      "skills" : [
+        {
+          "id" : "braise",
+          "levels" : [
+            {
+              "name" : "Braised leeks",
+              "number" : 1
+            },
+            {
+              "name" : "Chicken in wine",
+              "number" : 2
+            },
+            {
+              "name" : "Beef in red wine",
+              "number" : 3
+            }
+          ],
+          "name" : "Braise",
+          "prerequisites" : [
+            "stocks",
+            "pan-sauce"
+          ],
+          "summary" : "Sear, deglaze, then low and slow"
+        },
+        {
+          "id" : "roast",
+          "levels" : [
+            {
+              "name" : "Roasted roots",
+              "number" : 1
+            },
+            {
+              "name" : "Roast chicken and jus",
+              "number" : 2
+            },
+            {
+              "name" : "Butter-basted pork chop",
+              "number" : 3
+            }
+          ],
+          "name" : "Roast",
+          "prerequisites" : [
+            "sear"
+          ],
+          "summary" : "Dry heat, basting and a jus"
+        },
+        {
+          "id" : "gratin",
+          "levels" : [
+            {
+              "name" : "Potato gratin",
+              "number" : 1
+            },
+            {
+              "name" : "Cauliflower in béchamel",
+              "number" : 2
+            },
+            {
+              "name" : "Crumb crust",
+              "number" : 3
+            }
+          ],
+          "name" : "Gratin",
+          "prerequisites" : [
+            "knife-cuts",
+            "roux"
+          ],
+          "summary" : "A creamy bake with a golden crust"
+        }
+      ],
+      "title" : "Putting it together"
+    }
+  ],
+  "cuisines" : [
+    {
+      "id" : "french",
+      "name" : "French"
+    }
+  ],
+  "diets" : [
+    {
+      "id" : "fake-veg",
+      "name" : "Vegetarian",
+      "summary" : "Vegetarian"
+    },
+    {
+      "id" : "fake-vegan",
+      "name" : "Vegan",
+      "summary" : "Vegan"
+    }
+  ],
+  "equipment" : [
+    {
+      "assumed" : true,
+      "id" : "stovetop",
+      "name" : "Stovetop",
+      "summary" : "Stovetop"
+    }
+  ],
+  "experience" : [
+    {
+      "id" : "never",
+      "name" : "Never",
+      "summary" : "never"
+    },
+    {
+      "id" : "basics",
+      "name" : "Basics",
+      "summary" : "basics"
+    },
+    {
+      "id" : "comfortable",
+      "name" : "Comfortable",
+      "summary" : "comfortable"
+    }
+  ],
+  "ingredients" : [
+    {
+      "id" : "chicken-thigh",
+      "name" : "Chicken Thigh"
+    },
+    {
+      "id" : "salt",
+      "name" : "Salt"
+    },
+    {
+      "id" : "sunflower-oil",
+      "name" : "Sunflower Oil"
+    },
+    {
+      "id" : "garlic",
+      "name" : "Garlic"
+    },
+    {
+      "id" : "white-wine",
+      "name" : "White Wine"
+    },
+    {
+      "id" : "butter",
+      "name" : "Butter"
+    },
+    {
+      "id" : "lemon",
+      "name" : "Lemon"
+    },
+    {
+      "id" : "spinach",
+      "name" : "Spinach"
+    },
+    {
+      "id" : "egg",
+      "name" : "Egg"
+    },
+    {
+      "id" : "vegetarian-hard-cheese",
+      "name" : "Vegetarian Hard Cheese"
+    },
+    {
+      "id" : "black-pepper",
+      "name" : "Black Pepper"
+    },
+    {
+      "id" : "fake-salt",
+      "name" : "Salt"
+    },
+    {
+      "id" : "fake-oil",
+      "name" : "Olive oil"
+    },
+    {
+      "id" : "fake-pepper",
+      "name" : "Pepper"
+    },
+    {
+      "id" : "fake-rice",
+      "name" : "Rice"
+    },
+    {
+      "id" : "fake-pasta",
+      "name" : "Pasta"
+    },
+    {
+      "id" : "fake-cumin",
+      "name" : "Cumin"
+    },
+    {
+      "id" : "fake-chilli",
+      "name" : "Chilli flakes"
+    }
+  ],
+  "libraryVersion" : 1,
+  "staples" : [
+    {
+      "assumed" : true,
+      "id" : "fake-salt",
+      "name" : "Salt"
+    },
+    {
+      "assumed" : true,
+      "id" : "fake-oil",
+      "name" : "Olive oil"
+    },
+    {
+      "assumed" : true,
+      "id" : "fake-pepper",
+      "name" : "Pepper"
+    },
+    {
+      "assumed" : false,
+      "id" : "fake-rice",
+      "name" : "Rice"
+    },
+    {
+      "assumed" : false,
+      "id" : "fake-pasta",
+      "name" : "Pasta"
+    }
+  ],
+  "units" : [
+    {
+      "id" : "metric",
+      "name" : "Metric",
+      "summary" : "metric"
+    },
+    {
+      "id" : "cups",
+      "name" : "Cups",
+      "summary" : "cups"
+    }
+  ]
+}

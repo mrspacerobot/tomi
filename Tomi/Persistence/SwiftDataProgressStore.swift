@@ -46,25 +46,6 @@ final class SwiftDataProgressStore: ProgressStore {
         try saving { try cooks.add(entry) }
     }
 
-    func activeLesson() throws -> ActiveLesson? {
-        let saved = try bookmarks.records().map(\.saved)
-        guard let newest = saved.newest else {
-            return nil
-        }
-        return newest.activeLesson
-    }
-
-    func saveActiveLesson(_ lesson: ActiveLesson, at moment: Date) throws {
-        try saving {
-            let record = try bookmarks.recordToWrite(at: moment)
-            record.write(SavedActiveLesson(lesson))
-        }
-    }
-
-    func clearActiveLesson() throws {
-        try saving { try bookmarks.clear() }
-    }
-
     func pendingCookEntries(for account: String) throws -> [CookEntry] {
         try cooks.records().map(\.saved).pendingCookEntries(for: account)
     }

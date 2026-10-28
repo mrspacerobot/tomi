@@ -3,8 +3,9 @@ import OSLog
 import TomiCore
 
 /// Writes the cook of a suggestion to the outbox, once: finished when the last step is done, stopped early when the
-/// cook leaves before that. The moment and the zone are taken as the cook is saved, so the server counts it on the day
-/// it was cooked where it was cooked. It is saved before anything else happens with it and sent at once, when it can be.
+/// cook leaves before that. The moment and the zone are taken as the cook is saved, so the server counts it on the
+/// day it was cooked where it was cooked. It is saved before anything else happens with it and sent at once, when
+/// it can be.
 @Observable
 final class CookRecorder {
     static let logger = Logger(category: .progress)

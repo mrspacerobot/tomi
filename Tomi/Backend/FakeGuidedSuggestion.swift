@@ -21,13 +21,7 @@ nonisolated enum FakeGuidedSuggestion {
     }
 
     private static func fixtureData() throws -> Data {
-        guard
-            let url = Bundle.main.url(
-                forResource: "teaching-suggestion",
-                withExtension: "json"
-            )
-        else { throw CocoaError(.fileNoSuchFile) }
-        return try Data(contentsOf: url)
+        try FakeFixtureFile.data(named: "teaching-suggestion")
     }
 
     private static func patchRestrictions(in data: Data, for profile: CookProfile) throws -> [String: Any] {

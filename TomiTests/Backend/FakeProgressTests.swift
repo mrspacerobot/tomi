@@ -12,7 +12,7 @@ import TomiCore
     func fake(_ fixture: FakeProgressFixture, offline: Bool = false) -> FakeTomiAPI {
         let server = FakeProgressServer(fixture: fixture, isOffline: offline)
         let configuration = FakeTomiAPIConfiguration(progressServer: server)
-        return FakeTomiAPI(library: BundledLessonLibrary(), configuration: configuration)
+        return FakeTomiAPI(configuration: configuration)
     }
 
     func decoded(_ text: String) throws -> ProgressSnapshot {
@@ -37,7 +37,7 @@ import TomiCore
     }
 
     @Test func theFakeStartsAsANewCook() async throws {
-        let snapshot = try await FakeTomiAPI(library: BundledLessonLibrary()).progress(amsterdam).snapshot
+        let snapshot = try await FakeTomiAPI().progress(amsterdam).snapshot
         #expect(snapshot == (try decoded(ProgressFixtureText.newCook)))
     }
 

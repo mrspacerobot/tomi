@@ -43,8 +43,14 @@ public struct Suggestion: Identifiable, Hashable, Decodable, Sendable {
         level = try values.decode(NamedLevel.self, forKey: .level)
         safePlan = try values.decode(SafePlan.self, forKey: .safePlan)
         (reason, checked) = try Self.reasonAndCheck(values)
-        teaching = try? values.decodeIfPresent(Teaching.self, forKey: .teaching)
-        graphVersion = teaching?.graphVersion
+        (teaching, graphVersion) = Self.teachingAndVersion(values)
+    }
+
+    private static func teachingAndVersion(
+        _ values: KeyedDecodingContainer<CodingKeys>
+    ) -> (Teaching?, String?) {
+        let teaching = try? values.decodeIfPresent(Teaching.self, forKey: .teaching)
+        return (teaching ?? nil, (teaching ?? nil)?.graphVersion)
     }
 
     private static func reasonAndCheck(

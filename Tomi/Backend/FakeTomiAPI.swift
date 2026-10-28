@@ -1,7 +1,7 @@
 import Foundation
 import TomiCore
 
-/// Tomi's server for previews and UI tests. It answers from the bundled library and keeps the profile in memory.
+/// Tomi's server for previews and UI tests. It answers from fixtures and keeps the profile in memory.
 /// It imitates the server's refusals the app must handle: a stale version, and a removed restriction without the
 /// cook's confirmation. Progress comes from fixture snapshots (`FakeProgressServer`). It never touches the network.
 actor FakeTomiAPI: TomiAPI {
@@ -18,11 +18,10 @@ actor FakeTomiAPI: TomiAPI {
 
     /// The fake cook's profile starts as given: a new cook by default.
     init(
-        library: any LessonLibrary,
         profile: CookProfile = CookProfile(),
         configuration: FakeTomiAPIConfiguration = FakeTomiAPIConfiguration()
     ) {
-        data = FakeServerData(library: library)
+        data = FakeServerData()
         envelope = ProfileEnvelope(version: 0, schemaVersion: Self.profileSchemaVersion, profile: profile)
         self.configuration = configuration
         quizMarking = configuration.quiz.map(FakeQuizMarking.init)

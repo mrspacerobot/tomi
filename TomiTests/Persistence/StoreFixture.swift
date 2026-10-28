@@ -31,14 +31,6 @@ struct StoreFixture {
         try insert(record)
     }
 
-    func insertBookmark(_ lesson: ActiveLesson, changedOnOctober day: Int) throws {
-        let record = ActiveLessonRecord()
-        record.stableID = UUID()
-        record.updatedAt = .october(day)
-        record.write(SavedActiveLesson(lesson))
-        try insert(record)
-    }
-
     func insertCook(_ saved: SavedCookEntry) throws {
         try insert(CookLogRecord(saved))
     }

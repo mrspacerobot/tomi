@@ -23,17 +23,6 @@ protocol ProgressStore {
     /// Adds a cook to the log. Entries are written once and never changed.
     func add(_ entry: CookEntry) throws
 
-    /// The bookmark of the lesson in progress, or nil when there is none that can be read.
-    /// Before it is shown, `ActiveLesson.resumed(from:)` builds the dish again from the library.
-    /// The bookmark is forgotten whenever the cook's diet or avoid list changes (`ProfileCache`).
-    func activeLesson() throws -> ActiveLesson?
-
-    /// Saves the bookmark, replacing the one saved before.
-    func saveActiveLesson(_ lesson: ActiveLesson, at moment: Date) throws
-
-    /// Forgets the lesson in progress, when it is finished or given up.
-    func clearActiveLesson() throws
-
     /// The outbox of one account: every cook it made that the server has neither acknowledged nor refused, each once,
     /// oldest first. Cooks of another account, or of none, stay in the store and are not returned.
     func pendingCookEntries(for account: String) throws -> [CookEntry]

@@ -15,11 +15,9 @@ import TomiCore
     }
 
     func services(signedIn: Bool) -> AppServices {
-        let library = BundledLessonLibrary()
-        return AppServices(
-            api: FakeTomiAPI(library: library),
+        AppServices(
+            api: FakeTomiAPI(),
             auth: FakeAuthService(signedIn: signedIn),
-            library: library,
             store: store,
             photos: .fixed(PhotoSource.fakePhoto),
             usesFakeSignInButton: true

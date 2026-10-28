@@ -1,0 +1,550 @@
+[
+  {
+    "changes" : {
+      "leftOut" : [
+
+      ],
+      "swaps" : [
+        {
+          "added" : {
+            "id" : "ingredient\/olive-oil",
+            "name" : "Olive Oil"
+          },
+          "caveat" : "Not the same flavour, so taste before you serve.",
+          "ratio" : {
+            "by" : "volume",
+            "original" : 1,
+            "stand_in" : 1
+          },
+          "removed" : {
+            "id" : "ingredient\/butter",
+            "name" : "Butter"
+          }
+        }
+      ]
+    },
+    "checked" : {
+      "avoid" : [
+
+      ],
+      "diet" : null
+    },
+    "level" : {
+      "name" : "1",
+      "number" : 1
+    },
+    "reason" : "Pan sauce comes right after searing. It turns the brown bits left in your pan into a sauce.",
+    "recipe" : {
+      "ingredients" : [
+        {
+          "amount" : {
+            "unit" : "piece",
+            "value" : 4
+          },
+          "forms" : [
+
+          ],
+          "id" : "ingredient\/chicken-thigh",
+          "name" : "Chicken Thigh",
+          "part" : "chicken-thigh"
+        },
+        {
+          "amount" : {
+            "unit" : "teaspoon",
+            "value" : 1
+          },
+          "forms" : [
+
+          ],
+          "id" : "ingredient\/salt",
+          "name" : "Salt",
+          "part" : "salt"
+        },
+        {
+          "amount" : {
+            "unit" : "tablespoon",
+            "value" : 1
+          },
+          "forms" : [
+
+          ],
+          "id" : "ingredient\/sunflower-oil",
+          "name" : "Sunflower Oil",
+          "part" : "sunflower-oil"
+        },
+        {
+          "amount" : {
+            "unit" : "piece",
+            "value" : 2
+          },
+          "forms" : [
+
+          ],
+          "id" : "ingredient\/garlic",
+          "name" : "Garlic",
+          "part" : "garlic"
+        },
+        {
+          "amount" : {
+            "unit" : "millilitre",
+            "value" : 120
+          },
+          "forms" : [
+
+          ],
+          "id" : "ingredient\/white-wine",
+          "name" : "White Wine",
+          "part" : "white-wine"
+        },
+        {
+          "amount" : {
+            "unit" : "millilitre",
+            "value" : 30
+          },
+          "forms" : [
+
+          ],
+          "id" : "ingredient\/olive-oil",
+          "name" : "Olive Oil",
+          "part" : "butter"
+        },
+        {
+          "amount" : {
+            "unit" : "piece",
+            "value" : 0.5
+          },
+          "forms" : [
+
+          ],
+          "id" : "ingredient\/lemon",
+          "name" : "Lemon",
+          "part" : "lemon"
+        },
+        {
+          "amount" : {
+            "unit" : "gram",
+            "value" : 150
+          },
+          "forms" : [
+
+          ],
+          "id" : "ingredient\/spinach",
+          "name" : "Spinach",
+          "part" : "spinach"
+        }
+      ],
+      "steps" : [
+        {
+          "number" : 1,
+          "safetyPoints" : [
+            "doneness"
+          ],
+          "temperature" : {
+            "unit" : "celsius",
+            "value" : 180
+          },
+          "text" : "Pat the chicken thighs dry and salt both sides. Lay them skin-side down in a hot pan with the oil. Leave them alone until the skin is deep golden.",
+          "time" : {
+            "unit" : "second",
+            "value" : 450
+          }
+        },
+        {
+          "number" : 2,
+          "safetyPoints" : [
+            "doneness"
+          ],
+          "temperature" : {
+            "unit" : "celsius",
+            "value" : 180
+          },
+          "text" : "Flip the thighs and keep cooking until they are cooked through, with no pink at the thickest part. Move them to a plate.",
+          "time" : {
+            "unit" : "second",
+            "value" : 330
+          }
+        },
+        {
+          "number" : 3,
+          "safetyPoints" : [
+
+          ],
+          "temperature" : null,
+          "text" : "Pour off most of the fat. Add the minced garlic and stir until it smells sweet.",
+          "time" : {
+            "unit" : "second",
+            "value" : 30
+          }
+        },
+        {
+          "number" : 4,
+          "safetyPoints" : [
+
+          ],
+          "temperature" : null,
+          "text" : "Pour in the wine and scrape the pan with a wooden spoon until the brown bits lift.",
+          "time" : null
+        },
+        {
+          "number" : 5,
+          "safetyPoints" : [
+
+          ],
+          "temperature" : null,
+          "text" : "Let it bubble until about half is left.",
+          "time" : {
+            "unit" : "second",
+            "value" : 180
+          }
+        },
+        {
+          "number" : 6,
+          "safetyPoints" : [
+
+          ],
+          "temperature" : null,
+          "text" : "Take the pan off the heat. Whisk in the cold olive oil and the juice of the lemon half. Taste, then add salt if it needs it.",
+          "time" : null
+        },
+        {
+          "number" : 7,
+          "safetyPoints" : [
+
+          ],
+          "temperature" : null,
+          "text" : "Wilt the spinach in the same pan. Plate it with the chicken and spoon the sauce over.",
+          "time" : {
+            "unit" : "second",
+            "value" : 60
+          }
+        }
+      ],
+      "yields" : {
+        "unit" : "serving",
+        "value" : 2
+      }
+    },
+    "recipeId" : "recipe\/seared-chicken-lemon-butter-pan-sauce",
+    "safePlan" : {
+      "equipment" : [
+        {
+          "id" : "equipment\/stovetop",
+          "name" : "Stovetop"
+        }
+      ],
+      "ingredients" : [
+        {
+          "id" : "ingredient\/chicken-thigh",
+          "name" : "Chicken Thigh"
+        },
+        {
+          "id" : "ingredient\/salt",
+          "name" : "Salt"
+        },
+        {
+          "id" : "ingredient\/sunflower-oil",
+          "name" : "Sunflower Oil"
+        },
+        {
+          "id" : "ingredient\/garlic",
+          "name" : "Garlic"
+        },
+        {
+          "id" : "ingredient\/white-wine",
+          "name" : "White Wine"
+        },
+        {
+          "id" : "ingredient\/olive-oil",
+          "name" : "Olive Oil"
+        },
+        {
+          "id" : "ingredient\/lemon",
+          "name" : "Lemon"
+        },
+        {
+          "id" : "ingredient\/spinach",
+          "name" : "Spinach"
+        }
+      ],
+      "missing" : [
+        {
+          "id" : "ingredient\/salt",
+          "name" : "Salt"
+        },
+        {
+          "id" : "ingredient\/sunflower-oil",
+          "name" : "Sunflower Oil"
+        },
+        {
+          "id" : "ingredient\/garlic",
+          "name" : "Garlic"
+        },
+        {
+          "id" : "ingredient\/white-wine",
+          "name" : "White Wine"
+        },
+        {
+          "id" : "ingredient\/olive-oil",
+          "name" : "Olive Oil"
+        },
+        {
+          "id" : "ingredient\/lemon",
+          "name" : "Lemon"
+        },
+        {
+          "id" : "ingredient\/spinach",
+          "name" : "Spinach"
+        }
+      ],
+      "omittedParts" : [
+
+      ],
+      "substitutions" : [
+        {
+          "added" : {
+            "id" : "ingredient\/olive-oil",
+            "name" : "Olive Oil"
+          },
+          "caveat" : "Not the same flavour, so taste before you serve.",
+          "ratio" : {
+            "by" : "volume",
+            "original" : 1,
+            "stand_in" : 1
+          },
+          "removed" : {
+            "id" : "ingredient\/butter",
+            "name" : "Butter"
+          }
+        }
+      ]
+    },
+    "skill" : {
+      "id" : "pan-sauce",
+      "name" : "pan-sauce"
+    },
+    "title" : "Seared chicken thighs with lemon-butter pan sauce"
+  },
+  {
+    "changes" : {
+      "leftOut" : [
+        {
+          "ingredients" : [
+            {
+              "id" : "ingredient\/salt",
+              "name" : "Salt"
+            }
+          ],
+          "name" : "Salt",
+          "part" : "salt"
+        }
+      ],
+      "swaps" : [
+
+      ]
+    },
+    "checked" : {
+      "avoid" : [
+
+      ],
+      "diet" : null
+    },
+    "level" : {
+      "name" : "3",
+      "number" : 3
+    },
+    "reason" : "The rolled omelette is the last step in eggs. It asks for gentle heat and a quick hand.",
+    "recipe" : {
+      "ingredients" : [
+        {
+          "amount" : {
+            "unit" : "piece",
+            "value" : 3
+          },
+          "forms" : [
+
+          ],
+          "id" : "ingredient\/egg",
+          "name" : "Egg",
+          "part" : "egg"
+        },
+        {
+          "amount" : {
+            "unit" : "gram",
+            "value" : 60
+          },
+          "forms" : [
+
+          ],
+          "id" : "ingredient\/spinach",
+          "name" : "Spinach",
+          "part" : "spinach"
+        },
+        {
+          "amount" : {
+            "unit" : "gram",
+            "value" : 30
+          },
+          "forms" : [
+
+          ],
+          "id" : "ingredient\/vegetarian-hard-cheese",
+          "name" : "Vegetarian Hard Cheese",
+          "part" : "vegetarian-hard-cheese"
+        },
+        {
+          "amount" : {
+            "unit" : "gram",
+            "value" : 15
+          },
+          "forms" : [
+
+          ],
+          "id" : "ingredient\/butter",
+          "name" : "Butter",
+          "part" : "butter"
+        },
+        {
+          "amount" : {
+            "unit" : "teaspoon",
+            "value" : 0.25
+          },
+          "forms" : [
+
+          ],
+          "id" : "ingredient\/black-pepper",
+          "name" : "Black Pepper",
+          "part" : "black-pepper"
+        }
+      ],
+      "steps" : [
+        {
+          "number" : 1,
+          "safetyPoints" : [
+
+          ],
+          "temperature" : null,
+          "text" : "Whisk until no streaks of white are left.",
+          "time" : null
+        },
+        {
+          "number" : 2,
+          "safetyPoints" : [
+
+          ],
+          "temperature" : null,
+          "text" : "Melt half the butter in a pan over medium heat. Stir the spinach until it wilts, then tip it onto a plate.",
+          "time" : {
+            "unit" : "second",
+            "value" : 60
+          }
+        },
+        {
+          "number" : 3,
+          "safetyPoints" : [
+
+          ],
+          "temperature" : null,
+          "text" : "Melt the rest of the butter in the same pan. Pour in the eggs and stir in small circles until you see soft, wet curds.",
+          "time" : {
+            "unit" : "second",
+            "value" : 60
+          }
+        },
+        {
+          "number" : 4,
+          "safetyPoints" : [
+
+          ],
+          "temperature" : null,
+          "text" : "Stop stirring and let the bottom set. Scatter the spinach and the grated cheese down the middle.",
+          "time" : {
+            "unit" : "second",
+            "value" : 30
+          }
+        },
+        {
+          "number" : 5,
+          "safetyPoints" : [
+
+          ],
+          "temperature" : null,
+          "text" : "Tilt the pan and roll the omelette over itself, from the handle side to the far edge.",
+          "time" : null
+        },
+        {
+          "number" : 6,
+          "safetyPoints" : [
+
+          ],
+          "temperature" : null,
+          "text" : "Roll it out onto a plate, seam side down.",
+          "time" : null
+        }
+      ],
+      "yields" : {
+        "unit" : "serving",
+        "value" : 2
+      }
+    },
+    "recipeId" : "recipe\/spinach-hard-cheese-omelette",
+    "safePlan" : {
+      "equipment" : [
+        {
+          "id" : "equipment\/stovetop",
+          "name" : "Stovetop"
+        }
+      ],
+      "ingredients" : [
+        {
+          "id" : "ingredient\/egg",
+          "name" : "Egg"
+        },
+        {
+          "id" : "ingredient\/spinach",
+          "name" : "Spinach"
+        },
+        {
+          "id" : "ingredient\/vegetarian-hard-cheese",
+          "name" : "Vegetarian Hard Cheese"
+        },
+        {
+          "id" : "ingredient\/butter",
+          "name" : "Butter"
+        },
+        {
+          "id" : "ingredient\/black-pepper",
+          "name" : "Black Pepper"
+        }
+      ],
+      "missing" : [
+        {
+          "id" : "ingredient\/spinach",
+          "name" : "Spinach"
+        },
+        {
+          "id" : "ingredient\/vegetarian-hard-cheese",
+          "name" : "Vegetarian Hard Cheese"
+        },
+        {
+          "id" : "ingredient\/butter",
+          "name" : "Butter"
+        },
+        {
+          "id" : "ingredient\/black-pepper",
+          "name" : "Black Pepper"
+        }
+      ],
+      "omittedParts" : [
+        "salt"
+      ],
+      "substitutions" : [
+
+      ]
+    },
+    "skill" : {
+      "id" : "eggs",
+      "name" : "eggs"
+    },
+    "title" : "Spinach and hard cheese omelette"
+  }
+]

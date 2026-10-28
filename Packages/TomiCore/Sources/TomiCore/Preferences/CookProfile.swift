@@ -54,10 +54,4 @@ public struct CookProfile: Hashable, Sendable {
         let range = CookProfile.weeklyGoalRange
         weeklyGoal = min(max(goal, range.lowerBound), range.upperBound)
     }
-
-    /// Whether the cook's diet and avoid list are the same in both. When they differ, anything checked for
-    /// the old answers, such as the lesson in progress, must be checked by the server again before it is shown.
-    public func hasSameRestrictions(as other: CookProfile) -> Bool {
-        diet == other.diet && avoid == other.avoid
-    }
 }

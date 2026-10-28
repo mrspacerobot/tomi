@@ -1,7 +1,7 @@
 import Foundation
 import TomiCore
 
-/// Lesson amounts written with Foundation's formatters, never by hand.
+/// Amounts written with Foundation's formatters, never by hand.
 nonisolated enum AmountFormat {
     static func text(for amount: Amount) -> String {
         let style = Measurement<Dimension>.FormatStyle(width: .abbreviated, usage: .asProvided)

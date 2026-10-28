@@ -4,26 +4,22 @@ import TomiCore
 
 @testable import Tomi
 
-/// The state UI tests start from, worked out from the shipped menu.
+/// The state UI tests start from.
 @MainActor
 @Suite struct KnownStateTests {
-    let catalog: SkillCatalog
-    let known: KnownState
+    let known = KnownState()
 
-    init() throws {
-        catalog = try #require(BundledLibrary.catalog())
-        known = KnownState(catalog: catalog)
-    }
-
-    /// The first technique after the first course, cooked twice at each level, and nothing else.
-    @Test func theCookCookedTheFirstTechniqueAfterTheFirstCourseTwiceAtEachLevel() throws {
-        let firstCourse = try #require(catalog.courses.first)
-        let skill = try #require(catalog.skills.first { $0.course != firstCourse.id })
+    /// One technique, cooked twice at each of its levels, and nothing else.
+    @Test func theCookCookedOneTechniqueTwiceAtEachLevel() {
         let levels = known.cookLog.map(\.lesson.level)
-        #expect(Set(known.cookLog.map(\.lesson.skill)) == [skill.id])
-        #expect(levels.count == skill.levels.count * KnownState.cooksAtEachLevel)
+        #expect(Set(known.cookLog.map(\.lesson.skill)) == [KnownState.skill])
+        #expect(levels.count == KnownState.levels * KnownState.cooksAtEachLevel)
         #expect(levels == levels.sorted())
         #expect(known.cookLog.allSatisfy { $0.session.result == .finished(quizCorrect: true) })
+    }
+
+    @Test func theCooksAreCooksOfAGraphRecipeSoTheyWaitToBeSent() {
+        #expect(known.cookLog.allSatisfy { $0.isSendable })
     }
 
     @Test func theCooksAreOnFixedDaysOneADay() {

@@ -13,7 +13,6 @@ import TomiCore
         let store = try kind.emptyStore()
         #expect(try store.profile() == CookProfile())
         #expect(try store.cookLog().isEmpty)
-        #expect(try store.activeLesson() == nil)
     }
 
     @Test(arguments: StoreKind.allCases)
@@ -48,24 +47,5 @@ import TomiCore
         try store.add(cook)
         try store.add(cook)
         #expect(try store.cookLog() == [cook])
-    }
-
-    @Test(arguments: StoreKind.allCases)
-    func theBookmarkSavedLastReplacesTheOneBefore(kind: StoreKind) throws {
-        let store = try kind.emptyStore()
-        try store.saveActiveLesson(.fixture("an-omelette", onStep: 1), at: .october(5))
-        #expect(try store.activeLesson() == .fixture("an-omelette", onStep: 1))
-        try store.saveActiveLesson(.fixture("an-omelette", onStep: 2), at: .october(5))
-        #expect(try store.activeLesson() == .fixture("an-omelette", onStep: 2))
-    }
-
-    @Test(arguments: StoreKind.allCases)
-    func aClearedBookmarkIsGoneAndTheRestStays(kind: StoreKind) throws {
-        let store = try kind.emptyStore()
-        try store.saveProfile(.fixtureWithEveryAnswerChanged(), at: .october(5))
-        try store.saveActiveLesson(.fixture("an-omelette", onStep: 1), at: .october(5))
-        try store.clearActiveLesson()
-        #expect(try store.activeLesson() == nil)
-        #expect(try store.profile() == .fixtureWithEveryAnswerChanged())
     }
 }

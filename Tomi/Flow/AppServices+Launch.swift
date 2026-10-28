@@ -5,26 +5,23 @@ import TomiCore
 extension AppServices {
     /// The services the launch arguments ask for, or nil when this build has no server configured.
     static func forLaunch(_ options: BackendLaunchOptions, store: any ProgressStore) -> AppServices? {
-        let library = BundledLessonLibrary()
         if options.usesFake {
-            return fakeForUITests(options, library: library, store: store)
+            return fakeForUITests(options, store: store)
         }
         guard let configuration = BackendConfiguration.read(for: options) else {
             return nil
         }
-        return live(configuration, library: library, store: store)
+        return live(configuration, store: store)
     }
 
     private static func fakeForUITests(
         _ options: BackendLaunchOptions,
-        library: any LessonLibrary,
         store: any ProgressStore
     ) -> AppServices {
         let profile = fakeProfile(options, store: store)
         return AppServices(
-            api: fakeAPI(fakeServer(options, store: store), profile: profile, library: library),
+            api: fakeAPI(fakeServer(options, store: store), profile: profile),
             auth: FakeAuthService(signedIn: options.startsSignedIn),
-            library: library,
             store: store,
             photos: .fixed(PhotoSource.fakePhoto),
             usesFakeSignInButton: !options.showsAppleSignInButton
@@ -34,10 +31,8 @@ extension AppServices {
     private static func fakeAPI(
         _ configuration: FakeTomiAPIConfiguration,
         profile: CookProfile,
-        library: any LessonLibrary
     ) -> any TomiAPI {
         FakeTomiAPI(
-            library: library,
             profile: profile,
             configuration: configuration
         )
@@ -58,14 +53,12 @@ extension AppServices {
 
     private static func live(
         _ configuration: BackendConfiguration,
-        library: any LessonLibrary,
         store: any ProgressStore
     ) -> AppServices {
         let backend = liveBackend(configuration)
         return AppServices(
             api: backend.api,
             auth: backend.auth,
-            library: library,
             store: store,
             photos: .photoLibrary,
             usesFakeSignInButton: false

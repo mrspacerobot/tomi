@@ -49,18 +49,6 @@
         }
       }
     },
-    "welcome.subtitle": {
-      "comment": "Line under the masthead. First number is the count of techniques, second the count of courses.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld techniques in %2$lld courses"
-          }
-        }
-      }
-    },
     "welcome.title": {
       "comment": "Masthead title on the first screen.",
       "extractionState": "manual",
@@ -2257,30 +2245,6 @@
         }
       }
     },
-    "player.missing.title": {
-      "comment": "Title shown when the offered lesson is not in the phone's library.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This dish is not on your phone yet"
-          }
-        }
-      }
-    },
-    "player.missing.message": {
-      "comment": "Message shown when the offered lesson is not in the phone's library.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Update Tomi to cook it. Your other dishes are still here."
-          }
-        }
-      }
-    },
     "player.step": {
       "comment": "Label above a lesson step. The number counts the steps from 1. Shown in capitals by the design.",
       "extractionState": "manual",
@@ -2289,42 +2253,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Step %lld"
-          }
-        }
-      }
-    },
-    "player.next": {
-      "comment": "Button that moves the lesson player to the next page.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Next"
-          }
-        }
-      }
-    },
-    "player.finish": {
-      "comment": "Button that ends the lesson after the question and logs the cook.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Finish"
-          }
-        }
-      }
-    },
-    "player.stop": {
-      "comment": "Button that ends the lesson early. Such a cook earns nothing.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "I stopped"
           }
         }
       }

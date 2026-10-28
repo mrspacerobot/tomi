@@ -7,7 +7,6 @@ import TomiCore
 final class InMemoryProgressStore: ProgressStore {
     private var savedProfile = CookProfile()
     private var cooks: [SavedCookEntry] = []
-    private var bookmark: ActiveLesson?
     private var snapshots: [SavedProgressSnapshot] = []
 
     func profile() throws -> CookProfile {
@@ -24,18 +23,6 @@ final class InMemoryProgressStore: ProgressStore {
 
     func add(_ entry: CookEntry) throws {
         cooks.append(SavedCookEntry(entry))
-    }
-
-    func activeLesson() throws -> ActiveLesson? {
-        bookmark
-    }
-
-    func saveActiveLesson(_ lesson: ActiveLesson, at moment: Date) throws {
-        bookmark = lesson
-    }
-
-    func clearActiveLesson() throws {
-        bookmark = nil
     }
 
     func pendingCookEntries(for account: String) throws -> [CookEntry] {

@@ -7,14 +7,19 @@ import Testing
 /// entry id the quiz picks were recorded under.
 @Suite struct SuggestionCookTests {
     let id = UUID(uuidString: "4E2C2A0E-7E6B-4C7A-9C2B-6E0A3D1F9A11")!
-    let moment = CookSession(date: TestCalendar().date(.october(5)), result: .finished(quizCorrect: false), weeklyGoal: 3)
+    let moment = CookSession(
+        date: TestCalendar().date(.october(5)),
+        result: .finished(quizCorrect: false),
+        weeklyGoal: 3
+    )
 
     func response(_ graphVersion: String?) throws -> Suggestion {
         var named = ""
         if let graphVersion {
             named = "\"graphVersion\": \"\(graphVersion)\", "
         }
-        let text = #"{"# + named + #""rankedBy": "model", "special": "# + GraphJSON.suggestion() + #", "alternatives": []}"#
+        let text =
+            #"{"# + named + #""rankedBy": "model", "special": "# + GraphJSON.suggestion() + #", "alternatives": []}"#
         let special = try ServerJSON.decode(SuggestionsResponse.self, from: text).special
         return try #require(special)
     }

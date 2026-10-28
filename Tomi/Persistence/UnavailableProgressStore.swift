@@ -21,18 +21,6 @@ struct UnavailableProgressStore: ProgressStore {
         throw ProgressStoreError.unavailable
     }
 
-    func activeLesson() throws -> ActiveLesson? {
-        throw ProgressStoreError.unavailable
-    }
-
-    func saveActiveLesson(_ lesson: ActiveLesson, at moment: Date) throws {
-        throw ProgressStoreError.unavailable
-    }
-
-    func clearActiveLesson() throws {
-        throw ProgressStoreError.unavailable
-    }
-
     func pendingCookEntries(for account: String) throws -> [CookEntry] {
         throw ProgressStoreError.unavailable
     }

@@ -10,7 +10,6 @@ import TomiCore
 @Suite struct CookingQuizFailureTests {
     func server(_ failure: FakeQuizFailure) throws -> FakeTomiAPI {
         FakeTomiAPI(
-            library: BundledLessonLibrary(),
             configuration: FakeTomiAPIConfiguration(
                 guidedCooking: true,
                 quiz: try FakeQuizFixture.quiz(),

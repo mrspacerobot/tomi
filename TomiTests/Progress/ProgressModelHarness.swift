@@ -30,7 +30,7 @@ enum ProgressModelHarness {
         var progress = FakeProgressServer(fixture: .returning)
         progress.isOffline = server == .offline
         let configuration = FakeTomiAPIConfiguration(progressServer: progress)
-        return FakeTomiAPI(library: BundledLessonLibrary(), configuration: configuration)
+        return FakeTomiAPI(configuration: configuration)
     }
 
     private static func clock(at now: Date) -> ProgressClock {

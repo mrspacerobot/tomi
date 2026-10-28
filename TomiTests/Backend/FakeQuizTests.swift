@@ -10,7 +10,6 @@ import TomiCore
 
     func api(quiz: FakeQuiz?, failure: FakeQuizFailure? = nil) -> FakeTomiAPI {
         FakeTomiAPI(
-            library: BundledLessonLibrary(),
             configuration: FakeTomiAPIConfiguration(guidedCooking: true, quiz: quiz, quizFailure: failure)
         )
     }
