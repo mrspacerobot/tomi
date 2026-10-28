@@ -40,6 +40,7 @@ extension XCTestCase {
     @MainActor private func openIntroduction(_ app: XCUIApplication) -> (XCUIApplication, String) {
         let suggestion = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'suggestion-open-'"))
             .firstMatch
+        XCTAssertTrue(suggestion.waitForExistence(timeout: 5))
         let identifier = suggestion.identifier
         suggestion.tap()
         app.buttons["cooking-introduction-open"].tap()
