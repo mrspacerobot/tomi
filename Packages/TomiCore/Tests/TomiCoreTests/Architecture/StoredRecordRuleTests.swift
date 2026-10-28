@@ -4,13 +4,14 @@ import Testing
 @Suite struct StoredRecordRuleTests {
     static let plan = "docs/implementation-plan.md"
 
-    @Test func theAppStoresAProfileACookLogAndALessonInProgress() throws {
+    @Test func theAppStoresAProfileACookLogALessonInProgressAndTheLastSnapshot() throws {
         let records = StoredRecordRule.records(in: try Repository.swiftFiles(under: "Tomi/Persistence"))
         #expect(
             records.map(\.path) == [
                 "Tomi/Persistence/ActiveLessonRecord.swift",
                 "Tomi/Persistence/CookLogRecord.swift",
                 "Tomi/Persistence/ProfileRecord.swift",
+                "Tomi/Persistence/ProgressSnapshotRecord.swift",
             ]
         )
     }
@@ -28,7 +29,7 @@ import Testing
     @Test func everyStoredFieldIsListedInThePlan() throws {
         let files = try Repository.swiftFiles(under: "Tomi/Persistence")
         let fieldCount = StoredRecordRule.records(in: files).flatMap { StoredRecordRule.fieldNames(of: $0) }.count
-        #expect(fieldCount >= 31)
+        #expect(fieldCount >= 36)
         #expect(StoredRecordRule.fields(of: files, missingFrom: try Repository.text(Self.plan)) == [])
     }
 

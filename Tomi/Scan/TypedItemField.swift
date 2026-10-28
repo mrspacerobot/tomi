@@ -33,7 +33,7 @@ struct TypedItemField: View {
 }
 
 #Preview {
-    TypedItemField(typing: TypedItemModel(api: FakeTomiAPI(library: BundledLessonLibrary())), look: .cupboard) { _ in }
+    TypedItemField(typing: TypedItemModel(api: FakeTomiAPI()), look: .cupboard) { _ in }
         .padding()
         .background(ColorRole.paper.color)
         .dynamicTypeSize(.accessibility5)

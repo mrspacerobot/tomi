@@ -31,16 +31,24 @@ struct StoreFixture {
         try insert(record)
     }
 
-    func insertBookmark(_ lesson: ActiveLesson, changedOnOctober day: Int) throws {
-        let record = ActiveLessonRecord()
+    func insertCook(_ saved: SavedCookEntry) throws {
+        try insert(CookLogRecord(saved))
+    }
+
+    func insertSnapshot(_ body: Data, receivedOnOctober day: Int) throws {
+        let record = ProgressSnapshotRecord()
         record.stableID = UUID()
-        record.updatedAt = .october(day)
-        record.write(SavedActiveLesson(lesson))
+        record.receivedAt = .october(day)
+        record.body = body
         try insert(record)
     }
 
-    func insertCook(_ saved: SavedCookEntry) throws {
-        try insert(CookLogRecord(saved))
+    func cookRecords() throws -> [CookLogRecord] {
+        try container.mainContext.fetch(FetchDescriptor<CookLogRecord>())
+    }
+
+    func snapshotRecords() throws -> [ProgressSnapshotRecord] {
+        try container.mainContext.fetch(FetchDescriptor<ProgressSnapshotRecord>())
     }
 
     func count<Record: PersistentModel>(of type: Record.Type) throws -> Int {

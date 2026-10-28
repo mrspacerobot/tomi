@@ -1,27 +1,30 @@
 import Foundation
 import TomiCore
 
-/// Tomi's server for previews and UI tests. It answers from the bundled library and keeps the profile in memory.
+/// Tomi's server for previews and UI tests. It answers from fixtures and keeps the profile in memory.
 /// It imitates the server's refusals the app must handle: a stale version, and a removed restriction without the
-/// cook's confirmation. It never touches the network.
+/// cook's confirmation. Progress comes from fixture snapshots (`FakeProgressServer`). It never touches the network.
 actor FakeTomiAPI: TomiAPI {
     static let profileSchemaVersion = 2
 
     private let data: FakeServerData
-    private let configuration: FakeTomiAPIConfiguration
+    let configuration: FakeTomiAPIConfiguration
     private var profileReadCount = 0
+    /// How many quiz picks reached the fake, so a test can tell a pick that was never sent.
+    private(set) var quizPicksReceived = 0
     private var pendingProfile: CheckedContinuation<ProfileEnvelope, Never>?
     private var envelope: ProfileEnvelope
+    private var quizMarking: FakeQuizMarking?
 
     /// The fake cook's profile starts as given: a new cook by default.
     init(
-        library: any LessonLibrary,
         profile: CookProfile = CookProfile(),
         configuration: FakeTomiAPIConfiguration = FakeTomiAPIConfiguration()
     ) {
-        data = FakeServerData(library: library)
+        data = FakeServerData()
         envelope = ProfileEnvelope(version: 0, schemaVersion: Self.profileSchemaVersion, profile: profile)
         self.configuration = configuration
+        quizMarking = configuration.quiz.map(FakeQuizMarking.init)
     }
 
     func options() async throws -> LibraryOptions {
@@ -30,10 +33,10 @@ actor FakeTomiAPI: TomiAPI {
 
     func profile() async throws -> ProfileEnvelope {
         profileReadCount += 1
-        if profileReadCount > 1 && configuration.profileRefreshWaits { return await waitForProfile() }
-        if profileReadCount > 1 && configuration.profileRefreshFails { throw BackendError.notSignedIn }
-        if profileReadCount > 1 && configuration.profileRefreshChanges { return changedProfile }
-        if profileReadCount > 2 && configuration.profileRefreshChangesLate { return changedProfile }
+        if profileReadCount > 1 && configuration.profileRefresh.waits { return await waitForProfile() }
+        if profileReadCount > 1 && configuration.profileRefresh.fails { throw BackendError.notSignedIn }
+        if profileReadCount > 1 && configuration.profileRefresh.changes { return changedProfile }
+        if profileReadCount > 2 && configuration.profileRefresh.changesLate { return changedProfile }
         return envelope
     }
 
@@ -76,7 +79,22 @@ actor FakeTomiAPI: TomiAPI {
         if configuration.suggestionsNothing {
             return SuggestionsResponse()
         }
-        if configuration.guidedCooking { return try data.guidedSuggestion(for: envelope.profile) }
+        if configuration.guidedCooking {
+            return try data.guidedSuggestion(for: envelope.profile, quiz: configuration.quiz)
+        }
         return try data.suggestions(for: envelope.profile)
+    }
+
+    /// Marks the pick from the invented quiz, or fails as offline. Without a quiz the fake asked no question.
+    func answerQuiz(_ pick: QuizPick) async throws -> QuizVerdict {
+        quizPicksReceived += 1
+        if let failure = configuration.quizFailure {
+            throw failure.error
+        }
+        guard var marking = quizMarking else {
+            throw BackendError.unreachable
+        }
+        defer { quizMarking = marking }
+        return try marking.verdict(for: pick)
     }
 }

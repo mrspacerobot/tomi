@@ -2,10 +2,15 @@ import Foundation
 
 /// Everything the cook tells Tomi about themselves, as Tomi's server keeps it (`GET /v1/profile`).
 /// The server is the source of truth and decides what every id means; the app keeps a copy in its store
-/// (`SavedProfile`) for the progress rules and for cooking offline. A new value holds the server's defaults.
+/// (`SavedProfile`) for cooking offline. A new value holds the server's defaults.
 public struct CookProfile: Hashable, Sendable {
     public static let defaultServings = 2
     public static let minimumServings = 1
+    /// The server's default for a new cook.
+    public static let defaultWeeklyGoal = 3
+    /// The days of one week a cook can aim to cook on. The stepper offers the server's own range once
+    /// `GET /v1/options` sends it (#178).
+    public static let weeklyGoalRange = 1...7
 
     /// The diet the cook keeps, or nil when they eat everything.
     public var diet: OptionID?
@@ -25,8 +30,8 @@ public struct CookProfile: Hashable, Sendable {
     public private(set) var servings = CookProfile.defaultServings
     /// The units the cook picked, or nil while they have not picked: then `units(for:)` follows the locale.
     public var units: Units?
-    /// Cooking days a week. Change it with `setWeeklyGoal`, which keeps it inside `GameRules.weeklyGoalOptions`.
-    public private(set) var weeklyGoal = GameRules.defaultWeeklyGoal
+    /// Cooking days a week. Change it with `setWeeklyGoal`, which keeps it inside `weeklyGoalRange`.
+    public private(set) var weeklyGoal = CookProfile.defaultWeeklyGoal
     /// The technique the cook picked to cook next, or nil when the menu order decides.
     public var focusSkill: SkillID?
     public var isOnboardingDone = false
@@ -46,12 +51,7 @@ public struct CookProfile: Hashable, Sendable {
     }
 
     public mutating func setWeeklyGoal(_ goal: Int) {
-        weeklyGoal = GameRules.clampedWeeklyGoal(goal)
-    }
-
-    /// Whether the cook's diet and avoid list are the same in both. When they differ, anything checked for
-    /// the old answers, such as the lesson in progress, must be checked by the server again before it is shown.
-    public func hasSameRestrictions(as other: CookProfile) -> Bool {
-        diet == other.diet && avoid == other.avoid
+        let range = CookProfile.weeklyGoalRange
+        weeklyGoal = min(max(goal, range.lowerBound), range.upperBound)
     }
 }

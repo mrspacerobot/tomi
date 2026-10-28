@@ -26,9 +26,20 @@ import TomiCore
         #expect(try StoreFixture(at: file).store.cookLog() == cooks)
     }
 
-    @Test func theBookmarkSurvivesReopeningTheStore() throws {
-        try StoreFixture(at: file).store.saveActiveLesson(.fixture("an-omelette", onStep: 2), at: .october(5))
-        #expect(try StoreFixture(at: file).store.activeLesson() == .fixture("an-omelette", onStep: 2))
+    @Test func unsentCooksWithTheirZonesAndRefusalsSurviveReopeningTheStore() throws {
+        let tokyo = CookEntry.fixture("eggs", onOctober: 5).cooked(in: "Asia/Tokyo")
+        let refused = CookEntry.fixture("eggs", onOctober: 6)
+        let store = try StoreFixture(at: file).store
+        try store.add(tokyo)
+        try store.add(refused)
+        try store.markCookEntryRefused(id: refused.id, code: "cooked_in_future")
+        #expect(try StoreFixture(at: file).store.pendingCookEntries(for: CookEntry.fixtureAccount) == [tokyo])
+        #expect(try StoreFixture(at: file).store.cookLog() == [tokyo, refused])
+    }
+
+    @Test func theSnapshotSurvivesReopeningTheStore() throws {
+        try StoreFixture(at: file).store.saveProgressSnapshot(ProgressSnapshotBody.example(xp: 420), at: .october(5))
+        #expect(try StoreFixture(at: file).store.progressSnapshot()?.xp == 420)
     }
 
     /// An empty kitchen is an answer, and no answer is not: the store must keep the two apart.

@@ -1,6 +1,66 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "cooking.saveFailed.title": {
+      "comment": "Title of the alert when Tomi could not save a cook from the guided steps.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi could not save your cook"
+          }
+        }
+      }
+    },
+    "cooking.saveFailed.message": {
+      "comment": "Explanation when saving a guided cook fails. The cook stays on the steps until it can be saved.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please try again before you leave."
+          }
+        }
+      }
+    },
+    "cooking.saveFailed.retry": {
+      "comment": "Button to retry saving the same cook after a storage error.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        }
+      }
+    },
+    "cooking.saveFailed.stay": {
+      "comment": "Button to dismiss a cook save error and stay on the guided steps.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stay here"
+          }
+        }
+      }
+    },
+    "cooking.steps.back": {
+      "comment": "Navigation button that saves a stopped cook and returns to preparation.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
+          }
+        }
+      }
+    },
     "mascot.label": {
       "comment": "VoiceOver description of the mascot.",
       "extractionState": "manual",
@@ -49,30 +109,6 @@
         }
       }
     },
-    "welcome.mastered": {
-      "comment": "Line on the first screen. The number is how many techniques the cook has mastered.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Techniques mastered: %lld"
-          }
-        }
-      }
-    },
-    "welcome.subtitle": {
-      "comment": "Line under the masthead. First number is the count of techniques, second the count of courses.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld techniques in %2$lld courses"
-          }
-        }
-      }
-    },
     "welcome.title": {
       "comment": "Masthead title on the first screen.",
       "extractionState": "manual",
@@ -81,18 +117,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tonight at Tomi's"
-          }
-        }
-      }
-    },
-    "welcome.xp": {
-      "comment": "Line on the first screen. The number is the cook's total experience points. Shown in capitals by the design.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld XP"
           }
         }
       }
@@ -2281,30 +2305,6 @@
         }
       }
     },
-    "player.missing.title": {
-      "comment": "Title shown when the offered lesson is not in the phone's library.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This dish is not on your phone yet"
-          }
-        }
-      }
-    },
-    "player.missing.message": {
-      "comment": "Message shown when the offered lesson is not in the phone's library.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Update Tomi to cook it. Your other dishes are still here."
-          }
-        }
-      }
-    },
     "player.step": {
       "comment": "Label above a lesson step. The number counts the steps from 1. Shown in capitals by the design.",
       "extractionState": "manual",
@@ -2313,42 +2313,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Step %lld"
-          }
-        }
-      }
-    },
-    "player.next": {
-      "comment": "Button that moves the lesson player to the next page.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Next"
-          }
-        }
-      }
-    },
-    "player.finish": {
-      "comment": "Button that ends the lesson after the question and logs the cook.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Finish"
-          }
-        }
-      }
-    },
-    "player.stop": {
-      "comment": "Button that ends the lesson early. Such a cook earns nothing.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "I stopped"
           }
         }
       }
@@ -2943,6 +2907,270 @@
         }
       }
     },
+    "problem.graphVersionChanged": {
+      "comment": "Shown when Tomi's server has a newer cooking graph than the suggestion the cook is using, for example during a quiz. The cook asks for tonight's suggestions again.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi's recipes changed since this suggestion. Ask for tonight's suggestions again."
+          }
+        }
+      }
+    },
+    "cooking.quiz.open": {
+      "comment": "Button on the last cooking step when the recipe's teaching has a quiz. Opens the quiz.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take the quiz"
+          }
+        }
+      }
+    },
+    "cooking.quiz.title": {
+      "comment": "Navigation title of the short quiz after the cooking steps.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick check"
+          }
+        }
+      }
+    },
+    "cooking.quiz.progress": {
+      "comment": "Over a quiz question, shown in capitals: which question the cook is on. The first placeholder is the question's number, the second how many questions there are.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Question %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "cooking.quiz.check": {
+      "comment": "Quiz button that sends the ticked answer to Tomi's server to be checked. Disabled until an answer is ticked.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check"
+          }
+        }
+      }
+    },
+    "cooking.quiz.checking": {
+      "comment": "Quiz button label while the ticked answer is being checked by Tomi's server.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking..."
+          }
+        }
+      }
+    },
+    "cooking.quiz.tryAgain": {
+      "comment": "Quiz button that sends the same ticked answer again after it could not be checked, for example offline.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        }
+      }
+    },
+    "cooking.quiz.next": {
+      "comment": "Quiz button after a right answer that moves on to the next question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next question"
+          }
+        }
+      }
+    },
+    "cooking.quiz.finish": {
+      "comment": "Quiz button after the right answer to the last question that ends the quiz.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish the quiz"
+          }
+        }
+      }
+    },
+    "cooking.quiz.right": {
+      "comment": "Title of the note under a quiz question when Tomi's server said the answer is right. Tomi's explanation follows it.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right."
+          }
+        }
+      }
+    },
+    "cooking.quiz.wrong": {
+      "comment": "Title of the note under a quiz question when Tomi's server said the answer is wrong.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not quite."
+          }
+        }
+      }
+    },
+    "cooking.quiz.wrong.message": {
+      "comment": "Under 'Not quite.' after a wrong quiz answer. The cook can pick another answer; a wrong answer costs nothing.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick another answer and check again. A wrong answer costs nothing."
+          }
+        }
+      }
+    },
+    "cooking.quiz.notRight": {
+      "comment": "Shown in capitals next to a quiz answer that Tomi's server said is wrong. The answer is also struck through.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not right"
+          }
+        }
+      }
+    },
+    "cooking.quiz.offline.title": {
+      "comment": "Title of the note under a quiz question when the answer could not be sent because the phone is offline.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The quiz needs a connection."
+          }
+        }
+      }
+    },
+    "cooking.quiz.offline.message": {
+      "comment": "Under 'The quiz needs a connection.': what the cook can do.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again when you are back online, or carry on without the quiz."
+          }
+        }
+      }
+    },
+    "cooking.quiz.graphChanged.title": {
+      "comment": "Title of the note under a quiz question when Tomi's recipes were updated since the cook started, so the quiz cannot be checked.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This quiz has changed."
+          }
+        }
+      }
+    },
+    "cooking.quiz.graphChanged.message": {
+      "comment": "Under 'This quiz has changed.': the quiz cannot be checked tonight and the cook can carry on.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi's recipes were updated since you started, so this quiz cannot be checked tonight. Carry on without it."
+          }
+        }
+      }
+    },
+    "cooking.quiz.failed.title": {
+      "comment": "Title of the note under a quiz question when Tomi's server could not check the answer for another reason.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi could not check that answer."
+          }
+        }
+      }
+    },
+    "cooking.quiz.failed.message": {
+      "comment": "Under 'Tomi could not check that answer.': what the cook can do.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again, or carry on without the quiz."
+          }
+        }
+      }
+    },
+    "cooking.quiz.skip": {
+      "comment": "Quiz button shown when an answer could not be checked. Leaves the quiz and returns to the recipe details.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carry on without the quiz"
+          }
+        }
+      }
+    },
+    "cooking.quiz.done.title": {
+      "comment": "Title at the end of the quiz, after every question was answered right.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That's the quiz."
+          }
+        }
+      }
+    },
+    "cooking.quiz.done.message": {
+      "comment": "Under the title at the end of the quiz. No score is shown: Tomi's server keeps the first answer to each question.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every question answered. Well done."
+          }
+        }
+      }
+    },
     "home.masthead.title": {
       "comment": "Centered home title below the cartoon Tomi.",
       "extractionState": "manual",
@@ -3124,7 +3352,7 @@
       }
     },
     "home.rank.tiered": {
-      "comment": "Second progress column value once the cook is past the first tier of the top rank. %1$@ is the rank name, for example Toque. %2$lld is the tier number, 2 or more.",
+      "comment": "Second progress column value once the cook is past the first tier of a rank. %1$@ is the rank name as Tomi's server sends it, for example Toque. %2$lld is the tier number the server sends, 2 or more.",
       "extractionState": "manual",
       "localizations": {
         "en": {
@@ -3191,102 +3419,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Level %lld"
-          }
-        }
-      }
-    },
-    "rank.novice": {
-      "comment": "Name of the first cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Novice"
-          }
-        }
-      }
-    },
-    "rank.commis": {
-      "comment": "Name of the second cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Commis"
-          }
-        }
-      }
-    },
-    "rank.cook": {
-      "comment": "Name of the third cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cook"
-          }
-        }
-      }
-    },
-    "rank.saucier": {
-      "comment": "Name of the fourth cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Saucier"
-          }
-        }
-      }
-    },
-    "rank.sous": {
-      "comment": "Name of the fifth cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sous"
-          }
-        }
-      }
-    },
-    "rank.chef": {
-      "comment": "Name of the sixth cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Chef"
-          }
-        }
-      }
-    },
-    "rank.patron": {
-      "comment": "Name of the seventh cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Patron"
-          }
-        }
-      }
-    },
-    "rank.toque": {
-      "comment": "Name of the eighth cooking rank.",
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Toque"
           }
         }
       }
@@ -3376,13 +3508,95 @@
       }
     },
     "home.progress.totals": {
-      "comment": "Accessibility value summarizing saved XP and total mastered techniques.",
+      "comment": "Accessibility value of the progress columns: the cook's XP and the techniques mastered, as Tomi's server counted them. %1$lld is the XP, %2$lld the number of techniques.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld XP; %2$lld techniques mastered"
+            "value": "%1$lld XP; %#@mastered@"
+          },
+          "substitutions": {
+            "mastered": {
+              "argNum": 2,
+              "formatSpecifier": "lld",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg technique mastered"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%arg techniques mastered"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "home.progress.unsentCooks": {
+      "comment": "Note under the progress columns when the phone is offline and cooks saved on it have not reached Tomi's server yet. The number is how many cooks wait. The XP and rank above stay as the server last sent them.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld cook will count when you're back online."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld cooks will count when you're back online."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "home.progress.showsOnline": {
+      "comment": "Note on home in place of the progress columns, when the phone is offline and Tomi's server has never sent the cook's progress. No numbers are shown until it does.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your progress will show when you're online."
+          }
+        }
+      }
+    },
+    "home.progress.weekShowsOnline": {
+      "comment": "Note under the progress columns when the phone is offline and the week of the progress Tomi's server last sent is over, so this week's cooking days are not known yet.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This week's cooking days will show when you're back online."
+          }
+        }
+      }
+    },
+    "home.streak.newWeek": {
+      "comment": "First progress column detail in place of this week's cooking days, when the week of the progress Tomi's server last sent is over. Keep it short: the column is narrow.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A new week"
           }
         }
       }

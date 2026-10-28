@@ -9,7 +9,6 @@ import TomiCore
 @Suite struct ScanModelTests {
     func scan(suggestionsNothing: Bool = false) async throws -> ScanModel {
         let api = FakeTomiAPI(
-            library: BundledLessonLibrary(),
             configuration: FakeTomiAPIConfiguration(suggestionsNothing: suggestionsNothing)
         )
         let profile = ProfileModel(api: api, store: InMemoryProgressStore())

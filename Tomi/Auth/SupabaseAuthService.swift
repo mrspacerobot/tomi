@@ -7,7 +7,7 @@ actor SupabaseAuthService: AuthService {
     private static let logger = Logger(category: .auth)
 
     private let client: SupabaseTokenClient
-    private let store: any TokenStore
+    let store: any TokenStore
     private let now: @Sendable () -> Date
 
     init(client: SupabaseTokenClient, store: any TokenStore, now: @escaping @Sendable () -> Date) {
@@ -56,11 +56,27 @@ actor SupabaseAuthService: AuthService {
         try await renewed(try currentSession()).accessToken
     }
 
+    func accessToken(for account: String, renewing: Bool) async throws -> String {
+        let session = try currentSession()
+        guard session.accountID == account else { throw BackendError.notSignedIn }
+        if renewing || session.needsRefresh(at: now()) {
+            let fresh = try await renewed(session)
+            guard fresh.accountID == account else { throw BackendError.notSignedIn }
+            return fresh.accessToken
+        }
+        return session.accessToken
+    }
+
+    nonisolated func accountID() -> String? {
+        let session = try? store.load()
+        return session?.accountID
+    }
+
     func signOut() async throws {
         try store.delete()
     }
 
-    private func currentSession() throws -> AuthSession {
+    func currentSession() throws -> AuthSession {
         guard let session = try store.load() else {
             throw BackendError.notSignedIn
         }
@@ -71,12 +87,13 @@ actor SupabaseAuthService: AuthService {
     private func renewed(_ session: AuthSession) async throws -> AuthSession {
         do {
             let fresh = try await client.session(for: .refreshToken(session.refreshToken), at: now())
-            try store.save(fresh)
+            try keepRenewal(fresh, replacing: session)
             return fresh
         } catch BackendError.server {
             Self.logger.error("The session could not be renewed; the cook must sign in again.")
-            try store.delete()
+            if (try? currentSession()) == session { try store.delete() }
             throw BackendError.notSignedIn
         }
     }
+
 }

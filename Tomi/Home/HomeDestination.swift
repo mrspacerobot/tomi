@@ -18,8 +18,10 @@ struct HomeDestination: View {
             CookingIntroductionView(suggestion: suggestion, flow: flow, path: $path)
         case .preparation(let suggestion):
             CookingPreparationView(suggestion: suggestion, flow: flow, path: $path)
-        case .steps(let suggestion):
-            CookingStepsView(suggestion: suggestion, path: $path)
+        case .steps(let session):
+            CookingStepsView(session: session, flow: flow, path: $path)
+        case .quiz(let session):
+            CookingQuizView(session: session, flow: flow, path: $path)
         }
     }
 }

@@ -2,16 +2,20 @@ import SwiftUI
 import TomiCore
 
 /// The adapted recipe, one step at a time, exactly as the server wrote it: its text, its time, its heat and its
-/// safety points. Nothing is added to a step. Timers, saved progress and rewards belong to later slices.
+/// safety points. Nothing is added to a step. After the last step comes the quiz, when the teaching has one.
+/// Timers, saved progress and rewards belong to later slices.
 struct CookingStepsView: View {
-    let suggestion: Suggestion
+    let session: CookingSession
     @Binding var path: [HomeRoute]
     @State private var walk: StepWalk?
+    @State private var recorder: CookRecorder
+    @State private var saveFailed = false
 
-    init(suggestion: Suggestion, path: Binding<[HomeRoute]>) {
-        self.suggestion = suggestion
+    init(session: CookingSession, flow: AppFlowModel, path: Binding<[HomeRoute]>) {
+        self.session = session
         self._path = path
-        _walk = State(initialValue: StepWalk(steps: suggestion.recipe.steps))
+        _recorder = State(initialValue: CookRecorder(session: session, flow: flow))
+        _walk = State(initialValue: StepWalk(steps: session.suggestion.recipe.steps))
     }
 
     var body: some View {
@@ -21,13 +25,38 @@ struct CookingStepsView: View {
             .navigationTitle(Text(.cookingStepsTitle))
             .navigationBarTitleDisplayMode(.inline)
             .accessibilityIdentifier("cooking-steps")
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: saveAndGoBack) { Label(.cookingStepsBack, systemImage: "chevron.left") }
+                        .accessibilityIdentifier("cooking-steps-back")
+                }
+            }
+            .modifier(CookingSaveFailure(showing: $saveFailed, retry: saveAndGoBack))
+    }
+
+    private func saveAndGoBack() {
+        guard recorder.stop() else {
+            saveFailed = true
+            return
+        }
+        if !path.isEmpty { path.removeLast() }
     }
 
     @ViewBuilder private var content: some View {
         if let current = Binding($walk) {
-            CookingStepPage(title: suggestion.title, walk: current, path: $path)
+            CookingStepPage(session: session, recorder: recorder, walk: current, path: $path)
         } else {
             CookingNoSteps(path: $path)
+        }
+    }
+}
+
+#Preview {
+    @Previewable @State var path: [HomeRoute] = []
+    if let suggestion = PreviewSuggestion.make() {
+        NavigationStack {
+            CookingStepsView(session: CookingSession(suggestion: suggestion), flow: .preview(), path: $path)
         }
     }
 }

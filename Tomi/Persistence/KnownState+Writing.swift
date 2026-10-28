@@ -1,11 +1,15 @@
 import Foundation
 
 extension KnownState {
-    /// Writes the profile and every cook into a store, which should be empty.
+    /// Writes the profile, every cook and the server's last snapshot into a store, which should be empty.
+    /// The snapshot is the fake server's returning cook: the server, not the phone, says what the cooks are worth.
     func write(to store: any ProgressStore) throws {
-        try store.saveProfile(profile, at: Self.evening(ofDay: 0) ?? .distantPast)
+        let firstEvening = Self.evening(ofDay: 0) ?? .distantPast
+        try store.saveProfile(profile, at: firstEvening)
         for entry in cookLog {
             try store.add(entry)
         }
+        let snapshot = try FakeProgressFixture.returning.body()
+        try store.saveProgressSnapshot(snapshot, at: firstEvening, for: FakeAuthService.account)
     }
 }

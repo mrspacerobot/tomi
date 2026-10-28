@@ -15,6 +15,16 @@ public struct SavedCookEntry: Hashable, Sendable {
     public var quizCorrect: Bool?
     /// The cook's weekly goal at the time.
     public var weeklyGoal: Int?
+    /// The server's problem code when it rejected the cook. A refused cook is never sent again.
+    /// Missing for every cook the server has not refused.
+    public var refusedCode: String?
+    /// The IANA identifier of the zone the cook was made in, such as `Europe/Amsterdam`.
+    /// Missing for cooks saved before the zone was recorded.
+    public var timeZone: String?
+    /// The graph version a recipe was cooked at. Missing for a cook of a bundled lesson, which cannot be sent.
+    public var graphVersion: String?
+    /// The id of the account that cooked it. Missing for cooks saved before it was recorded: they are never sent.
+    public var account: String?
 
     public init() {}
 
@@ -25,7 +35,16 @@ public struct SavedCookEntry: Hashable, Sendable {
         level = entry.lesson.level
         date = entry.session.date
         weeklyGoal = entry.session.weeklyGoal
+        account = entry.account
+        graphVersion = entry.lesson.graphVersion
         write(entry.session.result)
+        write(entry.session.timeZone)
+    }
+
+    private mutating func write(_ zone: TimeZone?) {
+        if let zone {
+            timeZone = zone.identifier
+        }
     }
 
     private mutating func write(_ result: CookResult) {

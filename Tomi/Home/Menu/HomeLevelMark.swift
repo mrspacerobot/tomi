@@ -2,12 +2,12 @@ import SwiftUI
 import TomiCore
 
 struct HomeLevelMark: View {
-    let progress: SkillProgress
+    let progress: SnapshotSkill
 
     var body: some View {
         HStack(spacing: Spacing.xSmall) {
             Text(.homeSkillLevel(progress.currentLevel)).textStyle(.status)
-            if let level = progress.levels.first(where: { $0.number == progress.currentLevel }) {
+            if let level = progress.levelInProgress {
                 LevelDiamonds(level: level)
             }
         }

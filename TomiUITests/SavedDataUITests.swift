@@ -44,11 +44,11 @@ final class SavedDataUITests: XCTestCase {
         XCTAssertFalse(app.otherElements["home-progress-strip"].exists)
     }
 
-    /// The known cook state continues to show game progress and course menu after relaunch.
+    /// The known cook state continues to show the server's progress and the course menu after relaunch.
     @MainActor
     private func assertKnownProgressIsShown(in app: XCUIApplication) {
         XCTAssertTrue(app.otherElements["home-progress-strip"].waitForExistence(timeout: 5))
-        XCTAssertEqual(app.otherElements["home-progress-strip"].value as? String, "360 XP; 4 techniques mastered")
+        XCTAssertEqual(app.otherElements["home-progress-strip"].value as? String, "350 XP; 1 technique mastered")
         XCTAssertTrue(app.otherElements["home-menu"].exists)
     }
 

@@ -8,7 +8,7 @@ import TomiCore
 @MainActor
 @Suite struct VersionConflictTests {
     @Test func theChangeIsMadeAgainOnTheServersNewerProfile() async throws {
-        let api = FakeTomiAPI(library: BundledLessonLibrary())
+        let api = FakeTomiAPI()
         let phone = ProfileModel(api: api, store: InMemoryProgressStore())
         try await phone.load()
         try await avoidNutsOnAnotherDevice(api)

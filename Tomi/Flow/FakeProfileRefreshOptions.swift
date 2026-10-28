@@ -13,6 +13,13 @@ nonisolated struct FakeProfileRefreshOptions: Equatable {
     let waits: Bool
     let changesLate: Bool
 
+    init(fails: Bool = false, changes: Bool = false, waits: Bool = false, changesLate: Bool = false) {
+        self.fails = fails
+        self.changes = changes
+        self.waits = waits
+        self.changesLate = changesLate
+    }
+
     init(arguments: [String]) {
         fails = arguments.contains(Self.failsArgument)
         changes = arguments.contains(Self.changesArgument)

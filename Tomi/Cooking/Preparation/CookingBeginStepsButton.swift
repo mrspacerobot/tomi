@@ -48,7 +48,7 @@ struct CookingBeginStepsButton: View {
         startTask = nil
         guard !Task.isCancelled, path.last == .preparation(suggestion) else { return }
         if result == .ready {
-            path.append(.steps(suggestion))
+            path.append(.steps(CookingSession(suggestion: suggestion)))
             return
         }
         refusal = result.refusal

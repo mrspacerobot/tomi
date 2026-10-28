@@ -41,7 +41,7 @@ import Testing
         saved.servings = 0
         saved.weeklyGoal = 12
         #expect(saved.profile.servings == CookProfile.minimumServings)
-        #expect(saved.profile.weeklyGoal == GameRules.weeklyGoalOptions.upperBound)
+        #expect(saved.profile.weeklyGoal == CookProfile.weeklyGoalRange.upperBound)
     }
 
     @Test func theSameAnswersAlwaysSaveTheSameLists() {

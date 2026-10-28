@@ -9,7 +9,7 @@ extension SavedProfile {
         profile.setWeeklyGoal(weeklyGoal)
         var saved = SavedProfile(profile)
         saved.stableID = UUID()
-        saved.updatedAt = StreakTestCalendar().date(.october(day))
+        saved.updatedAt = TestCalendar().date(.october(day))
         return saved
     }
 }

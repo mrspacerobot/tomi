@@ -16,7 +16,7 @@ import Testing
     }
 
     @Test func anImportOfSwiftUIInTheRulesPackageIsCaught() {
-        let file = SourceFile(path: "Packages/TomiCore/Sources/TomiCore/Game/Rank.swift", text: "import SwiftUI\n")
+        let file = SourceFile(path: "Packages/TomiCore/Sources/TomiCore/Progress/Cook.swift", text: "import SwiftUI\n")
         #expect(ImportRule.violationsInRulesPackage([file]) == ["\(file.path) imports SwiftUI"])
     }
 

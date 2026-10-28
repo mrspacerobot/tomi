@@ -4,29 +4,22 @@ import TomiCore
 
 @testable import Tomi
 
-/// The state UI tests start from, worked out from the shipped menu.
+/// The state UI tests start from.
 @MainActor
 @Suite struct KnownStateTests {
-    let catalog: SkillCatalog
-    let known: KnownState
+    let known = KnownState()
 
-    init() throws {
-        catalog = try #require(BundledLibrary.catalog())
-        known = KnownState(catalog: catalog)
+    /// One technique, cooked twice at each of its levels, and nothing else.
+    @Test func theCookCookedOneTechniqueTwiceAtEachLevel() {
+        let levels = known.cookLog.map(\.lesson.level)
+        #expect(Set(known.cookLog.map(\.lesson.skill)) == [KnownState.skill])
+        #expect(levels.count == KnownState.levels * KnownState.cooksAtEachLevel)
+        #expect(levels == levels.sorted())
+        #expect(known.cookLog.allSatisfy { $0.session.result == .finished(quizCorrect: true) })
     }
 
-    @Test func theCookMasteredTheFirstCourseByExperienceAndOneMoreTechniqueByCooking() throws {
-        let firstCourse = try #require(catalog.courses.first)
-        let rules = ProgressRules(catalog: catalog, experience: known.profile.experience)
-        let mastered = rules.progress(for: known.cookLog).masteredCount
-        #expect(mastered == catalog.skills(in: firstCourse.id).count + 1)
-        #expect(ProgressRules(catalog: catalog, experience: .basics).progress(for: known.cookLog).masteredCount == 1)
-    }
-
-    @Test func everyCookEarnedTheFullXP() {
-        let cooks = known.cookLog.count
-        #expect(cooks > 0)
-        #expect(known.cookLog.earnedXP == cooks * GameRules.xpForFinishedCook(quizCorrect: true))
+    @Test func theCooksAreCooksOfAGraphRecipeSoTheyWaitToBeSent() {
+        #expect(known.cookLog.allSatisfy { $0.isSendable })
     }
 
     @Test func theCooksAreOnFixedDaysOneADay() {
@@ -41,5 +34,12 @@ import TomiCore
         try known.write(to: store)
         #expect(try store.profile() == known.profile)
         #expect(try store.cookLog().count == known.cookLog.count)
+    }
+
+    /// The server's last answer for this cook comes with the state, so Home shows progress before any call.
+    @Test func itKeepsTheReturningCooksSnapshot() throws {
+        let store = InMemoryProgressStore()
+        try known.write(to: store)
+        #expect(try store.progressSnapshot() == (try FakeProgressFixture.returning.snapshot()))
     }
 }

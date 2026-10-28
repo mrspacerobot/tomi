@@ -3,6 +3,8 @@
 public struct SuggestionsResponse: Hashable, Decodable, Sendable {
     /// How the suggestions were ordered, or nil when a newer server names a way this build does not know.
     public var rankedBy: RankedBy?
+    /// The version of the cooking graph the answer was made from, or nil when the server named none.
+    public var graphVersion: String?
     public var special: Suggestion?
     public var alternatives: [Suggestion] = []
 
@@ -11,12 +13,13 @@ public struct SuggestionsResponse: Hashable, Decodable, Sendable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         rankedBy = container.knownValue(RankedBy.self, forKey: .rankedBy)
+        graphVersion = try? container.decodeIfPresent(String.self, forKey: .graphVersion)
         let suggestions = try Self.readSuggestions(container)
-        special = suggestions.special
-        alternatives = suggestions.alternatives
+        special = suggestions.special?.from(graphVersion: graphVersion)
+        alternatives = suggestions.alternatives.map { $0.from(graphVersion: graphVersion) }
     }
 
     enum CodingKeys: String, CodingKey {
-        case rankedBy, special, alternatives
+        case graphVersion, rankedBy, special, alternatives
     }
 }

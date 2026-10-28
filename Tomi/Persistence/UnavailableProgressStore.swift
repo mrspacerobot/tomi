@@ -21,15 +21,31 @@ struct UnavailableProgressStore: ProgressStore {
         throw ProgressStoreError.unavailable
     }
 
-    func activeLesson() throws -> ActiveLesson? {
+    func pendingCookEntries(for account: String) throws -> [CookEntry] {
         throw ProgressStoreError.unavailable
     }
 
-    func saveActiveLesson(_ lesson: ActiveLesson, at moment: Date) throws {
+    func forgetCookEntries(ids: Set<UUID>) throws {
         throw ProgressStoreError.unavailable
     }
 
-    func clearActiveLesson() throws {
+    func markCookEntryRefused(id: UUID, code: CookEntryProblem) throws {
+        throw ProgressStoreError.unavailable
+    }
+
+    func progressSnapshot() throws -> ProgressSnapshot? {
+        throw ProgressStoreError.unavailable
+    }
+
+    func progressSnapshot(for account: String) throws -> ProgressSnapshot? {
+        throw ProgressStoreError.unavailable
+    }
+
+    func saveProgressSnapshot(_ body: Data, at moment: Date) throws {
+        throw ProgressStoreError.unavailable
+    }
+
+    func saveProgressSnapshot(_ body: Data, at moment: Date, for account: String) throws {
         throw ProgressStoreError.unavailable
     }
 }

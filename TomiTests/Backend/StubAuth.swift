@@ -16,6 +16,7 @@ final class StubAuth: AuthService {
     func createAccount(email: String, password: String) async throws -> SignUpResult { .emailConfirmationRequired }
     func sendPasswordReset(to email: String) async throws {}
     func signOut() async throws {}
+    func accountID() -> String? { "stub-account" }
 
     func accessToken() async throws -> String {
         if renewalCount == 0 {
@@ -27,5 +28,11 @@ final class StubAuth: AuthService {
     func renewedAccessToken() async throws -> String {
         renewals.withLock { $0 += 1 }
         return "new"
+    }
+
+    func accessToken(for account: String, renewing: Bool) async throws -> String {
+        guard accountID() == account else { throw BackendError.notSignedIn }
+        if renewing { return try await renewedAccessToken() }
+        return try await accessToken()
     }
 }

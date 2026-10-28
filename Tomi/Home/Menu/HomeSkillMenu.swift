@@ -1,14 +1,14 @@
 import SwiftUI
 import TomiCore
 
-/// The server's course order, paired with compatible local learning progress by permanent IDs.
+/// The server's course order, each technique with the server's progress for it by its permanent id.
 struct HomeSkillMenu: View {
     let options: [OptionCourse]
-    let catalog: SkillCatalog?
-    let progress: CookProgress?
+    /// The snapshot's skills. Nil before the first snapshot: every technique's progress is then unknown.
+    let skills: [SnapshotSkill]?
 
     var body: some View {
-        let menu = HomeMenuProgress.make(options: options, catalog: catalog, progress: progress)
+        let menu = HomeMenuProgress.make(options: options, skills: skills)
         VStack(alignment: .leading, spacing: Spacing.large) {
             VStack(alignment: .leading, spacing: Spacing.xxSmall) {
                 Text(.homeMenuTitle).textStyle(.displayM)
@@ -24,11 +24,7 @@ struct HomeSkillMenu: View {
 }
 
 #Preview {
-    HomeSkillMenu(
-        options: HomeMenuPreviewData.options,
-        catalog: HomeMenuPreviewData.catalog,
-        progress: SavedProgressModel.previewWithProgress().summary?.skillProgress
-    )
-    .padding()
-    .background(ColorRole.paper.color)
+    HomeSkillMenu(options: HomeMenuPreviewData.options, skills: HomeMenuPreviewData.skills)
+        .padding()
+        .background(ColorRole.paper.color)
 }

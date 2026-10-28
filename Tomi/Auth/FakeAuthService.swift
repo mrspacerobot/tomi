@@ -3,11 +3,15 @@ import Synchronization
 /// Sign-in for previews and UI tests: any identity signs in, and the token is a fixed word.
 nonisolated final class FakeAuthService: AuthService {
     static let token = "fake-access-token"
+    static let account = "fake-account"
+    static let otherAccount = "other-fake-account"
 
     private let signedIn: Mutex<Bool>
+    private let accountName: String
 
-    init(signedIn: Bool = false) {
+    init(signedIn: Bool = false, account: String = FakeAuthService.account) {
         self.signedIn = Mutex(signedIn)
+        accountName = account
     }
 
     func isSignedIn() async -> Bool {
@@ -37,6 +41,18 @@ nonisolated final class FakeAuthService: AuthService {
 
     func renewedAccessToken() async throws -> String {
         try await accessToken()
+    }
+
+    func accessToken(for account: String, renewing: Bool) async throws -> String {
+        guard accountID() == account else { throw BackendError.notSignedIn }
+        return Self.token
+    }
+
+    func accountID() -> String? {
+        guard signedIn.withLock({ $0 }) else {
+            return nil
+        }
+        return accountName
     }
 
     func signOut() async throws {

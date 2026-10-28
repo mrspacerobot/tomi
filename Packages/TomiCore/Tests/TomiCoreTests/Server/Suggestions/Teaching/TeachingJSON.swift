@@ -53,6 +53,8 @@ enum TeachingJSON {
             liveSuggestion.replacingOccurrences(of: #""graphChannel": "draft""#, with: #""graphChannel": "unknown""#),
             liveSuggestion.replacingOccurrences(of: #""language": "en""#, with: #""language": "fr""#),
             liveSuggestion.replacingOccurrences(of: #""tier": "drafted""#, with: #""tier": "future""#),
+            liveSuggestion.replacingOccurrences(of: #""schemaVersion": 1"#, with: #""schemaVersion": 3"#),
+            liveSuggestion.replacingOccurrences(of: #""schemaVersion": 1"#, with: #""schemaVersion": 0"#),
         ]
     }
 
@@ -66,6 +68,5 @@ enum TeachingJSON {
         #""teaching":{"schemaVersion":1,"graphVersion":"fixture","graphChannel":"draft","language":"en", "#
         + #""technique":{"id":"technique/scramble","name":"Scramble","tier":"drafted"},"#
         + #""introduction":{"concept":"Gentle curds","what":"Stir gently.","why":"Notice texture.","tier":"drafted"},"#
-        + #""quiz":[{"id":"bad","question":"Which?","choices":["A","B"],"answerIndex":8,"#
-        + #""explanation":"Text","tier":"drafted"}]}"#
+        + #""quiz":[{"id":"bad","question":"Which?","choices":["A","B"],"tier":"drafted"}]}"#
 }

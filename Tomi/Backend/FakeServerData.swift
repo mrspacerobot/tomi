@@ -1,16 +1,19 @@
 import Foundation
+import OSLog
 import TomiCore
 
-/// The fake server's answers, made from the bundled library so they always name lessons the phone has.
-/// The diet and avoid lists are invented test words; ingredient, equipment and cuisine ids come from the lessons,
-/// so no Swift file names one.
+/// The fake server's answers, from the fixtures `fake-options.json` and `fake-suggestions.json`.
+/// The diet and avoid lists are invented test words, so no Swift file names a diet, an ingredient or a cuisine.
 nonisolated struct FakeServerData: Sendable {
-    let lessons: [Lesson]
-    let options: LibraryOptions
+    static let graphVersion = "fake-graph"
+    static let logger = Logger(category: .backend)
 
-    init(library: any LessonLibrary) {
-        lessons = library.lessons
-        options = FakeOptions(lessons: library.lessons, catalog: library.catalog).options
+    let options: LibraryOptions
+    private let suggestionFixtures: [Data]
+
+    init() {
+        options = Self.readOptions()
+        suggestionFixtures = Self.readSuggestionFixtures()
     }
 
     /// The first two ingredients of the first lesson, sure; its third, unsure; and a thing the server does not know.
@@ -45,23 +48,25 @@ nonisolated struct FakeServerData: Sendable {
         return ResolvedLabel(label: label, basis: .noMatch, candidates: [])
     }
 
-    /// Every lesson as a graph suggestion, the first as the special with a swap made and the others with a part left
-    /// out, each checked for the cook's own answers.
+    /// Every fixture as a graph suggestion, the first as the special, each checked for the cook's own answers, in
+    /// the answer a real server sends, so the app reads it the same way.
     func suggestions(for profile: CookProfile) throws -> SuggestionsResponse {
-        var response = SuggestionsResponse()
-        let suggestions = try lessons.enumerated().map { position, lesson in
-            try FakeSuggestion(lesson: lesson, wantsSwap: position == 0).suggestion(checkedFor: profile)
-        }
-        response.special = suggestions.first
-        response.alternatives = Array(suggestions.dropFirst())
-        response.rankedBy = .overlap
-        return response
+        let offers = try suggestionFixtures.map { try Self.offer($0, checkedFor: profile) }
+        let answer: [String: Any] = [
+            "graphVersion": Self.graphVersion,
+            "rankedBy": RankedBy.overlap.rawValue,
+            "special": offers.first as Any,
+            "alternatives": Array(offers.dropFirst()),
+        ]
+        let data = try JSONSerialization.data(withJSONObject: answer)
+        return try JSONDecoder().decode(SuggestionsResponse.self, from: data)
     }
 
-    func guidedSuggestion(for profile: CookProfile) throws -> SuggestionsResponse {
+    /// The backend's teaching suggestion, asking the invented quiz in place of the graph's, or no quiz without one.
+    func guidedSuggestion(for profile: CookProfile, quiz: FakeQuiz?) throws -> SuggestionsResponse {
         var response = SuggestionsResponse()
         response.rankedBy = .overlap
-        response.special = try FakeGuidedSuggestion.read(profile: profile)
+        response.special = try FakeGuidedSuggestion.read(profile: profile, quiz: quiz)
         return response
     }
 }

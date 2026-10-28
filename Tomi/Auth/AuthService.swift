@@ -11,5 +11,10 @@ nonisolated protocol AuthService: Sendable {
     func accessToken() async throws -> String
     /// A new token even if the old one looked valid: the server refused the old one with 401.
     func renewedAccessToken() async throws -> String
+    /// A token only for the specified account, including after renewal.
+    func accessToken(for account: String, renewing: Bool) async throws -> String
     func signOut() async throws
+    /// The id of the account that is signed in, or nil when nobody is. Read from the saved session, so it is known
+    /// offline too. A cook is saved under it, and only that account's session sends the cook.
+    func accountID() -> String?
 }

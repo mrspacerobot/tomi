@@ -15,4 +15,17 @@ nonisolated protocol TomiAPI: Sendable {
     func scan(jpeg: Data) async throws -> ScanResult
     func resolve(_ labels: [String]) async throws -> ResolveResponse
     func suggestions(_ request: SuggestionsRequest) async throws -> SuggestionsResponse
+    /// Sends one cook of the outbox. The server answers with the result for that cook and the snapshot after it,
+    /// kept as it was sent. A request the server cannot read is `422 invalid_request`: the cook stays to be sent
+    /// again.
+    func sendCookEntry(_ request: CookEntryRequest) async throws -> CookEntryResponse
+    func sendCookEntry(_ request: CookEntryRequest, for account: String) async throws -> CookEntryResponse
+    /// The cook's progress, worked out by the server, with the week in progress judged by this calendar,
+    /// and its JSON as it arrived, for the store.
+    func progress(_ calendar: CalendarContext) async throws -> ProgressResponse
+    func progress(_ calendar: CalendarContext, for account: String) async throws -> ProgressResponse
+
+    /// Sends one quiz pick and reads the server's right or wrong. The app never knows the right choice: the server
+    /// holds it, scores the first pick of each question, and explains once the pick is right. Needs a connection.
+    func answerQuiz(_ pick: QuizPick) async throws -> QuizVerdict
 }
