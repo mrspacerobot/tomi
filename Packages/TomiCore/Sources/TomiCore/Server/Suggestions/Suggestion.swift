@@ -1,3 +1,5 @@
+import Foundation
+
 /// One dish the server suggests for tonight: a recipe of the cooking graph, already adapted for this cook.
 /// `recipe` is the one the cook follows and `changes` says what differs from the graph's own. The safe plan still
 /// carries what to buy and the equipment, and `checked` says for which diet and avoid list the server decided it.
@@ -14,6 +16,7 @@ public struct Suggestion: Identifiable, Hashable, Decodable, Sendable {
     public let reason: String?
     public let checked: CheckedRestrictions
     public let teaching: Teaching?
+    public let photoURL: URL?
     /// The version of the cooking graph the recipe was suggested from, which a cook of it names. The answer's own
     /// version when it sent one, else the teaching's. Nil when the server named none: such a cook cannot be sent.
     public private(set) var graphVersion: String?
@@ -30,6 +33,7 @@ public struct Suggestion: Identifiable, Hashable, Decodable, Sendable {
 
     enum CodingKeys: String, CodingKey {
         case recipeID = "recipeId"
+        case photoURL = "photoUrl"
         case title, recipe, changes, skill, level, safePlan, reason, checked, teaching
     }
 
@@ -37,13 +41,29 @@ public struct Suggestion: Identifiable, Hashable, Decodable, Sendable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         recipeID = try values.decode(RecipeID.self, forKey: .recipeID)
         title = try values.decode(String.self, forKey: .title)
-        recipe = try values.decode(AdaptedRecipe.self, forKey: .recipe)
-        changes = try values.decode(RecipeChanges.self, forKey: .changes)
+        (recipe, changes) = try Self.adaptation(values)
         skill = try values.decode(SuggestionSkill.self, forKey: .skill)
         level = try values.decode(NamedLevel.self, forKey: .level)
         safePlan = try values.decode(SafePlan.self, forKey: .safePlan)
         (reason, checked) = try Self.reasonAndCheck(values)
         (teaching, graphVersion) = Self.teachingAndVersion(values)
+        photoURL = Self.readPhotoURL(values)
+    }
+
+    private static func adaptation(
+        _ values: KeyedDecodingContainer<CodingKeys>
+    ) throws -> (AdaptedRecipe, RecipeChanges) {
+        let recipe = try values.decode(AdaptedRecipe.self, forKey: .recipe)
+        let changes = try values.decode(RecipeChanges.self, forKey: .changes)
+        return (recipe, changes)
+    }
+
+    private static func readPhotoURL(_ values: KeyedDecodingContainer<CodingKeys>) -> URL? {
+        guard let url = try? values.decode(URL.self, forKey: .photoURL),
+            url.scheme?.lowercased() == "https", let host = url.host(), !host.isEmpty,
+            url.user() == nil, url.password() == nil
+        else { return nil }
+        return url
     }
 
     private static func teachingAndVersion(

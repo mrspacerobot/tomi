@@ -51,6 +51,21 @@ import Testing
         #expect(suggestion.safePlan.omittedParts == ["enrichment"])
     }
 
+    @Test func aServerPhotoURLIsDecoded() throws {
+        let url = "https://photos.example.com/dish.webp"
+        let wire = GraphJSON.suggestion(extra: #", "photoUrl": "https://photos.example.com/dish.webp""#)
+        let suggestion = try ServerJSON.decode(Suggestion.self, from: wire)
+        #expect(suggestion.photoURL?.absoluteString == url)
+    }
+
+    @Test(arguments: [#"23"#, #""http://photos.example.com/dish.webp""#, #""/relative.webp""#])
+    func anUnreadablePhotoURLLeavesTheSuggestionReadable(photo: String) throws {
+        let wire = GraphJSON.suggestion(extra: #", "photoUrl": "# + photo)
+        let suggestion = try ServerJSON.decode(Suggestion.self, from: wire)
+        #expect(suggestion.photoURL == nil)
+        #expect(suggestion.title == "Soft scrambled eggs")
+    }
+
     @Test func teachingIsOptionalAndMalformedTeachingDoesNotHideTheRecipe() throws {
         let decoded = try suggestion(with: TeachingJSON.valid)
         #expect(decoded.teaching?.technique.name == "Scramble")

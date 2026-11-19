@@ -13,6 +13,7 @@ struct SuggestionCard: View {
     var body: some View {
         DoubleRuledBox(flag: flag) {
             VStack(alignment: .leading, spacing: Spacing.small) {
+                SuggestionPhoto(url: suggestion.photoURL)
                 SuggestionHeading(suggestion: suggestion, isSpecial: flag != nil)
                 SuggestionSummary(suggestion: suggestion, options: options)
                 Button(action: open) { Text(.suggestionOpen) }

@@ -105,7 +105,7 @@ The special and each alternative may include a `photoUrl` string. This public
 HTTPS image is approved by the recipe photo reviewer and matched by the server
 to the suggestion's adapted ingredients and pinned recipe. The phone may
 display it after checking the suggestion for the current cook. When the field
-is absent, unreadable, or the image fails to load, use the existing artwork.
+is absent, unreadable, or the image fails to load, keep the standard recipe card.
 
 # Optional teaching on suggestions
 
