@@ -31,7 +31,7 @@ Tomi/                  The iPhone app (SwiftUI)
 TomiTests/             Unit tests
 TomiUITests/           End-to-end UI tests
 Packages/TomiCore/     Rules and data types, plain Swift, with tests
-scripts/check.sh       Every check a change must pass
+scripts/check.sh       The checks a change must pass (--full adds the UI tests)
 AGENTS.md              Rules for people and coding agents
 docs/                  Product plan, implementation plan, design mockups
 prototype/index.html   Original single-file web prototype

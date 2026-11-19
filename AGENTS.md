@@ -10,16 +10,17 @@ Tomi is a native iPhone app (SwiftUI, iOS 27) that teaches cooking from what is 
 ## Before you call anything done
 
 ```
-./scripts/check.sh
+./scripts/check.sh          # the fast check, while you work
+./scripts/check.sh --full   # the full check, before a pull request is called ready
 ```
 
-It runs the formatter's lint, SwiftLint (size limits, hard-coded text, banned calls), the rules package tests, and the app's unit and UI tests in the simulator. Tools needed once: Xcode 27 and `brew install swiftlint`. It must pass with no warnings you introduced. Then run the app in the simulator and look at what you changed, in light and dark, next to the mockup. If something looks off, even something you did not touch, fix it or open an issue.
+The fast check runs the formatter's lint, SwiftLint (size limits, hard-coded text, banned calls), the rules package tests, the app build and the app's unit tests in the simulator. Run it while you work. The full check runs all of that and then the UI tests, which drive whole flows in the simulator and take most of the time. A pull request is ready only when `./scripts/check.sh --full` passed on its final code. The app is built once and every test run starts from that build. The UI tests run one at a time on this Mac: when another checkout or the CI runner is running them, the full check says who and since when, and waits. Never work around the wait; parallel UI test runs overload the Mac and make tests fail (#147). Every step prints how long it took. Tools needed once: Xcode 27 and `brew install swiftlint`. It must pass with no warnings you introduced. Then run the app in the simulator and look at what you changed, in light and dark, next to the mockup. If something looks off, even something you did not touch, fix it or open an issue.
 
 Report honestly: if a check fails or you skipped a step, say so.
 
 For every UI task, embed screenshots of the working screen in the pull request description, in light and dark. Capture each changed screen or meaningful state from the running app built from the final code, using fake data. Label the screen/state, device, iOS version and text size. Mockups and SwiftUI previews do not count. Keep the screenshots current after revisions. See `docs/agent-on-pull-requests.md` for capture and posting instructions. If screenshots cannot be captured or posted, explain the blocker in the description and leave the pull request in draft. No automated check reads the description, so this rule is enforced by review: the owner merges a UI pull request only when its description shows current light and dark captures of the final build, and a reviewer reports missing or stale ones as P1.
 
-**Every pull request to `main` runs the same check automatically** (`.github/workflows/check.yml`), on the owner's Mac. It shows on the pull request as "Check". If the Mac is busy, asleep or off, the check waits and runs when the Mac is free. GitHub cannot require a green check on this repository, so the rule is written here instead: the owner merges only when the check is green. Running it yourself first is still required; the automatic run is the proof, not the first try.
+**Every pull request to `main` runs the check automatically** (`.github/workflows/check.yml`), on the owner's Mac. It shows on the pull request as "Check". A draft pull request runs the fast check; a pull request that is ready for review runs the full check on every push, and every push to `main` runs the full check too. If the Mac is busy, asleep or off, the check waits and runs when the Mac is free. GitHub cannot require a green check on this repository, so the rule is written here instead: the owner merges only when the full check on the final commit is green. Running `./scripts/check.sh --full` yourself first is still required; the automatic run is the proof, not the first try.
 
 ## Running the app
 
