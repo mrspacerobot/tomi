@@ -6,12 +6,11 @@ import SwiftUI
 struct AmountRow: View {
     let name: String
     let amount: String?
-    var showCardStyle = false
 
     var body: some View {
         ViewThatFits(in: .horizontal) {
-            LeaderAmountRow(name: name, amount: amount, showCardStyle: showCardStyle)
-            StackedAmountRow(name: name, amount: amount, showCardStyle: showCardStyle)
+            LeaderAmountRow(name: name, amount: amount)
+            StackedAmountRow(name: name, amount: amount)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .combine)

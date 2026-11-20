@@ -16,7 +16,7 @@ struct AppRoot: View {
             } else if ProcessInfo.processInfo.arguments.contains(ShowGallery.launchArgument) {
                 ShowGallery()
             } else if GalleryLaunch.isRequested || CompanionGalleryLaunch.requested {
-                ComponentGallery()
+                ShowGallery(showsSamples: true)
             } else {
                 RootView(progress: progress, flow: flow)
             }

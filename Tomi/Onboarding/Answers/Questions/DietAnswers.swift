@@ -22,5 +22,5 @@ struct DietAnswers: View {
 
 #Preview {
     DietAnswers(draft: .preview())
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }

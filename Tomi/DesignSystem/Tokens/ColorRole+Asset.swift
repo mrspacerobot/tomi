@@ -4,19 +4,9 @@ nonisolated extension ColorRole {
     /// On the main actor, because the symbols Xcode makes for the asset catalog are.
     @MainActor var color: Color {
         switch self {
-        case .paper: Color(.paper)
         case .wash: Color(.wash)
-        case .ink: Color(.ink)
-        case .cobalt: Color(.cobalt)
-        case .inkFaded: Color(.inkFaded)
-        case .rule: Color(.rule)
-        case .leader: Color(.leader)
-        case .stampRed: Color(.stampRed)
-        case .stampRedMark: Color(.stampRedMark)
         case .printRed: Color(.printRed)
         case .yolk: Color(.yolk)
-        case .onPrimary: Color(.onPrimary)
-        case .primaryFill: Color(.primaryFill)
         case .companionLine: Color(.companionLine)
         case .companionFeature: Color(.companionFeature)
         case .companionToque: Color(.companionToque)

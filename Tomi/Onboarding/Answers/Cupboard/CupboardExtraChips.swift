@@ -24,5 +24,5 @@ struct CupboardExtraChips: View {
     draft.addToCupboard("fake-cumin")
     return CupboardExtraChips(draft: draft)
         .padding()
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }

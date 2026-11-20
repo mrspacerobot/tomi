@@ -19,17 +19,11 @@ import Testing
         #expect(style.metrics.lineHeight >= style.metrics.size)
     }
 
-    @Test(arguments: ["Gloock-OFL", "Newsreader-OFL", "Figtree-OFL", "LilitaOne-OFL", "Nunito-OFL"])
+    @Test(arguments: ["LilitaOne-OFL", "Nunito-OFL"])
     func theLicenceOfEachFamilyShipsInTheApp(name: String) throws {
         let url = try #require(Bundle.main.url(forResource: name, withExtension: "txt"))
         let text = try String(contentsOf: url, encoding: .utf8)
         #expect(text.contains("SIL Open Font License"))
     }
 
-    @Test func timerDigitsAreAllTheSameWidth() {
-        let font = CTFontCreateWithName(Typeface.gloock.fontName as CFString, 40, nil)
-        let features = CTFontCopyFeatures(font) as? [[CFString: Any]] ?? []
-        let types = features.compactMap { $0[kCTFontFeatureTypeIdentifierKey] as? Int }
-        #expect(types.contains(kNumberSpacingType))
-    }
 }

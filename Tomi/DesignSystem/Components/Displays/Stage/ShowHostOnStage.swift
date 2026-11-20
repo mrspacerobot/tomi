@@ -9,7 +9,7 @@ struct ShowHostOnStage: View {
                 )
                 .accessibilityHidden(true)
             ShowStageFloor()
-            CompanionSlot(state: .idle, side: ShowStageSize.hero, appearance: .cookingShow)
+            CompanionSlot(state: .idle, side: ShowStageSize.hero)
                 .padding(.bottom, ShowStageSize.figureInset)
         }
     }

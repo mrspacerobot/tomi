@@ -8,7 +8,7 @@ struct CookingIntroductionNeeds: View {
     var body: some View {
         ShowCard {
             VStack(alignment: .leading, spacing: ShowSize.gap) {
-                SectionHeading(words: .cookingYouWillUse, showCardStyle: true)
+                SectionHeading(words: .cookingYouWillUse)
                 ingredientRows
                 SuggestionMissingLine(suggestion: suggestion, style: .showText)
                 equipmentSection
@@ -25,7 +25,7 @@ struct CookingIntroductionNeeds: View {
     @ViewBuilder private var equipmentSection: some View {
         if !suggestion.safePlan.equipment.isEmpty {
             VStack(alignment: .leading, spacing: Spacing.small) {
-                SectionHeading(words: .cookingGetOut, showCardStyle: true)
+                SectionHeading(words: .cookingGetOut)
                 ForEach(Array(suggestion.safePlan.equipment.enumerated()), id: \.offset) { _, item in
                     Text(verbatim: item.name).textStyle(.showText)
                 }

@@ -27,5 +27,5 @@ struct KitchenAnswers: View {
 
 #Preview {
     KitchenAnswers(draft: .preview())
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }

@@ -18,5 +18,5 @@ struct NoneOfTheseRow: View {
 
 #Preview {
     NoneOfTheseRow(draft: .preview())
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }

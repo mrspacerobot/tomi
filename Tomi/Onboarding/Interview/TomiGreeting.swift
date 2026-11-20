@@ -6,7 +6,7 @@ struct TomiGreeting: View {
 
     var body: some View {
         layout {
-            CompanionSlot(state: question.hostPose, side: MascotSize.companionGreeting, appearance: .cookingShow)
+            CompanionSlot(state: question.hostPose, side: MascotSize.companionGreeting)
             ShowSpeechBubble {
                 Text(question.interviewPrompt)
                     .frame(maxWidth: .infinity, alignment: .leading)

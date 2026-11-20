@@ -6,7 +6,7 @@
 
         var body: some View {
             Button(.companionOpen) { showingCompanion = true }
-                .buttonStyle(.tomiSecondary)
+                .buttonStyle(ShowSecondaryButtonStyle())
                 .accessibilityIdentifier("gallery-companion")
                 .padding(.horizontal, Spacing.screenMargin)
                 .fullScreenCover(isPresented: $showingCompanion) { CompanionGallery() }

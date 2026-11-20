@@ -8,7 +8,7 @@ struct CookingWhyTonight: View {
         if let reason {
             ShowCard {
                 VStack(alignment: .leading, spacing: ShowSize.gap) {
-                    SectionHeading(words: .cookingWhyTonight, showCardStyle: true)
+                    SectionHeading(words: .cookingWhyTonight)
                     Text(verbatim: reason).textStyle(.showText)
                 }
             }

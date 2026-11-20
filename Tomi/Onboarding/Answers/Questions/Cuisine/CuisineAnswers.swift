@@ -17,5 +17,5 @@ struct CuisineAnswers: View {
 #Preview {
     CuisineAnswers(draft: .preview())
         .padding()
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }

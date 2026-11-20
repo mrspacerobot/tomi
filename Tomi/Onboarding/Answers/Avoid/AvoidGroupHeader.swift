@@ -8,7 +8,7 @@ struct AvoidGroupHeader: View {
         Text(title)
             .textStyle(.showLabel)
             .padding(.top, Spacing.large)
-            .padding(.horizontal, Spacing.screenMargin + TickRowFace.contentInset)
+            .padding(.horizontal, ShowSize.edge)
             .frame(maxWidth: .infinity, alignment: .leading)
             .accessibilityAddTraits(.isHeader)
     }

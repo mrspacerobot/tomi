@@ -2,7 +2,7 @@ import SwiftUI
 
 struct OffAirPortrait: View {
     var body: some View {
-        TomiMascot(mood: .thinking, appearance: .cookingShow)
+        TomiMascot(mood: .thinking)
             .frame(width: MascotSize.welcome, height: MascotSize.welcome)
             .accessibilityHidden(true)
     }

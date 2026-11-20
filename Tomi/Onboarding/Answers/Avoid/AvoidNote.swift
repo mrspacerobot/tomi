@@ -6,7 +6,7 @@ struct AvoidNote: View {
         Text(.questionAvoidNote)
             .textStyle(.showLede)
             .padding(.top, Spacing.medium)
-            .padding(.horizontal, Spacing.screenMargin + TickRowFace.contentInset)
+            .padding(.horizontal, ShowSize.edge)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

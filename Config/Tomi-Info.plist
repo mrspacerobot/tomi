@@ -19,10 +19,6 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Gloock-Regular.ttf</string>
-		<string>Newsreader.ttf</string>
-		<string>Newsreader-Italic.ttf</string>
-		<string>Figtree.ttf</string>
 		<string>LilitaOne-Regular.ttf</string>
 		<string>Nunito.ttf</string>
 	</array>

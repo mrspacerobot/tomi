@@ -1,11 +1,12 @@
 import SwiftUI
 
 struct ShowSecondaryButtonStyle: ButtonStyle {
+    var ink = ColorRole.stageInk
     @Environment(\.isEnabled) private var isEnabled
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .textStyle(.showLede)
+            .textStyle(.showLede, color: ink)
             .multilineTextAlignment(.center)
             .underline(configuration.isPressed)
             .frame(minWidth: TouchTarget.minimum, minHeight: TouchTarget.minimum)

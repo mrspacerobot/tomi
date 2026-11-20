@@ -4,7 +4,7 @@ struct EmailAuthPortrait: View {
     let hasProblem: Bool
 
     var body: some View {
-        TomiMascot(mood: mood, appearance: .cookingShow)
+        TomiMascot(mood: mood)
             .frame(width: ShowStageSize.backstageHost, height: ShowStageSize.backstageHost)
             .frame(maxWidth: .infinity)
             .accessibilityHidden(true)

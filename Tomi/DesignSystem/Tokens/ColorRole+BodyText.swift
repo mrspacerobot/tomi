@@ -1,26 +1,31 @@
 nonisolated extension ColorRole {
-    /// The roles text may be set in on a ground. Every default colour of a `TextStyle` is one of these.
     static var textRoles: Set<ColorRole> {
         Set(bodyTextPairings.map(\.text))
     }
 
-    private static let tastingMenuTextRoles: [ColorRole] = [.ink, .inkFaded, .cobalt, .stampRed]
-
-    /// The round 3 grounds shared by the original button and chip styles.
-    static let grounds: [ColorRole] = [.paper, .wash]
-
-    /// The name on a locked chip, which is filled with cobalt (`.r-chip.lock` in the design kit).
-    static let lockedChip = TextPairing(text: .onPrimary, ground: .cobalt)
-
-    /// Every pair of text and ground used for body text. A test holds each to the contrast rule in light and
-    /// dark, so a component that sets text on another fill adds its pairing here first.
-    static var bodyTextPairings: [TextPairing] {
-        var pairings = [TextPairing(text: .onPrimary, ground: .primaryFill), lockedChip] + cookingShowTextPairings
-        for ground in grounds {
-            for text in tastingMenuTextRoles {
-                pairings.append(TextPairing(text: text, ground: ground))
-            }
-        }
-        return pairings
-    }
+    /// Every pair of text and ground used for body text, checked in both appearances.
+    static let bodyTextPairings: [TextPairing] = [
+        TextPairing(text: .stageInk, ground: .stage),
+        TextPairing(text: .stageInk, ground: .stageGlow),
+        TextPairing(text: .stageMuted, ground: .stage),
+        TextPairing(text: .stageMuted, ground: .stageGlow),
+        TextPairing(text: .stageGold, ground: .stage),
+        TextPairing(text: .stageGold, ground: .stageGlow),
+        TextPairing(text: .showInk, ground: .showSurface),
+        TextPairing(text: .showMuted, ground: .showSurface),
+        TextPairing(text: .showRed, ground: .showSurface),
+        TextPairing(text: .showChecked, ground: .showSurface),
+        TextPairing(text: .showWhite, ground: .showRed),
+        TextPairing(text: .showBulb, ground: .showRed),
+        TextPairing(text: .showInk, ground: .showGold),
+        TextPairing(text: .showInk, ground: .showChipFill),
+        TextPairing(text: .showRed, ground: .showTabHighlight),
+        TextPairing(text: .showInk, ground: .showCorrect),
+        TextPairing(text: .showWhite, ground: .showError),
+        TextPairing(text: .showWhite, ground: .showBlue),
+        TextPairing(text: .showWhite, ground: .curtainRed),
+        TextPairing(text: .showWhite, ground: .curtainLight),
+        TextPairing(text: .showWhite, ground: .curtainShade),
+        TextPairing(text: .showWhite, ground: .showSign),
+    ]
 }

@@ -36,5 +36,5 @@ struct AvoidGroup: View {
         choices: [TickChoice(optionID: "a", name: "First"), TickChoice(optionID: "b", name: "Second")],
         draft: .preview()
     )
-    .background(ColorRole.paper.color)
+    .background { ShowStage() }
 }

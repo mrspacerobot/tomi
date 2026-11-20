@@ -23,7 +23,7 @@ import TomiCore
         let grounds = Set(ColorRole.bodyTextPairings.map(\.ground))
         #expect(
             grounds == [
-                .paper, .wash, .primaryFill, .cobalt, .stage, .stageGlow, .showSurface, .showRed, .showGold,
+                .stage, .stageGlow, .showSurface, .showRed, .showGold,
                 .showChipFill, .showTabHighlight, .showCorrect, .showError, .showBlue, .curtainRed, .curtainLight,
                 .curtainShade, .showSign,
             ]
@@ -35,17 +35,16 @@ import TomiCore
         #expect(ColorRole.textRoles.contains(style.defaultColor))
     }
 
-    /// Guards the reading of the catalog itself: paper is #FBFAF5 in light and night ink #0E1736 in dark.
-    @MainActor @Test func theGroundIsPaperInLightAndNightInkInDark() {
-        let paper = RGBColor(red: 251.0 / 255, green: 250.0 / 255, blue: 245.0 / 255)
-        let nightInk = RGBColor(red: 14.0 / 255, green: 23.0 / 255, blue: 54.0 / 255)
-        #expect(ColorRole.paper.rgb(in: .light).contrastRatio(with: paper) < 1.01)
-        #expect(ColorRole.paper.rgb(in: .dark).contrastRatio(with: nightInk) < 1.01)
+    /// Guards the reading of the asset catalog against the approved stage colors.
+    @MainActor @Test func theStageUsesTheMorningAndEveningColors() {
+        let morning = RGBColor(red: 1, green: 235.0 / 255, blue: 210.0 / 255)
+        let evening = RGBColor(red: 36.0 / 255, green: 18.0 / 255, blue: 46.0 / 255)
+        #expect(ColorRole.stage.rgb(in: .light).contrastRatio(with: morning) < 1.01)
+        #expect(ColorRole.stage.rgb(in: .dark).contrastRatio(with: evening) < 1.01)
     }
 
     @Test(arguments: [
-        ColorRole.paper, .wash, .ink, .cobalt, .inkFaded, .rule, .leader, .stampRed, .onPrimary, .companionLine,
-        .companionGlow,
+        ColorRole.stage, .stageGlow, .stageInk, .stageMuted, .stageGold, .showSurface, .showChipFill, .showTabHighlight,
     ])
     @MainActor func aRoleThatChangesWithTheAppearanceHasADarkValue(role: ColorRole) {
         #expect(role.rgb(in: .light) != role.rgb(in: .dark))

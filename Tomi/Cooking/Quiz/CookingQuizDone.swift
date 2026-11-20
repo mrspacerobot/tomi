@@ -8,7 +8,7 @@ struct CookingQuizDone: View {
         VStack(alignment: .leading, spacing: Spacing.xLarge) {
             ShowMarquee(title: .showtimeWrap)
                 .accessibilityIdentifier("cooking-quiz-done")
-            TomiMascot(mood: .celebrating, appearance: .cookingShow)
+            TomiMascot(mood: .celebrating)
                 .frame(width: MascotSize.welcome, height: MascotSize.welcome)
                 .accessibilityHidden(true)
             Text(.cookingQuizDoneMessage).textStyle(.showLede)
@@ -20,5 +20,5 @@ struct CookingQuizDone: View {
 
 #Preview {
     @Previewable @State var path: [HomeRoute] = []
-    CookingQuizDone(path: $path).background(ColorRole.paper.color)
+    CookingQuizDone(path: $path).background { ShowStage() }
 }

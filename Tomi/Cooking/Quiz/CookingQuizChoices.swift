@@ -19,6 +19,6 @@ struct CookingQuizChoices: View {
 #Preview {
     if let round = PreviewSuggestion.make()?.quiz(entryID: UUID()) {
         CookingQuizChoices(model: CookingQuizModel(round: round, api: CookingQuizPreviewAPI.unanswered))
-            .background(ColorRole.paper.color)
+            .background { ShowStage() }
     }
 }

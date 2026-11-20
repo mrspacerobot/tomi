@@ -8,4 +8,7 @@ nonisolated enum RuleWeight {
     static let leader: CGFloat = 2
     /// The whole height of a double rule, which opens a block.
     static let double: CGFloat = 3
+
+    static let showRing: CGFloat = 4
+    static let showHairline: CGFloat = 1.5
 }

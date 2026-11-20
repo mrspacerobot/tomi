@@ -6,7 +6,7 @@ import Testing
 @Suite struct ChipLookTests {
     @Test(arguments: ChipKind.allCases)
     func theNameOnAChipIsACheckedPairing(kind: ChipKind) {
-        let ground = kind.fill ?? .paper
+        let ground = kind.fill
         #expect(ColorRole.bodyTextPairings.contains(TextPairing(text: kind.text, ground: ground)))
     }
 
@@ -24,14 +24,14 @@ import Testing
         #expect(Set(shapes).count == ChipKind.allCases.count)
     }
 
-    @Test func onlyAChipThatIsSwitchedOnIsFilledWithTheWash() {
-        let filled = ChipKind.allCases.filter { $0.fill == .wash }
+    @Test func onlyAChipThatIsSwitchedOnIsFilledWithShowRed() {
+        let filled = ChipKind.allCases.filter { $0.fill == .showRed }
         #expect(filled == [.on])
     }
 
     @Test(arguments: UseTagKind.allCases)
     func theNameOnAUseTagIsACheckedPairing(kind: UseTagKind) {
-        #expect(ColorRole.bodyTextPairings.contains(TextPairing(text: kind.text, ground: .paper)))
+        #expect(ColorRole.bodyTextPairings.contains(TextPairing(text: kind.text, ground: .showSurface)))
     }
 
     @Test func aMissingIngredientIsMarkedByADashedEdgeAndNotOnlyByRed() {
