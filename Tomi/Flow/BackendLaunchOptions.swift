@@ -25,6 +25,8 @@ nonisolated struct BackendLaunchOptions: Equatable {
 
     /// The fake cook saved an avoid item the fake lists do not name, as a newer server could have.
     static let fakeUnlistedAvoidArgument = "--fake-unlisted-avoid"
+    /// The fake server's suggestions carry a dish photo, served from the app bundle (`FakeDishPhoto`).
+    static let fakeDishPhotosArgument = "--fake-dish-photos"
 
     let usesFake: Bool
     let showsAppleSignInButton: Bool

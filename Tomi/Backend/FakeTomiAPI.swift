@@ -82,7 +82,7 @@ actor FakeTomiAPI: TomiAPI {
         if configuration.guidedCooking {
             return try data.guidedSuggestion(for: envelope.profile, quiz: configuration.quiz)
         }
-        return try data.suggestions(for: envelope.profile)
+        return try data.suggestions(for: envelope.profile, withPhotos: configuration.dishPhotos)
     }
 
     /// Marks the pick from the invented quiz, or fails as offline. Without a quiz the fake asked no question.

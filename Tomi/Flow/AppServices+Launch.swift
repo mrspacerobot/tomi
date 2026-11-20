@@ -24,7 +24,8 @@ extension AppServices {
             auth: FakeAuthService(signedIn: options.startsSignedIn, account: options.fakeAccount),
             store: store,
             photos: .fixed(PhotoSource.fakePhoto),
-            usesFakeSignInButton: !options.showsAppleSignInButton
+            usesFakeSignInButton: !options.showsAppleSignInButton,
+            dishPhotos: .fake
         )
     }
 

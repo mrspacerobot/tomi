@@ -103,7 +103,7 @@ states, its motion and inspection steps.
 
 1. Photo (or typed list). The app sends a JPEG to `POST /v1/scans`; the server's model returns items, each matched to an ingredient of its table or not.
 2. The cook confirms: sure items start ticked, unsure and unmatched ones do not count until ticked; typed words go to `POST /v1/ingredients/resolve`, and the cook picks when one is ambiguous. The server adds the cupboard staples.
-3. `POST /v1/lessons/suggest`: the server filters the cooking graph's recipes by the cook's level, diet, things to avoid, cuisine "never" and kitchen, plans the safe swaps and omissions, writes the recipe already adapted for the cook (`recipe`, `changes`), ranks them and says what it checked. Since tomi-backend #17 a suggestion is a graph recipe with its safe plan, not a lesson file.
+3. `POST /v1/lessons/suggest`: the server filters the cooking graph's recipes by the cook's level, diet, things to avoid, cuisine "never" and kitchen, plans the safe swaps and omissions, writes the recipe already adapted for the cook (`recipe`, `changes`), ranks them and says what it checked. Since tomi-backend #17 a suggestion is a graph recipe with its safe plan, not a lesson file. Suggestions may carry a server-matched `photoUrl` for the menu artwork (tomi-backend #56).
 4. The app shows the special and up to two alternatives that pass the checked-restrictions guard, with swaps, missing ingredients and the reason. No dish yet is a kind empty state, never an error.
 5. The guided steps cook the adapted recipe the server sent. Finishing the last step, or leaving earlier, writes the cook to the outbox (#186). The bundled lesson player and library were removed in #156.
 

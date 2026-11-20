@@ -99,6 +99,14 @@ Each slice is one issue and one pull request. Required checks include Rust unit 
 - Rank names: sent by the server, localized like course names (default), or kept in the app's string catalog by `rank.id`.
 
 Rust and the versioned JSON graph artifact are chosen. These open product and data decisions do not block writing contracts or synthetic-fixture tests.
+# Optional dish photos on suggestions
+
+The special and each alternative may include a `photoUrl` string. This public
+HTTPS image is approved by the recipe photo reviewer and matched by the server
+to the suggestion's adapted ingredients and pinned recipe. The phone may
+display it after checking the suggestion for the current cook. When the field
+is absent, unreadable, or the image fails to load, keep the standard recipe card.
+
 # Optional teaching on suggestions
 
 Suggestions may carry graph teaching, schema 1: each quiz question is `{id, question, choices, tier}` and its right choice and explanation stay on the server after tomi-backend#42. The currently deployed server also sends `answerIndex` and `explanation`; the phone ignores them. The phone decodes this payload defensively and drops unknown or malformed teaching without dropping the checked recipe. It only offers the introduction when the recipe has no substitutions or omissions, shows graph prose unchanged, and labels draft-channel content as draft testing. Starting preparation refreshes the profile and rechecks the suggestion against that response, requiring an exact avoid-list match so either added or removed avoids trigger new suggestions. Failure or changed restrictions refuses the start and requires new suggestions. Preparation currently ends with an explicit unavailable-steps message until graph-native sessions are implemented. See the API contract in `tomi-teaching-api/docs/teaching.md`.

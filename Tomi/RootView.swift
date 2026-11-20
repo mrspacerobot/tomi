@@ -11,6 +11,7 @@ struct RootView: View {
             SavedDataUnavailableView()
         } else if let flow {
             AppFlowView(flow: flow, progress: progress)
+                .environment(\.dishPhotos, flow.services.dishPhotos)
         } else {
             NotConfiguredView()
         }

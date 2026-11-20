@@ -10,5 +10,6 @@ extension FakeTomiAPIConfiguration {
             quizFailure: quiz.failure,
             progressServer: FakeProgressServer(arguments: arguments)
         )
+        dishPhotos = arguments.contains(BackendLaunchOptions.fakeDishPhotosArgument)
     }
 }
