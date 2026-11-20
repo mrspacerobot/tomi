@@ -5,6 +5,7 @@ import OSLog
 enum LogCategory: String {
     case auth
     case backend
+    case haptics
     case library
     case persistence
     case preview

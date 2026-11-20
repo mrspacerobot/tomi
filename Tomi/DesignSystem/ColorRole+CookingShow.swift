@@ -1,0 +1,22 @@
+nonisolated extension ColorRole {
+    static let cookingShowTextPairings: [TextPairing] = [
+        TextPairing(text: .stageInk, ground: .stage),
+        TextPairing(text: .stageInk, ground: .stageGlow),
+        TextPairing(text: .stageMuted, ground: .stage),
+        TextPairing(text: .stageMuted, ground: .stageGlow),
+        TextPairing(text: .stageGold, ground: .stage),
+        TextPairing(text: .stageGold, ground: .stageGlow),
+        TextPairing(text: .showInk, ground: .showSurface),
+        TextPairing(text: .showMuted, ground: .showSurface),
+        TextPairing(text: .showRed, ground: .showSurface),
+        TextPairing(text: .showChecked, ground: .showSurface),
+        TextPairing(text: .showWhite, ground: .showRed),
+        TextPairing(text: .showBulb, ground: .showRed),
+        TextPairing(text: .showInk, ground: .showGold),
+        TextPairing(text: .showInk, ground: .showChipFill),
+        TextPairing(text: .showRed, ground: .showTabHighlight),
+        TextPairing(text: .showInk, ground: .showCorrect),
+        TextPairing(text: .showWhite, ground: .showError),
+        TextPairing(text: .showWhite, ground: .showBlue),
+    ]
+}

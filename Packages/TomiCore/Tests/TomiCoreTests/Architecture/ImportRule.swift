@@ -12,6 +12,7 @@ enum ImportRule {
         "SwiftData": ["Tomi/Persistence/"],
         "CloudKit": ["Tomi/Persistence/"],
         "AlarmKit": ["Tomi/Timers/"],
+        "CoreHaptics": ["Tomi/Haptics/"],
         "UIKit": ["Tomi/Camera/"],
         "PhotosUI": ["Tomi/Camera/"],
         "ImageIO": ["Tomi/Camera/", "Tomi/DishPhotos/"],

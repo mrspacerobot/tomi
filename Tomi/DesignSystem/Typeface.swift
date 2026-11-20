@@ -1,4 +1,4 @@
-/// The cuts of the three bundled families that the design uses. All are under the SIL Open Font License;
+/// The cuts of the bundled families that the design uses. All are under the SIL Open Font License;
 /// the files and their licence texts are in `Tomi/Resources/Fonts`, registered in `Config/Tomi-Info.plist`.
 nonisolated enum Typeface: CaseIterable, Sendable {
     /// Gloock 400: titles, dish names, timer digits.
@@ -18,7 +18,12 @@ nonisolated enum Typeface: CaseIterable, Sendable {
     /// Figtree 700: labels.
     case figtreeBold
 
-    /// The PostScript name the font file gives this cut. Newsreader and Figtree are variable fonts, and these
+    case lilitaOne
+    case nunitoBold
+    case nunitoExtraBold
+    case nunitoBlack
+
+    /// The PostScript name the font file gives this cut. Newsreader, Figtree and Nunito are variable fonts, and these
     /// are their named instances; Newsreader picks its optical size from the point size by itself.
     var fontName: String {
         switch self {
@@ -30,6 +35,10 @@ nonisolated enum Typeface: CaseIterable, Sendable {
         case .figtreeMedium: "Figtree-Medium"
         case .figtreeSemiBold: "Figtree-SemiBold"
         case .figtreeBold: "Figtree-Bold"
+        case .lilitaOne: "LilitaOne"
+        case .nunitoBold: "Nunito-Bold"
+        case .nunitoExtraBold: "Nunito-ExtraBold"
+        case .nunitoBlack: "Nunito-Black"
         }
     }
 }

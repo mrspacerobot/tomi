@@ -19,7 +19,7 @@ import Testing
         #expect(style.metrics.lineHeight >= style.metrics.size)
     }
 
-    @Test(arguments: ["Gloock-OFL", "Newsreader-OFL", "Figtree-OFL"])
+    @Test(arguments: ["Gloock-OFL", "Newsreader-OFL", "Figtree-OFL", "LilitaOne-OFL", "Nunito-OFL"])
     func theLicenceOfEachFamilyShipsInTheApp(name: String) throws {
         let url = try #require(Bundle.main.url(forResource: name, withExtension: "txt"))
         let text = try String(contentsOf: url, encoding: .utf8)
