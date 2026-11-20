@@ -20,10 +20,17 @@ import Testing
         #expect(now == (try FakeProgressFixture.returning.snapshot().computedAt.date))
     }
 
-    /// The phone's clock runs on past the week the fake fixtures were computed in.
-    @Test func theCooksOwnLaunchReadsThePhonesClock() throws {
-        let fixtureWeekEnds = try FakeProgressFixture.returning.snapshot().streak.weekEndsAt.date
-        let now = ProgressClock.forLaunch(BackendLaunchOptions(arguments: [])).now()
-        #expect(now > fixtureWeekEnds)
+    @Test func theCooksOwnLaunchKeepsThePhonesClock() {
+        let moment = Date(timeIntervalSinceReferenceDate: 800_000_000)
+        let phone = ProgressClock(now: { moment }, calendar: { Calendar(identifier: .gregorian) })
+        let clock = ProgressClock.forLaunch(BackendLaunchOptions(arguments: []), phone: phone)
+        #expect(clock.now() == moment)
+    }
+
+    @Test func aFakeLaunchIgnoresThePhonesClock() throws {
+        let moment = Date(timeIntervalSinceReferenceDate: 800_000_000)
+        let phone = ProgressClock(now: { moment }, calendar: { Calendar(identifier: .gregorian) })
+        let clock = ProgressClock.forLaunch(BackendLaunchOptions(arguments: ["--fake-backend"]), phone: phone)
+        #expect(clock.now() == (try FakeProgressFixture.newCook.snapshot().computedAt.date))
     }
 }
