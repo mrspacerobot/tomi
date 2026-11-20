@@ -3,10 +3,10 @@ import TomiCore
 
 struct HomeSpecialCopy: View {
     var body: some View {
-        VStack(spacing: Spacing.xxSmall) {
-            HomeBlankDishLine()
-            Text(.homeSpecialTitle).textStyle(.title)
-            Text(.homeSpecialPrompt).textStyle(.description)
+        VStack(alignment: .leading, spacing: ShowSize.gap) {
+            ShowLowerThird(title: .guideOnAir)
+            Text(.homeSpecialTitle).textStyle(.cardTitle)
+            Text(.homeSpecialPrompt).textStyle(.showNote)
         }
     }
 }

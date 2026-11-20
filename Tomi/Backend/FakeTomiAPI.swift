@@ -57,6 +57,7 @@ actor FakeTomiAPI: TomiAPI {
     }
 
     func scan(jpeg: Data) async throws -> ScanResult {
+        if configuration.slowScan { try await Task.sleep(for: .seconds(10)) }
         releasePendingProfile()
         return data.scan()
     }

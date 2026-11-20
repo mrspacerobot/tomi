@@ -17,6 +17,7 @@ struct ShowTabButton<Tab: Hashable>: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(item.title))
+        .accessibilityIdentifier(item.accessibilityID)
         .accessibilitySelected(isSelected)
     }
 

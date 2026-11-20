@@ -8,16 +8,17 @@ struct StatCell: View {
     static let valueTopPadding: CGFloat = 3
 
     let stat: Stat
+    var showStyle = false
 
     var body: some View {
         VStack(spacing: 0) {
             Text(stat.label)
-                .textStyle(.label)
+                .textStyle(labelStyle)
             Text(stat.value)
-                .textStyle(.value)
+                .textStyle(valueStyle)
                 .padding(.top, Self.valueTopPadding)
             Text(stat.detail)
-                .textStyle(.caption)
+                .textStyle(detailStyle)
         }
         .multilineTextAlignment(.center)
         .padding(.top, Self.topPadding)
@@ -26,6 +27,22 @@ struct StatCell: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .accessibilityElement(children: .combine)
     }
+
+    private var labelStyle: TextStyle {
+        if showStyle { return .showNote }
+        return .label
+    }
+
+    private var valueStyle: TextStyle {
+        if showStyle { return .cardTitle }
+        return .value
+    }
+
+    private var detailStyle: TextStyle {
+        if showStyle { return .showMeta }
+        return .caption
+    }
+
 }
 
 #Preview {

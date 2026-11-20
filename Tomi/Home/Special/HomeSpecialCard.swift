@@ -7,10 +7,12 @@ struct HomeSpecialCard: View {
     let options: LibraryOptions?
 
     var body: some View {
-        DoubleRuledBox(flag: .homeSpecialFlag) {
-            HomeSpecialCopy()
-            HomeSpecialActions(path: $path)
-            HomeCupboardEntry(path: $path, profile: profile, options: options)
+        ShowCard {
+            VStack(alignment: .leading, spacing: ShowSize.gap) {
+                HomeSpecialCopy()
+                HomeSpecialActions(path: $path)
+                HomeCupboardEntry(path: $path, profile: profile, options: options)
+            }
         }
     }
 }

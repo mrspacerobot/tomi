@@ -7,7 +7,7 @@ struct SaveAnswersButton: View {
 
     var body: some View {
         Button(action: save) { Text(.settingsSave) }
-            .buttonStyle(.tomiPrimary)
+            .buttonStyle(ShowPrimaryButtonStyle())
             .disabled(saver.isSaving)
             .accessibilityIdentifier("settings-save")
     }

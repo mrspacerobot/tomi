@@ -11,7 +11,7 @@ struct HomeCupboardEntry: View {
             path.append(.question(.cupboard))
         } label: {
             Text(cupboardSummary)
-                .textStyle(.description)
+                .textStyle(.showBody, color: .showRed)
         }
         .buttonStyle(.plain)
         .frame(minHeight: TouchTarget.minimum)
