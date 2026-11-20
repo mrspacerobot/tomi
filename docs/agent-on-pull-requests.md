@@ -59,7 +59,7 @@ The same runner also runs `./scripts/check.sh` on every pull request to `main` a
 - A draft pull request runs the fast check on every push. A pull request that is ready for review runs the full check on every push, and marking a draft ready starts one. Every push to `main` runs the full check.
 - A new push cancels the older run of that pull request.
 - It shares the one runner with the agent, so a check and an agent job never run at the same time: one waits for the other.
-- The UI tests also wait for any other full check on the Mac, from an agent's checkout or the runner, because only one UI test run at a time keeps the Mac's load low enough for the tests to pass reliably. The waiting check prints who holds the lock and since when.
+- The app's unit and UI tests also wait for any other check testing on the Mac, from an agent's checkout or the runner. One test run at a time keeps the load low enough for the tests to pass reliably, and stops one run from installing its app over another's in the simulator (#204). The waiting check prints who holds the lock and since when.
 - It only runs while the Mac is awake. Until then the check shows as waiting on the pull request.
 - It skips pull requests from forks, so nobody else's code runs on the Mac.
 - GitHub cannot require it before a merge on this plan. The owner merges only when the full check on the final commit is green.
