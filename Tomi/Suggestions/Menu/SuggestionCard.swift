@@ -14,15 +14,12 @@ struct SuggestionCard: View {
     @State private var photo: CGImage?
 
     var body: some View {
-        DoubleRuledBox(flag: flag) {
-            VStack(alignment: .leading, spacing: Spacing.small) {
-                if let photo {
-                    SuggestionPhoto(photo: photo)
-                }
-                SuggestionHeading(suggestion: suggestion, isSpecial: flag != nil)
+        ShowCard {
+            VStack(alignment: .leading, spacing: ShowSize.gap) {
+                SuggestionCardHeader(suggestion: suggestion, flag: flag, photo: photo)
                 SuggestionSummary(suggestion: suggestion, options: options)
                 Button(action: open) { Text(.suggestionOpen) }
-                    .buttonStyle(.tomiPrimary)
+                    .buttonStyle(ShowPrimaryButtonStyle())
                     .accessibilityIdentifier("suggestion-open-" + suggestion.recipeID.rawValue)
             }
         }

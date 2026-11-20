@@ -11,11 +11,11 @@ extension CookingQuizOutcome {
         }
     }
 
-    /// The rule down the note: cobalt for right, red for wrong or a problem, as in the mockup.
-    var rule: ColorRole {
+    var haptic: ShowHaptic? {
         switch self {
-        case .right: .cobalt
-        case .wrong, .problem: .stampRed
+        case .right: .correctAnswer
+        case .wrong: .retryAnswer
+        case .problem: nil
         }
     }
 

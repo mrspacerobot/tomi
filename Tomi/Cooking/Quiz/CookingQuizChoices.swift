@@ -7,14 +7,12 @@ struct CookingQuizChoices: View {
     let model: CookingQuizModel
 
     var body: some View {
-        VStack(spacing: Spacing.none) {
+        VStack(spacing: ShowSize.gap) {
             ForEach(Array(model.round.current.choices.enumerated()), id: \.offset) { position, choice in
                 CookingQuizChoice(model: model, position: position, words: choice)
             }
         }
-        .overlay(alignment: .top) {
-            Rectangle().fill(ColorRole.cobalt.color).frame(height: RuleWeight.hairline)
-        }
+
     }
 }
 

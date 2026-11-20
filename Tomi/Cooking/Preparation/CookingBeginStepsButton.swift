@@ -20,7 +20,7 @@ struct CookingBeginStepsButton: View {
         Button(action: begin) {
             Text(label).frame(maxWidth: .infinity)
         }
-        .buttonStyle(.tomiPrimary)
+        .buttonStyle(ShowPrimaryButtonStyle())
         .disabled(model.isRefreshingProfile)
         .accessibilityIdentifier("cooking-steps-begin")
         .cookingStartAlert($refusal, path: $path)

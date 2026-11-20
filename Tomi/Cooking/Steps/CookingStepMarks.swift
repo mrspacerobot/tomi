@@ -8,7 +8,7 @@ struct CookingStepMarks: View {
     var body: some View {
         HStack(spacing: Spacing.xxSmall) {
             ForEach(1...count, id: \.self) { step in
-                Rectangle()
+                Capsule()
                     .fill(color(for: step))
                     .frame(height: RuleWeight.double)
             }
@@ -18,8 +18,8 @@ struct CookingStepMarks: View {
 
     private func color(for step: Int) -> Color {
         if step <= position {
-            return ColorRole.cobalt.color
+            return ColorRole.showAccent.color
         }
-        return ColorRole.rule.color
+        return ColorRole.showSurface.color.opacity(0.5)
     }
 }

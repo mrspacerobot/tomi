@@ -7,7 +7,7 @@ struct UnknownItems: View {
     var body: some View {
         ForEach(items) { item in
             Text(.confirmUnknown(item.label))
-                .textStyle(.description)
+                .textStyle(.showLede, color: .stageMuted)
         }
     }
 }

@@ -11,17 +11,17 @@ struct SuggestionHeading: View {
             .textStyle(titleStyle)
             .accessibilityIdentifier("suggestion-title-" + suggestion.recipeID.rawValue)
         Text(.suggestionLine(suggestion.skill.name, suggestion.level.name))
-            .textStyle(.description)
+            .textStyle(.showMeta)
         if let reason = suggestion.reason {
             Text(verbatim: reason)
-                .textStyle(.body)
+                .textStyle(.showText)
         }
     }
 
     private var titleStyle: TextStyle {
         if isSpecial {
-            return .title
+            return .cardTitle
         }
-        return .dish
+        return .showBodyStrong
     }
 }

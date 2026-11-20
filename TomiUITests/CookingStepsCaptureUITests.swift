@@ -22,9 +22,7 @@ final class CookingStepsCaptureUITests: XCTestCase {
         showFirstStep(app, appearance: "largest-dark")
         showMiddleStep(app)
         attachScreenshot(of: app, named: "steps-middle-largest-dark")
-        app.swipeUp()
-        app.swipeUp()
-        XCTAssertTrue(app.buttons["cooking-step-next"].isHittable)
+        app.assertCanBeTapped(app.buttons["cooking-step-next"])
         attachScreenshot(of: app, named: "steps-controls-largest-dark")
     }
 

@@ -9,7 +9,7 @@ struct CookingProgress: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xSmall) {
             Text(words)
-                .textStyle(.label)
+                .textStyle(.showLabel)
                 .textCase(.uppercase)
             CookingStepMarks(position: marks.position, count: marks.count)
         }

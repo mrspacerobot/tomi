@@ -1,3 +1,4 @@
+import CoreGraphics
 import Foundation
 import OSLog
 import TomiCore
@@ -11,6 +12,7 @@ final class ScanModel {
     var stage = ScanStage.ready
     var problem: ProblemText?
     var list = ConfirmList()
+    var previewPhoto: CGImage?
     private(set) var scanID: ScanID?
     let api: any TomiAPI
     let profile: ProfileModel

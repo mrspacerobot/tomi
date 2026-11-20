@@ -7,7 +7,7 @@ struct ChangesSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.small) {
-            SectionHeading(words: .suggestionChangesTitle)
+            SectionHeading(words: .suggestionChangesTitle, showCardStyle: true)
             ChangeRows(changes: changes)
         }
     }

@@ -7,14 +7,14 @@ struct NothingTonightView: View {
 
     var body: some View {
         VStack(spacing: Spacing.large) {
-            TomiMascot(mood: .thinking)
+            TomiMascot(mood: .thinking, appearance: .cookingShow)
                 .frame(width: MascotSize.notice, height: MascotSize.notice)
                 .accessibilityHidden(true)
             Text(.nothingTonightTitle)
-                .textStyle(.title)
+                .textStyle(.showTitle)
                 .accessibilityIdentifier("nothing-tonight-title")
             Text(.nothingTonightMessage)
-                .textStyle(.body)
+                .textStyle(.showLede)
             NothingTonightButtons(model: model, path: $path)
         }
         .multilineTextAlignment(.center)
@@ -24,5 +24,5 @@ struct NothingTonightView: View {
 
 #Preview {
     NothingTonightView(model: .preview(), path: .constant([]))
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }

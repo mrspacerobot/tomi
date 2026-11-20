@@ -8,7 +8,7 @@ struct ScanHeader: View {
 
     var body: some View {
         Text(title)
-            .textStyle(.displayL)
+            .textStyle(.showTitle)
             .accessibilityIdentifier(identifier)
         if let problem {
             ProblemView(problem: problem)

@@ -30,6 +30,19 @@ final class CookingQuizCaptureUITests: XCTestCase {
         }
     }
 
+    @MainActor func testWrapInBothAppearances() {
+        for appearance in ["light", "dark"] {
+            let app = openQuiz(extra: FakeQuizLaunch.arguments + ["--appearance-\(appearance)"])
+            pick(app, choice: 0, waitFor: "cooking-quiz-next")
+            app.buttons["cooking-quiz-next"].tap()
+            pick(app, choice: 1, waitFor: "cooking-quiz-next")
+            app.buttons["cooking-quiz-next"].tap()
+            XCTAssertTrue(app.element("cooking-quiz-done").waitForExistence(timeout: 5))
+            attachScreenshot(of: app, named: "quiz-wrap-" + appearance)
+            app.terminate()
+        }
+    }
+
     @MainActor private func captureTheQuiz(in appearance: String, extra: [String]) {
         let app = openQuiz(extra: FakeQuizLaunch.arguments + extra)
         app.buttons["cooking-quiz-choice-1"].tap()

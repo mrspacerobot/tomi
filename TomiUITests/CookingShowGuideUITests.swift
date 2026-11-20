@@ -32,7 +32,7 @@ final class CookingShowGuideUITests: XCTestCase {
     }
 
     @MainActor private func visitSeasons(in app: XCUIApplication, appearance: String) {
-        let seasons = app.element("open-all-seasons")
+        let seasons = app.buttons["guide-seasons-tab"]
         XCTAssertTrue(seasons.waitForExistence(timeout: 5))
         app.assertCanBeTapped(seasons)
         seasons.tap()

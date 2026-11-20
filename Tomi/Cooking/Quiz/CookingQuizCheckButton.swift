@@ -11,7 +11,7 @@ struct CookingQuizCheckButton: View {
         } label: {
             Text(label).frame(maxWidth: .infinity)
         }
-        .buttonStyle(.tomiPrimary)
+        .buttonStyle(ShowPrimaryButtonStyle())
         .disabled(!model.canCheck)
         .accessibilityIdentifier("cooking-quiz-check")
     }

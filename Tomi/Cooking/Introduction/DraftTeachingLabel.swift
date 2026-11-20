@@ -6,7 +6,7 @@ struct DraftTeachingLabel: View {
 
     var body: some View {
         if isDraft {
-            Text(.cookingDraftLabel).textStyle(.label).foregroundStyle(ColorRole.stampRed.color)
+            Text(.cookingDraftLabel).textStyle(.showLabel)
         }
     }
 }

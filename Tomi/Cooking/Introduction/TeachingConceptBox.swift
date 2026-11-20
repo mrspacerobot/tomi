@@ -6,10 +6,13 @@ struct TeachingConceptBox: View {
     let teaching: Teaching
 
     var body: some View {
-        DoubleRuledBox(flag: .cookingTheTechnique) {
-            Text(teaching.introduction.concept).textStyle(.dish)
-            Text(teaching.introduction.what).textStyle(.body)
-            Text(teaching.introduction.why).textStyle(.body)
+        ShowCard {
+            VStack(alignment: .leading, spacing: ShowSize.gap) {
+                ShowLowerThird(title: .cookingTheTechnique)
+                Text(teaching.introduction.concept).textStyle(.cardTitle)
+                Text(teaching.introduction.what).textStyle(.showText)
+                Text(teaching.introduction.why).textStyle(.showText, color: .showMuted)
+            }
         }
     }
 }

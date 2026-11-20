@@ -19,7 +19,7 @@ struct CookingIntroductionTeaching: View {
         if suggestion.canOfferTeaching {
             CookingIntroductionNeeds(suggestion: suggestion)
         } else {
-            Text(.cookingUnavailableAdaptation).textStyle(.body)
+            Text(.cookingUnavailableAdaptation).textStyle(.showLede)
         }
     }
 }

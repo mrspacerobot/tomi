@@ -13,18 +13,20 @@ struct ConfirmView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Spacing.large) {
-                ScanHeader(title: .confirmTitle, identifier: "confirm-title", problem: model.problem)
+            VStack(alignment: .leading, spacing: ShowSize.rowGap) {
+                ConfirmHeading(model: model)
                 ConfirmChips(model: model)
                 TypedItemField(typing: typing, look: .confirm) { model.list.add($0) }
                 FindSuggestionsButton(model: model)
             }
-            .padding(Spacing.screenMargin)
+            .padding(ShowSize.edge)
         }
+        .scrollDismissesKeyboard(.interactively)
+        .environment(\.usesShowQuestionStyle, true)
     }
 }
 
 #Preview {
     ConfirmView(model: .preview())
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }

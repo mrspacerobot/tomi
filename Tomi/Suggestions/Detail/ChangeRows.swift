@@ -8,7 +8,7 @@ struct ChangeRows: View {
     var body: some View {
         if changes.swaps.isEmpty && changes.leftOut.isEmpty {
             Text(.suggestionChangesNone)
-                .textStyle(.body)
+                .textStyle(.showText)
                 .accessibilityIdentifier("suggestion-changes-none")
         }
         ForEach(changes.swaps, id: \.id) { swap in
@@ -16,7 +16,7 @@ struct ChangeRows: View {
         }
         ForEach(changes.leftOut) { part in
             Text(.suggestionOmitted(part.name))
-                .textStyle(.body)
+                .textStyle(.showText)
                 .accessibilityIdentifier("suggestion-left-out")
         }
     }

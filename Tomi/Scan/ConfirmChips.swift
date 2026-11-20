@@ -8,20 +8,11 @@ struct ConfirmChips: View {
         VStack(alignment: .leading, spacing: Spacing.small) {
             FlowLayout {
                 ForEach(model.list.items.filter { $0.ingredient != nil }) { item in
-                    Chip(name: item.label, kind: kind(of: item)) {
-                        model.list.toggle(item.id)
-                    }
-                    .accessibilityIdentifier("confirm-item-" + item.label)
+                    ConfirmChip(item: item, action: { model.list.toggle(item.id) })
+                        .accessibilityIdentifier("confirm-item-" + item.label)
                 }
             }
             UnknownItems(items: model.list.items.filter { $0.ingredient == nil })
         }
-    }
-
-    private func kind(of item: ConfirmItem) -> ChipKind {
-        if item.isTicked {
-            return .on
-        }
-        return .off
     }
 }

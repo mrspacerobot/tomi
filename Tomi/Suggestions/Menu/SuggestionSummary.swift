@@ -10,10 +10,10 @@ struct SuggestionSummary: View {
     var body: some View {
         ForEach(suggestion.changes.swaps, id: \.id) { swap in
             Text(.suggestionSwap(swap.added.name, swap.removed.name))
-                .textStyle(.description)
+                .textStyle(.showNote)
         }
-        SuggestionOmittedLine(leftOut: suggestion.changes.leftOut, style: .description)
-        SuggestionMissingLine(suggestion: suggestion, style: .description)
+        SuggestionOmittedLine(leftOut: suggestion.changes.leftOut, style: .showNote)
+        SuggestionMissingLine(suggestion: suggestion, style: .showNote)
         SuggestionCheckedLine(checked: suggestion.checked, options: options)
     }
 }

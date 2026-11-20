@@ -14,6 +14,7 @@ extension FakeTomiAPIConfiguration {
     }
 
     private nonisolated mutating func applyOptionalFixtures(_ arguments: [String]) {
+        slowScan = arguments.contains(BackendLaunchOptions.fakeSlowScanArgument)
         dishPhotos = arguments.contains(BackendLaunchOptions.fakeDishPhotosArgument)
         optionsUnavailable = arguments.contains(BackendLaunchOptions.fakeOptionsUnavailableArgument)
     }

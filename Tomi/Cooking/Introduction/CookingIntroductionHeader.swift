@@ -7,14 +7,13 @@ struct CookingIntroductionHeader: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.small) {
-            Text(.suggestionsKicker).textStyle(.label, color: .stampRed)
-            Text(suggestion.title).textStyle(.displayM)
+            ShowLowerThird(title: .showtimeBeforeRoll)
+            Text(suggestion.title).textStyle(.showTitle)
             if let teaching = suggestion.teaching,
                 let yieldText = RecipeYieldLine.words(for: suggestion.recipe.yields)
             {
                 Text(.cookingIntroductionMeta(teaching.technique.name, suggestion.recipe.steps.count, yieldText))
-                    .textStyle(.caption)
-                    .foregroundStyle(ColorRole.inkFaded.color)
+                    .textStyle(.showLede, color: .stageMuted)
             }
         }
     }

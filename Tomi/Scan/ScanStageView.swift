@@ -8,7 +8,7 @@ struct ScanStageView: View {
 
     var body: some View {
         switch model.stage {
-        case .reading, .finding: ScanWaitingView(stage: model.stage)
+        case .reading, .finding: ScanWaitingView(stage: model.stage, photo: model.previewPhoto)
         case .ready: ScanReadyView(model: model, photos: flow.services.photos)
         case .confirming: ConfirmView(model: model)
         case .menu(let menu): SuggestionsView(menu: menu, options: flow.profile.listedOptions, path: $path)

@@ -6,6 +6,8 @@ struct GuideTabs: View {
     var body: some View {
         ShowTabBar(items: GuideTab.items, selection: selection)
             .padding(.horizontal, ShowSize.edge)
+            .padding(.vertical, ShowSize.compact)
+            .background(ColorRole.stage.color)
     }
 
     private var selection: Binding<GuideTab> {

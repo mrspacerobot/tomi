@@ -11,7 +11,7 @@ struct EpisodeView: View {
                 ShowBackButton { dismiss() }.accessibilityIdentifier("episode-back")
                 EpisodeHeader(data: data)
                 EpisodeLevels(data: data)
-                HomeSkillDetails(skill: data.progress, ink: .stageMuted)
+                HomeSkillDetails(skill: data.progress, ink: .stageMuted, showsSummary: false)
             }
             .padding(ShowSize.edge)
         }

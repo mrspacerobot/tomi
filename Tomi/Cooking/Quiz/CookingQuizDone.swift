@@ -6,11 +6,12 @@ struct CookingQuizDone: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xLarge) {
-            Text(.cookingQuizDoneTitle)
-                .textStyle(.displayM)
-                .accessibilityAddTraits(.isHeader)
+            ShowMarquee(title: .showtimeWrap)
                 .accessibilityIdentifier("cooking-quiz-done")
-            Text(.cookingQuizDoneMessage).textStyle(.body)
+            TomiMascot(mood: .celebrating, appearance: .cookingShow)
+                .frame(width: MascotSize.welcome, height: MascotSize.welcome)
+                .accessibilityHidden(true)
+            Text(.cookingQuizDoneMessage).textStyle(.showLede)
             CookingReturnButton(path: $path, words: .cookingStepsFinish, identifier: "cooking-quiz-finish")
         }
         .padding(Spacing.screenMargin)
