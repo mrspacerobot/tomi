@@ -21,7 +21,12 @@ import TomiCore
 
     @Test func theGroundsAndTheFilledComponentsArePairedWithText() {
         let grounds = Set(ColorRole.bodyTextPairings.map(\.ground))
-        #expect(grounds == [.paper, .wash, .primaryFill, .cobalt])
+        #expect(
+            grounds == [
+                .paper, .wash, .primaryFill, .cobalt, .stage, .stageGlow, .showSurface, .showRed, .showGold,
+                .showChipFill, .showTabHighlight, .showCorrect, .showError, .showBlue,
+            ]
+        )
     }
 
     @Test(arguments: TextStyle.allCases)

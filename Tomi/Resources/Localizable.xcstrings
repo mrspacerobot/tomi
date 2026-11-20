@@ -1,6 +1,102 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "show.gallery.title": {
+      "comment": "Title of the debug Cooking Show component gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cooking Show"
+          }
+        }
+      }
+    },
+    "show.gallery.onAir": {
+      "comment": "Sample kicker and lower-third label in the debug component gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On air"
+          }
+        }
+      }
+    },
+    "show.gallery.episodeGuide": {
+      "comment": "Sample lower-third title and label for the first debug gallery tab.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Episode guide"
+          }
+        }
+      }
+    },
+    "show.gallery.table": {
+      "comment": "Label for the table tab in the debug Cooking Show component gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Table"
+          }
+        }
+      }
+    },
+    "show.gallery.fridge": {
+      "comment": "Label for the fridge tab in the debug Cooking Show component gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fridge"
+          }
+        }
+      }
+    },
+    "show.gallery.chip": {
+      "comment": "Sample selectable chip in the debug Cooking Show component gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Metric"
+          }
+        }
+      }
+    },
+    "show.gallery.note": {
+      "comment": "Sample speech by Tomi in the debug Cooking Show component gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let’s see what’s in your fridge."
+          }
+        }
+      }
+    },
+    "show.gallery.card": {
+      "comment": "Sample card title in the debug Cooking Show component gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonight’s special"
+          }
+        }
+      }
+    },
     "cooking.saveFailed.title": {
       "comment": "Title of the alert when Tomi could not save a cook from the guided steps.",
       "extractionState": "manual",

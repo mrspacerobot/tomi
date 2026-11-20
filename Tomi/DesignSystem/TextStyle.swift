@@ -38,26 +38,22 @@ nonisolated enum TextStyle: CaseIterable, Sendable {
     /// The small line under a stats value (`.b-house .s` in the design kit).
     case caption
 
-    var metrics: TextMetrics {
-        switch self {
-        case .displayXL: TextMetrics(typeface: .gloock, size: 40, lineHeight: 44)
-        case .displayL: TextMetrics(typeface: .gloock, size: 34, lineHeight: 38)
-        case .displayM: TextMetrics(typeface: .gloock, size: 30, lineHeight: 35)
-        case .title: TextMetrics(typeface: .gloock, size: 25, lineHeight: 30)
-        case .value: TextMetrics(typeface: .gloock, size: 24, lineHeight: 28)
-        case .dish: TextMetrics(typeface: .gloock, size: 19, lineHeight: 24)
-        case .option: TextMetrics(typeface: .gloock, size: 22, lineHeight: 28)
-        case .timer: TextMetrics(typeface: .gloock, size: 40, lineHeight: 44)
-        case .step: TextMetrics(typeface: .newsreaderMedium, size: 22, lineHeight: 30)
-        case .stepKeyPhrase: TextMetrics(typeface: .newsreaderSemiBoldItalic, size: 22, lineHeight: 30)
-        case .body: TextMetrics(typeface: .newsreader, size: 17, lineHeight: 23)
-        case .description: TextMetrics(typeface: .newsreaderItalic, size: 15, lineHeight: 20)
-        case .label: TextMetrics(typeface: .figtreeBold, size: 11, lineHeight: 14)
-        case .button: TextMetrics(typeface: .figtreeSemiBold, size: 16.5, lineHeight: 20)
-        case .status: TextMetrics(typeface: .figtreeSemiBold, size: 13, lineHeight: 24)
-        case .chip: TextMetrics(typeface: .figtreeSemiBold, size: 15.5, lineHeight: 20)
-        case .tag: TextMetrics(typeface: .figtreeSemiBold, size: 13, lineHeight: 16)
-        case .caption: TextMetrics(typeface: .figtreeMedium, size: 12, lineHeight: 15)
-        }
-    }
+    case marquee
+    case marqueeKicker
+    case showTitle
+    case showStat
+    case showButton
+    case answerKey
+    case cardTitle
+    case lowerThird
+    case showBodyStrong
+    case showBody
+    case showText
+    case showLede
+    case showNote
+    case showMeta
+    case showLabel
+    case showPill
+    case showTag
+    case showGlyph
 }

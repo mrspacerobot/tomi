@@ -1,6 +1,4 @@
-import SwiftUI
-
-/// Every colour of the design, named by what it is for (the handoff table of `docs/design/round3.html`).
+/// Every colour of the design, including the Cooking Show palette in the design handoff.
 /// Each has a light and a dark value in `Tokens.xcassets`, so a screen never picks a colour by appearance.
 nonisolated enum ColorRole: CaseIterable, Sendable {
     /// The ground of every screen.
@@ -46,30 +44,28 @@ nonisolated enum ColorRole: CaseIterable, Sendable {
     /// The soft warm glow around Tomi on night ink. Clear on paper, where a glow would blur his outline.
     case companionGlow
 
-    /// On the main actor, because the symbols Xcode makes for the asset catalog are.
-    @MainActor var color: Color {
-        switch self {
-        case .paper: Color(.paper)
-        case .wash: Color(.wash)
-        case .ink: Color(.ink)
-        case .cobalt: Color(.cobalt)
-        case .inkFaded: Color(.inkFaded)
-        case .rule: Color(.rule)
-        case .leader: Color(.leader)
-        case .stampRed: Color(.stampRed)
-        case .stampRedMark: Color(.stampRedMark)
-        case .printRed: Color(.printRed)
-        case .yolk: Color(.yolk)
-        case .onPrimary: Color(.onPrimary)
-        case .primaryFill: Color(.primaryFill)
-        case .companionLine: Color(.companionLine)
-        case .companionFeature: Color(.companionFeature)
-        case .companionToque: Color(.companionToque)
-        case .companionWhite: Color(.companionWhite)
-        case .companionShoe: Color(.companionShoe)
-        case .companionShade: Color(.companionShade)
-        case .companionBlush: Color(.companionBlush)
-        case .companionGlow: Color(.companionGlow)
-        }
-    }
+    case stage
+    case stageGlow
+    case stageInk
+    case stageMuted
+    case stageGold
+    case showSurface
+    case showInk
+    case showMuted
+    case showAccent
+    case showRed
+    case showWhite
+    case showLip
+    case showGold
+    case showBulb
+    case showSign
+    case showShadow
+    case showScrim
+    case showChipFill
+    case showTabHighlight
+    case showCorrect
+    case showNotQuite
+    case showError
+    case showChecked
+    case showBlue
 }

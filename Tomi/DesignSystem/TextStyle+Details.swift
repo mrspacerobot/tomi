@@ -5,38 +5,47 @@ nonisolated extension TextStyle {
     var defaultColor: ColorRole {
         switch self {
         case .description, .label, .caption: .inkFaded
+        case .marquee, .showButton, .answerKey: .showWhite
+        case .marqueeKicker: .showBulb
+        case .showNote, .showMeta: .showMuted
+        case .showTitle, .showLede: .stageInk
+        case .showLabel: .stageGold
+        case .showStat, .cardTitle, .lowerThird, .showBodyStrong, .showBody, .showText, .showPill, .showTag, .showGlyph:
+            .showInk
         default: .ink
         }
     }
 
     /// Extra space between letters, as a share of the font size, so it grows with the text.
     var trackingInEm: CGFloat {
-        if self == .label {
-            return 0.14
+        switch self {
+        case .label, .showLabel: 0.14
+        case .marqueeKicker: 0.24
+        case .showButton: 0.01
+        default: 0
         }
-        return 0
     }
 
     /// Casing is styling: the catalog stores "Chez Tomi" and the label style shows it in capitals.
     var textCase: Text.Case? {
-        if self == .label {
-            return .uppercase
+        switch self {
+        case .label, .showLabel, .marqueeKicker: .uppercase
+        default: nil
         }
-        return nil
     }
 
     /// The system text style whose growth this style follows when the cook changes the text size.
     var scalesWith: Font.TextStyle {
         switch self {
-        case .displayXL, .displayL, .displayM, .timer: .largeTitle
-        case .title, .value: .title
-        case .dish, .option, .step, .stepKeyPhrase: .title3
-        case .body, .button: .body
-        case .chip: .callout
-        case .description: .subheadline
-        case .status, .tag: .footnote
-        case .caption: .caption
-        case .label: .caption2
+        case .displayXL, .displayL, .displayM, .timer, .marquee: .largeTitle
+        case .title, .value, .showTitle, .showStat: .title
+        case .dish, .option, .step, .stepKeyPhrase, .cardTitle, .showBodyStrong: .title3
+        case .body, .button, .showButton, .showBody, .answerKey: .body
+        case .chip, .showText, .showLede: .callout
+        case .description, .showNote: .subheadline
+        case .status, .tag, .lowerThird, .showPill, .showGlyph: .footnote
+        case .caption, .showMeta, .showTag: .caption
+        case .label, .showLabel, .marqueeKicker: .caption2
         }
     }
 
