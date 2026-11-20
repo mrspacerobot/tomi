@@ -1,21 +1,28 @@
 name: Check
 
-# Runs ./scripts/check.sh on every pull request to main, so the owner can see it is green before merging.
-# See AGENTS.md and docs/agent-on-pull-requests.md.
+# Runs ./scripts/check.sh on pull requests to main and on every push to main, so the owner can see it is green
+# before merging. A draft pull request runs the fast check, so a push gives an answer in minutes. A pull request
+# that is ready for review runs the full check, with the UI tests, on every push, and so does every push to main.
+# The owner merges only when the full check is green. See AGENTS.md and docs/agent-on-pull-requests.md.
 
 on:
   pull_request:
     branches: [main]
+    # ready_for_review: marking a draft ready starts the full check without a new push.
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [main]
 
 # A new push makes the older run of the same pull request pointless, so it is cancelled and the Mac is freed.
+# Each push to main has a group of its own, so no push to main goes unchecked.
 concurrency:
-  group: check-${{ github.event.pull_request.number }}
+  group: check-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
 jobs:
   check:
     # Only branches of this repository. A self-hosted runner must never run code from a fork.
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
     # The owner's Mac: the only machine with Xcode 27, the simulator and SwiftLint. It costs no minutes.
     # If the Mac is busy, asleep or off, the job waits in the queue.
     runs-on: [self-hosted, tomi-mac]
@@ -27,5 +34,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run every check
+      - name: Run the fast check
+        if: github.event.pull_request.draft == true
         run: ./scripts/check.sh
+
+      - name: Run the full check
+        if: github.event.pull_request.draft != true
+        run: ./scripts/check.sh --full
