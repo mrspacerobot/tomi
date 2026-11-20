@@ -1,30 +1,37 @@
 import SwiftUI
 import TomiCore
 
-/// The server's course order, each technique with the server's progress for it by its permanent id.
+/// Joins the server catalog and snapshot. Home can focus on the season the snapshot names.
 struct HomeSkillMenu: View {
     let options: [OptionCourse]
-    /// The snapshot's skills. Nil before the first snapshot: every technique's progress is then unknown.
     let skills: [SnapshotSkill]?
+    var focus: SkillID?
+    var titleIdentifier = "home-season-title"
+    var includesTitle = true
 
     var body: some View {
-        let menu = HomeMenuProgress.make(options: options, skills: skills)
-        VStack(alignment: .leading, spacing: Spacing.large) {
-            VStack(alignment: .leading, spacing: Spacing.xxSmall) {
-                Text(.homeMenuTitle).textStyle(.displayM)
-                Text(.homeMenuDescription).textStyle(.description)
+        VStack(alignment: .leading, spacing: ShowSize.rowGap) {
+            if includesTitle {
+                Text(.guideAllSeasons).textStyle(.showTitle).accessibilityIdentifier(titleIdentifier)
             }
-            ForEach(menu.courses) { course in
+            ForEach(courses) { course in
                 HomeCourseSection(course: course)
             }
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("home-menu")
     }
+
+    private var courses: [HomeCourseProgress] {
+        let menu = HomeMenuProgress.make(options: options, skills: skills).courses
+        guard let focus, let season = menu.first(where: { $0.skills.contains(where: { $0.id == focus }) }) else {
+            return menu
+        }
+        return [season]
+    }
 }
 
 #Preview {
     HomeSkillMenu(options: HomeMenuPreviewData.options, skills: HomeMenuPreviewData.skills)
-        .padding()
-        .background(ColorRole.paper.color)
+        .padding().background { ShowStage() }
 }

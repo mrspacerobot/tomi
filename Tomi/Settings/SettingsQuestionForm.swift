@@ -10,15 +10,18 @@ struct SettingsQuestionForm: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.large) {
+                SettingsEditHeader(back: { dismiss() })
                 QuestionView(question: question, draft: draft)
                 if let problem = saver.problem {
                     ProblemView(problem: problem)
                 }
                 SaveAnswersButton(saver: saver) { save(confirmed: false) }
             }
-            .padding(Spacing.screenMargin)
+            .padding(ShowSize.edge)
         }
-        .background(ColorRole.paper.color)
+        .toolbarVisibility(.hidden, for: .navigationBar)
+        .background { ShowStage() }
+        .environment(\.usesShowQuestionStyle, true)
         .confirmRestrictionRemoval(isPresented: $saver.isConfirming) { save(confirmed: true) }
     }
 

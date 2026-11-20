@@ -10,16 +10,18 @@ struct HomeContent: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Spacing.xLarge) {
-                HomeMasthead(path: $path, date: now)
+            VStack(alignment: .leading, spacing: ShowSize.rowGap) {
+                HomeMasthead(date: now)
                 progressSection
                 HomeSpecialCard(path: $path, profile: flow.profile.profile, options: flow.profile.options)
+                OpenAllSeasons()
                 skillMenu
             }
-            .padding(Spacing.screenMargin)
+            .padding(ShowSize.edge)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(ColorRole.paper.color)
+        .safeAreaInset(edge: .bottom) { GuideTabs(path: $path) }
+        .background { ShowStage() }
     }
 
     @ViewBuilder private var progressSection: some View {
@@ -30,7 +32,12 @@ struct HomeContent: View {
 
     @ViewBuilder private var skillMenu: some View {
         if let options = flow.profile.options {
-            HomeSkillMenu(options: options.courses, skills: snapshotSkills)
+            HomeSkillMenu(
+                options: options.courses,
+                skills: snapshotSkills,
+                focus: progress.shown?.snapshot?.focusSkill,
+                includesTitle: false
+            )
         }
     }
 

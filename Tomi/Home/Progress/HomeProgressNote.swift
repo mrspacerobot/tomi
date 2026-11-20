@@ -7,8 +7,7 @@ struct HomeProgressNote: View {
 
     var body: some View {
         Text(words)
-            .textStyle(.description)
-            .foregroundStyle(ColorRole.inkFaded.color)
+            .textStyle(.showLede, color: .stageMuted)
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
             .accessibilityIdentifier("home-progress-note")
@@ -31,5 +30,5 @@ struct HomeProgressNote: View {
         HomeProgressNote(note: .thisWeekWhenOnline)
     }
     .padding()
-    .background(ColorRole.paper.color)
+    .background { ShowStage() }
 }

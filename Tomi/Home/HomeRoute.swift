@@ -5,6 +5,8 @@ enum HomeRoute: Hashable {
     case scan
     case type
     case settings
+    case seasons
+    case episode(SkillID)
     case question(ProfileQuestion)
     case suggestion(Suggestion)
     case introduction(Suggestion)

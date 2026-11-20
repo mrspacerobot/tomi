@@ -7,12 +7,11 @@ struct HomeMastheadHeading: View {
 
     var body: some View {
         VStack(spacing: Spacing.xxSmall) {
-            Text(.homeMastheadTitle)
-                .textStyle(.displayM)
+            Text(.guideTitle)
+                .textStyle(.showTitle)
                 .accessibilityIdentifier("home-title")
             Text(date, format: .dateTime.weekday(.wide).month(.wide).day())
-                .textStyle(.caption)
-                .foregroundStyle(ColorRole.inkFaded.color)
+                .textStyle(.showLede, color: .stageMuted)
                 .accessibilityIdentifier("home-date")
         }
         .multilineTextAlignment(.center)
@@ -22,5 +21,5 @@ struct HomeMastheadHeading: View {
 #Preview {
     HomeMastheadHeading(date: .now)
         .padding()
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }

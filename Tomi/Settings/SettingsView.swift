@@ -1,22 +1,24 @@
 import SwiftUI
+import TomiCore
 
-/// Every question about the cook, to change an answer, the photo consents, and signing out.
 struct SettingsView: View {
     let flow: AppFlowModel
+    var currentProgress: ShownProgress?
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        List {
-            QuestionLinks()
-            SignOutButton(flow: flow)
+        ScrollView {
+            VStack(alignment: .leading, spacing: ShowSize.rowGap) {
+                ShowBackButton { dismiss() }
+                SettingsHeader(currentProgress: currentProgress)
+                QuestionLinks()
+                SignOutButton(flow: flow)
+            }
+            .padding(ShowSize.edge)
         }
-        .navigationTitle(Text(.settingsTitle))
-        .scrollContentBackground(.hidden)
-        .background(ColorRole.paper.color)
+        .toolbarVisibility(.hidden, for: .navigationBar)
+        .background { ShowStage() }
     }
 }
 
-#Preview {
-    NavigationStack {
-        SettingsView(flow: .preview())
-    }
-}
+#Preview { NavigationStack { SettingsView(flow: .preview()) } }

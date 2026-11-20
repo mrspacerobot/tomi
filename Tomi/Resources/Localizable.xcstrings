@@ -1,6 +1,102 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "guide.title": {
+      "comment": "Title and tab for Home in the Cooking Show.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Episode guide"
+          }
+        }
+      }
+    },
+    "guide.allSeasons": {
+      "comment": "Link and title for the complete course and skill list.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All seasons"
+          }
+        }
+      }
+    },
+    "guide.onAir": {
+      "comment": "Label on the fridge entry card at Home.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On air tonight"
+          }
+        }
+      }
+    },
+    "guide.settings": {
+      "comment": "Title of the Cooking Show settings screens.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        }
+      }
+    },
+    "guide.levelComplete": {
+      "comment": "Shows a mastered episode or complete level.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mastered"
+          }
+        }
+      }
+    },
+    "guide.levelLocked": {
+      "comment": "Shows a locked episode or level.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Locked"
+          }
+        }
+      }
+    },
+    "guide.levelName": {
+      "comment": "Episode level title. The placeholders are the level number and the server-provided name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Level %1$lld · %2$@"
+          }
+        }
+      }
+    },
+    "guide.levelCooks": {
+      "comment": "Server progress for a level. The placeholders are completed cooks and required cooks.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld of %2$lld cooks"
+          }
+        }
+      }
+    },
     "opening.showKicker": {
       "comment": "Kicker over the Kitchen Show title on launch and sign-in.",
       "extractionState": "manual",
