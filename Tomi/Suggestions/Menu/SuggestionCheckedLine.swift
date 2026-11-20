@@ -15,7 +15,7 @@ struct SuggestionCheckedLine: View {
                 Text(.suggestionChecked(names.formatted(.list(type: .and))))
             }
         }
-        .textStyle(.caption)
+        .textStyle(.showMeta, color: .showChecked)
         .accessibilityIdentifier("suggestion-checked")
     }
 }

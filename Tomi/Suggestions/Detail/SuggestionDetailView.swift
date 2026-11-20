@@ -10,19 +10,18 @@ struct SuggestionDetailView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Spacing.xLarge) {
-                VStack(alignment: .leading, spacing: Spacing.small) {
-                    SuggestionHeading(suggestion: suggestion, isSpecial: true)
-                }
-                RecipeSection(recipe: suggestion.recipe)
-                ChangesSection(changes: suggestion.changes)
-                NeedsSection(suggestion: suggestion, options: options)
+            VStack(alignment: .leading, spacing: ShowSize.rowGap) {
+                ShowMarquee(title: .suggestionsKicker)
+                ShowCard { SuggestionHeading(suggestion: suggestion, isSpecial: true) }
+                ShowCard { RecipeSection(recipe: suggestion.recipe) }
+                ShowCard { ChangesSection(changes: suggestion.changes) }
+                ShowCard { NeedsSection(suggestion: suggestion, options: options) }
                 SuggestionTeachingAction(suggestion: suggestion, path: $path)
             }
-            .padding(Spacing.screenMargin)
+            .padding(ShowSize.edge)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
         .accessibilityIdentifier("suggestion-detail")
     }
 }

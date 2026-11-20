@@ -11,13 +11,14 @@ struct NothingTonightButtons: View {
         } label: {
             Text(.nothingTonightChange)
         }
-        .buttonStyle(.tomiPrimary)
+        .buttonStyle(ShowPrimaryButtonStyle())
         .accessibilityIdentifier("nothing-tonight-change")
         Button {
             path.removeAll()
         } label: {
-            Text(.nothingTonightHome)
+            Text(.nothingTonightHome).textStyle(.showLede)
         }
-        .buttonStyle(.tomiSecondary)
+        .buttonStyle(.plain)
+        .frame(minHeight: TouchTarget.minimum)
     }
 }

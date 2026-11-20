@@ -7,10 +7,14 @@ struct RecipeIngredientRow: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xxSmall) {
-            AmountRow(name: line.food.name, amount: RecipeAmountFormat.text(for: line.amount))
+            AmountRow(
+                name: line.food.name,
+                amount: RecipeAmountFormat.text(for: line.amount),
+                showCardStyle: true
+            )
             if !line.forms.isEmpty {
                 Text(verbatim: line.forms.map(\.name).formatted(.list(type: .and)))
-                    .textStyle(.caption)
+                    .textStyle(.showNote)
             }
         }
     }

@@ -4,16 +4,28 @@ import SwiftUI
 struct StackedAmountRow: View {
     let name: String
     let amount: String?
+    var showCardStyle = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xxSmall) {
             Text(verbatim: name)
-                .textStyle(.dish)
+                .textStyle(nameStyle)
             if let amount {
                 Text(verbatim: amount)
-                    .textStyle(.status)
+                    .textStyle(amountStyle)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
+
+    private var nameStyle: TextStyle {
+        if showCardStyle { return .showBodyStrong }
+        return .dish
+    }
+
+    private var amountStyle: TextStyle {
+        if showCardStyle { return .showMeta }
+        return .status
+    }
+
 }

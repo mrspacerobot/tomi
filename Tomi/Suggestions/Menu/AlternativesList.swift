@@ -10,7 +10,7 @@ struct AlternativesList: View {
     var body: some View {
         if !suggestions.isEmpty {
             Text(.suggestionsAlternatives)
-                .textStyle(.label)
+                .textStyle(.showLabel)
                 .textCase(.uppercase)
             ForEach(suggestions) { suggestion in
                 SuggestionCard(suggestion: suggestion, options: options, flag: nil) {

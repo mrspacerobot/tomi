@@ -17,11 +17,11 @@ struct FridgePhotoPicker: View {
             } label: {
                 Text(.scanPickPhoto)
             }
-            .buttonStyle(.tomiPrimary)
+            .buttonStyle(ShowPrimaryButtonStyle())
             .accessibilityIdentifier("scan-pick-photo")
         case .photoLibrary:
             PhotosPicker(selection: $item, matching: .images) { Text(.scanPickPhoto) }
-                .buttonStyle(.tomiPrimary)
+                .buttonStyle(ShowPrimaryButtonStyle())
                 .accessibilityIdentifier("scan-pick-photo")
                 .onChange(of: item) { _, picked in load(picked) }
         }

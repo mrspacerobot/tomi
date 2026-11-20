@@ -8,8 +8,8 @@ struct SuggestionPhoto: View {
         Image(decorative: photo, scale: 1)
             .resizable()
             .scaledToFill()
-            .frame(height: 156)
+            .frame(height: FridgeMonitorSize.dishPhoto)
             .frame(maxWidth: .infinity)
-            .clipped()
+            .clipShape(.rect(cornerRadius: Radius.showControl))
     }
 }

@@ -1,6 +1,102 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "fridge.live": {
+      "comment": "Lower-third heading on the photo selection and scan progress screens.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live from your fridge"
+          }
+        }
+      }
+    },
+    "fridge.photoInvitation": {
+      "comment": "Tomi’s invitation above the photo picker.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show me your fridge!"
+          }
+        }
+      }
+    },
+    "fridge.photoExplanation": {
+      "comment": "Explanation before the cook chooses a photo.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One photo is enough. I’ll spot what you have and pick tonight’s dish."
+          }
+        }
+      }
+    },
+    "fridge.photoLabel": {
+      "comment": "Accessibility label for the photo preview.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your fridge photo"
+          }
+        }
+      }
+    },
+    "fridge.lineUp": {
+      "comment": "Heading above the photo and list of foods found.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonight’s line-up"
+          }
+        }
+      }
+    },
+    "fridge.tellMe": {
+      "comment": "Heading on the ingredient entry screen without a photo.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tell me what you have"
+          }
+        }
+      }
+    },
+    "fridge.typedInvitation": {
+      "comment": "Tomi’s message before entering ingredients without a photo.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type in what’s in your fridge and we’ll carry on."
+          }
+        }
+      }
+    },
+    "fridge.menuTitle": {
+      "comment": "Title of the checked dish suggestions.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonight’s menu"
+          }
+        }
+      }
+    },
     "opening.showKicker": {
       "comment": "Kicker over the Kitchen Show title on launch and sign-in.",
       "extractionState": "manual",

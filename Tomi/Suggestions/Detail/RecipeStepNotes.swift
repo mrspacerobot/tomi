@@ -9,15 +9,15 @@ struct RecipeStepNotes: View {
     var body: some View {
         if let time = step.time, let words = StepTimeFormat.text(for: time) {
             Text(verbatim: words)
-                .textStyle(.description)
+                .textStyle(.showNote)
         }
         if let temperature = step.temperature, let words = StepTemperatureFormat.text(for: temperature) {
             Text(verbatim: words)
-                .textStyle(.description)
+                .textStyle(.showNote)
         }
         if !step.safetyPoints.isEmpty {
             Text(.suggestionStepSafety(step.safetyPointWords.formatted(.list(type: .and))))
-                .textStyle(.description)
+                .textStyle(.showNote)
         }
     }
 }

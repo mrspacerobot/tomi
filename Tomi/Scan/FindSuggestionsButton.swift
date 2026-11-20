@@ -10,7 +10,7 @@ struct FindSuggestionsButton: View {
         } label: {
             Text(.confirmFind)
         }
-        .buttonStyle(.tomiPrimary)
+        .buttonStyle(ShowPrimaryButtonStyle())
         .accessibilityIdentifier("confirm-find")
     }
 }

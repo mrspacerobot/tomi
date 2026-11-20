@@ -3,6 +3,7 @@ import TomiCore
 
 extension ScanModel {
     func send(jpeg: Data) async {
+        previewPhoto = JPEGConverter.preview(from: jpeg)
         stage = .reading
         do {
             remember(try await api.scan(jpeg: jpeg))

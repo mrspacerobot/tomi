@@ -9,7 +9,8 @@ struct SuggestionsView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Spacing.xLarge) {
+            VStack(alignment: .leading, spacing: ShowSize.rowGap) {
+                Text(.fridgeMenuTitle).textStyle(.showTitle).accessibilityIdentifier("fridge-menu-title")
                 if let special = menu.special {
                     SuggestionCard(suggestion: special, options: options, flag: .suggestionsKicker) {
                         path.append(.suggestion(special))
@@ -17,7 +18,7 @@ struct SuggestionsView: View {
                 }
                 AlternativesList(suggestions: menu.alternatives, options: options, path: $path)
             }
-            .padding(Spacing.screenMargin)
+            .padding(ShowSize.edge)
         }
     }
 }
