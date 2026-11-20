@@ -3,6 +3,11 @@ import CoreGraphics
 /// The sizes Tomi is drawn at, in points: the frame his figure fills at rest, toque to shoes, as drawn in the
 /// mockups of `docs/design`. A jump, thought dots or sparkles may spill past it.
 nonisolated enum MascotSize {
+    /// The drawn head in a Cooking Show tab, and the two portrait scales for the host gallery.
+    static let showHead: CGFloat = 43
+    static let showHostPortrait: CGFloat = 98
+    static let showHostTile: CGFloat = 132
+
     /// The companion stage in the gallery.
     static let companion: CGFloat = 240
     /// The printed Tomi on the home masthead (`round2.html`, `home-empty`).

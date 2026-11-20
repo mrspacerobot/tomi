@@ -1,6 +1,18 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "show.gallery.hostHead": {
+      "comment": "Label under Tomi's compact head in the debug host gallery.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Host portrait"
+          }
+        }
+      }
+    },
     "show.gallery.title": {
       "comment": "Title of the debug Cooking Show component gallery.",
       "extractionState": "manual",

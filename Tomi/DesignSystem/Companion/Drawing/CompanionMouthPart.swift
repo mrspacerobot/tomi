@@ -46,10 +46,10 @@ enum CompanionMouthPart {
 
     /// Fills the mouth, lays the tongue inside it, then inks the lips.
     private static func drawOpen(_ shape: Path, in context: GraphicsContext, palette: CompanionPalette) {
-        context.fill(shape, with: .color(palette.feature))
+        context.fill(shape, with: .color(palette.mouth ?? palette.feature))
         var inside = context
         inside.clip(to: shape)
-        inside.fill(tongue(in: shape.boundingRect), with: .color(palette.blush))
+        inside.fill(tongue(in: shape.boundingRect), with: .color(palette.tongue ?? palette.blush))
         context.ink(shape, pen: palette.feature(CompanionInk.feature))
     }
 

@@ -34,4 +34,13 @@ struct CompanionGridTests {
         #expect(fit.scale == 0.5)
         #expect(fit.origin.x == (1000 - CompanionGrid.size.width / 2) / 2)
     }
+
+    @Test func theHostHeadFillsATabWithoutBeingStretched() {
+        let fit = CompanionGrid.fitHead(in: CGSize(width: 36, height: 40))
+        let box = CompanionGrid.hostHeadBox
+        #expect(fit.scale == 0.2)
+        #expect(fit.origin.x + box.minX * fit.scale == 2)
+        #expect(fit.origin.y + box.minY * fit.scale == 0)
+    }
+
 }

@@ -70,6 +70,11 @@ Everything is SwiftUI in `Tomi/DesignSystem/Companion`, with no image, model or 
   hello; the scan's "nothing tonight" and the starting screen use thinking.
 - Sizes are in `MascotSize`.
 
+The Cooking Show uses the same five poses and animation timeline with the palette from round 13.
+Pass `appearance: .cookingShow` when moving a screen to the new look. `TomiHostHead` draws the shared
+face and toque without arms or legs and fits the smaller portrait frame from the mockup. It is decorative,
+and the tab or message around it carries the accessibility label.
+
 The companion opens no microphone, camera or model and reads no cook data.
 
 ## Inspect the running app
@@ -83,3 +88,6 @@ Tomi". Choose each mood and use "Hold still" to see its still pose. The gallery 
 Compare with `companion-directions.html`, direction A. Look at light and dark, small and large iPhones and the
 largest accessibility text size, and review motion live in the simulator: screenshots show the poses, not the
 timing.
+
+Launch with `--show-host-gallery --fake-backend --store-in-memory` to compare all five still poses and
+the compact head with round 13 in morning and evening lighting.

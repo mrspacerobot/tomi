@@ -12,6 +12,8 @@ struct CompanionPalette {
     let blush: Color
     let glow: Color
     let sparkle: Color
+    var mouth: Color?
+    var tongue: Color?
 
     static var tokens: CompanionPalette {
         CompanionPalette(
