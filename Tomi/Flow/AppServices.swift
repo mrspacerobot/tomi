@@ -8,6 +8,8 @@ struct AppServices {
     let store: any ProgressStore
     let photos: PhotoSource
     let usesFakeSignInButton: Bool
+    /// Where dish photos load from: the network in the app, the bundle in fake launches.
+    var dishPhotos = DishPhotoLoader.live
 
     /// Fakes over the given store, for previews and tests.
     static func fake(store: any ProgressStore, signedIn: Bool = false) -> AppServices {
@@ -16,7 +18,8 @@ struct AppServices {
             auth: FakeAuthService(signedIn: signedIn),
             store: store,
             photos: .fixed(PhotoSource.fakePhoto),
-            usesFakeSignInButton: true
+            usesFakeSignInButton: true,
+            dishPhotos: .fake
         )
     }
 }

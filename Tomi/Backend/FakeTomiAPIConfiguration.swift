@@ -10,6 +10,8 @@ nonisolated struct FakeTomiAPIConfiguration: Equatable {
     let quizFailure: FakeQuizFailure?
     /// How the progress routes answer: which fixture snapshot, or failing as if offline.
     var progressServer: FakeProgressServer
+    /// Every suggestion names the fake dish photo, as the server does when a reviewed photo matches the cook's version.
+    var dishPhotos = false
 
     init(
         suggestionsNothing: Bool = false,

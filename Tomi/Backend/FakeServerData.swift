@@ -49,9 +49,10 @@ nonisolated struct FakeServerData: Sendable {
     }
 
     /// Every fixture as a graph suggestion, the first as the special, each checked for the cook's own answers, in
-    /// the answer a real server sends, so the app reads it the same way.
-    func suggestions(for profile: CookProfile) throws -> SuggestionsResponse {
-        let offers = try suggestionFixtures.map { try Self.offer($0, checkedFor: profile) }
+    /// the answer a real server sends, so the app reads it the same way. With photos, the special names the fake
+    /// dish photo, which shows its dish; the alternatives name none, as no photo of their dishes exists.
+    func suggestions(for profile: CookProfile, withPhotos: Bool = false) throws -> SuggestionsResponse {
+        let offers = try checkedOffers(for: profile, withPhotos: withPhotos)
         let answer: [String: Any] = [
             "graphVersion": Self.graphVersion,
             "rankedBy": RankedBy.overlap.rawValue,
@@ -60,6 +61,15 @@ nonisolated struct FakeServerData: Sendable {
         ]
         let data = try JSONSerialization.data(withJSONObject: answer)
         return try JSONDecoder().decode(SuggestionsResponse.self, from: data)
+    }
+
+    private func checkedOffers(for profile: CookProfile, withPhotos: Bool) throws -> [[String: Any]] {
+        var offers = try suggestionFixtures.map { try Self.offer($0, checkedFor: profile) }
+        guard withPhotos, !offers.isEmpty else {
+            return offers
+        }
+        offers[0]["photoUrl"] = FakeDishPhoto.address
+        return offers
     }
 
     /// The backend's teaching suggestion, asking the invented quiz in place of the graph's, or no quiz without one.

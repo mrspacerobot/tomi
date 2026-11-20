@@ -14,7 +14,7 @@ enum ImportRule {
         "AlarmKit": ["Tomi/Timers/"],
         "UIKit": ["Tomi/Camera/"],
         "PhotosUI": ["Tomi/Camera/"],
-        "ImageIO": ["Tomi/Camera/"],
+        "ImageIO": ["Tomi/Camera/", "Tomi/DishPhotos/"],
         "AuthenticationServices": ["Tomi/Auth/"],
         "Security": ["Tomi/Auth/"],
         "CryptoKit": ["Tomi/Auth/"],
