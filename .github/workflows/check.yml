@@ -26,8 +26,8 @@ jobs:
     # The owner's Mac: the only machine with Xcode 27, the simulator and SwiftLint. It costs no minutes.
     # If the Mac is busy, asleep or off, the job waits in the queue.
     runs-on: [self-hosted, tomi-mac]
-    # A full run takes a few minutes. The limit only stops a stuck simulator from holding the Mac.
-    timeout-minutes: 30
+    # The job can wait for a full run on the shared simulator before starting its own tests.
+    timeout-minutes: 75
     # The check only reads the code. It never pushes or comments.
     permissions:
       contents: read
