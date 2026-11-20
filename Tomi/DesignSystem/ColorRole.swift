@@ -80,4 +80,6 @@ nonisolated enum ColorRole: CaseIterable, Sendable {
     case stageFloor
     case stageFloorEdge
     case stageBeam
+    case signalCyan
+    case signalPink
 }

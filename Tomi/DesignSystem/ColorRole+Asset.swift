@@ -61,6 +61,8 @@ nonisolated extension ColorRole {
         case .stageFloor: Color(.stageFloor)
         case .stageFloorEdge: Color(.stageFloorEdge)
         case .stageBeam: Color(.stageBeam)
+        case .signalCyan: Color(.signalCyan)
+        case .signalPink: Color(.signalPink)
         }
     }
 }

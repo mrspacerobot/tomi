@@ -10,6 +10,11 @@ extension FakeTomiAPIConfiguration {
             quizFailure: quiz.failure,
             progressServer: FakeProgressServer(arguments: arguments)
         )
+        applyOptionalFixtures(arguments)
+    }
+
+    private nonisolated mutating func applyOptionalFixtures(_ arguments: [String]) {
         dishPhotos = arguments.contains(BackendLaunchOptions.fakeDishPhotosArgument)
+        optionsUnavailable = arguments.contains(BackendLaunchOptions.fakeOptionsUnavailableArgument)
     }
 }

@@ -7,7 +7,7 @@ struct NotConfiguredView: View {
             .multilineTextAlignment(.center)
             .padding(Spacing.xLarge)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(ColorRole.paper.color)
+            .background { ShowStage() }
     }
 }
 

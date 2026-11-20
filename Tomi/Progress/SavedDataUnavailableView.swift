@@ -1,24 +1,24 @@
 import SwiftUI
 
 /// Shown instead of everything else when saved data cannot be opened or read.
-/// Tomi then cannot keep the cook log, so nothing is shown that would lose a cook.
 struct SavedDataUnavailableView: View {
     var body: some View {
-        VStack(spacing: Spacing.small) {
-            Text(.savedDataUnavailableTitle)
-                .textStyle(.title)
-                .accessibilityIdentifier("saved-data-unavailable-title")
-            Text(.savedDataUnavailableMessage)
-                .textStyle(.description)
-                .accessibilityIdentifier("saved-data-unavailable-message")
+        ScrollView {
+            VStack(spacing: ShowSize.rowGap) {
+                ShowLowerThird(title: .offAirLostScript)
+                OffAirPortrait()
+                Text(.savedDataUnavailableTitle).textStyle(.showTitle)
+                    .accessibilityIdentifier("saved-data-unavailable-title")
+                ShowSpeechBubble { Text(.savedDataUnavailableMessage) }
+                    .accessibilityIdentifier("saved-data-unavailable-message")
+            }
+            .padding(ShowSize.edge)
         }
         .multilineTextAlignment(.center)
-        .padding(Spacing.xLarge)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
     }
 }
 
-#Preview {
-    SavedDataUnavailableView()
-}
+#Preview("Morning") { SavedDataUnavailableView().preferredColorScheme(.light) }
+#Preview("Evening") { SavedDataUnavailableView().preferredColorScheme(.dark).dynamicTypeSize(.accessibility5) }

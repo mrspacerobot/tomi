@@ -8,11 +8,11 @@ struct HomeProgressSection: View {
 
     var body: some View {
         VStack(spacing: Spacing.small) {
-            if let snapshot = shown.snapshot {
-                HomeProgressStrip(snapshot: snapshot, showsThisWeek: shown.showsThisWeek)
-            }
             if let note = shown.note {
                 HomeProgressNote(note: note)
+            }
+            if let snapshot = shown.snapshot {
+                HomeProgressStrip(snapshot: snapshot, showsThisWeek: shown.showsThisWeek)
             }
         }
     }

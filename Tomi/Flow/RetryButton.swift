@@ -10,7 +10,7 @@ struct RetryButton: View {
         } label: {
             Text(.loadFailedRetry)
         }
-        .buttonStyle(.tomiPrimary)
+        .buttonStyle(ShowPrimaryButtonStyle())
         .accessibilityIdentifier("load-failed-retry")
     }
 }

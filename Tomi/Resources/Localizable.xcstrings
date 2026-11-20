@@ -1,6 +1,42 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "offAir.badge": {
+      "comment": "Badge on Home when the cook is offline and progress needs a note.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off air"
+          }
+        }
+      }
+    },
+    "offAir.standBy": {
+      "comment": "Readout on the server error screen.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please stand by"
+          }
+        }
+      }
+    },
+    "offAir.lostScript": {
+      "comment": "Lower-third label when saved data cannot be opened.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lost the script"
+          }
+        }
+      }
+    },
     "guide.title": {
       "comment": "Title and tab for Home in the Cooking Show.",
       "extractionState": "manual",

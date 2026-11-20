@@ -6,11 +6,12 @@ struct HomeProgressNote: View {
     let note: ProgressNote
 
     var body: some View {
-        Text(words)
-            .textStyle(.showLede, color: .stageMuted)
-            .multilineTextAlignment(.center)
-            .frame(maxWidth: .infinity)
-            .accessibilityIdentifier("home-progress-note")
+        ShowCard {
+            VStack(alignment: .leading, spacing: ShowSize.gap) {
+                ShowLowerThird(title: .offAirBadge).accessibilityIdentifier("off-air-badge")
+                Text(words).textStyle(.showText).accessibilityIdentifier("home-progress-note")
+            }
+        }
     }
 
     private var words: LocalizedStringResource {
