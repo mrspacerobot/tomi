@@ -9,7 +9,9 @@ struct AppRoot: View {
 
     var body: some View {
         #if DEBUG
-            if ProcessInfo.processInfo.arguments.contains(ShowGallery.launchArgument) {
+            if ProcessInfo.processInfo.arguments.contains(ShowHostGallery.launchArgument) {
+                ShowHostGallery()
+            } else if ProcessInfo.processInfo.arguments.contains(ShowGallery.launchArgument) {
                 ShowGallery()
             } else if GalleryLaunch.isRequested || CompanionGalleryLaunch.requested {
                 ComponentGallery()

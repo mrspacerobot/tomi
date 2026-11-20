@@ -8,8 +8,7 @@ struct ShowTabButton<Tab: Hashable>: View {
         Button {
             selection = item.id
         } label: {
-            Image(systemName: item.symbol)
-                .font(.system(size: ShowSize.tabIcon, weight: .semibold))
+            ShowTabGlyph(icon: item.icon)
                 .foregroundStyle(ink.color)
                 .frame(width: ShowSize.tabHighlightWidth, height: ShowSize.tabHighlightHeight)
                 .background(fill, in: .rect(cornerRadius: Radius.showIcon))

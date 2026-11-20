@@ -4,9 +4,10 @@ import SwiftUI
 /// sits quietly beside reading and loading. Callers label it for VoiceOver or hide it.
 struct TomiMascot: View {
     var mood: CompanionState = .idle
+    var appearance: CompanionAppearance = .tastingMenu
 
     var body: some View {
-        CompanionFigure(pose: mood.stillPose)
+        CompanionFigure(pose: mood.stillPose, appearance: appearance)
             .accessibilityElement()
     }
 }

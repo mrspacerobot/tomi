@@ -9,11 +9,11 @@
             ShowTabItem(
                 id: Self.episodeGuide,
                 title: .showGalleryEpisodeGuide,
-                symbol: "point.topleft.down.to.point.bottomright.curvepath"
+                icon: .symbol("point.topleft.down.to.point.bottomright.curvepath")
             ),
-            ShowTabItem(id: Self.table, title: .showGalleryTable, symbol: "circle.circle"),
-            ShowTabItem(id: Self.fridge, title: .showGalleryFridge, symbol: "refrigerator"),
-            ShowTabItem(id: Self.settings, title: .settingsTitle, symbol: "person.crop.circle"),
+            ShowTabItem(id: Self.table, title: .showGalleryTable, icon: .symbol("circle.circle")),
+            ShowTabItem(id: Self.fridge, title: .showGalleryFridge, icon: .symbol("refrigerator")),
+            ShowTabItem(id: Self.settings, title: .settingsTitle, icon: .host),
         ]
     }
 #endif

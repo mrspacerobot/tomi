@@ -49,6 +49,12 @@ nonisolated extension ColorRole {
         case .showError: Color(.showError)
         case .showChecked: Color(.showChecked)
         case .showBlue: Color(.showBlue)
+        case .hostInk: Color(.hostInk)
+        case .hostShade: Color(.hostShade)
+        case .hostBlush: Color(.hostBlush)
+        case .hostShoe: Color(.hostShoe)
+        case .hostMouth: Color(.hostMouth)
+        case .hostTongue: Color(.hostTongue)
         }
     }
 }

@@ -18,14 +18,26 @@ struct CompanionDrawing {
         glowing.drawLayer { layer in drawCharacter(in: layer) }
     }
 
+    func drawHead(in context: GraphicsContext, size: CGSize) {
+        let fit = CompanionGrid.fitHead(in: size)
+        var fitted = context
+        fitted.translateBy(x: fit.origin.x, y: fit.origin.y)
+        fitted.scaleBy(x: fit.scale, y: fit.scale)
+        drawFaceAndToque(in: fitted)
+    }
+
     /// The left arm sits behind the body and the right in front, so gestures across the face read clearly.
     private func drawCharacter(in context: GraphicsContext) {
         let body = context.posed(pose.body)
         CompanionLegPart.draw(in: body, palette: palette)
         CompanionArmPart.draw(pose.leftArm, in: body, palette: palette)
-        CompanionBodyPart.draw(in: body, palette: palette)
-        CompanionToquePart.draw(in: body, palette: palette)
-        CompanionFacePart.draw(pose.face, in: body, palette: palette)
+        drawFaceAndToque(in: body)
         CompanionArmPart.draw(pose.rightArm, in: body, palette: palette)
+    }
+
+    private func drawFaceAndToque(in context: GraphicsContext) {
+        CompanionBodyPart.draw(in: context, palette: palette)
+        CompanionToquePart.draw(in: context, palette: palette)
+        CompanionFacePart.draw(pose.face, in: context, palette: palette)
     }
 }

@@ -12,6 +12,9 @@ nonisolated enum CompanionGrid {
     static let figureOrigin = CGPoint(x: 20, y: 30)
     /// The part of the grid fitted to a frame: Tomi at rest, in grid units.
     static let figureBox = CGRect(x: 30, y: 50, width: 180, height: 212)
+    /// The compact silhouette, in figure units, from the Cooking Show mockup.
+    static let hostHeadBox = CGRect(x: 20, y: 6, width: 160, height: 200)
+
     /// The point between the feet that the body hops, squashes and leans about, in figure units.
     static let ground = CGPoint(x: 100, y: 229)
     /// The vertical centre line the figure is mirrored about, in figure units.
@@ -24,6 +27,14 @@ nonisolated enum CompanionGrid {
         let left = (frame.width - figureBox.width * scale) / 2 - figureBox.minX * scale
         let top = (frame.height - figureBox.height * scale) / 2 - figureBox.minY * scale
         return CGRect(x: left, y: top, width: size.width * scale, height: size.height * scale)
+    }
+
+    /// Fits the head's own silhouette, without reserving space for arms or shoes.
+    static func fitHead(in frame: CGSize) -> CompanionFit {
+        let scale = min(frame.width / hostHeadBox.width, frame.height / hostHeadBox.height)
+        let left = (frame.width - hostHeadBox.width * scale) / 2 - hostHeadBox.minX * scale
+        let top = (frame.height - hostHeadBox.height * scale) / 2 - hostHeadBox.minY * scale
+        return CompanionFit(scale: scale, origin: CGPoint(x: left, y: top))
     }
 
     /// The scale and top-left corner that fit the whole grid inside `canvas`, centred and never stretched.

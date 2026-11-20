@@ -7,10 +7,11 @@ struct CompanionSlot: View {
 
     let state: CompanionState
     let side: CGFloat
+    var appearance: CompanionAppearance = .tastingMenu
 
     var body: some View {
         ZStack {
-            TomiCompanion(state: state)
+            TomiCompanion(state: state, appearance: appearance)
         }
         .frame(width: side, height: side)
         .accessibilityElement(children: .contain)
