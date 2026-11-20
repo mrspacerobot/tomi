@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Missing Cooking Show screens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;800&family=Caveat:wght@600;700&family=Baloo+2:wght@600;700;800&family=Young+Serif&family=Rubik:wght@600;700;800;900&family=Bangers&family=Space+Grotesk:wght@500;700&family=DM+Serif+Display&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#f4f1ec;--page-ink:#1d1a17;--page-muted:#6b645c;--page-card:#fff;--page-line:#e2ddd5;
+  --t-body:#E5432B;--t-cheek:#FF9A86;--t-ink:#24172B;--t-limb:#24172B;--t-mouth:#5B1610;--t-shade:#B82E1C;
+  --t-shoe:#2F55D4;--t-tongue:#FF7B6B;--t-white:#fff;--t-yolk:#FFC83D;--i-ink:#24172B;--i-sw:2.6px;
+}
+@media (prefers-color-scheme: dark){:root{--page:#171513;--page-ink:#f1ece4;--page-muted:#a49c91;--page-card:#221f1c;--page-line:#36322d}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--page-ink);font:16px/1.5 Inter,-apple-system,system-ui,sans-serif}
+.wrap{max-width:1500px;margin:0 auto;padding:40px 20px 80px}
+h1.top{font-size:clamp(32px,5vw,50px);line-height:1.05;margin:6px 0 12px;letter-spacing:-.02em}
+.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--page-muted);font-weight:600}
+.lede{max-width:820px;color:var(--page-muted);font-size:18px;margin:0}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin:22px 0 0}
+.toc a{font-size:13px;font-weight:600;color:var(--page-ink);text-decoration:none;border:1px solid var(--page-line);background:var(--page-card);border-radius:99px;padding:4px 11px}
+.row{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:30px;margin-top:56px;padding-top:30px;border-top:1px solid var(--page-line);align-items:start}
+.meta .num{font:800 46px/1 Inter;color:var(--page-line)}
+.meta h2{margin:6px 0 6px;font-size:26px;letter-spacing:-.015em;line-height:1.1}
+.meta p{margin:0 0 10px;color:var(--page-muted);font-size:15px}
+.meta .tag{display:inline-block;font-size:11.5px;font-weight:700;border-radius:6px;padding:2px 8px;margin:0 4px 4px 0;background:var(--page-card);border:1px solid var(--page-line)}
+.meta .tag.k{background:#ffe9c2;border-color:#f2cf8e;color:#5a3a00}
+.meta .sw{display:flex;gap:5px;margin-top:8px}.meta .sw i{width:22px;height:22px;border-radius:6px;border:1px solid rgba(0,0,0,.12)}
+.meta label{display:flex;gap:8px;align-items:center;margin-top:12px;font-weight:600;font-size:14px;cursor:pointer}
+.phones{display:flex;gap:20px;overflow-x:auto;padding:4px 4px 14px}
+.phone{flex:0 0 auto;width:300px;height:640px;border-radius:48px;padding:9px;background:#0d0d0f;box-shadow:0 18px 40px rgba(0,0,0,.18)}
+.pick{margin-top:60px;background:var(--page-card);border:1px solid var(--page-line);border-radius:20px;padding:24px;position:sticky;bottom:12px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.pick h2{margin:0 0 4px;font-size:20px}
+.pick .sel{font-size:14px;color:var(--page-muted);margin-bottom:8px}
+.pick textarea{width:100%;min-height:60px;font:inherit;border-radius:12px;border:1px solid var(--page-line);padding:10px;background:var(--page);color:var(--page-ink)}
+.pick button{margin-top:10px;font:inherit;font-weight:700;background:var(--page-ink);color:var(--page);border:0;border-radius:999px;padding:10px 20px;cursor:pointer}
+@media (max-width:900px){.row{grid-template-columns:minmax(0,1fr)}}
+
+.c-car{fill:#F2802A}
+.c-chk{fill:#E9A55E}
+.c-chk2{fill:#C9772F}
+.c-chz{fill:#FFCB3D}
+.c-chz2{fill:#FFE07A}
+.c-egg{fill:var(--i-egg,#FFF7E6)}
+.c-fish{fill:#7DB4E6}
+.c-grn{fill:#3E9E4C}
+.c-grn2{fill:#2E8A44}
+.c-hole{fill:#E2A51F}
+.c-lv{stroke:#9ADBA4}
+.c-oni{fill:#DDA65C}
+.c-oni2{stroke:#B07A35}
+.c-plate{fill:var(--i-plate,#FFFFFF)}
+.c-tom{fill:#E5452D}
+.fb{fill:var(--t-body)}
+.fc{fill:var(--t-cheek);opacity:.75}
+.fi{fill:var(--t-ink)}
+.fm{fill:var(--t-mouth)}
+.fs{fill:var(--t-shade)}
+.fsh{fill:var(--t-shoe)}
+.ft{fill:var(--t-tongue)}
+.fw{fill:var(--t-white)}
+.fy{fill:var(--t-yolk)}
+.ik{stroke:var(--i-ink);stroke-width:var(--i-sw);stroke-linejoin:round;stroke-linecap:round}
+.iv{stroke-width:calc(var(--i-sw) * .7);stroke-linecap:round;fill:none}
+.nf{fill:none}
+.sh{fill:#fff;opacity:.6}
+.tk{stroke:var(--t-ink);stroke-linejoin:round;stroke-linecap:round}
+.tl{stroke:var(--t-limb);stroke-linejoin:round;stroke-linecap:round;fill:none}
+.w2{stroke-width:2.5}
+.w3{stroke-width:3}
+.w4{stroke-width:4}
+.w5{stroke-width:5}
+.w6{stroke-width:6}
+.w7{stroke-width:7}
+
+/* ===================== phone screen kit ===================== */
+.scr{width:100%;height:100%;border-radius:40px;overflow:hidden;position:relative;color:var(--fg);font-family:var(--bf);
+  background-color:var(--bg);background-image:var(--bgimg);background-size:var(--bgsize,auto)}
+.scr *{box-sizing:border-box}
+.sb{height:44px;display:flex;justify-content:space-between;align-items:center;padding:0 26px 0 30px;font:700 14px Inter,system-ui;color:var(--sbc,var(--fg));position:relative;z-index:5}
+.sb svg{width:54px;height:12px}
+.ab{position:absolute}
+.tm{display:block;position:absolute;z-index:3}
+.h{font-family:var(--hf);font-weight:var(--hw);text-transform:var(--htt,none);letter-spacing:var(--hls,0)}
+.sf{background:var(--sf);border-radius:var(--r);box-shadow:var(--cs);border:var(--cb,0)}
+.mut{color:var(--mut)}
+.btn{display:block;text-align:center;padding:13px;border-radius:var(--br);background:var(--acc);color:var(--onacc);box-shadow:var(--bs);font-family:var(--btf,var(--hf));font-weight:var(--bw,700);font-size:15px;text-transform:var(--tt,none);letter-spacing:var(--bls,0);border:var(--bb,0)}
+.bub{position:absolute;z-index:4;background:var(--bubbg,var(--sf));color:var(--bubfg,var(--fg));border:var(--bubb,0);border-radius:16px;padding:8px 11px;font-weight:800;font-size:12.5px;line-height:1.25;box-shadow:var(--cs);font-family:var(--bubf,var(--bf))}
+.chip{display:inline-block;font-size:10.5px;font-weight:800;border-radius:9px;padding:2px 7px;background:var(--chipbg,rgba(127,127,127,.14));color:var(--mut);margin:0 4px 4px 0}
+.tab{position:absolute;left:12px;right:12px;bottom:12px;height:52px;border-radius:var(--tabr,20px);display:flex;justify-content:space-around;align-items:center;background:var(--tabbg,var(--sf));box-shadow:var(--cs);border:var(--cb,0);z-index:6}
+.tab span{width:40px;height:34px;display:grid;place-items:center;border-radius:12px;color:var(--mut)}
+.tab span.on{color:var(--acc);background:var(--tabon,transparent)}
+.tab svg{width:22px;height:22px}
+.dish{font-size:17px;line-height:1.15;margin:6px 0 4px}
+.ring{border-radius:50%;display:grid;place-items:center}
+.streak{display:flex;align-items:center;gap:4px;font:800 12px var(--bf);padding:4px 9px;border-radius:99px;background:var(--sf);box-shadow:var(--cs);border:var(--cb,0)}
+.streak svg{width:15px;height:15px;color:#F08A1C}
+
+/* path nodes */
+.nd{position:absolute;width:60px;height:56px;border-radius:50%;display:grid;place-items:center;z-index:2}
+.nd svg{width:26px;height:26px}
+.nd.done{background:var(--nd-done,#FFC83D);color:#fff;box-shadow:0 5px 0 var(--nd-done-d,#D69A0B)}
+.nd.cur{background:var(--acc);color:var(--onacc);box-shadow:0 5px 0 var(--acc-d,rgba(0,0,0,.25)),0 0 0 7px var(--bg),0 0 0 11px var(--acc-soft,rgba(229,67,43,.2));width:68px;height:62px}
+.nd.lock{background:var(--nd-lock,#e7e1d9);color:var(--mut);box-shadow:0 5px 0 var(--nd-lock-d,#cfc7bc)}
+.pv-veg .nd{border-radius:46% 54% 42% 58%/55% 45% 55% 45%}
+.pv-neon .nd{background:transparent!important;border:4px solid var(--c,var(--acc));box-shadow:0 0 12px var(--c,var(--acc)),inset 0 0 10px var(--c,var(--acc))!important;color:var(--c,var(--acc))}
+.pv-neon .nd.done{--c:#4DF0D8}.pv-neon .nd.lock{--c:#5a5f78;box-shadow:none!important}
+.pv-stamp .nd{border-radius:10px;transform:rotate(-6deg);border:3px dashed rgba(255,255,255,.7)}
+.pv-stamp .nd.lock{border-color:var(--mut)}
+
+/* kitchen backdrop */
+.kit{position:absolute;inset:0;background-color:var(--k-wall);background-image:linear-gradient(var(--k-tile) 2px,transparent 2px),linear-gradient(90deg,var(--k-tile) 2px,transparent 2px);background-size:26px 26px}
+.win{position:absolute;right:16px;top:58px;width:90px;height:78px;border:6px solid var(--k-frame);border-radius:10px;background:var(--k-sky);overflow:hidden}
+.win::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:4px;margin-left:-2px;background:var(--k-frame)}
+.win::after{content:"";position:absolute;top:50%;left:0;right:0;height:4px;margin-top:-2px;background:var(--k-frame)}
+.win i{position:absolute;right:10px;top:8px;width:20px;height:20px;border-radius:50%;background:var(--k-sun)}
+.shelf{position:absolute;left:0;height:8px;background:var(--k-wood);border-radius:0 4px 4px 0;box-shadow:0 4px 0 rgba(0,0,0,.12)}
+.counter{position:absolute;left:0;right:0;bottom:0;background:var(--k-counter);border-top:14px solid var(--k-top)}
+.hob{position:absolute;height:10px;border-radius:5px;background:#2b2b30}
+.hooks{position:absolute;left:14px;top:56px;width:120px;height:4px;background:var(--k-wood);border-radius:2px}
+.hooks i{position:absolute;top:4px;width:4px;background:var(--k-wood);border-radius:2px}
+.hooks i::after{content:"";position:absolute;left:-6px;bottom:-12px;width:16px;height:16px;border-radius:50%;border:3px solid var(--k-wood)}
+.jar{position:absolute;width:38px;height:44px;border-radius:9px 9px 12px 12px;background:rgba(255,255,255,.55);border:3px solid var(--k-ink,#24172B);overflow:hidden;z-index:2}
+.jar::before{content:"";position:absolute;left:-3px;right:-3px;top:-3px;height:10px;background:var(--lid,#9c9aa6);border-bottom:3px solid var(--k-ink,#24172B)}
+.jar i{position:absolute;left:0;right:0;bottom:0;background:var(--fill,#E5432B)}
+.jar.gold{--lid:#F2B630}
+.jar.lock{background:rgba(255,255,255,.25);opacity:.75}
+.jar.lock svg{position:absolute;left:10px;top:16px;width:14px;height:14px;color:var(--k-ink,#24172B)}
+.jar.cur{box-shadow:0 0 0 4px var(--acc)}
+.jl{position:absolute;font:800 9.5px var(--bf);text-align:center;width:56px;color:var(--k-label,var(--fg));line-height:1.1;z-index:2}
+
+/* plates */
+.plate{position:absolute;border-radius:50%;background:var(--plate,#fff);box-shadow:inset 0 0 0 var(--rimw,8px) var(--rim,#efe8de),0 5px 0 rgba(0,0,0,.12);display:grid;place-items:center}
+.plate.gold{--rim:#F2B630}
+.plate.empty{box-shadow:inset 0 0 0 8px var(--rim,#efe8de),0 0 0 5px var(--acc)}
+.cloche{position:absolute;border-radius:50%;background:radial-gradient(circle at 34% 30%,#fff 0,#c7c6cc 55%,#8f8e98 100%);box-shadow:0 5px 0 rgba(0,0,0,.12)}
+.cloche::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px;border-radius:50%;background:#8f8e98}
+.lk{position:absolute;right:-4px;bottom:-2px;width:22px;height:22px;border-radius:50%;background:var(--sf);display:grid;place-items:center;color:var(--mut);box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.lk svg{width:13px;height:13px}
+
+/* tickets */
+.ticket{position:absolute;background:var(--tk,#fffdf6);color:#2a2622;padding:10px 10px 18px;font-family:"Space Grotesk",Inter;clip-path:polygon(0 0,100% 0,100% calc(100% - 8px),90% 100%,80% calc(100% - 8px),70% 100%,60% calc(100% - 8px),50% 100%,40% calc(100% - 8px),30% 100%,20% calc(100% - 8px),10% 100%,0 calc(100% - 8px));filter:drop-shadow(0 4px 6px rgba(0,0,0,.2))}
+.ticket b{display:block;font-size:13px;line-height:1.15}
+.ticket small{display:block;font-size:10px;color:#6c655e;margin-top:3px}
+.ticket .tks{margin-top:6px;font-size:13px;letter-spacing:2px;color:#2a8a4a}
+.clip{position:absolute;width:18px;height:12px;background:#b9bcc4;border-radius:3px;border:2px solid #7d808a;z-index:3}
+
+/* tabs/cards */
+.idx{position:absolute;left:18px;right:18px;border-radius:12px;background:var(--sf);box-shadow:var(--cs);padding:0 14px}
+.idx .t{position:absolute;top:-22px;height:24px;border-radius:9px 9px 0 0;padding:3px 10px;font:700 11px var(--bf);color:#fff}
+
+/* stickers */
+.stk{position:absolute;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#fff;box-shadow:0 0 0 4px #fff,0 4px 10px rgba(0,0,0,.18)}
+.stk svg{width:40px;height:40px}
+.stk.empty{background:transparent;box-shadow:none;border:3px dashed var(--mut);color:var(--mut);font:800 22px var(--bf)}
+.stk.cur{border-color:var(--acc);color:var(--acc)}
+
+/* comic */
+.panel{position:absolute;background:var(--sf);border:3px solid #111;box-shadow:4px 4px 0 #111;overflow:hidden}
+.pow{position:absolute;font:28px Bangers;color:#E5432B;-webkit-text-stroke:1.5px #111;transform:rotate(-8deg)}
+
+/* timer ring */
+.tring{position:absolute;border-radius:50%;background:conic-gradient(var(--acc) 0 62%,rgba(255,255,255,.12) 62% 100%);display:grid;place-items:center}
+.tring>div{border-radius:50%;background:var(--bg);display:grid;place-items:center;text-align:center}
+
+.stepbar{position:absolute;left:52px;right:16px;top:52px;height:10px;border-radius:99px;background:rgba(127,127,127,.22);overflow:hidden;z-index:5}
+.stepbar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--acc)}
+.x{position:absolute;left:16px;top:46px;width:26px;height:22px;display:grid;place-items:center;font-weight:900;color:var(--mut);z-index:5}
+.mic{display:flex;justify-content:center;gap:6px;align-items:center;font-size:11px;font-weight:800;color:var(--mut)}
+.mic svg{width:13px;height:13px}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--sf);border-radius:26px 26px 0 0;padding:16px 16px 20px;box-shadow:0 -6px 20px rgba(0,0,0,.12);z-index:4;border-top:var(--cb,0)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <!-- ========== Tomi parts. Poses use viewBox -14 -10 228 254 ========== -->
+  <g id="tm-legs">
+    <path class="tl w7" d="M84 196 Q82 212 76 222"/>
+    <path class="tl w7" d="M116 196 Q118 212 124 222"/>
+    <path class="tk w4 fsh" d="M52 233 C50 222 62 215 76 217 C87 218 93 225 93 233 Z"/>
+    <path class="tk w4 fsh" d="M148 233 C150 222 138 215 124 217 C113 218 107 225 107 233 Z"/>
+    <path d="M60 222 Q66 219 72 220" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".55"/>
+    <path d="M140 222 Q134 219 128 220" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".55"/>
+  </g>
+  <g id="tm-torso">
+    <path class="tk w5 fb" d="M100 84 C118 78 137 82 151 92 C166 104 174 122 173 142 C172 176 142 202 100 202 C58 202 28 176 27 142 C26 122 34 104 49 92 C63 82 82 78 100 84Z"/>
+    <path class="fs" d="M152 108 C172 140 160 190 104 199 C150 186 166 150 152 108Z" opacity=".55"/>
+    <ellipse class="sh" cx="62" cy="108" rx="15" ry="7" transform="rotate(-38 62 108)"/>
+    <circle class="sh" cx="78" cy="94" r="3.5"/>
+    <path class="tk w5 fw" d="M66 80 C48 78 42 54 58 46 C56 27 79 18 91 29 C97 12 124 11 129 28 C142 18 163 30 155 49 C169 57 161 80 134 80 Z"/>
+    <path class="tk w3 nf" d="M92 38 Q96 56 92 74 M116 36 Q112 56 116 74" opacity=".28"/>
+    <rect class="tk w5 fw" x="61" y="71" width="78" height="21" rx="9"/>
+  </g>
+  <g id="tm-eyes">
+    <ellipse class="tk w4 fw" cx="80" cy="128" rx="13" ry="17"/>
+    <ellipse class="tk w4 fw" cx="120" cy="128" rx="13" ry="17"/>
+    <circle class="fi" cx="83" cy="132" r="7.5"/><circle class="fi" cx="117" cy="132" r="7.5"/>
+    <circle cx="86" cy="128.5" r="2.6" fill="#fff"/><circle cx="120" cy="128.5" r="2.6" fill="#fff"/>
+  </g>
+  <g id="tm-cheeks"><ellipse class="fc" cx="56" cy="154" rx="10" ry="6"/><ellipse class="fc" cx="144" cy="154" rx="10" ry="6"/></g>
+  <g id="tm-brows"><path class="tk w6 nf" d="M66 104 Q78 96 91 103 M109 103 Q122 96 134 104"/></g>
+  <g id="tm-grin">
+    <path class="tk w4 fm" d="M82 153 Q100 157 118 153 Q116 178 100 179 Q84 178 82 153Z"/>
+    <path class="ft" d="M90 171 Q100 164 110 171 Q106 177 100 177 Q94 177 90 171Z"/>
+  </g>
+  <g id="tm-glove">
+    <path class="tk w4 fw" d="M-8 10 C-15 4 -16 -10 -8 -16 C-3 -20 5 -20 9 -15 C15 -9 15 4 9 10 Z"/>
+    <ellipse class="tk w4 fw" cx="-13" cy="0" rx="5.5" ry="7.5" transform="rotate(-25 -13 0)"/>
+    <path class="tk w2 nf" d="M-2 -17 V-9 M4 -16 V-9"/>
+    <rect class="tk w4 fw" x="-10" y="8" width="20" height="9" rx="4"/>
+  </g>
+  <g id="tm-cup">
+    <path class="tk w4 fw" d="M10 -15 C-6 -19 -18 -4 -12 9 C-8 17 4 19 10 13 L5 6 C-1 9 -6 4 -5 -2 C-4 -8 2 -9 8 -7 Z"/>
+    <rect class="tk w4 fw" x="-9" y="13" width="18" height="8" rx="4" transform="rotate(25 0 17)"/>
+  </g>
+  <g id="tm-sparks" class="fy">
+    <path d="M14 34 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4z"/>
+    <path d="M184 20 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/>
+    <path d="M196 92 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z"/>
+    <path d="M2 100 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z"/>
+  </g>
+
+  <symbol id="t-hello" viewBox="-14 -10 228 254">
+    <path class="tl w7" d="M34 146 Q12 168 30 190"/><use href="#tm-glove" transform="translate(30 194) rotate(172)"/>
+    <use href="#tm-legs"/><use href="#tm-torso"/><use href="#tm-eyes"/><use href="#tm-brows"/><use href="#tm-cheeks"/><use href="#tm-grin"/>
+    <path class="tl w7" d="M166 140 Q194 128 184 94"/><use href="#tm-glove" transform="translate(184 86) rotate(14)"/>
+    <path class="tk w3 nf" d="M200 64 Q208 78 202 92 M190 54 Q196 50 202 52" opacity=".5"/>
+  </symbol>
+
+  <symbol id="t-think" viewBox="-14 -10 228 254">
+    <path class="tl w7" d="M34 146 Q12 168 30 190"/><use href="#tm-glove" transform="translate(30 194) rotate(172)"/>
+    <use href="#tm-legs"/><use href="#tm-torso"/>
+    <ellipse class="tk w4 fw" cx="80" cy="128" rx="13" ry="17"/><ellipse class="tk w4 fw" cx="120" cy="128" rx="13" ry="17"/>
+    <circle class="fi" cx="85" cy="122" r="7.5"/><circle class="fi" cx="124" cy="122" r="7.5"/>
+    <circle cx="88" cy="119" r="2.6" fill="#fff"/><circle cx="127" cy="119" r="2.6" fill="#fff"/>
+    <path class="tk w6 nf" d="M66 106 Q78 101 91 106 M109 98 Q122 88 135 96"/>
+    <use href="#tm-cheeks"/>
+    <path class="tk w5 nf" d="M88 162 Q94 157 100 162 Q106 167 112 161"/>
+    <path class="tl w7" d="M164 152 Q176 192 146 192"/><use href="#tm-glove" transform="translate(134 184) rotate(-70)"/>
+    <circle class="tk w3 fw" cx="166" cy="62" r="5"/><circle class="tk w3 fw" cx="181" cy="42" r="7"/><circle class="tk w3 fw" cx="198" cy="16" r="10"/>
+  </symbol>
+
+  <symbol id="t-listen" viewBox="-14 -10 228 254">
+    <g transform="rotate(-6 100 234)">
+      <path class="tl w7" d="M164 148 Q188 168 170 190"/><use href="#tm-glove" transform="translate(170 194) rotate(188)"/>
+      <use href="#tm-legs"/><use href="#tm-torso"/>
+      <ellipse class="tk w4 fw" cx="80" cy="127" rx="14" ry="19"/><ellipse class="tk w4 fw" cx="120" cy="127" rx="14" ry="19"/>
+      <circle class="fi" cx="78" cy="126" r="7"/><circle class="fi" cx="114" cy="126" r="7"/>
+      <circle cx="81" cy="122.5" r="2.6" fill="#fff"/><circle cx="117" cy="122.5" r="2.6" fill="#fff"/>
+      <path class="tk w6 nf" d="M65 98 Q78 88 92 96 M108 96 Q122 88 135 98"/>
+      <use href="#tm-cheeks"/>
+      <path class="tk w5 nf" d="M88 160 Q100 170 112 160"/>
+      <path class="tl w7" d="M36 140 Q14 132 24 112"/><use href="#tm-cup" transform="translate(26 106)"/>
+    </g>
+    <path class="tk w3 nf" d="M4 86 Q-4 104 4 122 M-8 78 Q-18 104 -8 130" opacity=".45"/>
+  </symbol>
+
+  <symbol id="t-explain" viewBox="-14 -10 228 254">
+    <path class="tl w7" d="M32 150 Q8 152 6 128"/><use href="#tm-glove" transform="translate(6 120) rotate(-22)"/>
+    <use href="#tm-legs"/><use href="#tm-torso"/><use href="#tm-eyes"/>
+    <path class="tk w6 nf" d="M66 100 Q78 92 91 99 M109 99 Q122 92 134 100"/>
+    <use href="#tm-cheeks"/>
+    <ellipse class="tk w4 fm" cx="100" cy="164" rx="10" ry="12"/>
+    <path class="ft" d="M93 170 Q100 165 107 170 Q104 175 100 175 Q96 175 93 170Z"/>
+    <path class="tl w7" d="M168 150 Q192 152 194 128"/><use href="#tm-glove" transform="translate(194 120) rotate(22)"/>
+  </symbol>
+
+  <symbol id="t-cheer" viewBox="-14 -10 228 254">
+    <use href="#tm-sparks"/>
+    <path class="tl w7" d="M38 132 Q12 114 20 74"/><use href="#tm-glove" transform="translate(20 66) rotate(-14)"/>
+    <path class="tl w7" d="M162 132 Q188 114 180 74"/><use href="#tm-glove" transform="translate(180 66) rotate(14)"/>
+    <use href="#tm-legs"/><use href="#tm-torso"/>
+    <path class="tk w6 nf" d="M68 130 Q80 114 92 130 M108 130 Q120 114 132 130"/>
+    <path class="tk w6 nf" d="M66 100 Q78 90 91 97 M109 97 Q122 90 134 100"/>
+    <use href="#tm-cheeks"/>
+    <path class="tk w4 fm" d="M74 148 Q100 152 126 148 Q123 188 100 189 Q77 188 74 148Z"/>
+    <path class="ft" d="M86 178 Q100 168 114 178 Q108 187 100 187 Q92 187 86 178Z"/>
+  </symbol>
+
+  <symbol id="t-head" viewBox="20 6 160 200">
+    <use href="#tm-torso"/><use href="#tm-eyes"/><use href="#tm-brows"/><use href="#tm-cheeks"/><use href="#tm-grin"/>
+  </symbol>
+  <symbol id="t-head-listen" viewBox="20 6 160 200">
+    <use href="#tm-torso"/>
+    <ellipse class="tk w4 fw" cx="80" cy="127" rx="14" ry="19"/><ellipse class="tk w4 fw" cx="120" cy="127" rx="14" ry="19"/>
+    <circle class="fi" cx="80" cy="124" r="7"/><circle class="fi" cx="118" cy="124" r="7"/>
+    <circle cx="83" cy="120.5" r="2.6" fill="#fff"/><circle cx="121" cy="120.5" r="2.6" fill="#fff"/>
+    <path class="tk w6 nf" d="M65 98 Q78 88 92 96 M108 96 Q122 88 135 98"/>
+    <use href="#tm-cheeks"/><path class="tk w5 nf" d="M88 160 Q100 170 112 160"/>
+  </symbol>
+
+  <!-- ========== ingredients, viewBox 0 0 48 48 ========== -->
+  <symbol id="i-egg" viewBox="0 0 48 48">
+    <path class="ik c-egg" d="M24 6 C33 6 39 18 39 28 C39 37 32 43 24 43 C16 43 9 37 9 28 C9 18 15 6 24 6Z"/>
+    <ellipse cx="18" cy="18" rx="3" ry="5.5" fill="#fff" transform="rotate(20 18 18)"/>
+  </symbol>
+  <symbol id="i-carrot" viewBox="0 0 48 48">
+    <path class="ik c-grn" d="M33 15 C31 7 35 3 38 3 C39 8 37 12 35 15Z M35 16 C40 10 45 12 46 14 C42 18 38 18 35 16Z"/>
+    <path class="ik c-car" d="M9 41 C6 38 26 17 31 13 C35 10 40 14 37 18 C33 23 12 44 9 41Z"/>
+    <path class="ik iv" d="M18 31 l4 3 M24 24 l4 3 M30 18 l3 2"/>
+  </symbol>
+  <symbol id="i-onion" viewBox="0 0 48 48">
+    <path class="ik c-oni" d="M24 5 C26 12 37 16 38 27 C39 37 32 42 24 42 C16 42 9 37 10 27 C11 16 22 12 24 5Z"/>
+    <path class="c-oni2" d="M24 10 C19 20 19 32 24 42 M24 10 C29 20 29 32 24 42" stroke-width="2" fill="none"/>
+    <path class="ik iv" d="M20 43 l-2 3 M24 43 v3 M28 43 l2 3"/>
+  </symbol>
+  <symbol id="i-cheese" viewBox="0 0 48 48">
+    <path class="ik c-chz2" d="M5 22 L36 11 L43 22 Z"/>
+    <path class="ik c-chz" d="M5 22 H43 V37 H5Z"/>
+    <circle class="c-hole" cx="15" cy="30" r="3.2"/><circle class="c-hole" cx="30" cy="32" r="2.4"/><circle class="c-hole" cx="36" cy="26.5" r="2"/>
+  </symbol>
+  <symbol id="i-spinach" viewBox="0 0 48 48">
+    <path class="ik c-grn2" d="M9 41 C4 22 19 6 41 6 C43 27 30 41 9 41Z"/>
+    <path class="c-lv" d="M9 41 C19 31 28 21 39 9 M20 30 L19 21 M27 22 L26 14 M20 30 L29 31 M27 22 L35 23" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </symbol>
+  <symbol id="i-tomato" viewBox="0 0 48 48">
+    <path class="ik c-tom" d="M24 12 C36 12 43 19 43 28 C43 37 35 43 24 43 C13 43 5 37 5 28 C5 19 12 12 24 12Z"/>
+    <path class="ik c-grn" d="M24 15 L17 10 L21 16 L13 17 L21 19 L24 24 L27 19 L35 17 L27 16 L31 10 Z"/>
+    <ellipse cx="14" cy="25" rx="3" ry="5" fill="#fff" opacity=".55" transform="rotate(30 14 25)"/>
+  </symbol>
+  <symbol id="i-chicken" viewBox="0 0 48 48">
+    <path class="ik c-chk" d="M8 28 C6 16 19 8 30 12 C41 16 44 29 35 35 C27 41 10 40 8 28Z"/>
+    <path class="c-chk2" d="M15 24 Q20 20 26 22 M18 31 Q25 27 32 30" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+  </symbol>
+  <symbol id="i-fish" viewBox="0 0 48 48">
+    <path class="ik c-fish" d="M6 24 C12 14 26 12 34 22 L44 14 L42 24 L44 34 L34 26 C26 36 12 34 6 24Z"/>
+    <circle class="fi" cx="13" cy="22" r="2" style="fill:var(--i-ink)"/>
+  </symbol>
+  <symbol id="i-sprout" viewBox="0 0 48 48">
+    <path class="ik iv" style="stroke:#2E8A44;stroke-width:3" d="M24 44 V22"/>
+    <path class="ik c-grn" d="M24 24 C14 26 6 18 6 10 C16 8 24 14 24 24Z"/>
+    <path class="ik c-grn2" d="M24 20 C28 10 38 6 44 10 C42 20 32 24 24 20Z"/>
+  </symbol>
+  <symbol id="i-plate" viewBox="0 0 48 48">
+    <circle class="ik c-plate" cx="26" cy="26" r="16"/>
+    <circle class="ik iv" cx="26" cy="26" r="10"/>
+    <path class="ik iv" style="stroke-width:2.6" d="M6 6 V16 M3 6 V13 Q3 17 6 17 Q9 17 9 13 V6 M6 17 V44"/>
+  </symbol>
+
+  <!-- ========== UI glyphs ========== -->
+  <symbol id="g-cam" viewBox="0 0 24 24"><path d="M3 8h4l1.6-2.4h6.8L17 8h4v12H3z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="12" cy="13.5" r="3.6" fill="none" stroke="currentColor" stroke-width="2.2"/></symbol>
+  <symbol id="g-mic" viewBox="0 0 24 24"><rect x="8.5" y="2.5" width="7" height="12" rx="3.5" fill="currentColor"/><path d="M5 11a7 7 0 0014 0M12 18v3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="g-chk" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="g-back" viewBox="0 0 24 24"><path d="M15 4.5L7.5 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="g-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 5.5l6.5 6.5-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="g-status" viewBox="0 0 52 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="4.5" y="6" width="3" height="6" rx="1" fill="currentColor"/><rect x="9" y="3.5" width="3" height="8.5" rx="1" fill="currentColor"/><rect x="13.5" y="1" width="3" height="11" rx="1" fill="currentColor"/><path d="M21 4.5a8 8 0 0111 0M23.2 7a4.8 4.8 0 016.6 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="26.5" cy="10" r="1.4" fill="currentColor"/><rect x="35.5" y="1.5" width="14" height="9" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="37.3" y="3.3" width="10.4" height="5.4" rx="1.2" fill="currentColor"/><rect x="50.5" y="4.5" width="1.5" height="3" rx=".7" fill="currentColor"/></symbol>
+
+  <!-- ========== filters and patterns ========== -->
+  <filter id="stk" x="-15%" y="-15%" width="130%" height="135%">
+    <feMorphology in="SourceAlpha" operator="dilate" radius="4" result="d"/>
+    <feFlood flood-color="#ffffff"/><feComposite in2="d" operator="in" result="w"/>
+    <feOffset in="d" dx="0" dy="4" result="o"/>
+    <feFlood flood-color="#22152E" flood-opacity=".22"/><feComposite in2="o" operator="in" result="s"/>
+    <feMerge><feMergeNode in="s"/><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="b"/>
+    <feFlood flood-color="#FFB25E" flood-opacity=".55"/><feComposite in2="b" operator="in" result="g"/>
+    <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <pattern id="tiles" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#CFE6E0"/><path d="M22 0V22H0" stroke="#B6D6CE" stroke-width="2" fill="none"/></pattern>
+  <pattern id="tilesN" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#1E1A2C"/><path d="M22 0V22H0" stroke="#2A2540" stroke-width="2" fill="none"/></pattern>
+  <radialGradient id="lamp" cx="50%" cy="30%" r="60%"><stop offset="0" stop-color="#FFC277" stop-opacity=".6"/><stop offset=".5" stop-color="#FF9F4A" stop-opacity=".2"/><stop offset="1" stop-color="#FF9F4A" stop-opacity="0"/></radialGradient>
+  <radialGradient id="burner" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FF7A2F" stop-opacity=".85"/><stop offset="1" stop-color="#FF7A2F" stop-opacity="0"/></radialGradient>
+
+  <!-- shared kitchen pieces for C -->
+  <g id="c-lampshade">
+    <path d="M196 0 V22" style="stroke:var(--ink)" stroke-width="2.5"/>
+    <path class="tk w3" d="M174 42 Q196 14 218 42 Z" style="fill:#D8432C"/>
+    <ellipse cx="196" cy="44" rx="9" ry="4" fill="#FFE2A8"/>
+  </g>
+  <g id="c-counter">
+    <rect x="-4" y="212" width="282" height="14" rx="3" style="fill:var(--wood);stroke:#22192B" stroke-width="3"/>
+    <rect x="0" y="226" width="274" height="40" style="fill:var(--wood2)"/>
+    <path d="M60 232 V266 M150 232 V266 M230 232 V266" stroke="#000" stroke-opacity=".18" stroke-width="2"/>
+  </g>
+</defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+ <symbol id="s-pan" viewBox="0 0 240 150">
+   <rect x="182" y="70" width="58" height="13" rx="6" fill="#2b2b30" stroke="#24172B" stroke-width="3"/>
+   <ellipse cx="100" cy="82" rx="92" ry="50" fill="#3b3b42" stroke="#24172B" stroke-width="4"/>
+   <ellipse cx="100" cy="78" rx="78" ry="40" fill="#55555e"/>
+   <g transform="translate(40 46) scale(1.15)"><use href="#i-chicken" width="48" height="48"/></g>
+   <g transform="translate(98 40) scale(1.25) rotate(8 24 24)"><use href="#i-chicken" width="48" height="48"/></g>
+   <path d="M60 30 q-6 -8 0 -16 q6 -8 0 -16 M100 24 q-6 -8 0 -16 q6 -8 0 -16 M140 30 q-6 -8 0 -16 q6 -8 0 -16" fill="none" stroke="#c9c2bb" stroke-width="3" stroke-linecap="round" opacity=".8" transform="translate(0 6)"/>
+ </symbol>
+ <symbol id="g-flame" viewBox="0 0 24 24"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3-1-6 1-9z" fill="currentColor"/></symbol>
+ <symbol id="g-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="3" fill="currentColor"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="currentColor" stroke-width="2.6"/></symbol>
+ <symbol id="g-pan" viewBox="0 0 24 24"><ellipse cx="10" cy="13" rx="8" ry="6" fill="currentColor"/><rect x="16" y="11.5" width="7" height="3" rx="1.5" fill="currentColor"/></symbol>
+ <symbol id="g-path" viewBox="0 0 24 24"><circle cx="7" cy="6" r="3.2" fill="currentColor"/><circle cx="17" cy="12" r="3.2" fill="currentColor"/><circle cx="8" cy="19" r="3.2" fill="currentColor"/></symbol>
+ <symbol id="g-plate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/></symbol>
+ <symbol id="g-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z" fill="currentColor"/></symbol>
+ <symbol id="g-fridge" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M5 10h14M8 5v3M8 13v4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+ <symbol id="g-knife" viewBox="0 0 24 24"><path d="M3 19 L17 5 C20 3 22 6 20 8 L8 20 Z" fill="currentColor"/></symbol>
+ <symbol id="g-oven" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="6.5" y="9" width="11" height="8" rx="1.5" fill="currentColor"/><circle cx="8" cy="6" r="1.2" fill="currentColor"/><circle cx="12" cy="6" r="1.2" fill="currentColor"/></symbol>
+ <symbol id="g-table" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="4" rx="2" fill="currentColor"/><rect x="5" y="11" width="2.6" height="9" rx="1.3" fill="currentColor"/><rect x="16.4" y="11" width="2.6" height="9" rx="1.3" fill="currentColor"/></symbol>
+ <symbol id="s-lid" viewBox="0 0 130 70"><path d="M6 62 a59 54 0 0 1 118 0z" fill="#d9d8de" stroke="#24172B" stroke-width="3"/><rect x="2" y="60" width="126" height="8" rx="4" fill="#9d9ca6" stroke="#24172B" stroke-width="3"/><ellipse cx="65" cy="8" rx="9" ry="6" fill="#9d9ca6" stroke="#24172B" stroke-width="3"/><path d="M28 40 Q36 22 54 16" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/></symbol>
+</defs></svg>
+
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+<style>
+.wrap{max-width:1500px}
+.grid{display:flex;flex-wrap:wrap;gap:26px 20px;margin-top:20px}
+.cell{flex:0 0 auto;width:300px}
+.cell .cap{font-size:13px;color:var(--page-muted);margin-top:10px;text-align:center}
+.cell .cap b{display:block;color:var(--page-ink);font-size:14px}
+.ctl{display:flex;gap:8px;align-items:center;margin:26px 0 6px;font-size:14px;color:var(--page-muted)}
+.ctl button{font:inherit;font-weight:600;border:1px solid var(--page-line);background:var(--page-card);color:var(--page-ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.ctl button[aria-pressed="true"]{background:var(--page-ink);color:var(--page)}
+.ba{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;margin-top:24px;align-items:start}
+.ba img{width:100%;border-radius:14px;border:1px solid var(--page-line)}
+.ba .chg{background:var(--page-card);border:1px solid var(--page-line);border-radius:16px;padding:16px 20px;font-size:14.5px}
+.ba h3{margin:0 0 8px;font-size:16px}
+.ba ol{margin:0;padding-left:20px}.ba li{margin:6px 0}
+@media (max-width:900px){.ba{grid-template-columns:minmax(0,1fr)}}
+
+/* ---- show kit v2 ---- */
+.scr .sf,.scr .sheet,.scr .streak{color:var(--ink)}
+.scr .sf .mut,.scr .sheet .mut{color:var(--mut2)}
+.scr .sf .chip,.scr .sheet .chip{color:var(--mut2);background:rgba(60,20,30,.08)}
+.scr .tab span{color:var(--mut2)}.scr .tab span.on{color:var(--acc)}
+.scr .btn{font-size:17px;letter-spacing:.01em}
+.val{position:absolute;left:0;right:0;top:0;height:56px;z-index:4;background:repeating-linear-gradient(90deg,#9E221B 0 10px,#C4342A 10px 20px,#84190F 20px 26px);box-shadow:0 3px 0 #FFC83D}
+.val::after{content:"";position:absolute;left:0;right:0;bottom:-17px;height:28px;background:radial-gradient(circle at 50% 0,#9E221B 13px,transparent 14px);background-size:28px 28px}
+.cur{position:absolute;top:0;width:52px;z-index:3;background:repeating-linear-gradient(90deg,#9E221B 0 10px,#C4342A 10px 20px,#84190F 20px 26px);box-shadow:0 10px 20px rgba(0,0,0,.3)}
+.cur.l{left:0;border-radius:0 0 90% 0}.cur.r{right:0;border-radius:0 0 0 90%}
+.spot{position:absolute;left:50%;top:0;width:360px;margin-left:-180px;height:420px;background:linear-gradient(180deg,var(--beam) 0,transparent 96%);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%);pointer-events:none;z-index:1}
+.floor{position:absolute;left:-30px;right:-30px;border-radius:50%;background:radial-gradient(closest-side,var(--floor),var(--floor2));z-index:1}
+.marq{position:absolute;z-index:5;padding:7px;border-radius:18px;background:radial-gradient(circle,#FFE9A8 2.6px,transparent 3.1px) 0 0/14px 14px,#3A1420;box-shadow:0 0 26px rgba(255,200,61,.4),0 6px 0 rgba(0,0,0,.25)}
+.marq>div{background:var(--acc);color:#fff;border-radius:12px;text-align:center;padding:8px 10px;font-family:"Lilita One"}
+.marq small{display:block;font:900 10.5px Nunito;letter-spacing:.24em;color:#FFE9A8}
+.l3{display:inline-flex;border-radius:9px;overflow:hidden;font:400 13px "Lilita One";box-shadow:0 4px 10px rgba(0,0,0,.25);white-space:nowrap}
+.l3 i{font-style:normal;background:var(--acc);color:#fff;padding:5px 9px}
+.l3 span{background:var(--gold);color:#2B1A24;padding:5px 11px}
+.onair{display:inline-flex;align-items:center;gap:6px;background:var(--acc);color:#fff;border-radius:99px;font:900 10.5px Nunito;padding:3px 9px;letter-spacing:.1em}
+.onair::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff}
+.cue{position:absolute;left:16px;right:16px;height:48px;border-radius:14px;background:var(--sf);color:var(--ink);display:flex;align-items:center;padding:0 14px;font:800 14.5px Nunito;gap:12px;box-shadow:var(--cs)}
+.cue::before{content:"";width:20px;height:20px;border-radius:50%;border:2.5px solid #cfc2c6;flex:none}
+.cue.on{box-shadow:0 0 0 3px var(--acc),var(--cs)}
+.cue.on::before{border-color:var(--acc);background:radial-gradient(circle,var(--acc) 5px,transparent 6px)}
+.tile{position:absolute;width:122px;height:104px;border-radius:16px;background:var(--sf);color:var(--ink);overflow:hidden;box-shadow:var(--cs)}
+.tile .tv{height:58px;background:var(--c);position:relative;display:grid;place-items:center}
+.tile .tv svg{width:42px;height:42px}
+.tile b{display:block;font:400 14px "Lilita One";padding:6px 10px 0}
+.tile small{display:block;font:800 10.5px Nunito;color:var(--mut2);padding:0 10px}
+.tile .badge{position:absolute;right:6px;top:6px;width:22px;height:22px;border-radius:50%;background:#fff;display:grid;place-items:center;color:#F2A900}
+.tile .badge svg{width:14px;height:14px}
+.tile.lock .tv{background:repeating-linear-gradient(0deg,#b9adb3 0 3px,#a3969d 3px 6px);color:#fff}
+.tile.lock .tv svg{width:22px;height:22px}
+.tile.lock{opacity:.8}
+.mon{position:absolute;left:14px;right:14px;border:6px solid var(--sf);border-radius:24px;overflow:hidden;box-shadow:var(--cs);background-color:#FFE7CC;background-image:linear-gradient(rgba(180,90,40,.13) 2px,transparent 2px),linear-gradient(90deg,rgba(180,90,40,.13) 2px,transparent 2px);background-size:24px 24px}
+.mon .ctr{position:absolute;left:0;right:0;bottom:0;height:50px;background:#C98B55;border-top:8px solid #8A5A3A}
+.pill{position:absolute;background:var(--sf);color:var(--ink);border-radius:99px;font:900 11px Nunito;padding:3px 10px;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.tvset{position:absolute;left:22px;right:22px;border-radius:28px;background:var(--sf);color:var(--ink);box-shadow:var(--cs),inset 0 -8px 0 rgba(60,20,30,.08)}
+.tvset .glass{position:absolute;left:14px;right:14px;top:14px;height:206px;border-radius:20px;background:#1E1026;overflow:hidden;color:#FFF3E0;text-align:center}
+.tvset .bars{height:10px;background:linear-gradient(90deg,#fff 0 14%,#FFD23F 14% 28%,#4DD8E8 28% 42%,#55C96B 42% 57%,#E86AD0 57% 71%,#E5432B 71% 85%,#3F6FE0 85%)}
+.tvset .knob{position:absolute;bottom:16px;width:26px;height:26px;border-radius:50%;background:#2B1A24;box-shadow:inset 0 0 0 5px #5a4650}
+.tvset .grille{position:absolute;right:20px;bottom:20px;width:70px;height:18px;background:repeating-linear-gradient(90deg,#cfc2c6 0 3px,transparent 3px 8px)}
+.ans{position:absolute;left:16px;right:16px;border-radius:16px;background:var(--sf);color:var(--ink);display:flex;gap:12px;padding:8px 12px;font:800 13.5px Nunito;align-items:center;box-shadow:var(--cs)}
+.ans .k{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:400 17px "Lilita One";color:#fff;flex:none;box-shadow:inset 0 -4px 0 rgba(0,0,0,.22)}
+.ans.hit{box-shadow:0 0 0 3px #2F9E5B,var(--cs);align-items:flex-start}
+.ans.hit small{display:block;font:700 12px Nunito;color:var(--mut2);margin-top:3px}
+.burst{position:absolute;width:70px;height:70px;border-radius:50%;background:var(--gold);color:#2B1A24;display:grid;place-items:center;font:400 14px "Lilita One";transform:rotate(12deg);box-shadow:0 0 0 4px #fff,0 6px 14px rgba(0,0,0,.3);z-index:6}
+.score{position:absolute;width:80px;height:78px;border-radius:16px;background:var(--sf);text-align:center;padding-top:10px;color:var(--acc);font:400 24px "Lilita One";box-shadow:var(--cs)}
+.score small{display:block;font:900 10px Nunito;color:var(--mut2);letter-spacing:.06em;margin-top:1px}
+.glow{position:absolute;border-radius:50%;background:radial-gradient(closest-side,var(--beam2),transparent);z-index:1}
+
+.srow{position:absolute;left:14px;right:14px;height:52px;border-radius:16px;background:var(--sf);color:var(--ink);display:flex;align-items:center;gap:12px;padding:0 12px;box-shadow:var(--cs)}
+.srow .ic2{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;flex:none;color:#fff}
+.srow .ic2 svg{width:26px;height:26px}
+.srow b{display:block;font:400 15px "Lilita One"}
+.srow small{display:block;font:800 11px Nunito;color:var(--mut2)}
+.srow .rt{margin-left:auto;color:#F2A900}
+.srow.now{box-shadow:0 0 0 3px var(--acc),var(--cs)}
+.srow.lock{opacity:.7}
+.dots{display:flex;gap:4px}.dots i{width:10px;height:10px;border-radius:50%;background:#e3d7d2}.dots i.on{background:var(--acc)}
+.sec{left:18px;font:900 11px Nunito;letter-spacing:.14em;text-transform:uppercase;color:var(--goldtx)}
+.ing{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(60,20,30,.1);font:800 13.5px Nunito}
+.ing:last-child{border:0}
+.ing em{font-style:normal;font-size:10.5px;color:var(--acc);margin-left:8px;font-weight:900}
+.ing span:last-child{color:var(--mut2)}
+.sethead{margin:54px 0 0;padding-top:30px;border-top:1px solid var(--page-line)}
+.sethead h2{font-size:30px;margin:4px 0 6px;letter-spacing:-.015em}
+.sethead p{margin:0;color:var(--page-muted);max-width:780px}
+.take{background:#fff5d6;color:#3d2f00;border-radius:14px;padding:14px 18px;margin-top:16px;font-size:15px;max-width:900px}
+@media (prefers-color-scheme: dark){.take{background:#3a3016;color:#fbecc0}}
+</style>
+<style>
+/* ---- round 13 additions ---- */
+.cue small{display:block;font:700 11.5px Nunito;color:var(--mut2)}
+.cue.sq::before{border-radius:7px}
+.cue.sq.on::before{content:"✓";color:#fff;background:var(--acc);border-color:var(--acc);font:900 13px Nunito;display:grid;place-items:center}
+.pks{position:absolute;left:14px;right:14px;display:flex;flex-wrap:wrap;gap:8px}
+.pk{background:var(--sf);color:var(--ink);border-radius:99px;font:800 13px Nunito;padding:7px 12px;box-shadow:var(--cs);white-space:nowrap}
+.pk.on{background:var(--acc);color:#fff}
+.pk.more{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 2px currentColor;opacity:.75}
+.cz em{font-style:normal;font-size:22px;line-height:1;flex:none}
+.cz span{position:absolute;right:9px;top:8px}
+@keyframes scanmove{0%,100%{top:8px}50%{top:186px}}
+.mon .scan{animation:scanmove 2.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.mon .scan{animation:none}}
+.tag{position:absolute;z-index:3;background:#24172B;color:#fff;font:900 9.5px Nunito;padding:2px 6px;border-radius:6px;white-space:nowrap}
+.tag.q{background:#FFC83D;color:#24172B}
+.jar{position:absolute;width:30px;height:38px;border-radius:7px 7px 9px 9px;background:#C98B55;border:3px solid #24172B}
+.jar::before{content:"";position:absolute;left:-3px;right:-3px;top:-9px;height:8px;border-radius:3px;background:#E5432B;border:3px solid #24172B}
+.qbox{position:absolute;border:2px dashed #FFC83D;border-radius:8px}
+.feel{margin-top:56px;padding-top:28px;border-top:1px solid var(--page-line)}
+.feel h2{font-size:28px;margin:4px 0 4px;letter-spacing:-.015em}
+.feel p{margin:0 0 14px;color:var(--page-muted);max-width:780px}
+.feel table{border-collapse:collapse;width:100%;max-width:1000px;font-size:14.5px;background:var(--page-card);border:1px solid var(--page-line);border-radius:16px;overflow:hidden}
+.feel th,.feel td{text-align:left;padding:10px 14px;border-top:1px solid var(--page-line);vertical-align:top}
+.feel th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--page-muted);border-top:0}
+.feel td:first-child{font-weight:700;white-space:nowrap}
+.feel code{font-size:13px}
+.feel ul{margin:14px 0 0;padding-left:20px;max-width:900px;color:var(--page-muted)}
+.pk svg{width:18px;height:18px;vertical-align:-4px;margin-right:5px}
+.pk u{text-decoration:none;color:var(--mut2);margin-left:7px;font-weight:900}
+.fld{position:absolute;left:16px;right:16px;height:54px;border-radius:14px;background:var(--sf);color:var(--ink);padding:8px 14px;box-shadow:var(--cs);font:800 14.5px Nunito}
+.fld small{display:block;font:900 10px Nunito;letter-spacing:.1em;color:var(--mut2);text-transform:uppercase}
+.fld.ph{color:var(--mut2);display:flex;align-items:center;justify-content:space-between;height:46px}
+.fld.ph b{color:var(--acc);font:900 20px Nunito}
+.cz{position:absolute;width:122px;height:58px;border-radius:14px;background:var(--sf);color:var(--ink);font:400 15px "Lilita One";display:flex;align-items:center;gap:8px;line-height:1.05;padding:0 18px 0 10px;box-shadow:var(--cs);border-left:8px solid var(--c)}
+.cz.on{box-shadow:0 0 0 3px var(--acc),var(--cs)}
+.cz span{font:900 13px Nunito;color:var(--acc)}
+.stp{position:absolute;left:16px;right:16px;height:88px;border-radius:16px;background:var(--sf);color:var(--ink);box-shadow:var(--cs);padding:10px 14px}
+.stp small{font:900 10.5px Nunito;letter-spacing:.1em;color:var(--mut2);text-transform:uppercase}
+.stp .r{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.stp .r b{font:400 30px "Lilita One"}
+.stp .r b em{font:800 12px Nunito;font-style:normal;color:var(--mut2);margin-left:6px}
+.stp .r i{font-style:normal;width:40px;height:40px;border-radius:50%;background:rgba(60,20,30,.08);display:grid;place-items:center;font:900 22px Nunito;color:var(--acc)}
+.lnk{position:absolute;left:14px;right:14px;height:42px;border-radius:13px;background:var(--sf);color:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:800 13.5px Nunito;box-shadow:var(--cs)}
+.lnk span{color:var(--mut2);font-size:12px}
+.frg{position:absolute;width:132px;height:196px;border-radius:18px;background:#EAF4FF;border:5px solid #24172B;overflow:hidden;z-index:2}
+.frg>i{position:absolute;left:0;right:0;height:4px;background:#24172B;opacity:.3}
+.frgd{position:absolute;width:24px;height:196px;border-radius:4px 16px 16px 4px;background:#FFF7EA;border:5px solid #24172B;z-index:2}
+.scan{position:absolute;left:0;right:0;height:4px;background:#FFC83D;box-shadow:0 0 16px 6px rgba(255,200,61,.6)}
+.ans small{display:block;font:700 12px Nunito;color:var(--mut2);margin-top:3px}
+.ans.miss{box-shadow:0 0 0 3px #E0892B,var(--cs);align-items:flex-start}
+.txt{font:800 13px/1.35 Nunito}
+.sechead{margin:56px 0 0;padding-top:28px;border-top:1px solid var(--page-line)}
+.sechead h2{font-size:28px;margin:4px 0 4px;letter-spacing:-.015em}
+.sechead p{margin:0;color:var(--page-muted);max-width:780px}
+.words{margin-top:22px;background:var(--page-card);border:1px solid var(--page-line);border-radius:16px;padding:16px 20px;max-width:900px}
+.words h3{margin:0 0 10px;font-size:16px}
+.words div{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px 24px;font-size:14.5px}
+.words span b{font-weight:700}
+.words span i{font-style:normal;color:var(--page-muted)}
+</style>
+
+<style>
+.wave{position:absolute;display:flex;gap:5px;align-items:center;justify-content:center;height:40px;z-index:3}
+.wave i{display:block;width:6px;border-radius:4px;background:var(--acc)}
+.msg{position:absolute;max-width:206px;border-radius:16px;padding:8px 12px;font:800 13px/1.3 Nunito;box-shadow:var(--cs);z-index:3}
+.msg.me{right:14px;background:var(--acc);color:#fff;border-bottom-right-radius:5px}
+.msg.tomi{left:56px;background:var(--sf);color:var(--ink);border-bottom-left-radius:5px}
+.msg small{display:block;font:800 10.5px Nunito;color:var(--mut2);margin-top:4px}
+.tog{position:absolute;right:14px;width:42px;height:24px;border-radius:99px;background:var(--acc)}
+.tog::after{content:"";position:absolute;right:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff}
+.err{position:absolute;left:16px;right:16px;font:800 12.5px/1.3 Nunito;color:#fff;background:#B8321F;border-radius:12px;padding:8px 12px;z-index:3}
+.ticket{position:absolute;left:46px;right:46px;height:116px;border-radius:14px;background:var(--gold);color:#2B1A24;text-align:center;padding-top:18px;box-shadow:var(--cs);transform:rotate(-4deg);z-index:2}
+.ticket::before,.ticket::after{content:"";position:absolute;top:44px;width:22px;height:22px;border-radius:50%;background:var(--bg)}
+.ticket::before{left:-11px}.ticket::after{right:-11px}
+.rate{position:absolute;left:16px;right:16px;display:flex;gap:10px;z-index:3}
+.rate span{flex:1;border-radius:16px;background:var(--sf);color:var(--ink);text-align:center;padding:10px 4px;font:800 12px Nunito;box-shadow:var(--cs)}
+.rate span em{display:block;font-style:normal;font-size:26px;line-height:1.2}
+.rate span.on{box-shadow:0 0 0 3px var(--acc),var(--cs)}
+.dotsload{position:absolute;left:0;right:0;display:flex;gap:8px;justify-content:center;z-index:5}
+.dotsload i{width:10px;height:10px;border-radius:50%;background:var(--gold);opacity:.5}
+.dotsload i:first-child{opacity:1}
+</style>
+<div class="wrap">
+  <div class="kicker">Tomi design / round 15 / 19 November 2026</div>
+  <h1 class="top">The screens round 13 left out.</h1>
+  <p class="lede">Eighteen more screens in the Cooking Show look: what the app has today but round 13 did not show, and what open issues will need. Same look, same show words. The last part sketches later phases, so their issues have a picture to point at.</p>
+  <div class="toc" id="toc"></div>
+  <div class="ctl">Lighting <button data-m="eve" aria-pressed="true">Evening show (dark)</button><button data-m="day" aria-pressed="false">Morning show (light)</button></div>
+  <div id="sections"></div>
+  <div class="feel">
+    <div class="kicker">With round 13 and round 14</div>
+    <h2>Where every screen now stands</h2>
+    <table>
+      <tr><th>Area</th><th>Mocked in</th><th>Still open</th></tr>
+      <tr><td>Start, sign-in, onboarding</td><td>Round 13, plus launch, email ticket, sign-in error and permission primers here</td><td>App icon (#51)</td></tr>
+      <tr><td>Home, skills, settings</td><td>Round 13 ("Dressing room" renamed Settings), plus editing one answer and Tomi's voice here</td><td>-</td></tr>
+      <tr><td>Fridge to dish</td><td>Round 13; real photos in round 14 (you liked 8C and 9A)</td><td>Which photo option ships, after issue tomi-backend#56</td></tr>
+      <tr><td>Cooking, quiz, wrap</td><td>Round 13, plus rating, missing episode, streak lost and season finale here</td><td>Your plate photo at the wrap (round 14, 9C) is undecided</td></tr>
+      <tr><td>Later phases</td><td>Sketches here: Ask Tomi, listening, pantry by voice, reruns</td><td>Ask Tomi needs a decision: AGENTS.md now says no AI runs on the phone</td></tr>
+    </table>
+  </div>
+  <section class="pick" style="position:static" data-lavish-question="round15">
+    <h2>What should change?</h2>
+    <div class="sel">Name the screen and say what is off. Or say "issues" and I open the epic and its issues.</div>
+    <textarea id="notes" placeholder="For example: the season finale needs more fanfare"></textarea>
+    <button id="queue" type="button">Queue my notes</button>
+  </section>
+</div>
+<script>
+/* ---------- small builders ---------- */
+var SB = '<div class="sb">9:41<svg><use href="#g-status"/></svg></div>';
+function T(p, w, css) { return '<svg class="tm" style="width:' + w + 'px;height:' + Math.round(w * 1.114) + 'px;' + (css || '') + '"><use href="#t-' + p + '"/></svg>'; }
+function HEAD(w, css) { return '<svg class="tm" style="width:' + w + 'px;height:' + Math.round(w * 1.25) + 'px;' + (css || '') + '"><use href="#t-head"/></svg>'; }
+function I(n, w, css) { return '<svg class="ab" style="width:' + w + 'px;height:' + w + 'px;' + (css || '') + '"><use href="#i-' + n + '"/></svg>'; }
+function G(n, w) { return '<svg style="width:' + w + 'px;height:' + w + 'px;vertical-align:-3px"><use href="#g-' + n + '"/></svg>'; }
+function BUB(t, css) { return '<div class="bub" style="' + css + '">' + t + '</div>'; }
+function BTN(t, css) { return '<span class="btn" style="' + (css || '') + '">' + t + '</span>'; }
+function TAB(on) {
+  var icons = ['path', 'plate', 'fridge'];
+  var out = '<div class="tab">';
+  icons.forEach(function (n, i) { out += '<span class="' + (i === on ? 'on' : '') + '">' + G(n, 22) + '</span>'; });
+  out += '<span><svg style="width:24px;height:30px"><use href="#t-head"/></svg></span></div>';
+  return out;
+}
+function STREAK(css) { return '<div class="streak ab" style="' + css + '">' + G('flame', 15) + '3 weeks</div>'; }
+var DISH = 'Seared chicken thighs with a lemon-butter pan sauce';
+var KIT = function (counterTop, extra) {
+  return '<div class="kit"><div class="win"><i></i></div><div class="hooks"><i style="left:20px;height:26px"></i><i style="left:58px;height:34px"></i><i style="left:96px;height:22px"></i></div>' + (extra || '') + '<div class="counter" style="top:' + counterTop + 'px"></div></div>';
+};
+
+var DISH = 'Seared chicken thighs with a lemon-butter pan sauce';
+
+var BASE = '--acc:#E5432B;--onacc:#fff;--hf:"Lilita One";--hw:400;--bf:Nunito;--btf:"Lilita One";--bw:400;--r:20px;--br:16px;--bs:0 4px 0 #A82A18;--ink:#2B1A24;--mut2:#7A6470;--bubfg:#2B1A24;--t-ink:#24172B;';
+var EVE = BASE + '--bg:#24122E;--bgimg:radial-gradient(90% 60% at 50% 0,#4A2358 0,transparent 70%);--fg:#FFF3E0;--mut:#CDB7D6;--sf:#FFF7EA;--gold:#FFC83D;--goldtx:#FFC83D;--beam:rgba(255,226,150,.22);--beam2:rgba(255,226,150,.30);--floor:#6A3644;--floor2:#3E1E2B;--cs:0 8px 22px rgba(0,0,0,.35);';
+var DAY = BASE + '--bg:#FFEBD2;--bgimg:radial-gradient(90% 60% at 50% 0,#FFF9EE 0,transparent 70%);--fg:#2B1A24;--mut:#7A6470;--sf:#FFFFFF;--gold:#FFC83D;--goldtx:#A85F00;--beam:rgba(255,190,60,.30);--beam2:rgba(255,190,60,.35);--floor:#EBC198;--floor2:#D9A26E;--cs:0 8px 22px rgba(120,50,20,.16);';
+var SBV = SB.replace('class="sb"', 'class="sb" style="color:#FFF3E0"');
+function L3(tag, text, css) { return '<div class="ab l3" style="' + css + ';z-index:5">' + (tag ? '<i>' + tag + '</i>' : '') + '<span>' + text + '</span></div>'; }
+function MARQ(small, big, css, size) { return '<div class="marq" style="' + css + '"><div>' + (small ? '<small>' + small + '</small>' : '') + '<span style="font-size:' + (size || 26) + 'px;line-height:1.05">' + big + '</span></div></div>'; }
+function CURT(h) { return '<div class="val"></div><div class="cur l" style="height:' + h + 'px"></div><div class="cur r" style="height:' + h + 'px"></div>'; }
+function TOP(p) { return '<span class="x">✕</span><div class="stepbar"><i style="width:' + p + '%"></i></div>'; }
+function FOOT(label, extra) { return '<div class="ab" style="left:16px;right:16px;bottom:22px;z-index:6">' + (extra || '') + BTN(label) + '</div>'; }
+var MIC = '<div class="mic" style="margin-bottom:9px">' + G('mic', 13) + 'Tomi is listening for "next"</div>';
+DISH = 'Seared chicken thighs with a lemon pan sauce';
+var EP = 'Season 3 · Episode 2 · Pan sauces';
+
+/* ---------- round 13 helpers ---------- */
+function BACK() { return '<div class="ab" style="left:16px;top:50px;color:var(--fg);z-index:5">' + G('back', 22) + '</div>'; }
+function H(t, top, size, extra) { return '<div class="ab h" style="left:18px;right:18px;top:' + top + 'px;font-size:' + (size || 24) + 'px;line-height:1.12;' + (extra || '') + '">' + t + '</div>'; }
+function P(t, top, extra) { return '<div class="ab mut" style="left:18px;right:18px;top:' + top + 'px;font:800 12.5px/1.35 Nunito;' + (extra || '') + '">' + t + '</div>'; }
+var CEN = 'text-align:center;';
+function ASK(n, pose, text) {
+  return SB + L3(n + ' of 7', 'Contestant profile', 'left:16px;top:56px') + '<div class="glow" style="left:-20px;top:90px;width:150px;height:130px"></div>' +
+    T(pose, 112, 'left:2px;top:92px') + BUB(text, 'left:116px;top:104px;width:152px;font-size:13.5px');
+}
+function CUE(y, text, on, sq, sub) {
+  return '<div class="cue' + (on ? ' on' : '') + (sq ? ' sq' : '') + '" style="top:' + y + 'px' + (sub ? ';height:58px' : '') + '">' + (sub ? '<div>' + text + '<small>' + sub + '</small></div>' : text) + '</div>';
+}
+function PKS(top, items) {
+  return '<div class="pks" style="top:' + top + 'px">' + items.map(function (it) {
+    var on = typeof it !== 'string';
+    if (!on && it.charAt(0) === '+') { return '<span class="pk more">' + it + '</span>'; }
+    return '<span class="pk' + (on ? ' on' : '') + '">' + (on ? '✓ ' + it[0] : it) + '</span>';
+  }).join('') + '</div>';
+}
+function FOUND(top, items) {
+  return '<div class="pks" style="top:' + top + 'px">' + items.map(function (it) {
+    return '<span class="pk">' + (it[1] ? '<svg><use href="#i-' + it[1] + '"/></svg>' : '') + it[0] + '<u>✕</u></span>';
+  }).join('') + '</div>';
+}
+function SECL(t, top) { return '<div class="ab sec" style="top:' + top + 'px">' + t + '</div>'; }
+function FLD(top, label, value) { return '<div class="fld" style="top:' + top + 'px"><small>' + label + '</small>' + value + '</div>'; }
+function ADD(top, text) { return '<div class="fld ph" style="top:' + top + 'px">' + text + '<b>+</b></div>'; }
+function CZ(x, y, c, name, on, emo) { return '<div class="cz' + (on ? ' on' : '') + '" style="left:' + x + 'px;top:' + y + 'px;--c:' + c + '"><em>' + emo + '</em>' + name + (on ? '<span>✓</span>' : '') + '</div>'; }
+function STP(top, label, n, unit) { return '<div class="stp" style="top:' + top + 'px"><small>' + label + '</small><div class="r"><i>−</i><b>' + n + '<em>' + unit + '</em></b><i>+</i></div></div>'; }
+function LNK(top, a, b) { return '<div class="lnk" style="top:' + top + 'px">' + a + '<span>' + b + ' ›</span></div>'; }
+function FOOT2(label, link) { return '<div class="ab" style="left:16px;right:16px;bottom:14px;z-index:6">' + BTN(label) + '<div class="mut" style="text-align:center;font:800 12.5px Nunito;margin-top:10px">' + link + '</div></div>'; }
+function FOOTD(label) { return '<div class="ab" style="left:16px;right:16px;bottom:22px;z-index:6">' + BTN(label, 'opacity:.45;box-shadow:none') + '</div>'; }
+function CARD(label, body) { return '<div class="sf" style="padding:10px 14px"><div class="mut" style="font:900 10.5px Nunito;letter-spacing:.12em">' + label + '</div>' + body + '</div>'; }
+function STACK(top, cards) { return '<div class="ab" style="left:14px;right:14px;top:' + top + 'px;display:flex;flex-direction:column;gap:10px;z-index:2">' + cards.join('') + '</div>'; }
+function TILE(x, y, c, food, title, sub, star) {
+  return '<div class="tile" style="left:' + x + 'px;top:' + y + 'px;--c:' + c + '"><div class="tv"><svg><use href="#i-' + food + '"/></svg>' + (star ? '<span class="badge">' + G('star', 14) + '</span>' : '') + '</div><b>' + title + '</b><small>' + sub + '</small></div>';
+}
+function LOCKT(x, y, title, sub) { return '<div class="tile lock" style="left:' + x + 'px;top:' + y + 'px"><div class="tv">' + G('lock', 22) + '</div><b>' + title + '</b><small>' + sub + '</small></div>'; }
+function ROW(y, food, c, title, sub, right, cls) {
+  return '<div class="srow ' + (cls || '') + '" style="top:' + y + 'px"><span class="ic2" style="background:' + c + '">' + (food ? '<svg><use href="#i-' + food + '"/></svg>' : G('lock', 16)) + '</span><div><b>' + title + '</b><small>' + sub + '</small></div><span class="rt">' + right + '</span></div>';
+}
+function DOTS(n, of) { var o = '<span class="dots">'; for (var i = 0; i < of; i++) { o += '<i class="' + (i < n ? 'on' : '') + '"></i>'; } return o + '</span>'; }
+function CONF(list) { return list.map(function (c) { return '<i class="ab" style="z-index:4;left:' + c[0] + 'px;top:' + c[1] + 'px;width:8px;height:13px;border-radius:2px;background:' + c[2] + ';transform:rotate(' + c[3] + 'deg)"></i>'; }).join(''); }
+var QTOP = function (bub) {
+  return SB + TOP(86) + L3('', 'Quick quiz', 'left:16px;top:78px') + '<div class="glow" style="left:-20px;top:108px;width:140px;height:120px"></div>' +
+    T('think', 92, 'left:4px;top:110px') + BUB(bub, 'left:102px;top:126px;width:164px;font-size:14.5px');
+};
+function KEY(l, c) { return '<span class="k" style="background:' + c + '">' + l + '</span>'; }
+var TV = function (inner, extra) { return '<div class="tvset" style="top:80px;height:284px"><div class="glass">' + inner + '</div><i class="knob" style="left:20px"></i><i class="knob" style="left:56px"></i><i class="grille"></i></div>' + (extra || ''); };
+function RING(pct, small, big) {
+  return '<div class="tring" style="left:53px;top:56px;width:126px;height:126px;position:absolute;background:conic-gradient(var(--acc) 0 ' + pct + '%,rgba(255,255,255,.14) ' + pct + '% 100%)"><div style="width:104px;height:104px;background:#1E1026"><div><div style="font:900 9.5px Nunito;letter-spacing:.14em;color:#CDB7D6">' + small + '</div><div class="h" style="font-size:34px;line-height:1">' + big + '</div></div></div></div>';
+}
+
+/* ---------- round 15 helpers ---------- */
+function TITLE(t, top) { return '<div class="ab" style="left:48px;right:48px;top:' + (top || 52) + 'px;text-align:center;font:900 15px Nunito;color:var(--fg);z-index:5">' + t + '</div>'; }
+function NAV(t) { return BACK() + '<div class="ab" style="left:48px;right:48px;top:52px;text-align:center;font:900 15px Nunito;color:var(--fg);z-index:5">' + t + '</div>'; }
+function WAVE(top, hs) { return '<div class="wave" style="left:0;right:0;top:' + top + 'px">' + hs.map(function (h) { return '<i style="height:' + h + 'px"></i>'; }).join('') + '</div>'; }
+function MSG(who, top, text, small) { return '<div class="msg ' + who + '" style="top:' + top + 'px">' + text + (small ? '<small>' + small + '</small>' : '') + '</div>'; }
+function PRIMER(tag, pose, title, body, btn, link) {
+  return SB + TITLE(tag) + '<div class="glow" style="left:46px;top:96px;width:190px;height:170px"></div>' + T(pose, 138, 'left:72px;top:104px') +
+    H(title, 270, 22, CEN) + P(body, 336, CEN + 'font-size:13px') + FOOT2(btn, link);
+}
+
+var PARTS = [
+ ['Before the show', 'Starting up, signing up, and asking for the camera and reminders. The app has these today or needs them for TestFlight.', [
+  ['Lights up', 'Launch, while the app opens saved data and checks in with the server. Curtains closed, the sign warming up.', function () {
+    return '<div class="spot"></div>' + CURT(622) + SBV + MARQ("TOMI'S", 'Kitchen Show', 'left:44px;right:44px;top:200px', 30) +
+      '<div class="dotsload" style="top:330px"><i></i><i></i><i></i></div>' +
+      '<div class="ab" style="left:0;right:0;top:356px;text-align:center;font:800 12.5px Nunito;color:var(--fg);z-index:5">Warming up the lights</div>';
+  }],
+  ['Your ticket is in the post', 'After creating an account with email: confirm the address, then sign in.', function () {
+    return SB + NAV('Backstage pass') +
+      '<div class="ticket" style="top:108px"><div style="font:900 10.5px Nunito;letter-spacing:.2em">VIP</div><div class="h" style="font-size:24px;margin-top:4px">Opening night</div><div style="font:800 11.5px Nunito;margin-top:4px">you@example.com</div></div>' +
+      T('hello', 96, 'left:176px;top:208px;z-index:3') +
+      H('Check your email', 318, 25, CEN) + P("I sent a link to you@example.com. Tap it, then come back and sign in.", 354, CEN + 'font-size:13px') +
+      FOOT2('Sign in', 'Send the link again');
+  }],
+  ['Wrong pass', 'Sign-in failed. The words say what to do, and nothing typed is lost.', function () {
+    return SB + NAV('Backstage pass') + H('Sign in with email', 92, 26) +
+      FLD(140, 'Email', 'you@example.com') + '<div class="fld" style="top:204px;box-shadow:0 0 0 3px #B8321F,var(--cs)"><small>Password</small>••••••••••</div>' +
+      '<div class="err" style="top:268px">That email and password don\'t match. Try again, or reset your password.</div>' +
+      P('<b style="color:var(--acc)">Reset password</b>', 342, CEN) +
+      '<div class="glow" style="left:56px;top:372px;width:170px;height:130px"></div>' + T('think', 92, 'left:95px;top:380px') + FOOT('Sign in');
+  }],
+  ['May I see your fridge?', 'Camera primer, shown once before iOS asks. The full photo consent text comes separately, before Tomi goes beyond TestFlight (AGENTS.md).', function () {
+    return PRIMER('Live from your fridge', 'explain', 'May I see your fridge?', "Take a photo of your fridge and I'll spot what you have. I only use the camera when you tap to take one.", 'Turn on the camera', 'Not now · Type it instead');
+  }],
+  ['Camera is off', 'The camera was refused. Two other ways in, and a way to change it.', function () {
+    return SB + TITLE('Live from your fridge') + '<div class="frg" style="left:76px;top:104px;opacity:.55"><i style="top:62px"></i><i style="top:126px"></i></div><div class="frgd" style="left:206px;top:104px;opacity:.55"></div>' +
+      T('think', 100, 'left:150px;top:200px;z-index:3') +
+      H("The camera is off", 316, 23, CEN) + P('Turn it on in Settings, choose a photo you already took, or type what you have.', 352, CEN + 'font-size:13px') +
+      '<div class="ab" style="left:16px;right:16px;bottom:14px;z-index:6">' + BTN('Open Settings') + '<div class="mut" style="text-align:center;font:800 12.5px Nunito;margin-top:10px">Choose a photo · Type it instead</div></div>';
+  }],
+  ['Showtime reminders', 'Reminder primer before iOS asks for notifications. Ties to the showtimes answer.', function () {
+    return PRIMER('Showtimes', 'hello', 'Remind you on cooking nights?', 'You picked 3 showtimes a week. I can remind you at 6 pm on those nights. Nothing else, ever.', 'Remind me', 'Not now');
+  }]
+ ]],
+ ['Settings', 'Changing an answer later, and trying Tomi\'s voice.', [
+  ['Change one answer', 'Settings question. The same screen as onboarding, opened from Settings, with Save instead of Next. Anything typed asks which list it goes on: allergies are kept off strictly, rather-not is a preference.', function () {
+    return SB + NAV('Settings') + H('Keep off my plate', 90, 25) +
+      P('I check every dish against this list.', 124) + SECL('Allergies', 156) +
+      PKS(176, [['Milk'], 'Eggs', 'Peanuts', 'Tree nuts', 'Gluten', 'Shellfish', 'Sesame', 'Soy', '+ 6 more']) +
+      SECL('Rather not', 300) + PKS(320, [['Coriander'], 'Mushrooms', 'Olives', 'Anchovies', '+ more']) +
+      '<div class="fld" style="top:404px"><small>Something else</small>Sesame oil<span style="color:var(--acc)">|</span></div>' +
+      '<div class="ab" style="left:18px;right:16px;top:468px;display:flex;gap:8px;align-items:center;font:800 12.5px Nunito;color:var(--fg);z-index:3">Add to<span class="pk on" style="position:static">Allergies</span><span class="pk" style="position:static">Rather not</span></div>' + FOOT('Save');
+  }],
+  ["Tomi's voice", 'Voice try-out (issue #96). Hear Tomi, switch his voice off, and try reading speed.', function () {
+    return SB + NAV("Tomi's voice") + '<div class="glow" style="left:46px;top:84px;width:190px;height:160px"></div>' + T('explain', 120, 'left:81px;top:90px') +
+      WAVE(232, [10, 22, 34, 18, 28, 40, 24, 14, 30, 20, 12]) +
+      BUB('"Lay the thighs skin side down. Don\'t touch them!"', 'left:30px;right:30px;top:284px;text-align:center') +
+      '<div class="lnk" style="top:356px">Read steps aloud<i class="tog" style="top:9px"></i></div>' +
+      '<div class="lnk" style="top:406px">Speed<span>Normal ›</span></div>' +
+      '<div class="ab" style="left:16px;right:16px;bottom:22px;z-index:6;display:flex;gap:10px">' + BTN('▶ Speak', 'flex:1') + BTN('■ Stop', 'flex:1;background:var(--sf);color:var(--ink);box-shadow:var(--cs)') + '</div>';
+  }]
+ ]],
+ ['Showtime extras', 'After the cook, when an episode is missing, and the edges of the streak.', [
+  ['How did it go?', 'Rating after the wrap (issue #28). One tap, then on to the quiz.', function () {
+    return SB + TITLE("That's a wrap") + '<div class="glow" style="left:-20px;top:90px;width:150px;height:130px"></div>' +
+      T('cheer', 108, 'left:2px;top:94px') + BUB('How did tonight go?', 'left:116px;top:120px;width:140px;font-size:14px') +
+      '<div class="rate" style="top:226px"><span>' + T('cheer', 54, 'position:relative;display:block;margin:0 auto 2px') + 'Loved it</span><span class="on">' + T('hello', 54, 'position:relative;display:block;margin:0 auto 2px') + 'Good</span><span>' + T('think', 54, 'position:relative;display:block;margin:0 auto 2px') + 'Tricky</span></div>' +
+      SECL('What was tricky?', 340) + PKS(360, ['Timing', 'The sauce', ['Nothing'], 'Too long']) +
+      '<div class="lnk" style="top:452px">' + G('cam', 16) + '&nbsp;Snap your plate<span>Optional ›</span></div>' + FOOT('On to the quiz');
+  }],
+  ['Missing episode', 'The lesson cannot be opened (today\'s LessonMissingView). Nothing is guessed; back to the guide.', function () {
+    return SB + BACK() + '<div class="tvset" style="top:80px;height:224px"><div class="glass" style="height:150px"><div class="bars" style="height:150px"></div><div class="ab h" style="left:22px;right:22px;top:52px;background:#1E1026;color:#FFF3E0;border-radius:12px;padding:10px 6px;font-size:17px;text-align:center">Episode not found</div></div><i class="knob" style="left:20px"></i><i class="knob" style="left:56px"></i><i class="grille"></i></div>' +
+      H("I can't find this episode", 322, 23, CEN) + P("This dish didn't load, so I won't guess the steps. Pick another, or try again later.", 358, CEN + 'font-size:13px') +
+      '<div class="glow" style="left:71px;top:404px;width:140px;height:100px"></div>' + T('think', 80, 'left:101px;top:410px') + FOOT('Back to the guide');
+  }],
+  ['New week, new run', 'Streak lost (issue #30). Kind, no guilt, and the next goal is small.', function () {
+    return '<div class="spot"></div><div class="val"></div>' + SBV + MARQ('', 'New week, new run', 'left:44px;right:44px;top:84px', 20) +
+      '<div class="floor" style="top:292px;height:62px"></div>' + T('hello', 132, 'left:75px;top:168px') +
+      '<div class="sheet" style="padding-bottom:18px"><span class="chip">Last run: 3 weeks</span><span class="chip">Best: 5 weeks</span><div class="h" style="font-size:21px;line-height:1.12;margin:6px 0 4px">Busy week? That happens.</div><div class="mut txt" style="margin-bottom:12px">Cook 3 times this week and the streak starts again. Your skills and XP are all still here.</div>' + BTN('Find tonight\'s dish') + '</div>';
+  }],
+  ['Season finale', 'Every skill mastered (issue #30). The biggest curtain call, and what comes next.', function () {
+    return '<div class="spot"></div>' + CURT(390) + SBV + MARQ('SEASON', 'Finale!', 'left:56px;right:56px;top:84px', 30) +
+      CONF([[60, 176, '#FFC83D', 20], [214, 186, '#4DD8E8', -30], [58, 290, '#E86AD0', 50], [220, 280, '#FFC83D', 15], [140, 156, '#55C96B', 70], [100, 230, '#fff', -15], [184, 240, '#E86AD0', 30]]) +
+      '<div class="floor" style="top:318px;height:60px"></div>' + T('cheer', 150, 'left:66px;top:168px') +
+      '<div class="ab sf" style="left:16px;right:16px;top:400px;padding:12px 14px;z-index:5;text-align:center"><div class="mut" style="font:900 10.5px Nunito;letter-spacing:.12em">EVERY EPISODE MASTERED</div><div class="h" style="font-size:21px;margin:1px 0 2px">12 of 12 · ' + G('star', 18) + '</div><div class="mut txt">Keep cooking to hold your streak. New seasons come with updates.</div></div>' + FOOT('Back to the guide');
+  }]
+ ]],
+ ['Later phases', 'Sketches for open issues, so each has a picture to point at. Not final.', [
+  ['Call-in line', 'Ask Tomi (issue #41). Needs a decision first: AGENTS.md now says no AI runs on the phone, so answers would come from the server.', function () {
+    return SB + NAV('Call-in line') + HEAD(40, 'left:12px;top:150px') +
+      MSG('me', 96, 'Why did my sauce split?') +
+      MSG('tomi', 146, 'It got too hot after the butter went in. Take it off the heat and whisk in a spoon of cold water.') +
+      MSG('me', 262, 'And if I have no butter?') +
+      MSG('tomi', 312, 'Olive oil works. The sauce is thinner, so reduce it a little longer.', 'From the Pan sauces episode') +
+      '<div class="fld ph" style="top:494px;bottom:auto">Ask Tomi anything about tonight<b>' + G('mic', 18) + '</b></div>';
+  }],
+  ['Lines are down', 'When Tomi cannot answer (issue #43). Points to what still works.', function () {
+    return SB + NAV('Call-in line') + '<div class="glow" style="left:46px;top:100px;width:190px;height:160px"></div>' + T('listen', 128, 'left:77px;top:108px') +
+      H('The lines are down', 270, 24, CEN) + P("I can't take questions right now. The steps, timers and tips in tonight's episode all still work.", 306, CEN + 'font-size:13px') +
+      FOOT2('Back to the step', 'Try again');
+  }],
+  ['Tomi is listening', 'Hands-free voice (issues #44, #45). Shown whenever the microphone is on; speech stays on the phone.', function () {
+    return SB + TOP(42) + '<div class="mon" style="top:78px;height:150px"><div class="ctr"></div><svg style="position:absolute;left:44px;top:14px;width:170px;height:106px" viewBox="0 0 240 150"><use href="#s-pan"/></svg><span class="onair" style="position:absolute;left:10px;top:10px">LIVE</span></div>' +
+      '<div class="glow" style="left:56px;top:236px;width:170px;height:150px"></div>' + T('listen', 120, 'left:81px;top:240px') +
+      WAVE(380, [12, 24, 36, 22, 30, 16, 26, 10]) +
+      H('"Next"', 432, 26, CEN) + P('Say "next", "back", "repeat" or "timer". Hold the button to talk.', 470, CEN) +
+      '<div class="ab" style="left:16px;right:16px;bottom:22px;z-index:6">' + BTN(G('mic', 18) + ' Listening') + '</div>';
+  }],
+  ['Say what you have', 'Pantry by voice (issue #189). Tomi writes the list as you talk; you fix it before it is saved.', function () {
+    return SB + NAV('The cupboard') + T('listen', 80, 'left:6px;top:90px') +
+      BUB('"...two lemons, some rice and a bag of spinach."', 'left:92px;top:100px;width:176px') +
+      WAVE(180, [10, 20, 30, 16, 26, 12]) +
+      SECL('Heard so far', 236) + FOUND(256, [['Lemons', ''], ['Rice', ''], ['Spinach', 'spinach']]) +
+      P("I'll match each to Tomi's list before saving. Anything I can't match, I'll ask about.", 340, 'font-size:12.5px') +
+      ADD(400, 'Type one instead') + FOOT('Add 3 to the cupboard');
+  }],
+  ['Rerun', 'Review quiz on a busy day (issue #172). One question from an earlier episode, no cooking needed.', function () {
+    return SB + TOP(86) + TITLE('Rerun · from Sear', 76) + '<div class="glow" style="left:-20px;top:108px;width:140px;height:120px"></div>' +
+      T('think', 92, 'left:4px;top:110px') + BUB('Remember this one from an earlier episode?', 'left:102px;top:126px;width:164px;font-size:14.5px') +
+      '<div class="ans" style="top:246px;height:54px">' + KEY('A', '#E5432B') + 'Pat the chicken dry first</div>' +
+      '<div class="ans" style="top:312px;height:54px">' + KEY('B', '#2F9E5B') + 'Crowd the pan to save time</div>' +
+      '<div class="ans" style="top:378px;height:54px">' + KEY('C', '#3F6FE0') + 'Start in a cold pan</div>' +
+      P('Which one gives the crispest skin?', 450, CEN) + FOOTD('Pick an answer');
+  }]
+ ]]
+];
+
+var total = 0;
+PARTS.forEach(function (p) { total += p[2].length; });
+document.getElementById('toc').innerHTML = PARTS.map(function (p, i) { return '<a href="#part' + (i + 1) + '">' + (i + 1) + '. ' + p[0] + ' (' + p[2].length + ')</a>'; }).join('');
+function render(tokens) {
+  document.getElementById('sections').innerHTML = PARTS.map(function (p, i) {
+    return '<div class="sechead" id="part' + (i + 1) + '"><div class="kicker">Part ' + (i + 1) + ' of ' + PARTS.length + ' · ' + p[2].length + ' screens</div><h2>' + p[0] + '</h2><p>' + p[1] + '</p></div><div class="grid">' +
+      p[2].map(function (s) { return '<div class="cell"><div class="phone"><div class="scr" style=\'' + tokens + '\'>' + s[2]() + '</div></div><div class="cap"><b>' + s[0] + '</b>' + s[1] + '</div></div>'; }).join('') + '</div>';
+  }).join('');
+}
+function setMode(m) {
+  render(m === 'day' ? DAY : EVE);
+  document.querySelectorAll('.ctl button').forEach(function (o) { o.setAttribute('aria-pressed', String(o.dataset.m === m)); });
+}
+setMode(location.hash === '#day' ? 'day' : 'eve');
+document.querySelectorAll('.ctl button').forEach(function (b) { b.addEventListener('click', function () { setMode(b.dataset.m); }); });
+document.getElementById('queue').addEventListener('click', function (e) {
+  var notes = document.getElementById('notes').value.trim();
+  if (!notes) return;
+  var text = 'Round 15 (missing screens): ' + notes;
+  if (window.lavish) window.lavish.queuePrompt(text, { tag: 'feedback', text: text, element: e.currentTarget, queueKey: 'round15', data: { notes: notes } });
+});
+</script>
+</body>
+</html>
