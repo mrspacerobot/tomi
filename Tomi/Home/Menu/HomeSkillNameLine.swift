@@ -7,10 +7,10 @@ struct HomeSkillNameLine: View {
 
     var body: some View {
         layout {
-            Text(skill.name).textStyle(.dish)
+            Text(skill.name).textStyle(.cardTitle)
                 .fixedSize(horizontal: false, vertical: true)
                 .layoutPriority(1)
-            if !dynamicTypeSize.isAccessibilitySize { DottedLeader() }
+            if !dynamicTypeSize.isAccessibilitySize { Spacer(minLength: ShowSize.gap) }
             HomeSkillProgressMark(skill: skill)
         }
     }
@@ -27,6 +27,6 @@ struct HomeSkillNameLine: View {
     if let skill = HomeMenuPreviewData.menu?.courses.first?.skills.first {
         HomeSkillRow(skill: skill)
             .padding()
-            .background(ColorRole.paper.color)
+            .background { ShowStage() }
     }
 }

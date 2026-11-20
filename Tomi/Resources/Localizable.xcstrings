@@ -3052,12 +3052,26 @@
     "cooking.introduction.open": {
       "comment": "Button on a recipe detail screen to open the graph-authored cooking introduction.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Learn the technique" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Learn the technique"
+          }
+        }
+      }
     },
     "cooking.introduction.title": {
       "comment": "Navigation title for the cooking introduction screen.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Introduction" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Introduction"
+          }
+        }
+      }
     },
     "cooking.introduction.meta": {
       "comment": "Metadata below the recipe title. The placeholders are the technique name, step count, and the server supplied yield. No total time is shown.",
@@ -3066,8 +3080,18 @@
         "en": {
           "variations": {
             "plural": {
-              "one": { "stringUnit": { "state": "translated", "value": "Practises %1$@ · %2$lld step · %3$@" } },
-              "other": { "stringUnit": { "state": "translated", "value": "Practises %1$@ · %2$lld steps · %3$@" } }
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Practises %1$@ · %2$lld step · %3$@"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Practises %1$@ · %2$lld steps · %3$@"
+                }
+              }
             }
           }
         }
@@ -3076,107 +3100,254 @@
     "cooking.theTechnique": {
       "comment": "Label interrupting the double rule around graph-authored teaching prose.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "The technique" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The technique"
+          }
+        }
+      }
     },
     "cooking.whyTonight": {
       "comment": "Section heading for the server's optional reason for ranking this suggestion.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Why tonight" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Why tonight"
+          }
+        }
+      }
     },
     "cooking.youWillUse": {
       "comment": "Section heading above the adapted recipe ingredient list.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "You will use" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You will use"
+          }
+        }
+      }
     },
     "cooking.getOut": {
       "comment": "Section heading above the equipment checklist and preparation items.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Get out" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get out"
+          }
+        }
+      }
     },
     "cooking.start": {
       "comment": "Button that checks the latest profile and opens recipe preparation.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Start cooking" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start cooking"
+          }
+        }
+      }
     },
     "cooking.notTonight": {
       "comment": "Button to leave the introduction or preparation and return to the same suggestion.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Not tonight" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not tonight"
+          }
+        }
+      }
     },
     "cooking.draft.label": {
       "comment": "Explicit label shown when graph teaching is draft testing content.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Draft testing content" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Draft testing content"
+          }
+        }
+      }
     },
     "cooking.unavailable.adaptation": {
       "comment": "Explains that teaching is unavailable when the recipe has an ingredient change.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "A guided introduction is unavailable for this adapted recipe." } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A guided introduction is unavailable for this adapted recipe."
+          }
+        }
+      }
     },
     "cooking.refresh.refused.title": {
       "comment": "Alert title when a fresh profile check fails or restrictions changed.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Please check tonight's dishes again" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please check tonight's dishes again"
+          }
+        }
+      }
     },
     "cooking.refresh.refused.message": {
       "comment": "Alert message explaining why starting was refused after the latest profile check.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Your answers could not be confirmed. Get new suggestions before starting." } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your answers could not be confirmed. Get new suggestions before starting."
+          }
+        }
+      }
     },
     "cooking.preparation.title": {
       "comment": "Navigation title for the preparation checklist.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Preparation" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preparation"
+          }
+        }
+      }
     },
     "cooking.ingredients": {
       "comment": "Section heading above the adapted ingredient checklist.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Ingredients" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ingredients"
+          }
+        }
+      }
     },
     "cooking.equipment": {
       "comment": "Section heading above the equipment preparation checklist.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Equipment" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Equipment"
+          }
+        }
+      }
     },
     "cooking.steps.begin": {
       "comment": "Button on the preparation checklist that starts the guided steps.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Begin the steps" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Begin the steps"
+          }
+        }
+      }
     },
     "cooking.steps.title": {
       "comment": "Navigation title for the guided cooking steps.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Cooking" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cooking"
+          }
+        }
+      }
     },
     "cooking.steps.progress": {
       "comment": "Where the cook is in the recipe, above a step. The first number is the step shown, counted from 1; the second is how many steps the recipe has. Shown in capitals by the design.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Step %1$lld of %2$lld" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step %1$lld of %2$lld"
+          }
+        }
+      }
     },
     "cooking.steps.next": {
       "comment": "Button on a cooking step that moves on to the next step.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Next step" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next step"
+          }
+        }
+      }
     },
     "cooking.steps.previous": {
       "comment": "Button on a cooking step that goes back to the step before.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Previous step" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Previous step"
+          }
+        }
+      }
     },
     "cooking.steps.finish": {
       "comment": "Button on the last cooking step, and on a recipe without steps, that returns to the recipe details.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Back to the recipe" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to the recipe"
+          }
+        }
+      }
     },
     "cooking.steps.none": {
       "comment": "Shown instead of the steps when a recipe arrived without any steps.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "This recipe has no steps to follow." } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This recipe has no steps to follow."
+          }
+        }
+      }
     },
     "common.okay": {
       "comment": "Button that dismisses an alert.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "OK" } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
     },
     "suggestion.omitted": {
       "comment": "What the recipe leaves out for this cook. The placeholder is a list of names joined by the app, or one name.",
@@ -3193,7 +3364,14 @@
     "cooking.checkingProfile": {
       "comment": "Button label while checking the latest profile before preparation.",
       "extractionState": "manual",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Checking your answers..." } } }
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking your answers..."
+          }
+        }
+      }
     },
     "suggestion.checked": {
       "comment": "Under a dish on suggestion: the diet and avoid items the server checked it against. The placeholder is a list of their names joined by the app.",
@@ -4161,6 +4339,102 @@
           "stringUnit": {
             "state": "translated",
             "value": "A new week"
+          }
+        }
+      }
+    },
+    "guide.title": {
+      "comment": "Title and tab for Home in the Cooking Show.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Episode guide"
+          }
+        }
+      }
+    },
+    "guide.allSeasons": {
+      "comment": "Link and title for the complete course and skill list.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All seasons"
+          }
+        }
+      }
+    },
+    "guide.onAir": {
+      "comment": "Label on the fridge entry card at Home.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On air tonight"
+          }
+        }
+      }
+    },
+    "guide.settings": {
+      "comment": "Title of the Cooking Show settings screens.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        }
+      }
+    },
+    "guide.levelComplete": {
+      "comment": "Shows a mastered episode or complete level.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mastered"
+          }
+        }
+      }
+    },
+    "guide.levelLocked": {
+      "comment": "Shows a locked episode or level.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Locked"
+          }
+        }
+      }
+    },
+    "guide.levelName": {
+      "comment": "Episode level title. The placeholders are the level number and the server-provided name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Level %1$lld · %2$@"
+          }
+        }
+      }
+    },
+    "guide.levelCooks": {
+      "comment": "Server progress for a level. The placeholders are completed cooks and required cooks.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld of %2$lld cooks"
           }
         }
       }

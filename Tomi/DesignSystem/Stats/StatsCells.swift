@@ -4,6 +4,7 @@ import SwiftUI
 /// cannot hold their words, so the stats are stacked instead.
 struct StatsCells: View {
     let stats: [Stat]
+    var showStyle = false
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
@@ -11,7 +12,7 @@ struct StatsCells: View {
         let layout = layout(isStacked: isStacked)
         layout {
             ForEach(Array(stats.enumerated()), id: \.offset) { index, stat in
-                StatCell(stat: stat)
+                StatCell(stat: stat, showStyle: showStyle)
                     .overlay(alignment: dividerEdge(isStacked: isStacked)) {
                         if index > 0 {
                             StatDivider(isStacked: isStacked)

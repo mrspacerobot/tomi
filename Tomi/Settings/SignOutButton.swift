@@ -9,7 +9,10 @@ struct SignOutButton: View {
             Task { await flow.signOut() }
         } label: {
             Text(.settingsSignOut)
+                .textStyle(.showLede)
+                .frame(minHeight: TouchTarget.minimum)
         }
+        .buttonStyle(.plain)
         .accessibilityIdentifier("settings-sign-out")
     }
 }

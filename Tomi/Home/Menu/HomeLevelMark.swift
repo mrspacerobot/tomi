@@ -6,12 +6,12 @@ struct HomeLevelMark: View {
 
     var body: some View {
         HStack(spacing: Spacing.xSmall) {
-            Text(.homeSkillLevel(progress.currentLevel)).textStyle(.status)
+            Text(.homeSkillLevel(progress.currentLevel)).textStyle(.showNote)
             if let level = progress.levelInProgress {
-                LevelDiamonds(level: level)
+                Text(.guideLevelCooks(level.cooks, level.cooksToComplete)).textStyle(.showNote)
             }
         }
-        .foregroundStyle(ColorRole.inkFaded.color)
+
     }
 }
 

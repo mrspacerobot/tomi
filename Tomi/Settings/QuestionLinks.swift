@@ -1,14 +1,15 @@
 import SwiftUI
 
-/// A link to every question about the cook.
 struct QuestionLinks: View {
     var body: some View {
         ForEach(ProfileQuestion.allCases, id: \.self) { question in
             NavigationLink(value: HomeRoute.question(question)) {
-                Text(question.title)
-                    .textStyle(.body)
+                ShowCard { SettingsQuestionLabel(question: question) }
             }
+            .buttonStyle(.plain)
             .accessibilityIdentifier("settings-" + question.identifier)
         }
     }
 }
+
+#Preview { NavigationStack { QuestionLinks().padding().background { ShowStage() } } }
