@@ -8,7 +8,7 @@ struct RecipeYieldLine: View {
     var body: some View {
         if let words = Self.words(for: yields) {
             Text(verbatim: words)
-                .textStyle(.body)
+                .textStyle(.showText)
                 .accessibilityIdentifier("suggestion-yield")
         }
     }

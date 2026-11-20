@@ -18,7 +18,7 @@ struct CookingStepControls: View {
                 } label: {
                     Text(.cookingStepsPrevious).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.tomiSecondary)
+                .buttonStyle(ShowSecondaryButtonStyle())
                 .accessibilityIdentifier("cooking-step-previous")
             }
         }
@@ -33,7 +33,7 @@ struct CookingStepControls: View {
             } label: {
                 Text(.cookingStepsNext).frame(maxWidth: .infinity)
             }
-            .buttonStyle(.tomiPrimary)
+            .buttonStyle(ShowPrimaryButtonStyle())
             .accessibilityIdentifier("cooking-step-next")
         }
     }

@@ -12,11 +12,11 @@ struct CookingIntroductionActions: View {
                 Text(model.isRefreshingProfile ? .cookingCheckingProfile : .cookingStart)
                     .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.tomiPrimary)
+            .buttonStyle(ShowPrimaryButtonStyle())
             .disabled(!model.suggestion.canOfferTeaching || model.isRefreshingProfile)
             .accessibilityIdentifier("cooking-start")
             Button(action: close) { Text(.cookingNotTonight).frame(maxWidth: .infinity) }
-                .buttonStyle(.tomiSecondary)
+                .buttonStyle(ShowSecondaryButtonStyle())
                 .accessibilityIdentifier("cooking-not-tonight")
         }
     }

@@ -10,7 +10,7 @@ struct CookingQuizNextButton: View {
         } label: {
             Text(label).frame(maxWidth: .infinity)
         }
-        .buttonStyle(.tomiPrimary)
+        .buttonStyle(ShowPrimaryButtonStyle())
         .accessibilityIdentifier("cooking-quiz-next")
     }
 

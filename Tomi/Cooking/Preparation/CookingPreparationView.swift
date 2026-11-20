@@ -10,14 +10,15 @@ struct CookingPreparationView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.xLarge) {
-                Text(suggestion.title).textStyle(.displayM)
+                ShowLowerThird(title: .showtimePlaces)
+                Text(suggestion.title).textStyle(.showTitle)
                 CookingPreparationChecklist(suggestion: suggestion)
                 CookingBeginStepsButton(suggestion: suggestion, flow: flow, path: $path)
                 CookingReturnButton(path: $path)
             }
             .padding(Spacing.screenMargin)
         }
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
         .navigationTitle(Text(.cookingPreparationTitle))
         .navigationBarTitleDisplayMode(.inline)
     }
