@@ -19,7 +19,7 @@ final class ShowHostGalleryUITests: XCTestCase {
         let smiling = app.element("host-idle")
         XCTAssertTrue(smiling.waitForExistence(timeout: 5))
         await checkFigures(in: app)
-        await app.buttons["Settings"].assertTomatoRendered()
+        await app.buttons["Your answers"].assertTomatoRendered()
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = "host-poses-\(appearance)"
         attachment.lifetime = .keepAlways
