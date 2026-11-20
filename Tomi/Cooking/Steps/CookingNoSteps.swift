@@ -6,7 +6,7 @@ struct CookingNoSteps: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xLarge) {
-            Text(.cookingStepsNone).textStyle(.body)
+            Text(.cookingStepsNone).textStyle(.showLede)
             CookingReturnButton(path: $path, words: .cookingStepsFinish, identifier: "cooking-steps-finish")
         }
         .padding(Spacing.screenMargin)

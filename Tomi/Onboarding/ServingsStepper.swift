@@ -6,21 +6,15 @@ struct ServingsStepper: View {
     static let mostServings = 12
 
     let draft: AnswersDraft
-    @Environment(\.usesShowQuestionStyle) private var showStyle
 
     var body: some View {
         QuestionStepperCard {
             Stepper(value: servings, in: CookProfile.minimumServings...Self.mostServings) {
                 Text(.questionTableServings(draft.answers.servings))
-                    .textStyle(captionStyle)
+                    .textStyle(.showBodyStrong)
             }
             .accessibilityIdentifier("servings")
         }
-    }
-
-    private var captionStyle: TextStyle {
-        if showStyle { return .showBodyStrong }
-        return .body
     }
 
     private var servings: Binding<Int> {

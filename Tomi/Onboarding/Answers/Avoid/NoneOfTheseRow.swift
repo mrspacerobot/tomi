@@ -5,7 +5,7 @@ struct NoneOfTheseRow: View {
     let draft: AnswersDraft
 
     var body: some View {
-        QuestionChoiceRow(choice: choice, selected: draft.answers.avoid.isEmpty) {
+        ShowQuestionChoice(choice: choice, selected: draft.answers.avoid.isEmpty) {
             draft.answers.avoid = []
         }
         .accessibilityIdentifier("avoid-none")

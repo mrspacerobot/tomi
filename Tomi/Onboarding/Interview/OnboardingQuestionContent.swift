@@ -15,6 +15,5 @@ struct OnboardingQuestionContent: View {
 #Preview {
     let flow = AppFlowModel.preview()
     OnboardingQuestionContent(model: OnboardingModel(profile: flow.profile, options: FakeServerData().options))
-        .environment(\.usesShowQuestionStyle, true)
         .background { ShowStage() }
 }

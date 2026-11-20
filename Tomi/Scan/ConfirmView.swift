@@ -22,7 +22,6 @@ struct ConfirmView: View {
             .padding(ShowSize.edge)
         }
         .scrollDismissesKeyboard(.interactively)
-        .environment(\.usesShowQuestionStyle, true)
     }
 }
 

@@ -4,27 +4,16 @@ import SwiftUI
 struct QuestionView: View {
     let question: ProfileQuestion
     let draft: AnswersDraft
-    @Environment(\.usesShowQuestionStyle) private var showStyle
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.medium) {
             Text(question.title)
-                .textStyle(titleStyle)
+                .textStyle(.showTitle)
                 .accessibilityIdentifier(question.identifier)
             Text(question.hint)
-                .textStyle(hintStyle)
+                .textStyle(.showLede)
             QuestionAnswers(question: question, draft: draft)
         }
-    }
-
-    private var titleStyle: TextStyle {
-        if showStyle { return .showTitle }
-        return .displayL
-    }
-
-    private var hintStyle: TextStyle {
-        if showStyle { return .showLede }
-        return .description
     }
 }
 
@@ -33,5 +22,5 @@ struct QuestionView: View {
         QuestionView(question: .kitchen, draft: .preview())
             .padding(Spacing.screenMargin)
     }
-    .background(ColorRole.paper.color)
+    .background { ShowStage() }
 }

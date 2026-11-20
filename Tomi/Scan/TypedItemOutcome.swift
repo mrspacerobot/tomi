@@ -6,12 +6,11 @@ struct TypedItemOutcome: View {
     let typing: TypedItemModel
     let look: TypedItemLook
     let onAdd: (NamedOption) -> Void
-    @Environment(\.usesShowQuestionStyle) private var showStyle
 
     var body: some View {
         if let choosing = typing.choosing {
             Text(.confirmWhichOne(choosing.label))
-                .textStyle(outcomeStyle)
+                .textStyle(.showLede)
             FlowLayout {
                 ForEach(choosing.candidates) { candidate in
                     QuestionChip(name: candidate.name, kind: .off) {
@@ -23,14 +22,9 @@ struct TypedItemOutcome: View {
             }
         } else if let unknown = typing.unknownLabel {
             Text(.confirmNotKnown(unknown))
-                .textStyle(outcomeStyle)
+                .textStyle(.showLede)
         } else if let problem = typing.problem {
             ProblemView(problem: problem)
         }
-    }
-
-    private var outcomeStyle: TextStyle {
-        if showStyle { return .showLede }
-        return .description
     }
 }

@@ -7,26 +7,25 @@ struct TypedItemField: View {
     @Bindable var typing: TypedItemModel
     let look: TypedItemLook
     let onAdd: (NamedOption) -> Void
-    @Environment(\.usesShowQuestionStyle) private var showStyle
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.small) {
-            HStack(spacing: Spacing.small) {
-                TextField(text: $typing.text) { Text(look.prompt) }
-                    .textStyle(inputStyle)
-                    .onSubmit(add)
-                    .accessibilityIdentifier(look.identifierPrefix + "-type")
-                Button(action: add) { Text(.confirmAdd) }
-                    .buttonStyle(.tomiSecondary)
+            inputLayout {
+                TypedItemTextField(text: $typing.text, look: look, submit: add)
+                Button(action: add) { Text(.confirmAdd).padding(.horizontal, ShowSize.gap) }
+                    .buttonStyle(ShowSecondaryButtonStyle())
                     .accessibilityIdentifier(look.identifierPrefix + "-add")
             }
             TypedItemOutcome(typing: typing, look: look, onAdd: onAdd)
         }
     }
 
-    private var inputStyle: TextStyle {
-        if showStyle { return .showLede }
-        return .body
+    private var inputLayout: AnyLayout {
+        if dynamicTypeSize.isAccessibilitySize {
+            return AnyLayout(VStackLayout(alignment: .leading, spacing: ShowSize.compact))
+        }
+        return AnyLayout(HStackLayout(spacing: ShowSize.gap))
     }
 
     private func add() {
@@ -41,6 +40,6 @@ struct TypedItemField: View {
 #Preview {
     TypedItemField(typing: TypedItemModel(api: FakeTomiAPI()), look: .cupboard) { _ in }
         .padding()
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
         .dynamicTypeSize(.accessibility5)
 }

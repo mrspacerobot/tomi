@@ -5,7 +5,6 @@ import TomiCore
 /// Only answers this build understands are shown, because only those can be kept in the profile.
 struct ExperienceAnswers: View {
     let draft: AnswersDraft
-    @Environment(\.usesShowQuestionStyle) private var showStyle
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.large) {
@@ -14,7 +13,6 @@ struct ExperienceAnswers: View {
                     draft.answers.experience = experience
                 }
             }
-            if !showStyle { WeeklyGoalStepper(draft: draft) }
         }
     }
 
@@ -37,5 +35,5 @@ struct ExperienceAnswers: View {
 
 #Preview {
     ExperienceAnswers(draft: .preview())
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }
