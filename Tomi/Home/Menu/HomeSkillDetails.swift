@@ -4,10 +4,11 @@ import TomiCore
 struct HomeSkillDetails: View {
     let skill: HomeSkillProgress
     var ink = ColorRole.showMuted
+    var showsSummary = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: ShowSize.compact) {
-            if !skill.summary.isEmpty {
+            if showsSummary, !skill.summary.isEmpty {
                 Text(verbatim: skill.summary).textStyle(.showNote, color: ink)
             }
             if skill.progress?.status == .locked, let names = skill.missingPrerequisiteNames {
