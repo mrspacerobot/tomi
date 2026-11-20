@@ -7,8 +7,8 @@
 #                              request is ready, and may be merged, only when this passes.
 #
 # The app is built once (build-for-testing) and every test run starts from that build (test-without-building).
-# The UI tests take a lock shared by every checkout and the CI runner on this Mac, so only one UI test run loads
-# the simulator at a time. Each step prints how long it took, and a summary closes the run.
+# The app's tests take a lock shared by every checkout and the CI runner on this Mac, so only one run uses the
+# simulator at a time: a test run installs the app, and two runs would replace each other's app (#204). Each step prints how long it took, and a summary closes the run.
 set -eu
 cd "$(dirname "$0")/.."
 
@@ -23,7 +23,7 @@ esac
 
 DESTINATION="${TOMI_DESTINATION:-platform=iOS Simulator,name=iPhone 17}"
 # One fixed path for the whole Mac, so checkouts in any folder and the CI runner wait for each other.
-UI_TEST_LOCK=/tmp/tomi-check-ui-tests.lock
+SIMULATOR_LOCK=/tmp/tomi-check-simulator.lock
 CHECK_STARTED=$(date +%s)
 TIMES=""
 
@@ -40,7 +40,7 @@ step() {
 "
 }
 
-# xcodebuild never gets the UI test lock's descriptor (9>&-, see below). The close sits on the command itself:
+# xcodebuild never gets the simulator lock's descriptor (9>&-, see below). The close sits on the command itself:
 # on a function call the shell keeps a copy of the descriptor open, and the children inherit it.
 app_xcodebuild() {
     xcodebuild -project Tomi.xcodeproj -scheme Tomi -destination "$DESTINATION" \
@@ -60,27 +60,25 @@ test_bundle() {
         -only-testing:"$1" test-without-building
 }
 
-# Runs the UI tests while holding the Mac's UI test lock. The lock is a BSD file lock on descriptor 9, held by
-# this shell: the kernel drops it when the shell exits, however it ends, so a crashed or killed run never leaves
+# Takes the Mac's simulator lock before the first test step. The lock is a BSD file lock on descriptor 9, held by
+# this shell until it exits: the kernel drops it then, however it ends, so a crashed or killed run never leaves
 # it behind. xcodebuild gets descriptor 9 closed, so a process left running after a killed run, such as a
 # simulator service, cannot keep holding the lock.
-ui_tests_with_lock() {
-    exec 9>>"$UI_TEST_LOCK"
-    wait_for_ui_test_lock
-    echo "pid $$ in $(pwd), since $(date '+%Y-%m-%d %H:%M:%S')" >"$UI_TEST_LOCK"
-    test_bundle TomiUITests
-    exec 9>&-
+take_simulator_lock() {
+    exec 9>>"$SIMULATOR_LOCK"
+    wait_for_simulator_lock
+    echo "pid $$ in $(pwd), since $(date '+%Y-%m-%d %H:%M:%S')" >"$SIMULATOR_LOCK"
 }
 
-wait_for_ui_test_lock() {
+wait_for_simulator_lock() {
     if lockf -s -t 0 9; then
         return
     fi
-    holder=$(cat "$UI_TEST_LOCK")
-    echo "Another check is running UI tests on this Mac (${holder:-holder unknown}). Waiting for it to finish."
+    holder=$(cat "$SIMULATOR_LOCK")
+    echo "Another check is testing in the simulator on this Mac (${holder:-holder unknown}). Waiting for it to finish."
     waiting_since=$(date +%s)
     lockf -s 9
-    echo "Took the UI test lock after $(($(date +%s) - waiting_since)) s."
+    echo "Took the simulator lock after $(($(date +%s) - waiting_since)) s."
 }
 
 print_times() {
@@ -93,12 +91,13 @@ step "Format and lint" xcrun swift-format lint --strict --recursive Tomi TomiTes
 step "Size limits, hard-coded text and other lint rules" swiftlint lint --strict --quiet
 step "Rules package tests" swift test --package-path Packages/TomiCore
 step "App build for testing" build_for_testing
+step "Waiting for the simulator, one test run at a time on this Mac" take_simulator_lock
 step "App unit tests" test_bundle TomiTests
 if [ "$FULL" = no ]; then
     print_times
     echo "Fast checks passed. Run ./scripts/check.sh --full before the pull request is called ready."
     exit 0
 fi
-step "App UI tests, one run at a time on this Mac" ui_tests_with_lock
+step "App UI tests" test_bundle TomiUITests
 print_times
 echo "All checks passed."
