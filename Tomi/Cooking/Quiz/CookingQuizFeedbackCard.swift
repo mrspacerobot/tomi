@@ -10,6 +10,7 @@ struct CookingQuizFeedbackCard: View {
                 CookingQuizOutcomeWords(outcome: outcome)
             }
         }
+        .accessibilityElement(children: .combine)
         .accessibilityIdentifier(outcome.identifier)
     }
 }
