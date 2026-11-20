@@ -7,7 +7,7 @@ final class EmailSignInUITests: XCTestCase {
 
     @MainActor
     func testCookCanSignInWithEmailAndPassword() {
-        let app = XCUIApplication.launched(XCUIApplication.newCook)
+        let app = openBackstagePass()
 
         XCTAssertTrue(app.textFields["auth-email"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.secureTextFields["auth-password"].exists)
@@ -22,7 +22,7 @@ final class EmailSignInUITests: XCTestCase {
 
     @MainActor
     func testCookCanCreateAnAccount() {
-        let app = XCUIApplication.launched(XCUIApplication.newCook)
+        let app = openBackstagePass()
 
         XCTAssertTrue(app.buttons["auth-create-account"].waitForExistence(timeout: 5))
         app.buttons["auth-create-account"].tap()
@@ -35,7 +35,7 @@ final class EmailSignInUITests: XCTestCase {
 
     @MainActor
     func testCookCanRequestPasswordReset() {
-        let app = XCUIApplication.launched(XCUIApplication.newCook)
+        let app = openBackstagePass()
 
         XCTAssertTrue(app.buttons["auth-forgot-password"].waitForExistence(timeout: 5))
         app.buttons["auth-forgot-password"].tap()
@@ -48,7 +48,7 @@ final class EmailSignInUITests: XCTestCase {
 
     @MainActor
     func testMalformedEmailIsRefusedBeforeSigningIn() {
-        let app = XCUIApplication.launched(XCUIApplication.newCook)
+        let app = openBackstagePass()
 
         XCTAssertTrue(app.buttons["auth-sign-in"].waitForExistence(timeout: 5))
         enterEmail("not-an-email", in: app)
@@ -61,7 +61,7 @@ final class EmailSignInUITests: XCTestCase {
 
     @MainActor
     func testShortPasswordIsRefusedWhenCreatingAnAccount() {
-        let app = XCUIApplication.launched(XCUIApplication.newCook)
+        let app = openBackstagePass()
 
         XCTAssertTrue(app.buttons["auth-create-account"].waitForExistence(timeout: 5))
         app.buttons["auth-create-account"].tap()
@@ -70,6 +70,13 @@ final class EmailSignInUITests: XCTestCase {
         app.buttons["auth-create-submit"].tap()
 
         XCTAssertTrue(app.staticTexts["auth-confirmation-message"].waitForExistence(timeout: 5))
+    }
+
+    @MainActor private func openBackstagePass() -> XCUIApplication {
+        let app = XCUIApplication.launched(XCUIApplication.newCook)
+        XCTAssertTrue(app.buttons["open-email-auth"].waitForExistence(timeout: 5))
+        app.buttons["open-email-auth"].tap()
+        return app
     }
 
     @MainActor

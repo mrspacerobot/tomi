@@ -24,7 +24,8 @@ import TomiCore
         #expect(
             grounds == [
                 .paper, .wash, .primaryFill, .cobalt, .stage, .stageGlow, .showSurface, .showRed, .showGold,
-                .showChipFill, .showTabHighlight, .showCorrect, .showError, .showBlue,
+                .showChipFill, .showTabHighlight, .showCorrect, .showError, .showBlue, .curtainRed, .curtainLight,
+                .curtainShade,
             ]
         )
     }

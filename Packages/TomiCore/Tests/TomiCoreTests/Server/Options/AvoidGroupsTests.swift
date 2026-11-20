@@ -28,4 +28,13 @@ import Testing
     @Test func nothingIsUnlistedWhenEverySavedIdIsListed() {
         #expect(options.unlistedAvoidIDs(in: ["nuts", "pork"]).isEmpty)
     }
+
+    @Test func typedSearchReturnsOnlyMatchingServerEntries() {
+        let matches = options.avoidMatches(for: " NUT ")
+        #expect(matches.map(\.id) == ["nuts"])
+        #expect(matches.first?.kind == .allergen)
+        #expect(options.avoidMatches(for: "unknown").isEmpty)
+        #expect(options.avoidMatches(for: " ").isEmpty)
+    }
+
 }

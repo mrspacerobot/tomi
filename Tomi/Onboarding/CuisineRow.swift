@@ -5,20 +5,26 @@ import TomiCore
 struct CuisineRow: View {
     let cuisine: NamedOption
     let draft: AnswersDraft
+    @Environment(\.usesShowQuestionStyle) private var showStyle
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xSmall) {
             Text(verbatim: cuisine.name)
-                .textStyle(.option)
+                .textStyle(titleStyle)
             FlowLayout {
                 ForEach(CuisineAnswer.allCases, id: \.self) { answer in
-                    Chip(name: String(localized: answer.words), kind: kind(of: answer)) {
+                    QuestionChip(name: String(localized: answer.words), kind: kind(of: answer)) {
                         draft.answers.setAnswer(answer, for: cuisine.id)
                     }
                     .accessibilityIdentifier("cuisine-" + cuisine.id.rawValue + "-" + String(describing: answer))
                 }
             }
         }
+    }
+
+    private var titleStyle: TextStyle {
+        if showStyle { return .showTitle }
+        return .option
     }
 
     private func kind(of answer: CuisineAnswer) -> ChipKind {

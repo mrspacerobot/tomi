@@ -4,6 +4,7 @@ import TomiCore
 /// Grams or cups, from the server's list, and how many people eat most nights.
 struct TableAnswers: View {
     let draft: AnswersDraft
+    @Environment(\.usesShowQuestionStyle) private var showStyle
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.large) {
@@ -11,6 +12,7 @@ struct TableAnswers: View {
                 draft.answers.units = Self.units(of: choice)
             }
             ServingsStepper(draft: draft)
+            if showStyle { WeeklyGoalStepper(draft: draft) }
         }
     }
 

@@ -8,6 +8,6 @@ enum ProfileQuestion: CaseIterable, Hashable {
     case experience
     case table
 
-    /// Onboarding asks these in order. The cupboard waits for settings, so a first evening is quick.
-    static let onboarding: [ProfileQuestion] = [.diet, .avoid, .cuisines, .kitchen, .experience, .table]
+    /// The order of the seven questions in the opening-night interview.
+    static let onboarding: [ProfileQuestion] = [.diet, .avoid, .kitchen, .cupboard, .cuisines, .experience, .table]
 }

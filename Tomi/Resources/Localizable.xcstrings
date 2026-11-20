@@ -1,6 +1,366 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "opening.showKicker": {
+      "comment": "Kicker over the Kitchen Show title on launch and sign-in.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomi’s"
+          }
+        }
+      }
+    },
+    "opening.showTitle": {
+      "comment": "Name on the opening marquee.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kitchen Show"
+          }
+        }
+      }
+    },
+    "opening.starring": {
+      "comment": "First segment of the actor credit on sign-in.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starring"
+          }
+        }
+      }
+    },
+    "opening.tonightChef": {
+      "comment": "Second segment of the actor credit on sign-in.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You, tonight’s chef"
+          }
+        }
+      }
+    },
+    "opening.emailTitle": {
+      "comment": "Link and heading for the email sign-in page.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in with email"
+          }
+        }
+      }
+    },
+    "opening.backstagePass": {
+      "comment": "Lower-third label on email authentication screens.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Backstage pass"
+          }
+        }
+      }
+    },
+    "opening.warmingLights": {
+      "comment": "Loading message during app startup.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warming up the lights"
+          }
+        }
+      }
+    },
+    "opening.checkEmail": {
+      "comment": "Heading after an email confirmation link is requested.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check your email"
+          }
+        }
+      }
+    },
+    "opening.confirmationBody %@": {
+      "comment": "Confirmation instructions. The placeholder is the cook’s email address.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I sent a link to %@. Tap it, then come back and sign in."
+          }
+        }
+      }
+    },
+    "opening.ticketVIP": {
+      "comment": "Short marker on the confirmation ticket.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VIP"
+          }
+        }
+      }
+    },
+    "opening.ticketTitle": {
+      "comment": "Title on the confirmation ticket.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opening night"
+          }
+        }
+      }
+    },
+    "opening.meetHost": {
+      "comment": "Sign at the top of the onboarding welcome.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meet your host"
+          }
+        }
+      }
+    },
+    "opening.hostHello": {
+      "comment": "Tomi’s welcome to a new cook.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hi, I’m Tomi!"
+          }
+        }
+      }
+    },
+    "opening.hostPromise": {
+      "comment": "Opening promise in the welcome card.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show me your fridge and I’ll teach you to cook from it, one dish at a time."
+          }
+        }
+      }
+    },
+    "opening.hostQuestions": {
+      "comment": "Explanation before onboarding.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First, seven quick questions, so I can pick dishes that fit you."
+          }
+        }
+      }
+    },
+    "opening.startInterview": {
+      "comment": "Button that starts the profile questions.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let’s go"
+          }
+        }
+      }
+    },
+    "opening.questionCount %lld %lld": {
+      "comment": "Question progress in the lower third. The placeholders are the current one-based position and the total.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "opening.contestantProfile": {
+      "comment": "Lower-third title across onboarding questions.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contestant profile"
+          }
+        }
+      }
+    },
+    "opening.startShow": {
+      "comment": "Button that sends the final onboarding answers and opens Home.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start the show"
+          }
+        }
+      }
+    },
+    "opening.interviewDiet": {
+      "comment": "Tomi asks about diet.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What do you eat? I’ll only put on dishes that fit."
+          }
+        }
+      }
+    },
+    "opening.interviewAvoid": {
+      "comment": "Tomi asks about allergies and foods the cook avoids.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What should I keep off your plate?"
+          }
+        }
+      }
+    },
+    "opening.interviewKitchen": {
+      "comment": "Tomi asks about kitchen equipment.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What’s on your set? I’ll pick dishes you can make."
+          }
+        }
+      }
+    },
+    "opening.interviewCupboard": {
+      "comment": "Tomi asks about regular cupboard staples.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What’s always in the cupboard? I’ll leave it off your shopping list."
+          }
+        }
+      }
+    },
+    "opening.interviewCuisines": {
+      "comment": "Tomi asks about cuisine preferences.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What do you love to eat? I’ll lean that way."
+          }
+        }
+      }
+    },
+    "opening.interviewExperience": {
+      "comment": "Tomi asks about cooking experience.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How much have you cooked? I’ll pick a first episode that fits."
+          }
+        }
+      }
+    },
+    "opening.interviewTable": {
+      "comment": "Tomi asks about servings and the weekly goal.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last one! How many are you cooking for, and how often each week?"
+          }
+        }
+      }
+    },
+    "opening.avoidSearch": {
+      "comment": "Field for finding an entry on the server’s avoid list.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Something else? Type it"
+          }
+        }
+      }
+    },
+    "opening.avoidNoMatch": {
+      "comment": "Message for a typed restriction with no matching entries.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I can’t check that yet. Try another name from the list."
+          }
+        }
+      }
+    },
+    "opening.addAllergy": {
+      "comment": "Adds a matching server-listed allergen.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to Allergies"
+          }
+        }
+      }
+    },
+    "opening.addRatherNot": {
+      "comment": "Adds a matching server-listed avoid preference.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to Rather not"
+          }
+        }
+      }
+    },
     "show.gallery.hostHead": {
       "comment": "Label under Tomi's compact head in the debug host gallery.",
       "extractionState": "manual",

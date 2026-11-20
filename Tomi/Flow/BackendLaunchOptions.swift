@@ -4,6 +4,7 @@ import Foundation
 /// a cook never does, so a plain launch talks to the deployed server.
 nonisolated struct BackendLaunchOptions: Equatable {
     /// Run against the in-memory fake server and fake sign-in, with a fixed photo instead of the camera.
+    static let fakeRejectsPasswordArgument = "--fake-rejects-password"
     static let fakeBackendArgument = "--fake-backend"
     /// Show Apple’s native button over fake services to test its real layout.
     static let appleSignInButtonArgument = "--apple-sign-in-button"
@@ -28,6 +29,7 @@ nonisolated struct BackendLaunchOptions: Equatable {
     /// The fake server's suggestions carry a dish photo, served from the app bundle (`FakeDishPhoto`).
     static let fakeDishPhotosArgument = "--fake-dish-photos"
 
+    let fakeRejectsPassword: Bool
     let usesFake: Bool
     let showsAppleSignInButton: Bool
     let usesLocalAPI: Bool
@@ -39,6 +41,7 @@ nonisolated struct BackendLaunchOptions: Equatable {
     let quiz: FakeQuizOptions
 
     init(arguments: [String]) {
+        fakeRejectsPassword = arguments.contains(Self.fakeRejectsPasswordArgument)
         usesFake = arguments.contains(Self.fakeBackendArgument)
         showsAppleSignInButton = arguments.contains(Self.appleSignInButtonArgument)
         usesLocalAPI = arguments.contains(Self.localBackendArgument)
