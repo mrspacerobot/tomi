@@ -95,5 +95,5 @@ jobs:
           track_progress: ${{ github.event_name == 'pull_request_review' }}
           prompt: ${{ needs.requests.outputs.prompt }}
           claude_args: |
-            --allowedTools "Bash(./scripts/check.sh),Bash(xcodebuild:*),Bash(xcrun:*),Bash(swift:*),Bash(swiftlint:*)"
+            --allowedTools "Bash(./scripts/check.sh),Bash(./scripts/check.sh --full),Bash(xcodebuild:*),Bash(xcrun:*),Bash(swift:*),Bash(swiftlint:*)"
             --disallowedTools "Bash(gh pr merge:*),Bash(git push origin main:*),Bash(git push --force:*)"
