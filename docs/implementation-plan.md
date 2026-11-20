@@ -1,6 +1,6 @@
 # Tomi for iPhone: implementation plan
 
-Status on 10 October 2026: design approved (direction "Tasting menu"), project scaffold built, Phase 0 partly done. The app is becoming a thin client of Tomi's Rust backend (`tomi-backend`): the backend owns the food lists, the profile, the fridge scan and tonight's special, and (decided 26 October 2026) the cook log, every progress rule and the quiz. This document is the build plan. Product background and business reasoning are in [plan.md](plan.md). Coding rules are in [../AGENTS.md](../AGENTS.md). Mockups are in [design/](design/).
+Status on 10 October 2026: design approved (direction "Tasting menu", replaced by the Cooking Show on 20 November 2026), project scaffold built, Phase 0 partly done. The app is becoming a thin client of Tomi's Rust backend (`tomi-backend`): the backend owns the food lists, the profile, the fridge scan and tonight's special, and (decided 26 October 2026) the cook log, every progress rule and the quiz. This document is the build plan. Product background and business reasoning are in [plan.md](plan.md). Coding rules are in [../AGENTS.md](../AGENTS.md). Mockups are in [design/](design/).
 
 ## Goal
 
@@ -11,7 +11,7 @@ A native iPhone app where a cook answers a short onboarding, shows Tomi their fr
 | Topic | Decision |
 |---|---|
 | Platform | iOS 27, iPhone only, portrait. SwiftUI, SwiftData, Swift 6 strict concurrency |
-| Design | Direction B, "Tasting menu": navy ink on paper, red stamp, the skill path as a menu of four courses and twelve dishes. Not a Duolingo look |
+| Design | The Cooking Show, approved by the owner on 20 November 2026 (epic #201), replacing direction B, "Tasting menu": Tomi hosts a cooking show, Home is the episode guide, cooking is "showtime", errors are "off air". Curtains, a lit sign, a stage and spotlight, cream cards and one red button, in a morning show (light) and an evening show (dark). Mockups: `docs/design/round13-cooking-show-all.html` (all 37 screens), `round14-photos.html` (real photos) and `round15-missing-screens.html` (18 more screens). Tokens, type, haptics and the show words: `docs/design/cooking-show-handoff.html`. Only the look changes: server calls, food checks, progress and the outbox stay as they are |
 | Dependencies | No third-party dependencies in the app |
 | Project | A standard Xcode project committed to git, with synchronized folders |
 | Pull request evidence | Every PR uses `.github/pull_request_template.md`. UI tasks embed current screenshots of the running app in light and dark; capture or posting blockers keep the PR in draft. Capture and posting instructions are in `agent-on-pull-requests.md` |
@@ -80,7 +80,7 @@ docs/ prototype/
 
 `Tomi/DesignSystem` supplies `TomiButtonStyle`, `TickRow`, `Chip`, `UseTag`, `StatsColumns`,
 `DoubleRuledBox`, `ProgressRule` and their shared rules and icons. The states follow the component cards
-in `docs/design/round3.html`; interactive states have localized accessibility words and at least 44-point
+in `docs/design/round3.html` (the old "Tasting menu" look, until #194 moves the design system to the Cooking Show); interactive states have localized accessibility words and at least 44-point
 touch targets. At accessibility text sizes tick-row notes and stats stack, chip names wrap, and box flags
 grow with their text. Selection rules live in TomiCore (`Selection`).
 
@@ -189,7 +189,7 @@ Each phase ends with something runnable. GitHub milestones mirror these.
 | # | Phase | Done when |
 |---|---|---|
 | 0 | Toolchain and scaffold | The app runs in the simulator and on the owner's iPhone, checks run from the command line, and five real fridge photos have been read by the server's model |
-| 1 | Design pass | Done. Mockups approved in `docs/design/` |
+| 1 | Design pass | Done. Mockups approved in `docs/design/`. On 20 November 2026 the Cooking Show (rounds 13 to 15) replaced the "Tasting menu" look; epic #201 moves every screen to it |
 | 2 | Rules and design system | Every rule is in TomiCore with tests, and a gallery of every component matches the mockups in light and dark |
 | 3 | Onboarding, home, menu, saved progress | A fresh install walks through onboarding, answers survive a force-quit, and "vegetarian" changes the example special |
 | 4 | Lesson player | The example lesson can be cooked start to finish, earning XP, a day toward the weekly goal and a stamp |

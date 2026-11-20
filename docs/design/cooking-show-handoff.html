@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cooking Show handoff</title>
+<style>
+:root{--page:#f4f1ec;--page-ink:#1d1a17;--page-muted:#6b645c;--page-card:#fff;--page-line:#e2ddd5;--warn:#9a3412}
+@media (prefers-color-scheme: dark){:root{--page:#171513;--page-ink:#f1ece4;--page-muted:#a49c91;--page-card:#221f1c;--page-line:#36322d;--warn:#fdba74}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--page-ink);font:16px/1.5 Inter,-apple-system,system-ui,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:40px 16px 80px}
+.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--page-muted);font-weight:600}
+h1{font-size:clamp(30px,5vw,44px);line-height:1.05;margin:6px 0 12px;letter-spacing:-.02em}
+h2{font-size:24px;margin:48px 0 6px;padding-top:24px;border-top:1px solid var(--page-line);letter-spacing:-.015em}
+h3{font-size:17px;margin:24px 0 6px}
+p,li{color:var(--page-muted);max-width:820px}
+p b,li b{color:var(--page-ink)}
+code{font:13px ui-monospace,SFMono-Regular,Menlo,monospace}
+.scroll{overflow-x:auto;margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:14px;background:var(--page-card);border:1px solid var(--page-line);border-radius:14px;overflow:hidden}
+th,td{text-align:left;padding:8px 12px;border-top:1px solid var(--page-line);vertical-align:top}
+th{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--page-muted);border-top:0;white-space:nowrap}
+td:first-child{font-weight:700;white-space:nowrap}
+td.v{white-space:nowrap;font:13px ui-monospace,SFMono-Regular,Menlo,monospace}
+.sw{display:inline-block;width:18px;height:18px;border-radius:5px;border:1px solid rgba(127,127,127,.4);vertical-align:-4px;margin-right:6px}
+.fail{color:var(--warn);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Tomi design / Cooking Show / approved 20 November 2026</div>
+  <h1>Cooking Show handoff</h1>
+  <p>Every token the Cooking Show mockups use, for the design system work of #194. The mockups are <a href="round13-cooking-show-all.html">round 13</a> (all 37 screens), <a href="round14-photos.html">round 14</a> (real photos) and <a href="round15-missing-screens.html">round 15</a> (18 more screens). The two lightings are the <b>morning show</b> (light appearance) and the <b>evening show</b> (dark appearance). Names in the Token column are the CSS variables of the mockups, so a value can be found in them; #194 gives each its <code>ColorRole</code>, <code>TextStyle</code>, <code>Spacing</code>, <code>Radius</code> or <code>RuleWeight</code> name.</p>
+  <p><b>Sizes are mockup pixels.</b> The mockup screen is 282 px wide; an iPhone 17 is 402 pt wide, so a mockup pixel is about 1.43 points. #194 settles the point values, with text sizes mapped onto Dynamic Type so they grow with the cook's text size.</p>
+  <p>Only the screens count. The page around them (Inter, beige page, the "What should change?" box) and the earlier kit classes the screens no longer use (path nodes, ticket stubs, comic panels, the kitchen backdrop) are not part of the look.</p>
+
+  <h2>Colour: changes with the lighting</h2>
+  <div class="scroll"><table>
+    <tr><th>Token</th><th>Role</th><th>Morning (light)</th><th>Evening (dark)</th></tr>
+    <tr><td>bg</td><td>Stage ground behind everything</td><td class="v"><i class="sw" style="background:#FFEBD2"></i>#FFEBD2</td><td class="v"><i class="sw" style="background:#24122E"></i>#24122E</td></tr>
+    <tr><td>bgimg</td><td>Soft glow at the top of the stage: radial gradient 90% by 60% at the top centre, this colour to transparent at 70%</td><td class="v"><i class="sw" style="background:#FFF9EE"></i>#FFF9EE</td><td class="v"><i class="sw" style="background:#4A2358"></i>#4A2358</td></tr>
+    <tr><td>fg</td><td>Text and icons on the stage</td><td class="v"><i class="sw" style="background:#2B1A24"></i>#2B1A24</td><td class="v"><i class="sw" style="background:#FFF3E0"></i>#FFF3E0</td></tr>
+    <tr><td>mut</td><td>Secondary text on the stage</td><td class="v"><i class="sw" style="background:#7A6470"></i>#7A6470</td><td class="v"><i class="sw" style="background:#CDB7D6"></i>#CDB7D6</td></tr>
+    <tr><td>sf</td><td>Card surface: cards, rows, answers, fields, sheets, tab bar, speech bubbles</td><td class="v"><i class="sw" style="background:#FFFFFF"></i>#FFFFFF</td><td class="v"><i class="sw" style="background:#FFF7EA"></i>#FFF7EA</td></tr>
+    <tr><td>goldtx</td><td>Gold as text: section labels on the stage</td><td class="v"><i class="sw" style="background:#A85F00"></i>#A85F00</td><td class="v"><i class="sw" style="background:#FFC83D"></i>#FFC83D</td></tr>
+    <tr><td>beam</td><td>Spotlight cone from the top (fades to transparent at 96%)</td><td class="v">rgba(255,190,60,.30)</td><td class="v">rgba(255,226,150,.22)</td></tr>
+    <tr><td>beam2</td><td>Round glow behind Tomi and the dish</td><td class="v">rgba(255,190,60,.35)</td><td class="v">rgba(255,226,150,.30)</td></tr>
+    <tr><td>floor, floor2</td><td>Stage floor ellipse, radial from floor to floor2</td><td class="v"><i class="sw" style="background:#EBC198"></i>#EBC198 → <i class="sw" style="background:#D9A26E"></i>#D9A26E</td><td class="v"><i class="sw" style="background:#6A3644"></i>#6A3644 → <i class="sw" style="background:#3E1E2B"></i>#3E1E2B</td></tr>
+    <tr><td>cs</td><td>Card shadow (see Shadows)</td><td class="v">0 8 22 rgba(120,50,20,.16)</td><td class="v">0 8 22 rgba(0,0,0,.35)</td></tr>
+  </table></div>
+  <p>Cards stay light in the evening show: text on a card always uses <b>ink</b> and <b>mut2</b> below, never fg and mut.</p>
+
+  <h2>Colour: the same in both lightings</h2>
+  <div class="scroll"><table>
+    <tr><th>Token</th><th>Role</th><th>Value</th></tr>
+    <tr><td>acc</td><td>The one red: primary button, selected ring, on-air badge, progress, links on cards, Tomi's body</td><td class="v"><i class="sw" style="background:#E5432B"></i>#E5432B</td></tr>
+    <tr><td>onacc</td><td>Text and icons on acc</td><td class="v"><i class="sw" style="background:#FFFFFF"></i>#FFFFFF</td></tr>
+    <tr><td>bs (button lip)</td><td>Solid lip under the primary button</td><td class="v"><i class="sw" style="background:#A82A18"></i>#A82A18</td></tr>
+    <tr><td>ink</td><td>Text on cards</td><td class="v"><i class="sw" style="background:#2B1A24"></i>#2B1A24</td></tr>
+    <tr><td>mut2</td><td>Secondary text on cards, inactive tab icons</td><td class="v"><i class="sw" style="background:#7A6470"></i>#7A6470</td></tr>
+    <tr><td>gold</td><td>Lower-third label, burst badge, scan line, stickers, valance trim, loading dots, ticket</td><td class="v"><i class="sw" style="background:#FFC83D"></i>#FFC83D</td></tr>
+    <tr><td>t-ink</td><td>Outline ink of Tomi, ingredients and photo stickers; photo tag ground</td><td class="v"><i class="sw" style="background:#24172B"></i>#24172B</td></tr>
+    <tr><td>chip fill</td><td>Chips and round buttons on cards</td><td class="v">rgba(60,20,30,.08)</td></tr>
+    <tr><td>card hairline</td><td>Rule between ingredient lines</td><td class="v">rgba(60,20,30,.10)</td></tr>
+    <tr><td>stepbar track</td><td>Unfilled part of the step progress bar</td><td class="v">rgba(127,127,127,.22)</td></tr>
+    <tr><td>correct</td><td>Right quiz answer ring, answer key B</td><td class="v"><i class="sw" style="background:#2F9E5B"></i>#2F9E5B</td></tr>
+    <tr><td>notQuite</td><td>Wrong quiz pick ring</td><td class="v"><i class="sw" style="background:#E0892B"></i>#E0892B</td></tr>
+    <tr><td>error</td><td>Error banner ground, error field ring</td><td class="v"><i class="sw" style="background:#B8321F"></i>#B8321F</td></tr>
+    <tr><td>checked</td><td>The "Checked: no milk, ..." line on tonight's dish</td><td class="v"><i class="sw" style="background:#2F7D4A"></i>#2F7D4A</td></tr>
+    <tr><td>star</td><td>Mastered star on rows and tiles</td><td class="v"><i class="sw" style="background:#F2A900"></i>#F2A900</td></tr>
+    <tr><td>flame</td><td>Streak flame</td><td class="v"><i class="sw" style="background:#F08A1C"></i>#F08A1C</td></tr>
+    <tr><td>answer keys</td><td>Round letter keys of the quiz: A, B, C</td><td class="v"><i class="sw" style="background:#E5432B"></i>#E5432B <i class="sw" style="background:#2F9E5B"></i>#2F9E5B <i class="sw" style="background:#3F6FE0"></i>#3F6FE0</td></tr>
+    <tr><td>locked</td><td>Locked tile stripes, locked row icon, empty dots, empty radio ring</td><td class="v"><i class="sw" style="background:#B9ADB3"></i>#B9ADB3 / <i class="sw" style="background:#A3969D"></i>#A3969D, <i class="sw" style="background:#D9CFD3"></i>#D9CFD3, <i class="sw" style="background:#E3D7D2"></i>#E3D7D2, <i class="sw" style="background:#CFC2C6"></i>#CFC2C6</td></tr>
+    <tr><td>curtain</td><td>Curtain and valance stripes (10, 10, 6 px), valance trim in gold</td><td class="v"><i class="sw" style="background:#9E221B"></i>#9E221B <i class="sw" style="background:#C4342A"></i>#C4342A <i class="sw" style="background:#84190F"></i>#84190F</td></tr>
+    <tr><td>marquee</td><td>Lit sign board, its bulbs (14 px grid) and its kicker text</td><td class="v"><i class="sw" style="background:#3A1420"></i>#3A1420, <i class="sw" style="background:#FFE9A8"></i>#FFE9A8</td></tr>
+    <tr><td>tv</td><td>Timer TV glass, knobs, grille</td><td class="v"><i class="sw" style="background:#1E1026"></i>#1E1026, <i class="sw" style="background:#2B1A24"></i>#2B1A24 / <i class="sw" style="background:#5A4650"></i>#5A4650, <i class="sw" style="background:#CFC2C6"></i>#CFC2C6</td></tr>
+    <tr><td>colour bars</td><td>Test-card bars on the TV, in order</td><td class="v"><i class="sw" style="background:#FFFFFF"></i><i class="sw" style="background:#FFD23F"></i><i class="sw" style="background:#4DD8E8"></i><i class="sw" style="background:#55C96B"></i><i class="sw" style="background:#E86AD0"></i><i class="sw" style="background:#E5432B"></i><i class="sw" style="background:#3F6FE0"></i>#FFFFFF #FFD23F #4DD8E8 #55C96B #E86AD0 #E5432B #3F6FE0</td></tr>
+    <tr><td>confetti</td><td>Wrap and level-up confetti</td><td class="v">gold, #55C96B, #4DD8E8, #E86AD0, #E5432B, #3F6FE0, #FFFFFF</td></tr>
+    <tr><td>dish tints</td><td>Picture band of tiles and row icons, one per dish, given by position in the list</td><td class="v"><i class="sw" style="background:#FFD9A0"></i><i class="sw" style="background:#CFE8FF"></i><i class="sw" style="background:#DDF0C8"></i><i class="sw" style="background:#FFF0B8"></i><i class="sw" style="background:#FFD0C4"></i><i class="sw" style="background:#E9DDF5"></i><i class="sw" style="background:#FFE0C0"></i><i class="sw" style="background:#FFE1B8"></i>#FFD9A0 #CFE8FF #DDF0C8 #FFF0B8 #FFD0C4 #E9DDF5 #FFE0C0 #FFE1B8</td></tr>
+    <tr><td>flavour stripes</td><td>Left stripe of the cuisine cards, given by position (the app holds no cuisine list, so never by name)</td><td class="v"><i class="sw" style="background:#3E9E4C"></i><i class="sw" style="background:#3F6FE0"></i><i class="sw" style="background:#F2802A"></i><i class="sw" style="background:#E5432B"></i><i class="sw" style="background:#FFC83D"></i><i class="sw" style="background:#55C96B"></i><i class="sw" style="background:#C98B55"></i><i class="sw" style="background:#E86AD0"></i>#3E9E4C #3F6FE0 #F2802A #E5432B #FFC83D #55C96B #C98B55 #E86AD0</td></tr>
+    <tr><td>studio monitor</td><td>Scan monitor ground and grid, its counter, fridge body and door, scan line glow</td><td class="v">#FFE7CC, rgba(180,90,40,.13), #C98B55 / #8A5A3A, #EAF4FF, #FFF7EA, rgba(255,200,61,.6)</td></tr>
+    <tr><td>plate</td><td>Drawn plate rim, gold rim for a mastered plate</td><td class="v"><i class="sw" style="background:#EFE8DE"></i>#EFE8DE, <i class="sw" style="background:#F2B630"></i>#F2B630</td></tr>
+    <tr><td>photo overlay (round 14)</td><td>Sticker ground, unsure sticker and pins, dimmed photo, tape, polaroid</td><td class="v">#FFF3E0, #FFC83D, rgba(20,8,26,.66), rgba(255,222,140,.85), #FFFFFF</td></tr>
+  </table></div>
+
+  <h3>Text pairs to check in #194</h3>
+  <p>The app holds every text pair to 4.5 to 1 (<code>ColorRole.bodyTextPairings</code>). Measured on the mockup values; those marked fail must change colour in #194, never the test.</p>
+  <div class="scroll"><table>
+    <tr><th>Text on ground</th><th>Morning</th><th>Evening</th></tr>
+    <tr><td>fg on bg</td><td>14.2</td><td>15.9 (11.5 on the top glow)</td></tr>
+    <tr><td>mut on bg</td><td>4.65</td><td>9.4 (6.8 on the top glow)</td></tr>
+    <tr><td>ink on sf</td><td>16.5</td><td>15.5</td></tr>
+    <tr><td>mut2 on sf</td><td>5.4</td><td>5.1</td></tr>
+    <tr><td>goldtx on bg</td><td class="fail">4.2, fails</td><td>11.3</td></tr>
+    <tr><td>onacc on acc (button, on-air badge)</td><td class="fail" colspan="2">4.06, fails</td></tr>
+    <tr><td>acc as text on sf</td><td class="fail">4.06, fails</td><td class="fail">3.8, fails</td></tr>
+    <tr><td>marquee kicker #FFE9A8 on acc</td><td class="fail" colspan="2">3.4, fails</td></tr>
+    <tr><td>white on correct key #2F9E5B</td><td class="fail" colspan="2">3.4, fails</td></tr>
+    <tr><td>white on key C #3F6FE0</td><td colspan="2">4.6</td></tr>
+    <tr><td>white on error</td><td colspan="2">6.0</td></tr>
+    <tr><td>checked on sf</td><td>5.1</td><td>4.75</td></tr>
+    <tr><td>ink on gold</td><td colspan="2">10.6</td></tr>
+  </table></div>
+
+  <h2>Type</h2>
+  <p>Two families, both SIL Open Font License: <b>Lilita One</b> 400 for anything that announces (titles, the sign, buttons, card titles, numbers) and <b>Nunito</b> 700, 800 and 900 for everything you read. The mockups never set Nunito lighter than 700. Inter appears only in the drawn status bar and the page around the phones. Text is never uppercase in the data; caps are styling (<code>.textCase(.uppercase)</code>).</p>
+  <div class="scroll"><table>
+    <tr><th>Style</th><th>Font</th><th>Size / line</th><th>Used for</th></tr>
+    <tr><td>marquee</td><td>Lilita One 400</td><td class="v">26 / 1.05 (24 to 30)</td><td>The lit sign: "That's a wrap", "Off air", screen names</td></tr>
+    <tr><td>title</td><td>Lilita One 400</td><td class="v">24 / 1.12 (22 to 30)</td><td>Screen titles and questions on the stage</td></tr>
+    <tr><td>stat</td><td>Lilita One 400</td><td class="v">30 / 1 (score 24)</td><td>Stepper values, scoreboard numbers</td></tr>
+    <tr><td>button</td><td>Lilita One 400, +0.01 em</td><td class="v">17</td><td>Primary button</td></tr>
+    <tr><td>answerKey</td><td>Lilita One 400</td><td class="v">17</td><td>A, B, C keys of the quiz</td></tr>
+    <tr><td>cardTitle</td><td>Lilita One 400</td><td class="v">15 (14 on tiles)</td><td>Row, tile, cuisine and polaroid titles</td></tr>
+    <tr><td>lowerThird</td><td>Lilita One 400</td><td class="v">13 (11.5 in number badges)</td><td>Lower-third label, sticker numbers, burst badge (14)</td></tr>
+    <tr><td>bodyStrong</td><td>Nunito 800</td><td class="v">14.5</td><td>Choices (cues), field values</td></tr>
+    <tr><td>body</td><td>Nunito 800</td><td class="v">13.5</td><td>Answers, ingredient lines, links, speech bubbles on questions</td></tr>
+    <tr><td>text</td><td>Nunito 800</td><td class="v">13 / 1.35</td><td>Paragraphs on cards, chips, messages (13 / 1.3)</td></tr>
+    <tr><td>lede</td><td>Nunito 800</td><td class="v">12.5 / 1.35</td><td>Paragraphs on the stage, speech bubbles (12.5 / 1.25), error banner</td></tr>
+    <tr><td>note</td><td>Nunito 700</td><td class="v">12 (11.5)</td><td>Answer explanations, choice subtitles</td></tr>
+    <tr><td>meta</td><td>Nunito 800</td><td class="v">11 (10.5 on tiles)</td><td>Row subtitles ("Ep. 2 · level 1 of 3"), "listening" line</td></tr>
+    <tr><td>label</td><td>Nunito 900, caps, +0.10 to +0.14 em</td><td class="v">11 (10 to 10.5)</td><td>Section labels in goldtx (+0.14 em), field and step labels (+0.10 em), on-air badge (+0.10 em), sign kicker (+0.24 em)</td></tr>
+    <tr><td>pill</td><td>Nunito 900</td><td class="v">11</td><td>Pills on the monitor, photo stickers, "new" stamp (10, +0.08 em)</td></tr>
+    <tr><td>tag</td><td>Nunito 900</td><td class="v">9.5</td><td>Tags on the scan and the photo</td></tr>
+    <tr><td>glyph</td><td>Nunito 900</td><td class="v">20 to 22</td><td>Plus and minus of the stepper, the tick in a picked box (13)</td></tr>
+  </table></div>
+
+  <h2>Radii</h2>
+  <div class="scroll"><table>
+    <tr><th>Token</th><th>Value</th><th>Used for</th></tr>
+    <tr><td>sheet</td><td class="v">26 (top corners)</td><td>Bottom sheet</td></tr>
+    <tr><td>tv</td><td class="v">28, glass 20</td><td>Timer TV</td></tr>
+    <tr><td>monitor</td><td class="v">24 (6 px sf frame)</td><td>Studio monitor, framed photos (22)</td></tr>
+    <tr><td>card (r)</td><td class="v">20</td><td>Cards, tab bar</td></tr>
+    <tr><td>marquee</td><td class="v">18 outer, 12 inner</td><td>Lit sign</td></tr>
+    <tr><td>button (br)</td><td class="v">16</td><td>Primary button, tiles, answers, rows, rating cards, messages (5 on the tail corner), speech bubbles</td></tr>
+    <tr><td>control</td><td class="v">14 (13 links, 12 error banner)</td><td>Choices, fields, cuisine cards, ticket</td></tr>
+    <tr><td>icon</td><td class="v">12</td><td>Row icon squares, tab bar highlight</td></tr>
+    <tr><td>small</td><td class="v">9</td><td>Lower third, chips, thumbnails, photo stickers</td></tr>
+    <tr><td>tiny</td><td class="v">8 (6 tags, 7 square checkbox)</td><td>"New" stamp, scan tags, dashed unsure box</td></tr>
+    <tr><td>capsule</td><td class="v">full</td><td>Pills, picked chips, on-air badge, streak, toggles, step bar, round keys and dots</td></tr>
+  </table></div>
+
+  <h2>Shadows and lines</h2>
+  <div class="scroll"><table>
+    <tr><th>Token</th><th>Value (x y blur spread colour)</th><th>Used for</th></tr>
+    <tr><td>card (cs)</td><td class="v">0 8 22 rgba(120,50,20,.16) morning<br>0 8 22 rgba(0,0,0,.35) evening</td><td>Every card, row, answer, field, bubble, tab bar</td></tr>
+    <tr><td>buttonLip (bs)</td><td class="v">0 4 0 #A82A18</td><td>Primary button: a solid lip, no blur</td></tr>
+    <tr><td>selected</td><td class="v">ring 3 acc + card</td><td>Picked choice, current row, picked rating</td></tr>
+    <tr><td>correct, notQuite, error</td><td class="v">ring 3 #2F9E5B / #E0892B / #B8321F + card</td><td>Quiz answer states, field with an error</td></tr>
+    <tr><td>unsure</td><td class="v">inset 4 0 0 gold + card</td><td>The card of an item Tomi is unsure of</td></tr>
+    <tr><td>marquee</td><td class="v">0 0 26 rgba(255,200,61,.4), 0 6 0 rgba(0,0,0,.25)</td><td>Lit sign glow and lip</td></tr>
+    <tr><td>curtain</td><td class="v">0 10 20 rgba(0,0,0,.3); valance 0 3 0 gold</td><td>Side curtains, valance trim</td></tr>
+    <tr><td>sheet</td><td class="v">0 -6 20 rgba(0,0,0,.12)</td><td>Bottom sheet</td></tr>
+    <tr><td>lowerThird</td><td class="v">0 4 10 rgba(0,0,0,.25)</td><td>Lower-third label</td></tr>
+    <tr><td>pill</td><td class="v">0 2 6 rgba(0,0,0,.18)</td><td>Pills on the monitor</td></tr>
+    <tr><td>burst</td><td class="v">ring 4 #FFFFFF, 0 6 14 rgba(0,0,0,.3)</td><td>Gold burst badge</td></tr>
+    <tr><td>key</td><td class="v">inset 0 -4 0 rgba(0,0,0,.22)</td><td>Quiz answer keys</td></tr>
+    <tr><td>tv</td><td class="v">card + inset 0 -8 0 rgba(60,20,30,.08)</td><td>Timer TV body</td></tr>
+    <tr><td>scanLine</td><td class="v">0 0 16 6 rgba(255,200,61,.6)</td><td>Scan line, 4 px gold</td></tr>
+    <tr><td>photo (round 14)</td><td class="v">polaroid 5 6 0 rgba(0,0,0,.28); dish plate ring 3 t-ink + 0 12 0 rgba(0,0,0,.25); sticker 2 2 0 t-ink; number badge 0 3 8 rgba(0,0,0,.35)</td><td>Photo frames and stickers</td></tr>
+    <tr><td>lines</td><td class="v">ink outline 2.6 (ingredients), 2.5 to 3 (stickers, polaroid, thumbnails), 2 dashed (unsure box), 2.5 radio ring, 1 hairline</td><td>Line weights</td></tr>
+  </table></div>
+
+  <h2>Spacing and sizes</h2>
+  <div class="scroll"><table>
+    <tr><th>Token</th><th>Value</th><th>Used for</th></tr>
+    <tr><td>screen edge</td><td class="v">14 cards, 16 controls and button, 18 text</td><td>Side margins</td></tr>
+    <tr><td>tab bar</td><td class="v">inset 12, height 52, items 40 by 34</td><td>Bottom tab bar</td></tr>
+    <tr><td>footer</td><td class="v">22 from the bottom</td><td>Primary button at the foot of a screen</td></tr>
+    <tr><td>card padding</td><td class="v">10 by 14 (8 by 12 compact, 16 by 20 large)</td><td>Cards, sheets</td></tr>
+    <tr><td>button padding</td><td class="v">13</td><td>Primary button</td></tr>
+    <tr><td>gaps</td><td class="v">4, 6, 8, 10, 12</td><td>Dots and chip rows (4 to 8), rating cards (10), icon to text in rows (12)</td></tr>
+    <tr><td>row heights</td><td class="v">choice 48 (58 with a subtitle), field 54 (46 stepper), row 52, link 42, step value 88</td><td>Fixed heights in the mockups; on the phone they grow with text size and never drop below the 44 pt touch target</td></tr>
+    <tr><td>icon sizes</td><td class="v">tab 22, row icon 36 (glyph 26), answer key 36, streak flame 15, thumbnail 40 to 46</td><td>Icons</td></tr>
+  </table></div>
+
+  <h2>Motion and feel</h2>
+  <p>From round 13's Feel section. Each haptic fires from the same animation timeline as the motion, follows the phone's System Haptics setting, and is never the only signal. Reduce Motion stops the motion and keeps the haptic. SwiftUI's <code>sensoryFeedback</code> covers the simple ones; the custom patterns need Core Haptics behind a service, like voice and camera.</p>
+  <div class="scroll"><table>
+    <tr><th>Moment</th><th>On screen</th><th>Feel</th></tr>
+    <tr><td>Pick an answer or a chip</td><td>The card pops and gets its tick</td><td>One light tick (selection)</td></tr>
+    <tr><td>Quiz: correct</td><td>Tomi cheers, the answer glows green</td><td>Success pattern</td></tr>
+    <tr><td>Quiz: not quite</td><td>The card wobbles once</td><td>One soft bump, never harsh</td></tr>
+    <tr><td>Commercial break ends</td><td>The TV flashes "Time!"</td><td>Repeating taps until you look, alongside the sound and the screen</td></tr>
+    <tr><td>That's a wrap</td><td>Curtain call and confetti</td><td>A short rising roll, timed to the confetti burst</td></tr>
+    <tr><td>XP counting up</td><td>The score ticks up</td><td>A light tick per step, fading out</td></tr>
+    <tr><td>New level unlocked</td><td>The curtain opens on the new level</td><td>One firm thump as it opens</td></tr>
+    <tr><td>Tomi takes a look</td><td>The gold scan line sweeps the photo, 2.6 s ease-in-out, repeating</td><td>None; under Reduce Motion the line stands still</td></tr>
+  </table></div>
+
+  <h2 id="show-words">Show words</h2>
+  <p>The one list of the show's words, so every screen says the same thing. Each word stays in <code>Localizable.xcstrings</code> like any other text; this list says what it means.</p>
+  <div class="scroll"><table>
+    <tr><th>Show word</th><th>Means in the app</th></tr>
+    <tr><td>Season</td><td>A course (Heat, Sauces)</td></tr>
+    <tr><td>Episode</td><td>A skill (Sear, Pan sauces)</td></tr>
+    <tr><td>Episode guide</td><td>Home</td></tr>
+    <tr><td>All seasons</td><td>The full list of courses and skills</td></tr>
+    <tr><td>On air tonight</td><td>Tonight's special</td></tr>
+    <tr><td>Also showing</td><td>The other suggestions</td></tr>
+    <tr><td>Opening night</td><td>Sign-in and onboarding</td></tr>
+    <tr><td>Backstage pass</td><td>Sign in or create an account</td></tr>
+    <tr><td>Contestant profile</td><td>Your answers (the seven onboarding questions)</td></tr>
+    <tr><td>Live from your fridge</td><td>The fridge scan</td></tr>
+    <tr><td>Line-up</td><td>What Tomi found in the fridge</td></tr>
+    <tr><td>The running order</td><td>The plan: the adapted recipe and what changed for you</td></tr>
+    <tr><td>Nothing on tonight</td><td>No suggestion fits</td></tr>
+    <tr><td>Showtime</td><td>Cooking a dish, from introduction to quiz</td></tr>
+    <tr><td>Before we roll</td><td>The lesson introduction</td></tr>
+    <tr><td>Places, everyone</td><td>Preparation (mise en place)</td></tr>
+    <tr><td>Cooking live</td><td>One step</td></tr>
+    <tr><td>Commercial break</td><td>A running timer</td></tr>
+    <tr><td>We paused the show</td><td>A lesson left mid-cook, kept to resume</td></tr>
+    <tr><td>Quick quiz</td><td>The quick check after a cook</td></tr>
+    <tr><td>That's a wrap</td><td>Lesson done</td></tr>
+    <tr><td>Curtain call</td><td>The celebration of a finished cook or level</td></tr>
+    <tr><td>Season finale</td><td>Every skill mastered</td></tr>
+    <tr><td>Missing episode</td><td>A lesson that cannot be opened</td></tr>
+    <tr><td>Rerun</td><td>A review question from an earlier episode</td></tr>
+    <tr><td>Showtime reminders</td><td>Notifications for the cook's chosen cooking times</td></tr>
+    <tr><td>Off air</td><td>Offline</td></tr>
+    <tr><td>Please stand by</td><td>A server error, with one button to try again</td></tr>
+    <tr><td>Lost the script</td><td>Saved data cannot be read</td></tr>
+    <tr><td>Lights up</td><td>Launch, while saved data opens</td></tr>
+  </table></div>
+  <p>Settings stays "Settings" (round 15 renamed round 13's "Dressing room"). Most buttons stay plain ("Next", "Save", "Try again"); a few big moments use a show word that still says what happens ("Roll cameras", "Start the show", "Cook it live", "Back to the guide").</p>
+</div>
+</body>
+</html>
