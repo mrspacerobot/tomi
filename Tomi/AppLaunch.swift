@@ -10,14 +10,15 @@ struct AppLaunch {
 
     init(arguments: [String]) {
         let options = StoreLaunchOptions(arguments: arguments)
+        let backend = BackendLaunchOptions(arguments: arguments)
         let store = ProgressStoreOpener.store(for: options)
-        let flow = Self.flow(arguments: arguments, store: store)
+        let flow = Self.flow(backend, store: store)
         self.flow = flow
-        progress = ProgressModel(store: store, server: ProgressServer(flow?.services), clock: .phone)
+        progress = ProgressModel(store: store, server: ProgressServer(flow?.services), clock: .forLaunch(backend))
     }
 
-    private static func flow(arguments: [String], store: any ProgressStore) -> AppFlowModel? {
-        guard let services = AppServices.forLaunch(BackendLaunchOptions(arguments: arguments), store: store) else {
+    private static func flow(_ backend: BackendLaunchOptions, store: any ProgressStore) -> AppFlowModel? {
+        guard let services = AppServices.forLaunch(backend, store: store) else {
             return nil
         }
         return AppFlowModel(services: services)
