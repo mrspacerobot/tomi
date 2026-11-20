@@ -8,7 +8,8 @@ struct ShowSecondaryButtonStyle: ButtonStyle {
             .textStyle(.showLede)
             .multilineTextAlignment(.center)
             .underline(configuration.isPressed)
-            .frame(minHeight: TouchTarget.minimum)
+            .frame(minWidth: TouchTarget.minimum, minHeight: TouchTarget.minimum)
+            .contentShape(.interaction, Rectangle())
             .opacity(opacity)
     }
 

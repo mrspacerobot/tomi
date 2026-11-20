@@ -3086,13 +3086,13 @@
       }
     },
     "question.cupboard.prompt": {
-      "comment": "Placeholder of the field where the cook types another cupboard item on the cupboard question in settings.",
+      "comment": "Placeholder for the field where the cook adds an ingredient to the cupboard in onboarding or settings.",
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Add another, for example cumin"
+            "value": "Type a staple"
           }
         }
       }
