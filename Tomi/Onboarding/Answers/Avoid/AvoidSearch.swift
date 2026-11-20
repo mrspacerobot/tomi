@@ -12,6 +12,8 @@ struct AvoidSearch: View {
             ShowCard {
                 TextField(text: $query) { Text(.openingAvoidSearch) }
                     .textStyle(.showBody)
+                    .frame(minHeight: TouchTarget.minimum)
+                    .contentShape(.interaction, Rectangle())
                     .focused($editing)
                     .accessibilityIdentifier("avoid-search")
             }
