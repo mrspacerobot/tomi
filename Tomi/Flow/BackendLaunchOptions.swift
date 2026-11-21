@@ -12,6 +12,7 @@ nonisolated struct BackendLaunchOptions: Equatable {
     static let localBackendArgument = "--local-backend"
     /// The fake server suggests nothing tonight, as the real one does before the cook has reached a lesson's level.
     static let fakeNoSuggestionsArgument = "--fake-no-suggestions"
+    static let fakeSlowScanArgument = "--fake-slow-scan"
     static let fakeGuidedArgument = "--fake-guided-cooking"
     /// The fake server's progress is that of a new cook, as it is without an argument.
     static let fakeProgressNewCookArgument = "--fake-progress-new-cook"

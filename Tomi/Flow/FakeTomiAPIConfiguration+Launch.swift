@@ -10,6 +10,11 @@ extension FakeTomiAPIConfiguration {
             quizFailure: quiz.failure,
             progressServer: FakeProgressServer(arguments: arguments)
         )
+        configureMedia(arguments: arguments)
+    }
+
+    nonisolated private mutating func configureMedia(arguments: [String]) {
+        slowScan = arguments.contains(BackendLaunchOptions.fakeSlowScanArgument)
         dishPhotos = arguments.contains(BackendLaunchOptions.fakeDishPhotosArgument)
     }
 }

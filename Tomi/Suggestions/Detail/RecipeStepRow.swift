@@ -8,10 +8,10 @@ struct RecipeStepRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xxSmall) {
             Text(.playerStep(step.number))
-                .textStyle(.label)
+                .textStyle(.showLabel, color: .showMuted)
                 .textCase(.uppercase)
             Text(verbatim: step.text)
-                .textStyle(.step)
+                .textStyle(.showText)
             RecipeStepNotes(step: step)
         }
         .frame(maxWidth: .infinity, alignment: .leading)

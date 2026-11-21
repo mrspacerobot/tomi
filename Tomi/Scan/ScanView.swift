@@ -19,7 +19,7 @@ struct ScanView: View {
     var body: some View {
         ScanStageView(model: model, flow: flow, path: $path)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(ColorRole.paper.color)
+            .background { ShowStage() }
     }
 }
 

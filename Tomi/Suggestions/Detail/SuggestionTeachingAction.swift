@@ -13,7 +13,7 @@ struct SuggestionTeachingAction: View {
             } label: {
                 Text(.cookingIntroductionOpen).frame(maxWidth: .infinity)
             }
-            .buttonStyle(.tomiPrimary)
+            .buttonStyle(ShowPrimaryButtonStyle())
             .accessibilityIdentifier("cooking-introduction-open")
         }
     }

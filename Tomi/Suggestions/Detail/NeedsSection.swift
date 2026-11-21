@@ -8,10 +8,10 @@ struct NeedsSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.small) {
-            SuggestionMissingLine(suggestion: suggestion, style: .body)
+            SuggestionMissingLine(suggestion: suggestion, style: .showText)
             if !suggestion.safePlan.equipment.isEmpty {
                 Text(.suggestionEquipment(suggestion.safePlan.equipment.map(\.name).formatted(.list(type: .and))))
-                    .textStyle(.body)
+                    .textStyle(.showText)
             }
             SuggestionCheckedLine(checked: suggestion.checked, options: options)
         }

@@ -7,12 +7,13 @@ struct TypedItemField: View {
     @Bindable var typing: TypedItemModel
     let look: TypedItemLook
     let onAdd: (NamedOption) -> Void
+    @Environment(\.usesShowQuestionStyle) private var showStyle
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.small) {
             HStack(spacing: Spacing.small) {
                 TextField(text: $typing.text) { Text(look.prompt) }
-                    .textStyle(.body)
+                    .textStyle(inputStyle)
                     .onSubmit(add)
                     .accessibilityIdentifier(look.identifierPrefix + "-type")
                 Button(action: add) { Text(.confirmAdd) }
@@ -21,6 +22,11 @@ struct TypedItemField: View {
             }
             TypedItemOutcome(typing: typing, look: look, onAdd: onAdd)
         }
+    }
+
+    private var inputStyle: TextStyle {
+        if showStyle { return .showLede }
+        return .body
     }
 
     private func add() {
