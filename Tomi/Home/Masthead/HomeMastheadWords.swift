@@ -6,16 +6,14 @@ struct HomeMastheadWords: View {
 
     var body: some View {
         VStack(spacing: Spacing.xxSmall) {
-            TomiMascot()
-                .frame(width: MascotSize.home, height: MascotSize.home)
-                .accessibilityHidden(true)
+            TomiHostHead().frame(width: MascotSize.home, height: MascotSize.home)
             HomeMastheadHeading(date: date)
         }
     }
 }
 
 #Preview {
-    HomeMasthead(path: .constant([]), date: .now)
+    HomeMasthead(date: .now)
         .padding()
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }

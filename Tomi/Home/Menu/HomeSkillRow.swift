@@ -5,20 +5,21 @@ struct HomeSkillRow: View {
     let skill: HomeSkillProgress
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Spacing.xxSmall) {
-            HomeSkillNameLine(skill: skill)
-            HomeSkillDetails(skill: skill)
-            Hairline()
+        NavigationLink(value: HomeRoute.episode(skill.id)) {
+            ShowCard {
+                VStack(alignment: .leading, spacing: ShowSize.compact) {
+                    HomeSkillNameLine(skill: skill)
+                    HomeSkillDetails(skill: skill)
+                }
+            }
         }
-        .accessibilityElement(children: .combine)
+        .buttonStyle(.plain)
         .accessibilityIdentifier("home-skill-" + skill.id.rawValue)
     }
 }
 
 #Preview {
     if let skill = HomeMenuPreviewData.menu?.courses.first?.skills.first {
-        HomeSkillRow(skill: skill)
-            .padding()
-            .background(ColorRole.paper.color)
+        NavigationStack { HomeSkillRow(skill: skill).padding().background { ShowStage() } }
     }
 }

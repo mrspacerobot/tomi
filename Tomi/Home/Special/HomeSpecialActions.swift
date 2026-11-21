@@ -10,14 +10,15 @@ struct HomeSpecialActions: View {
         } label: {
             Text(.homeScan)
         }
-        .buttonStyle(.tomiPrimary)
+        .buttonStyle(ShowPrimaryButtonStyle())
         .accessibilityIdentifier("home-scan")
         Button {
             path.append(.type)
         } label: {
-            Text(.homeType)
+            Text(.homeType).textStyle(.showBody, color: .showRed)
         }
-        .buttonStyle(.tomiSecondary)
+        .buttonStyle(.plain)
+        .frame(minHeight: TouchTarget.minimum)
         .accessibilityIdentifier("home-type")
     }
 }

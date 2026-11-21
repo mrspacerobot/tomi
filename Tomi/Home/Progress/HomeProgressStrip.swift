@@ -8,10 +8,15 @@ struct HomeProgressStrip: View {
     let showsThisWeek: Bool
 
     var body: some View {
-        StatsColumns(stats: stats, progress: snapshot.rankBar.fraction)
-            .accessibilityElement(children: .contain)
-            .accessibilityValue(Text(.homeProgressTotals(snapshot.xp, mastered: snapshot.masteredCount)))
-            .accessibilityIdentifier("home-progress-strip")
+        ShowCard {
+            VStack(spacing: ShowSize.gap) {
+                StatsCells(stats: stats, showStyle: true)
+                ProgressView(value: snapshot.rankBar.fraction).tint(ColorRole.showRed.color)
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityValue(Text(.homeProgressTotals(snapshot.xp, mastered: snapshot.masteredCount)))
+        .accessibilityIdentifier("home-progress-strip")
     }
 
     private var stats: [Stat] {

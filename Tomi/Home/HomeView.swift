@@ -21,7 +21,7 @@ struct HomeView: View {
             HomeContent(flow: flow, progress: progress, path: $path, now: moment)
                 .task { await refresh() }
                 .navigationDestination(for: HomeRoute.self) { route in
-                    HomeDestination(route: route, flow: flow, path: $path)
+                    HomeDestination(route: route, flow: flow, progress: progress, path: $path)
                 }
         }
         .onChange(of: scenePhase) { _, phase in

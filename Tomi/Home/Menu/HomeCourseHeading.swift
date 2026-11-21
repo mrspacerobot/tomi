@@ -7,7 +7,7 @@ struct HomeCourseHeading: View {
 
     var body: some View {
         layout {
-            Text(course.title).textStyle(.title)
+            Text(course.title).textStyle(.showLabel)
                 .fixedSize(horizontal: false, vertical: true)
                 .layoutPriority(1)
             if !dynamicTypeSize.isAccessibilitySize { Spacer(minLength: Spacing.xSmall) }
@@ -25,8 +25,7 @@ struct HomeCourseHeading: View {
     @ViewBuilder private var masteryCount: some View {
         if let count = course.masteredCount {
             Text(.homeCourseMastery(count, course.skillCount))
-                .textStyle(.caption)
-                .foregroundStyle(ColorRole.inkFaded.color)
+                .textStyle(.showLede, color: .stageMuted)
         }
     }
 }
