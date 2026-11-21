@@ -74,4 +74,10 @@ nonisolated enum ColorRole: CaseIterable, Sendable {
     case hostShoe
     case hostMouth
     case hostTongue
+    case curtainRed
+    case curtainLight
+    case curtainShade
+    case stageFloor
+    case stageFloorEdge
+    case stageBeam
 }

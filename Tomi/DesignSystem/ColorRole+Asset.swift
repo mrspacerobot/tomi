@@ -55,6 +55,12 @@ nonisolated extension ColorRole {
         case .hostShoe: Color(.hostShoe)
         case .hostMouth: Color(.hostMouth)
         case .hostTongue: Color(.hostTongue)
+        case .curtainRed: Color(.curtainRed)
+        case .curtainLight: Color(.curtainLight)
+        case .curtainShade: Color(.curtainShade)
+        case .stageFloor: Color(.stageFloor)
+        case .stageFloorEdge: Color(.stageFloorEdge)
+        case .stageBeam: Color(.stageBeam)
         }
     }
 }

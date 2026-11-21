@@ -8,10 +8,12 @@ nonisolated final class FakeAuthService: AuthService {
 
     private let signedIn: Mutex<Bool>
     private let accountName: String
+    private let rejectsPassword: Bool
 
-    init(signedIn: Bool = false, account: String = FakeAuthService.account) {
+    init(signedIn: Bool = false, account: String = FakeAuthService.account, rejectsPassword: Bool = false) {
         self.signedIn = Mutex(signedIn)
         accountName = account
+        self.rejectsPassword = rejectsPassword
     }
 
     func isSignedIn() async -> Bool {
@@ -23,6 +25,7 @@ nonisolated final class FakeAuthService: AuthService {
     }
 
     func signIn(email: String, password: String) async throws {
+        guard !rejectsPassword else { throw BackendError.notSignedIn }
         signedIn.withLock { $0 = true }
     }
 

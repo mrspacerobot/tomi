@@ -18,5 +18,8 @@ nonisolated extension ColorRole {
         TextPairing(text: .showInk, ground: .showCorrect),
         TextPairing(text: .showWhite, ground: .showError),
         TextPairing(text: .showWhite, ground: .showBlue),
+        TextPairing(text: .showWhite, ground: .curtainRed),
+        TextPairing(text: .showWhite, ground: .curtainLight),
+        TextPairing(text: .showWhite, ground: .curtainShade),
     ]
 }

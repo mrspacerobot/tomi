@@ -21,11 +21,19 @@ extension AppServices {
         let profile = fakeProfile(options, store: store)
         return AppServices(
             api: fakeAPI(fakeServer(options, store: store), profile: profile),
-            auth: FakeAuthService(signedIn: options.startsSignedIn, account: options.fakeAccount),
+            auth: fakeAuth(options),
             store: store,
             photos: .fixed(PhotoSource.fakePhoto),
             usesFakeSignInButton: !options.showsAppleSignInButton,
             dishPhotos: .fake
+        )
+    }
+
+    private static func fakeAuth(_ options: BackendLaunchOptions) -> FakeAuthService {
+        FakeAuthService(
+            signedIn: options.startsSignedIn,
+            account: options.fakeAccount,
+            rejectsPassword: options.fakeRejectsPassword
         )
     }
 
