@@ -5,7 +5,6 @@ import TomiCore
 /// Until the cook has answered, the chips show what the server assumes, and saving records exactly what is shown.
 struct CupboardAnswers: View {
     let draft: AnswersDraft
-    @Environment(\.usesShowQuestionStyle) private var showStyle
     @State private var typing: TypedItemModel
 
     init(draft: AnswersDraft) {
@@ -23,16 +22,12 @@ struct CupboardAnswers: View {
             }
             TypedItemField(typing: typing, look: .cupboard) { draft.addToCupboard($0.id) }
             Text(.questionCupboardSaved(draft.cupboard.count))
-                .textStyle(countStyle)
+                .textStyle(.showLede)
                 .accessibilityIdentifier("cupboard-count")
         }
         .onAppear {
             draft.answers.answerCupboard(assumedUntilAnswered: draft.options.assumedStaples)
         }
-    }
-    private var countStyle: TextStyle {
-        if showStyle { return .showLede }
-        return .description
     }
 }
 
@@ -41,6 +36,6 @@ struct CupboardAnswers: View {
         CupboardAnswers(draft: .preview())
             .padding()
     }
-    .background(ColorRole.paper.color)
+    .background { ShowStage() }
     .dynamicTypeSize(.accessibility5)
 }

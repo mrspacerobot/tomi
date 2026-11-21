@@ -41,6 +41,26 @@ final class GalleryLayoutUITests: XCTestCase {
     }
 
     @MainActor
+    func testSamplesInBothAppearances() {
+        for appearance in ["light", "dark"] {
+            let app = XCUIApplication.launchingGallery(extraArguments: ["--appearance-\(appearance)"])
+            attachScreenshot(of: app, named: "samples-\(appearance)")
+            captureCompanion(in: app, appearance: appearance)
+            app.assertCanBeTapped(app.buttons["gallery-single-0"])
+            attachScreenshot(of: app, named: "sample-choices-\(appearance)")
+            app.terminate()
+        }
+    }
+
+    @MainActor private func captureCompanion(in app: XCUIApplication, appearance: String) {
+        app.buttons["gallery-companion"].tap()
+        XCTAssertTrue(app.staticTexts["companion-title"].waitForExistence(timeout: 5))
+        attachScreenshot(of: app, named: "companion-sample-\(appearance)")
+        app.buttons["companion-close"].tap()
+        XCTAssertTrue(app.staticTexts["gallery-title"].waitForExistence(timeout: 5))
+    }
+
+    @MainActor
     func testEveryComponentCanBeTappedInDefaultText() {
         let app = XCUIApplication.launchingGallery()
 

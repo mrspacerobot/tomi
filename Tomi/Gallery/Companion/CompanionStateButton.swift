@@ -6,16 +6,11 @@
         let selected: Bool
         let action: () -> Void
 
-        private var kind: TomiButtonKind {
-            if selected { return .primary }
-            return .secondary
-        }
-
         var body: some View {
-            Button(option.label, action: action)
-                .buttonStyle(TomiButtonStyle(kind: kind))
-                .accessibilitySelected(selected)
-                .accessibilityIdentifier("companion-state-\(option.rawValue)")
+            ShowChip(selected: selected, action: action) {
+                Text(option.label).frame(maxWidth: .infinity)
+            }
+            .accessibilityIdentifier("companion-state-\(option.rawValue)")
         }
     }
 

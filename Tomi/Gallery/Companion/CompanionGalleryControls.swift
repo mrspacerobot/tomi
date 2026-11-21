@@ -18,7 +18,7 @@
                     CompanionStateButton(option: option, selected: state == option) { state = option }
                 }
                 Button(.companionStill) { still.toggle() }
-                    .buttonStyle(.tomiSecondary)
+                    .buttonStyle(ShowSecondaryButtonStyle())
                     .accessibilitySelected(still)
                     .accessibilityIdentifier("companion-still")
             }

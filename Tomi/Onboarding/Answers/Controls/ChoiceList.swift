@@ -5,22 +5,16 @@ struct ChoiceList: View {
     let choices: [TickChoice]
     let isSelected: (TickChoice) -> Bool
     let onTap: (TickChoice) -> Void
-    @Environment(\.usesShowQuestionStyle) private var showStyle
 
     var body: some View {
-        VStack(spacing: rowGap) {
+        VStack(spacing: ShowSize.gap) {
             ForEach(choices) { choice in
-                QuestionChoiceRow(choice: choice, selected: isSelected(choice)) {
+                ShowQuestionChoice(choice: choice, selected: isSelected(choice)) {
                     onTap(choice)
                 }
                 .accessibilityIdentifier("choice-" + choice.id)
             }
         }
-    }
-
-    private var rowGap: CGFloat {
-        if showStyle { return ShowSize.gap }
-        return Spacing.none
     }
 }
 
@@ -30,5 +24,5 @@ struct ChoiceList: View {
         isSelected: { $0.id == "a" },
         onTap: { _ in }
     )
-    .background(ColorRole.paper.color)
+    .background { ShowStage() }
 }

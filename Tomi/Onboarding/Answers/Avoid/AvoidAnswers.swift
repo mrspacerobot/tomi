@@ -5,7 +5,6 @@ import TomiCore
 /// Saved ids the server no longer lists stay ticked, so taking them away needs the cook's yes like any other.
 struct AvoidAnswers: View {
     let draft: AnswersDraft
-    @Environment(\.usesShowQuestionStyle) private var showStyle
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.none) {
@@ -13,7 +12,7 @@ struct AvoidAnswers: View {
             AvoidGroup(title: .questionAvoidGroupChoices, choices: choices(of: .choice), draft: draft)
             AvoidGroup(title: nil, choices: unreadableChoices, draft: draft)
             NoneOfTheseRow(draft: draft)
-            if showStyle { AvoidSearch(draft: draft) }
+            AvoidSearch(draft: draft)
             AvoidNote()
         }
     }
@@ -32,14 +31,14 @@ struct AvoidAnswers: View {
     ScrollView {
         AvoidAnswers(draft: .preview())
     }
-    .background(ColorRole.paper.color)
+    .background { ShowStage() }
 }
 
 #Preview("Dark, largest text") {
     ScrollView {
         AvoidAnswers(draft: .preview(saved: [FakeOptions.unlistedSavedItem]))
     }
-    .background(ColorRole.paper.color)
+    .background { ShowStage() }
     .preferredColorScheme(.dark)
     .dynamicTypeSize(.accessibility5)
 }

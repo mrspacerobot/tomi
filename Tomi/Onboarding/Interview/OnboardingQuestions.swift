@@ -29,7 +29,6 @@ struct OnboardingQuestions: View {
             }
         }
         .background { ShowStage() }
-        .environment(\.usesShowQuestionStyle, true)
     }
 
     private func finish(confirmed: Bool) async {

@@ -21,7 +21,6 @@ struct SettingsQuestionForm: View {
         }
         .toolbarVisibility(.hidden, for: .navigationBar)
         .background { ShowStage() }
-        .environment(\.usesShowQuestionStyle, true)
         .confirmRestrictionRemoval(isPresented: $saver.isConfirming) { save(confirmed: true) }
     }
 

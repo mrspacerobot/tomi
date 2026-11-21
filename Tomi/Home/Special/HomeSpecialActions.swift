@@ -26,5 +26,5 @@ struct HomeSpecialActions: View {
 #Preview {
     HomeSpecialCard(path: .constant([]), profile: CookProfile(), options: nil)
         .padding()
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }

@@ -22,13 +22,13 @@ struct HomeProgressSection: View {
     if let shown = ShownProgress.previewOffline() {
         HomeProgressSection(shown: shown)
             .padding()
-            .background(ColorRole.paper.color)
+            .background { ShowStage() }
     }
 }
 
 #Preview("No snapshot yet, largest text") {
     HomeProgressSection(shown: .previewWithoutSnapshot())
         .padding()
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
         .dynamicTypeSize(.accessibility5)
 }

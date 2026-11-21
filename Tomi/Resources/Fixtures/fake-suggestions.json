@@ -30,7 +30,7 @@
       "diet" : null
     },
     "level" : {
-      "name" : "1",
+      "name" : "Deglaze the fond",
       "number" : 1
     },
     "reason" : "Pan sauce comes right after searing. It turns the brown bits left in your pan into a sauce.",
@@ -320,7 +320,7 @@
     },
     "skill" : {
       "id" : "pan-sauce",
-      "name" : "pan-sauce"
+      "name" : "Pan sauces"
     },
     "title" : "Seared chicken thighs with lemon-butter pan sauce"
   },
@@ -349,7 +349,7 @@
       "diet" : null
     },
     "level" : {
-      "name" : "3",
+      "name" : "Rolled omelette",
       "number" : 3
     },
     "reason" : "The rolled omelette is the last step in eggs. It asks for gentle heat and a quick hand.",
@@ -543,7 +543,7 @@
     },
     "skill" : {
       "id" : "eggs",
-      "name" : "eggs"
+      "name" : "Eggs"
     },
     "title" : "Spinach and hard cheese omelette"
   }

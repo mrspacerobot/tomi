@@ -12,11 +12,11 @@
                     CompanionGalleryHeader(close: { dismiss() })
                     CompanionGalleryStage(state: state, still: still)
                     CompanionGalleryControls(state: $state, still: $still)
-                    Text(.companionDemoNote).textStyle(.caption).foregroundStyle(ColorRole.inkFaded.color)
+                    Text(.companionDemoNote).textStyle(.showLede, color: .stageMuted)
                 }
                 .padding(Spacing.screenMargin)
             }
-            .background(ColorRole.paper.color)
+            .background { ShowStage() }
         }
     }
 

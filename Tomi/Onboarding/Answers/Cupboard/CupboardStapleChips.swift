@@ -30,5 +30,5 @@ struct CupboardStapleChips: View {
 #Preview {
     CupboardStapleChips(draft: .preview())
         .padding()
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }

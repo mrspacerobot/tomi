@@ -36,12 +36,20 @@ final class OpeningNightUITests: XCTestCase {
     @MainActor private func captureQuestion(_ question: String, appearance: String, in app: XCUIApplication) {
         XCTAssertTrue(app.element("question-\(question)").waitForExistence(timeout: 5))
         capture(question, appearance: appearance, in: app)
-        if question == "avoid" { addKnownAllergy(in: app) }
+        checkControls(for: question, in: app)
         let next = app.buttons["onboarding-next"]
         if next.exists {
             next.tap()
         } else {
             app.buttons["onboarding-done"].tap()
+        }
+    }
+
+    @MainActor private func checkControls(for question: String, in app: XCUIApplication) {
+        if question == "avoid" { addKnownAllergy(in: app) }
+        if question == "cupboard" {
+            app.assertCanBeTapped(app.textFields["cupboard-type"])
+            app.assertCanBeTapped(app.buttons["cupboard-add"])
         }
     }
 

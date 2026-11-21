@@ -7,7 +7,7 @@ struct NothingTonightView: View {
 
     var body: some View {
         VStack(spacing: Spacing.large) {
-            TomiMascot(mood: .thinking, appearance: .cookingShow)
+            TomiMascot(mood: .thinking)
                 .frame(width: MascotSize.notice, height: MascotSize.notice)
                 .accessibilityHidden(true)
             Text(.nothingTonightTitle)

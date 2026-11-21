@@ -19,6 +19,6 @@ struct HomeLevelMark: View {
     if let skill = HomeMenuPreviewData.menu?.courses.first?.skills.first {
         HomeSkillRow(skill: skill)
             .padding()
-            .background(ColorRole.paper.color)
+            .background { ShowStage() }
     }
 }

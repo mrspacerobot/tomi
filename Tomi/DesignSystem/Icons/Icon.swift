@@ -26,7 +26,7 @@ struct Icon: View {
             Icon(glyph, size: .medium)
         }
     }
-    .foregroundStyle(ColorRole.cobalt.color)
+    .foregroundStyle(ColorRole.stageGold.color)
     .padding()
-    .background(ColorRole.paper.color)
+    .background { ShowStage() }
 }

@@ -6,7 +6,6 @@ import SwiftUI
 struct TomiCompanion: View {
     let state: CompanionState
     var reduceMotion = false
-    var appearance: CompanionAppearance = .tastingMenu
     @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
     @Environment(\.scenePhase) private var scenePhase
     @State private var clock = CompanionClock()
@@ -23,7 +22,7 @@ struct TomiCompanion: View {
     var body: some View {
         TimelineView(.animation(paused: !moving)) { timeline in
             let pose = clock.pose(state: state, at: timeline.date, moving: moving)
-            CompanionFigure(pose: pose, appearance: appearance)
+            CompanionFigure(pose: pose)
         }
         .accessibilityHidden(true)
         .onAppear { visible = true }
@@ -34,5 +33,5 @@ struct TomiCompanion: View {
 #Preview {
     TomiCompanion(state: .idle)
         .frame(height: MascotSize.companion)
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }

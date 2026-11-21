@@ -332,12 +332,12 @@
     {
       "id" : "fake-veg",
       "name" : "Vegetarian",
-      "summary" : "Vegetarian"
+      "summary" : "No meat or fish"
     },
     {
       "id" : "fake-vegan",
       "name" : "Vegan",
-      "summary" : "Vegan"
+      "summary" : "Plants only"
     }
   ],
   "equipment" : [
@@ -345,24 +345,24 @@
       "assumed" : true,
       "id" : "stovetop",
       "name" : "Stovetop",
-      "summary" : "Stovetop"
+      "summary" : "Hob or gas rings"
     }
   ],
   "experience" : [
     {
       "id" : "never",
       "name" : "Never",
-      "summary" : "never"
+      "summary" : "New to the kitchen"
     },
     {
       "id" : "basics",
       "name" : "Basics",
-      "summary" : "basics"
+      "summary" : "A few dishes I know"
     },
     {
       "id" : "comfortable",
       "name" : "Comfortable",
-      "summary" : "comfortable"
+      "summary" : "I cook most weeks"
     }
   ],
   "ingredients" : [
@@ -471,12 +471,12 @@
     {
       "id" : "metric",
       "name" : "Metric",
-      "summary" : "metric"
+      "summary" : "Grams and millilitres"
     },
     {
       "id" : "cups",
       "name" : "Cups",
-      "summary" : "cups"
+      "summary" : "Cups and spoons"
     }
   ]
 }

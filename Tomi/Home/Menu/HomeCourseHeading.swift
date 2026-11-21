@@ -34,6 +34,6 @@ struct HomeCourseHeading: View {
     if let course = HomeMenuPreviewData.menu?.courses.first {
         HomeCourseSection(course: course)
             .padding()
-            .background(ColorRole.paper.color)
+            .background { ShowStage() }
     }
 }

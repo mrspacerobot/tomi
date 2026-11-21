@@ -55,6 +55,8 @@ final class CookingShowFridgeUITests: XCTestCase {
         app.buttons["home-scan"].tap()
         app.buttons["scan-type-instead"].tap()
         XCTAssertTrue(app.element("confirm-title").waitForExistence(timeout: 5))
+        app.assertCanBeTapped(app.textFields["confirm-type"])
+        app.assertCanBeTapped(app.buttons["confirm-add"])
         capture("fridge-typed-\(appearance)", in: app)
         app.buttons["confirm-find"].tap()
         XCTAssertTrue(app.element("nothing-tonight-title").waitForExistence(timeout: 5))

@@ -10,7 +10,7 @@ struct HomeProgressStrip: View {
     var body: some View {
         ShowCard {
             VStack(spacing: ShowSize.gap) {
-                StatsCells(stats: stats, showStyle: true)
+                StatsCells(stats: stats)
                 ProgressView(value: snapshot.rankBar.fraction).tint(ColorRole.showRed.color)
             }
         }
@@ -58,6 +58,6 @@ struct HomeProgressStrip: View {
     if let snapshot = ShownProgress.previewReturning()?.snapshot {
         HomeProgressStrip(snapshot: snapshot, showsThisWeek: true)
             .padding()
-            .background(ColorRole.paper.color)
+            .background { ShowStage() }
     }
 }
