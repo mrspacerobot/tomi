@@ -13,6 +13,7 @@ nonisolated struct FakeTomiAPIConfiguration: Equatable {
     /// Every suggestion names the fake dish photo, as the server does when a reviewed photo matches the cook's version.
     var dishPhotos = false
     var slowScan = false
+    var optionsUnavailable = false
 
     init(
         suggestionsNothing: Bool = false,

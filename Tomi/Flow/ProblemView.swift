@@ -12,8 +12,10 @@ struct ProblemView: View {
                 Text(verbatim: problem.serverMessage)
             }
         }
-        .textStyle(.body)
-        .foregroundStyle(ColorRole.ink.color)
+        .textStyle(.showText, color: .showWhite)
+        .padding(ShowSize.cardVertical)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(ColorRole.showError.color, in: .rect(cornerRadius: Radius.showControl))
         .accessibilityIdentifier("problem")
     }
 }
@@ -21,5 +23,5 @@ struct ProblemView: View {
 #Preview {
     ProblemView(problem: ProblemText(BackendError.unreachable))
         .padding()
-        .background(ColorRole.paper.color)
+        .background { ShowStage() }
 }

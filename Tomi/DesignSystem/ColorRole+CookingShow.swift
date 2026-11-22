@@ -21,5 +21,6 @@ nonisolated extension ColorRole {
         TextPairing(text: .showWhite, ground: .curtainRed),
         TextPairing(text: .showWhite, ground: .curtainLight),
         TextPairing(text: .showWhite, ground: .curtainShade),
+        TextPairing(text: .showWhite, ground: .showSign),
     ]
 }

@@ -4,6 +4,7 @@ import Foundation
 /// a cook never does, so a plain launch talks to the deployed server.
 nonisolated struct BackendLaunchOptions: Equatable {
     /// Run against the in-memory fake server and fake sign-in, with a fixed photo instead of the camera.
+    static let fakeOptionsUnavailableArgument = "--fake-options-unavailable"
     static let fakeRejectsPasswordArgument = "--fake-rejects-password"
     static let fakeBackendArgument = "--fake-backend"
     /// Show Apple’s native button over fake services to test its real layout.

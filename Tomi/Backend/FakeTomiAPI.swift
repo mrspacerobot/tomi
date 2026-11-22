@@ -28,7 +28,8 @@ actor FakeTomiAPI: TomiAPI {
     }
 
     func options() async throws -> LibraryOptions {
-        data.options
+        if configuration.optionsUnavailable { throw BackendError.unreachable }
+        return data.options
     }
 
     func profile() async throws -> ProfileEnvelope {
