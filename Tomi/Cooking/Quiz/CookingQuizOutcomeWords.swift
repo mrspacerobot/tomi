@@ -8,12 +8,12 @@ struct CookingQuizOutcomeWords: View {
         switch outcome {
         case .right(let explanation):
             if let explanation {
-                Text(verbatim: explanation).textStyle(.body)
+                Text(verbatim: explanation).textStyle(.showText)
             }
         case .wrong:
-            Text(.cookingQuizWrongMessage).textStyle(.body)
+            Text(.cookingQuizWrongMessage).textStyle(.showText)
         case .problem(let problem):
-            Text(problem.message).textStyle(.body)
+            Text(problem.message).textStyle(.showText)
         }
     }
 }

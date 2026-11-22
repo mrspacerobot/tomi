@@ -1,6 +1,114 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "showtime.beforeRoll": {
+      "comment": "Lower-third heading on the cooking introduction.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Before we roll"
+          }
+        }
+      }
+    },
+    "showtime.places": {
+      "comment": "Lower-third heading on cooking preparation.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Places, everyone"
+          }
+        }
+      }
+    },
+    "showtime.live": {
+      "comment": "Label above the live cooking steps.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cooking live"
+          }
+        }
+      }
+    },
+    "showtime.quiz": {
+      "comment": "Lower-third heading for the quiz.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick quiz"
+          }
+        }
+      }
+    },
+    "showtime.wrap": {
+      "comment": "Marquee shown at the end of the quiz.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That’s a wrap"
+          }
+        }
+      }
+    },
+    "showtime.choiceA": {
+      "comment": "Badge for the first quiz choice.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A"
+          }
+        }
+      }
+    },
+    "showtime.choiceB": {
+      "comment": "Badge for the second quiz choice.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "B"
+          }
+        }
+      }
+    },
+    "showtime.choiceC": {
+      "comment": "Badge for the third quiz choice.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "C"
+          }
+        }
+      }
+    },
+    "showtime.choiceNumber": {
+      "comment": "Badge for a later choice. The placeholder is the one-based display position.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
+        }
+      }
+    },
     "fridge.live": {
       "comment": "Lower-third heading on the photo selection and scan progress screens.",
       "extractionState": "manual",

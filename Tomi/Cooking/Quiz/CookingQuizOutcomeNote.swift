@@ -7,12 +7,10 @@ struct CookingQuizOutcomeNote: View {
     var body: some View {
         Group {
             if let outcome = model.outcome {
-                RuledNote(title: outcome.title, rule: outcome.rule) {
-                    CookingQuizOutcomeWords(outcome: outcome)
-                }
-                .accessibilityIdentifier(outcome.identifier)
+                CookingQuizFeedbackCard(outcome: outcome)
             }
         }
+        .showFeedback(model.outcome?.haptic, trigger: model.results)
         .onChange(of: model.results) {
             announce()
         }

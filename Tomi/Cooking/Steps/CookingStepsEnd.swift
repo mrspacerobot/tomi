@@ -11,11 +11,11 @@ struct CookingStepsEnd: View {
         Group {
             if session.quiz == nil {
                 Button(action: saveAndContinue) { Text(.cookingStepsFinish).frame(maxWidth: .infinity) }
-                    .buttonStyle(.tomiSecondary)
+                    .buttonStyle(ShowSecondaryButtonStyle())
                     .accessibilityIdentifier("cooking-steps-finish")
             } else {
                 Button(action: saveAndContinue) { Text(.cookingQuizOpen).frame(maxWidth: .infinity) }
-                    .buttonStyle(.tomiPrimary)
+                    .buttonStyle(ShowPrimaryButtonStyle())
                     .accessibilityIdentifier("cooking-quiz-open")
             }
         }

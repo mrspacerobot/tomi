@@ -6,11 +6,13 @@ struct CookingIntroductionNeeds: View {
     let suggestion: Suggestion
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Spacing.small) {
-            SectionHeading(words: .cookingYouWillUse)
-            ingredientRows
-            SuggestionMissingLine(suggestion: suggestion, style: .body)
-            equipmentSection
+        ShowCard {
+            VStack(alignment: .leading, spacing: ShowSize.gap) {
+                SectionHeading(words: .cookingYouWillUse, showCardStyle: true)
+                ingredientRows
+                SuggestionMissingLine(suggestion: suggestion, style: .showText)
+                equipmentSection
+            }
         }
     }
 
@@ -23,9 +25,9 @@ struct CookingIntroductionNeeds: View {
     @ViewBuilder private var equipmentSection: some View {
         if !suggestion.safePlan.equipment.isEmpty {
             VStack(alignment: .leading, spacing: Spacing.small) {
-                SectionHeading(words: .cookingGetOut)
+                SectionHeading(words: .cookingGetOut, showCardStyle: true)
                 ForEach(Array(suggestion.safePlan.equipment.enumerated()), id: \.offset) { _, item in
-                    Text(verbatim: item.name).textStyle(.body)
+                    Text(verbatim: item.name).textStyle(.showText)
                 }
             }
         }

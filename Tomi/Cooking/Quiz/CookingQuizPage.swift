@@ -8,10 +8,10 @@ struct CookingQuizPage: View {
     @Binding var path: [HomeRoute]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Spacing.xLarge) {
+        VStack(alignment: .leading, spacing: ShowSize.rowGap) {
             CookingQuizQuestion(round: model.round)
                 .padding(.horizontal, Spacing.screenMargin)
-            CookingQuizChoices(model: model)
+            CookingQuizChoices(model: model).padding(.horizontal, ShowSize.edge)
             Group {
                 CookingQuizOutcomeNote(model: model)
                 CookingQuizControls(model: model, path: $path)

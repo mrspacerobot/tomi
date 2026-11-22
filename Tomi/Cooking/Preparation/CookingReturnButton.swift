@@ -11,7 +11,7 @@ struct CookingReturnButton: View {
         Button(action: returnToSuggestion) {
             Text(words).frame(maxWidth: .infinity)
         }
-        .buttonStyle(.tomiSecondary)
+        .buttonStyle(ShowSecondaryButtonStyle())
         .accessibilityIdentifier(identifier)
     }
 

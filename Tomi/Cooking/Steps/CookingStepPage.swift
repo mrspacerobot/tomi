@@ -10,12 +10,10 @@ struct CookingStepPage: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xLarge) {
-            Text(verbatim: session.suggestion.title).textStyle(.displayM)
+            ShowLowerThird(title: .showtimeLive)
+            Text(verbatim: session.suggestion.title).textStyle(.showTitle)
             CookingProgress(words: .cookingStepsProgress(walk.position, walk.count), marks: walk.marks)
-            Text(verbatim: walk.current.text)
-                .textStyle(.step)
-                .accessibilityIdentifier("cooking-step-text")
-            RecipeStepNotes(step: walk.current)
+            CookingLiveStep(step: walk.current)
             CookingStepControls(session: session, recorder: recorder, walk: $walk, path: $path)
         }
         .padding(Spacing.screenMargin)

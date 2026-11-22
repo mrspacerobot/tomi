@@ -17,7 +17,7 @@ struct CookingIntroductionView: View {
 
     var body: some View {
         ScrollView { content }
-            .background(ColorRole.paper.color)
+            .background { ShowStage() }
             .navigationTitle(Text(.cookingIntroductionTitle))
             .navigationBarTitleDisplayMode(.inline)
             .cookingStartAlert($refusal, path: $path)

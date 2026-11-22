@@ -15,7 +15,7 @@ struct CookingQuizView: View {
     var body: some View {
         ScrollView { content }
             .id(model?.round.position)
-            .background(ColorRole.paper.color)
+            .background { ShowStage() }
             .navigationTitle(Text(.cookingQuizTitle))
             .navigationBarTitleDisplayMode(.inline)
             .accessibilityIdentifier("cooking-quiz")

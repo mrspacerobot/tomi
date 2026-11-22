@@ -6,9 +6,11 @@ struct CookingWhyTonight: View {
 
     var body: some View {
         if let reason {
-            VStack(alignment: .leading, spacing: Spacing.xSmall) {
-                SectionHeading(words: .cookingWhyTonight)
-                Text(verbatim: reason).textStyle(.body)
+            ShowCard {
+                VStack(alignment: .leading, spacing: ShowSize.gap) {
+                    SectionHeading(words: .cookingWhyTonight, showCardStyle: true)
+                    Text(verbatim: reason).textStyle(.showText)
+                }
             }
         }
     }

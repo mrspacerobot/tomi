@@ -7,9 +7,10 @@ struct CookingQuizQuestion: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.small) {
+            ShowLowerThird(title: .showtimeQuiz)
             CookingProgress(words: .cookingQuizProgress(round.position, round.count), marks: round.marks)
             Text(verbatim: round.current.question)
-                .textStyle(.displayM)
+                .textStyle(.showTitle)
                 .accessibilityAddTraits(.isHeader)
                 .accessibilityIdentifier("cooking-quiz-question")
         }
